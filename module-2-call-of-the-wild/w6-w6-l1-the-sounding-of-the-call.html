@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; The Sounding of the Call</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-scale .widget-options { justify-content: space-between; }
+    .ow-scale .widget-options button { flex: 1; text-align: center; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">2.16</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Reading</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Chapter 7, The Sounding of the Call</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Focus</div>
+        <div style="font-size: 16px; color: #0e1c42;">Theme synthesis</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip with gold time pill -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.16 &middot; The Final Chapter</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Sounding of the Call</div>
+                <div style="font-size: 16px; color: #666;">What Buck&rsquo;s change finally means</div>
+            </div>
+            <span style="background: #C7922C; color: #FFFFFF; font-size: 13px; padding: 5px 14px; border-radius: 12px; white-space: nowrap;">~13 min</span>
+        </div>
+    </div>
+
+    <!-- Today's focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; WHERE WE ARE IN THE BOOK</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">In Chapter 6 John Thornton saved Buck, and Buck loved him in return. That love was the one thing still tying Buck to the world of people. In this last chapter London tests that tie. By the end you will be able to name the theme the whole novel has been building toward and say what London argues about the pull between civilization and the wild. You will use that thinking all week as you write your final project.</div>
+    </div>
+
+    <!-- READ & NOTICE: read the chapter -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Read all of <strong>Chapter 7, The Sounding of the Call</strong>, before you go on. It is short. As you read, watch the two forces pulling at Buck: John Thornton and the love that holds him in camp, and the wild brother and the howl in the forest that keep calling him away.</p>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 18px; margin: 0 0 14px 0;">
+            <div style="font-size: 14px; color: #c7922c; margin-bottom: 6px;">READ THE CHAPTER</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Open Chapter 7 in your text. [Teacher: link the Chapter 7 PDF or e-text in Canvas Files here.] The novel is public domain, so you may read it freely.</div>
+        </div>
+        <div style="background: #FBEDE9; border-left: 4px solid #E2725B; border-radius: 6px; padding: 14px 18px;">
+            <div style="font-size: 14px; color: #E2725B; margin-bottom: 6px;">WHILE YOU READ, ADD TO YOUR READING JOURNAL</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Turn to the <strong>Week 6 section of your Reading Journal</strong> and answer these in your own words as you read:</div>
+            <ol style="font-size: 16px; color: #1a2340; line-height: 1.65; margin: 10px 0 0 0; padding-left: 22px;">
+                <li style="margin-bottom: 6px;">After the wolf becomes friendly and runs with Buck, Buck stops and turns back toward camp. What makes him turn around, and what does that tell you about what still holds him to the world of men?</li>
+                <li style="margin-bottom: 6px;">When Buck returns and finds the camp destroyed, the narrator says, &ldquo;The last tie was broken. Man and the claims of man no longer bound him.&rdquo; What is the &ldquo;last tie,&rdquo; and why does its breaking finally free Buck to answer the call?</li>
+                <li>By the final page Buck runs at the head of the wolf pack. Does answering the call set Buck free, destroy who he was, or both? Point to one detail from the chapter that supports your view.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: civilization vs the wild, the closing tug-of-war -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE TWO FORCES AT THE END</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 18px;">All module long Buck has been pulled between two worlds. In Chapter 7 the pull comes to a head, then resolves. Here is the contrast London sets up, and what tips the balance.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: stretch;">
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-top: 4px solid #E2725B; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 13px; color: #E2725B; margin-bottom: 6px;">CIVILIZATION (the claims of man)</div>
+                <div style="font-size: 19px; color: #0e1c42; margin-bottom: 10px;">John Thornton</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Buck&rsquo;s love for Thornton keeps him in camp. After his first run with the wild brother, Buck turns back for him. While Thornton lives, Buck is half a dog of men.</div>
+            </div>
+            <div style="flex: 0 0 auto; align-self: center; font-size: 26px; color: #C7922C;">&#8646;</div>
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-top: 4px solid #2A9D8F; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 13px; color: #2A9D8F; margin-bottom: 6px;">THE WILD (the call)</div>
+                <div style="font-size: 19px; color: #0e1c42; margin-bottom: 10px;">The howl in the forest</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">The wild brother, the visions of the hairy man, and the &ldquo;many-noted call&rdquo; pull Buck away. Hunting the great moose, killing the Yeehats, he becomes a creature of the wild.</div>
+            </div>
+        </div>
+        <div style="background: #0E1C42; color: #fff; border-radius: 8px; padding: 14px 18px; margin-top: 16px;">
+            <div style="font-size: 12px; color: #55c8e8; margin-bottom: 4px;">WHAT TIPS THE BALANCE</div>
+            <div style="font-size: 17px; line-height: 1.55;">Thornton&rsquo;s death removes the last claim of man. With nothing left to hold him, Buck answers the call, sits and howls with the pack, and runs into the woods as their leader.</div>
+        </div>
+    </div>
+
+    <!-- TEACHING: naming the theme -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PUTTING THE WHOLE NOVEL TOGETHER</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">A <strong>theme</strong> is the idea about life that a whole story works out, not just one event. Across the module you watched Buck change in stages, and each stage built toward the ending. Reading the last chapter, you can now see the shape of the whole.</p>
+        <div style="display: flex; flex-direction: column; gap: 0;">
+            <div style="background: #FDF3E3; border-left: 4px solid #C7922C; border-radius: 8px 8px 0 0; padding: 12px 16px;">
+                <div style="font-size: 13px; color: #c7922c; margin-bottom: 3px;">CHAPTERS 1 TO 2 &middot; THE PAMPERED DOG IS BROKEN IN</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">Buck is stolen from a warm valley and learns the law of club and fang.</div>
+            </div>
+            <div style="background: #EEF1F8; border-left: 4px solid #C7922C; padding: 12px 16px;">
+                <div style="font-size: 13px; color: #c7922c; margin-bottom: 3px;">CHAPTERS 3 TO 5 &middot; THE PRIMORDIAL BEAST AWAKENS</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">Buck beats Spitz, leads the team, and survives masters good and bad. The old instincts grow stronger.</div>
+            </div>
+            <div style="background: #FDF3E3; border-left: 4px solid #C7922C; padding: 12px 16px;">
+                <div style="font-size: 13px; color: #c7922c; margin-bottom: 3px;">CHAPTER 6 &middot; THE COUNTER-PULL OF LOVE</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.5;">John Thornton gives Buck a reason to stay. Love pulls against the wild.</div>
+            </div>
+            <div style="background: #0E1C42; color: #fff; border-left: 4px solid #55C8E8; border-radius: 0 0 8px 8px; padding: 12px 16px;">
+                <div style="font-size: 13px; color: #55c8e8; margin-bottom: 3px;">CHAPTER 7 &middot; THE CALL WINS</div>
+                <div style="font-size: 16px; line-height: 1.5;">With Thornton gone, Buck answers the call and joins the pack. The transformation is complete.</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 0 0;">London does not say in one sentence what it all means. That is your job as a reader. Some readers see freedom: Buck becomes fully himself, &ldquo;running free in the open, the unpacked earth underfoot.&rdquo; Others see loss: the loyal dog who loved Thornton is gone, replaced by a killer the Yeehats call the Evil Spirit. The novel holds both at once. Your job in the project is to argue which reading the text supports best.</p>
+    </div>
+
+    <!-- WORD STUDY-style aside, kept light -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; A WORD WORTH KNOWING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">London uses the word <strong>primordial</strong> through the book, and it returns at the end. It means belonging to the earliest, most ancient times, before civilization. When Buck answers &ldquo;the call of the younger world&rdquo; and acts on instincts &ldquo;from the old hunting days of the primordial world,&rdquo; London means the deep, ancient part of Buck that civilization had covered over. Watch how the ending makes that ancient self the truest one.</p>
+    </div>
+
+    <!-- COMMIT-THEN-REVEAL self-check (brief, not a model response) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; CHECK YOUR UNDERSTANDING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">The narrator writes: &ldquo;John Thornton was dead. The last tie was broken. Man and the claims of man no longer bound him.&rdquo;</p>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 18px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 8px;">&#128161; THE LAST TIE</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In your notebook, write what the &ldquo;last tie&rdquo; is in plain words. The last tie is Buck&rsquo;s love for John Thornton.</div>
+        </div>
+    </div>
+
+    <!-- TRY IT: freedom or loss? (varied answer keys: 1,2,0,1) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 14px;">&#9889; TRY IT &middot; WHAT DOES EACH DETAIL SUGGEST?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Below are details from Chapter 7. For each one, decide whether London makes Buck&rsquo;s change feel mostly like <strong>freedom</strong>, mostly like <strong>loss</strong>, or like <strong>both at once</strong>. There is no single right reading for the chapter as a whole, but each detail leans a certain way. Decide first, then choose, and read the feedback.</p>
+
+        <div class="optima-widget ow-scale">
+            <div class="widget-row" data-correct="1" data-fb="Right. The void that food cannot fill is a clear note of loss. Thornton&rsquo;s death leaves an ache in Buck, which shows the cost of the transformation." data-hint="Does an ache that nothing can fill sound like gain, or like something missing?">
+                <div class="widget-row-prompt">1. After Thornton dies, the narrator says the loss &ldquo;left a great void in him... a void which ached and ached, and which food could not fill.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Mostly freedom</button>
+                    <button data-choice="1">Mostly loss</button>
+                    <button data-choice="2">Both at once</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. This leans both ways. Buck is glad and free, running in the open, but he is also leaving behind the camp and Thornton, so the freedom carries a quiet cost." data-hint="Buck is joyful here, but think about what he is running away from at the same time.">
+                <div class="widget-row-prompt">2. Running beside the wild brother, &ldquo;Buck was wildly glad... running free in the open, the unpacked earth underfoot, the wide sky overhead.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Mostly freedom</button>
+                    <button data-choice="1">Mostly loss</button>
+                    <button data-choice="2">Both at once</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. This is freedom. Buck becomes fully what he was meant to be, leading the pack and singing &ldquo;a song of the younger world.&rdquo; The ending frames it as the triumph of his true self." data-hint="Leaping at the head of the pack and singing the song of the wild: does London write this as a loss or as a fulfillment?">
+                <div class="widget-row-prompt">3. On the last page Buck &ldquo;may be seen running at the head of the pack... leaping gigantic above his fellows... as he sings a song of the younger world.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Mostly freedom</button>
+                    <button data-choice="1">Mostly loss</button>
+                    <button data-choice="2">Both at once</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. This is loss, or at least a heavy cost. The gentle dog who loved Thornton is now &ldquo;the Fiend incarnate.&rdquo; To answer the call, Buck has to become something the people around him fear." data-hint="The dog who licked Thornton&rsquo;s face is now feared as an evil spirit. What has been given up to reach that point?">
+                <div class="widget-row-prompt">4. Avenging Thornton, Buck becomes &ldquo;a live hurricane of fury,&rdquo; and the Yeehats flee, &ldquo;proclaiming... the advent of the Evil Spirit.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Mostly freedom</button>
+                    <button data-choice="1">Mostly loss</button>
+                    <button data-choice="2">Both at once</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <p style="font-size: 15px; color: #6b7a99; line-height: 1.6; margin: 14px 0 0 0;">Notice that the chapter gives you evidence for more than one reading. That is exactly what makes it a strong question to argue. Your essay will pick the reading you can defend best and use details like these as evidence.</p>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #E2725B; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Finish your Week 6 Reading Journal entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Answer all three Read &amp; Notice questions in the Week 6 section of your Reading Journal. Your answer to question 3 is the seed of your essay&rsquo;s argument.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Begin the final project</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Next you will open <strong>Work Session 1: Building Your Argumentative Essay</strong> and turn your Quick Writes into a full essay.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You have now read the whole novel. Buck&rsquo;s transformation is finished, and the question is no longer what happens but what it means. Hold on to your own answer to that question. The rest of this week, you build an argument that defends it.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.16 &middot; The Sounding of the Call</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
