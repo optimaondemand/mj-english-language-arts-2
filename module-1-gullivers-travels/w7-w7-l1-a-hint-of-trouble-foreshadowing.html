@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 1.18</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Gulliver&rsquo;s Travels</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.18</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Part IV, Chapter 9</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">How does changing your perspective change what you see?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip with gold time pill -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.18</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">A Hint of Trouble: How Writers Plant Clues</div>
+                <div style="font-size: 16px; color: #666;">Lesson</div>
+            </div>
+            <span style="background: #C7922C; color: #FFFFFF; font-size: 13px; padding: 5px 14px; border-radius: 12px; white-space: nowrap;">~12 min</span>
+        </div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Gulliver is happy living among the wise horses. But in the middle of Chapter 9 he drops one strange line about a secret that will ruin his happiness. Why does Swift warn us before the bad news arrives?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will read Chapter 9. You will learn how an author plants a clue early that hints at what is coming later. This is called <strong>foreshadowing</strong>, and once you can spot it, you read the rest of the book differently.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what foreshadowing is: a clue an author plants early that hints at something later.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find the line in Chapter 9 where Gulliver hints that his happy life is about to end.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell the difference between a clue that hints at the future and a detail that is just description.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>Gulliver&rsquo;s Travels</em>, Part IV, Chapter 9. <a href="#" style="color: #2196D0;">[Teacher: link the Part IV Chapter 9 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Gulliver&rsquo;s Travels Reading Journal</strong> on OneDrive.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: the foreshadowing timeline -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 16px;"><strong>Foreshadowing</strong> is a clue the author plants early that points to something that happens later. It is a small warning light. You may not understand it yet, but the story has just told you to keep watching. Here is how one clue in Chapter 9 reaches forward to the trouble in Chapters 10 and 11.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0; align-items: stretch; border-radius: 8px; overflow: hidden; border: 1px solid #D0D9E8;">
+            <div style="flex: 1; min-width: 220px; background: #E8F6FB; padding: 16px 18px;">
+                <div style="font-size: 12px; color: #1B6A94; margin-bottom: 6px;">CHAPTER 9 &middot; THE CLUE</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.55;">Gulliver says his master &ldquo;was pleased to conceal one particular&rdquo; about him, &ldquo;whence I date all the succeeding misfortunes of my life.&rdquo;</div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; background: #C7922C; color: #fff; padding: 0 14px; font-size: 24px;">&#10142;</div>
+            <div style="flex: 1; min-width: 220px; background: #FDF3E3; padding: 16px 18px;">
+                <div style="font-size: 12px; color: #C7922C; margin-bottom: 6px;">CHAPTERS 10&ndash;11 &middot; THE PAYOFF</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.55;">The assembly orders that Gulliver be sent away. He must leave the country he loves, build a canoe, and sail off alone.</div>
+            </div>
+        </div>
+        <div style="font-size: 15px; color: #6b7a99; line-height: 1.6; margin-top: 14px;">When Gulliver mentions &ldquo;misfortunes&rdquo; before anything bad has happened, Swift is warning you. The happy life will not last.</div>
+    </div>
+
+    <!-- PART 1: check-in (coral = read & notice) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU READ</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">Think about a movie where you knew, early on, that something bad was coming. How did you usually know? (No wrong answer. Just check in with yourself.)</div>
+            <div class="widget-options">
+                <button data-response="That counts. Music and mood are foreshadowing too. Writers do the same thing with a single uneasy sentence.">&#127925; The music or the mood changed.</button>
+                <button data-response="Exactly the instinct this lesson builds. A character saying too much, too early, is often a planted clue.">&#128172; A character said something that felt like a warning.</button>
+                <button data-response="Honest answer. By the end of this lesson you will start catching clues you used to read right past.">&#129300; I usually do not notice until it happens.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: read -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: READ CHAPTER 9</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read Chapter 9 now. Gulliver describes a grand assembly of the Houyhnhnms, the wise horses who rule this country. The horses debate an old question: whether the Yahoos, the filthy human-shaped animals, should be wiped out. Gulliver&rsquo;s master speaks and even borrows an idea from Gulliver himself. The chapter then turns to a calm tour of Houyhnhnm life: their learning, their simple buildings, their quiet way of facing death, and their language.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">In the middle of all this, Gulliver lets one sentence slip. His master, he says, chose to hide one detail about Gulliver, and that hidden detail is where all of Gulliver&rsquo;s later sorrows begin. He says no more about it. Then he goes right back to describing horse poetry. That single sentence is the clue.</p>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">A foreshadowing clue often sounds calm, almost thrown away. The narrator mentions a future trouble in passing, then moves on. That quiet tone is part of how it works. Swift makes you feel the danger before he shows it.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: the exact line -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 3 &middot; THE PLANTED CLUE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Here is the exact sentence. Read it slowly. Notice that it points to events that have not happened yet.</p>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 16px 20px; margin: 0 0 14px 0;">
+            <div style="font-size: 18px; color: #0e1c42; font-style: italic; line-height: 1.6;">&ldquo;But he was pleased to conceal one particular, which related personally to myself, whereof I soon felt the unhappy effect, as the reader will know in its proper place, and whence I date all the succeeding misfortunes of my life.&rdquo;</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">Three small phrases do the work. &ldquo;I soon felt the unhappy effect&rdquo; promises trouble. &ldquo;As the reader will know in its proper place&rdquo; promises it is coming later. &ldquo;All the succeeding misfortunes of my life&rdquo; tells you this is the turning point of the whole story. Swift has just told you to brace yourself.</p>
+    </div>
+
+    <!-- PART 4: TRY IT clue vs description -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; CLUE OR JUST DESCRIPTION?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Not every sentence is foreshadowing. A clue points to something that will happen later. A description just tells you about the world right now. For each line from Chapter 9, decide which it is. Decide in your head before you choose.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="1" data-fb="Right. This sentence points ahead to misfortunes that have not happened yet. That forward reach is what makes it foreshadowing." data-hint="Does this sentence describe the world now, or warn you about something later?">
+                <div class="widget-row-prompt">1. &ldquo;I soon felt the unhappy effect... whence I date all the succeeding misfortunes of my life.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Just description of horse life</button>
+                    <button data-choice="1">Foreshadowing: it warns of trouble ahead</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. This tells you how the horses build, nothing more. It does not point to a future event, so it is description." data-hint="Does anything here reach forward to a later event, or is it just how things are?">
+                <div class="widget-row-prompt">2. &ldquo;Their buildings, although very rude and simple, are not inconvenient.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Just description of horse life</button>
+                    <button data-choice="1">Foreshadowing: it warns of trouble ahead</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. The word &lsquo;catastrophe&rsquo; promises a disaster that has not come yet. Gulliver is pointing ahead again." data-hint="The last phrase names something that has not happened yet. What does that signal?">
+                <div class="widget-row-prompt">3. &ldquo;I... proceed to relate my own sad catastrophe.&rdquo; (the last line of the chapter)</div>
+                <div class="widget-options">
+                    <button data-choice="0">Just description of horse life</button>
+                    <button data-choice="1">Foreshadowing: it warns of trouble ahead</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. This is a fact about their calendar. It tells you about their world now and does not hint at a future event." data-hint="Is this a warning about Gulliver&rsquo;s future, or a fact about how the horses live?">
+                <div class="widget-row-prompt">4. &ldquo;They calculate the year by the revolution of the sun and moon, but use no subdivisions into weeks.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Just description of horse life</button>
+                    <button data-choice="1">Foreshadowing: it warns of trouble ahead</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 5: Reading Journal entry (Read & Notice) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 5 &middot; READ &amp; NOTICE: ADD TO YOUR READING JOURNAL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Swift could have just told the bad news when it happened. Instead he warns you first. That is a choice. Open your Reading Journal and go to the <strong>Week 7</strong> section. Answer these three questions in 2 to 4 complete sentences each. Point to a detail from Chapter 9, then explain your thinking.</p>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 16px 20px; margin: 0;">
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.7;"><strong>1.</strong> Find the sentence in Chapter 9 where Gulliver hints that trouble is coming. Copy a few words of it, and explain what it warns you about.<br />
+            <strong>2.</strong> The clue is dropped in the middle of a calm tour of Houyhnhnm life. Why do you think Swift placed it there instead of saving it for a dramatic moment?<br />
+            <strong>3.</strong> Now that you have seen the clue, how do you expect Gulliver&rsquo;s happy life with the horses to end? Make one prediction and tie it to the clue.</div>
+        </div>
+        <p style="font-size: 16px; color: #6b7a99; line-height: 1.6; margin: 12px 0 0 0;">Add this to the Week 7 section of your Reading Journal. Your teacher reviews the Journal at the module checkpoints, not every week.</p>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Update your Reading Journal (Week 7)</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Record the foreshadowing clue from Chapter 9 and your three responses above in the Week 7 section of your Reading Journal on OneDrive.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You now know that Swift planted a warning in the middle of a calm chapter. As you read the next two chapters, watch the clue pay off. The misfortune Gulliver promised is about to arrive.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.18 &middot; A Hint of Trouble: Foreshadowing</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
