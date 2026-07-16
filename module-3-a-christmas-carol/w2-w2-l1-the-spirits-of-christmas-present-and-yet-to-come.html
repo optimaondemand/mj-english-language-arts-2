@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 3.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 3</div>
+        <div style="font-size: 12px; color: #666;">A Christmas Carol</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 3.04</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Staves 3 and 4</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">What changes Scrooge: fear, memory, or love?</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <!-- Title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 3.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Spirits of Christmas Present and Yet to Come</div>
+        <div style="font-size: 16px; color: #666;">Lesson <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">&#8986; ~15 min</span> <span style="font-size: 14px; color: #6b7a99;">(lesson activities, separate from reading time)</span></div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY&rsquo;S FOCUS</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will read Staves 3 and 4. You will notice what each Spirit shows Scrooge, how Scrooge responds, and what he begins to fear.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Describe what the Ghost of Christmas Present shows Scrooge and explain what Scrooge learns from it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Identify what makes the Ghost of Christmas Yet to Come different from the other two spirits, and explain why Dickens gave it no voice.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Point to a detail from Stave 3 or 4 and explain what it reveals about Scrooge&rsquo;s character at that moment.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>A Christmas Carol</em>, Stave 3. <a href="#" style="color: #2196D0;">[Teacher: link Stave 3 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>A Christmas Carol</em>, Stave 4. <a href="#" style="color: #2196D0;">[Teacher: link Stave 4 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>A Christmas Carol Reading Journal</strong> (Word document on OneDrive).</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: Two Spirits Comparison -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 14px; letter-spacing: 0.3px;">&#128161; THE TWO SPIRITS OF WEEK 2</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 2px solid #0E1C42; border-radius: 8px; overflow: hidden;">
+            <div style="background: #0E1C42; padding: 16px 18px; text-align: center;">
+                <div style="font-size: 14px; color: #55C8E8; margin-bottom: 8px; letter-spacing: 0.3px;">GHOST OF CHRISTMAS PRESENT</div>
+            </div>
+            <div style="background: #2A3A5E; padding: 16px 18px; text-align: center;">
+                <div style="font-size: 14px; color: #55C8E8; margin-bottom: 8px; letter-spacing: 0.3px;">GHOST OF CHRISTMAS YET TO COME</div>
+            </div>
+            <div style="background: #EEF1F8; padding: 14px 16px; border-right: 1px solid #D0D9E8; border-top: 1px solid #D0D9E8;">
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #E2725B; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Jolly, open, generous</div></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #E2725B; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Clothed in green; carries a torch like Plenty&rsquo;s horn</div></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #E2725B; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Shows abundance and human warmth</div></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #E2725B; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Speaks freely; quotes Scrooge&rsquo;s own cruel words back to him</div></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #E2725B; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Scrooge enters with curiosity</div></div>
+                <div style="background: #E2725B; color: #fff; border-radius: 4px; padding: 8px 12px; font-size: 14px; margin-top: 6px;">Lesson: generosity exists all around Scrooge</div>
+            </div>
+            <div style="background: #EEF1F8; padding: 14px 16px; border-top: 1px solid #D0D9E8;">
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #2A9D8F; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Silent, dark, hooded phantom; only one hand visible</div></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #2A9D8F; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Shrouded entirely in black</div></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #2A9D8F; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Shows consequences: absence, grief, a neglected grave</div></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #2A9D8F; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Never speaks; only points</div></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;"><span style="color: #2A9D8F; flex-shrink: 0;">&#9654;</span><div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Scrooge follows with trembling legs</div></div>
+                <div style="background: #2A9D8F; color: #fff; border-radius: 4px; padding: 8px 12px; font-size: 14px; margin-top: 6px;">Lesson: greed ends in isolation and forgotten death</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 1: Check-in -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU READ</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">The Ghost of Christmas Present says &ldquo;Come in! and know me better, man!&rdquo; What do you expect this spirit will be like compared to the Ghost of Christmas Past?</div>
+            <div class="widget-options">
+                <button data-response="A reasonable read. The invitation to come in suggests openness and warmth. Keep that sense as you meet the Spirit.">&#127881; More cheerful and outward-looking: it is about the present</button>
+                <button data-response="That is a fair prediction. You have noticed that this story does not let up easily. Hold that expectation as you see what the Spirit actually shows.">&#128512; Probably similar; all ghosts seem serious</button>
+                <button data-response="There is some truth in that. The Spirit does show Scrooge something painful, but it is wrapped in a very different package. Read on and see.">&#128260; I expect it to show Scrooge something painful, like the last one did</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: Read Staves 3 and 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: NOW READ STAVES 3 AND 4</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">In Stave 3, a jolly giant in a green robe fills Scrooge&rsquo;s room with Christmas abundance and invites him to travel. They watch the Cratchit family celebrate Christmas on almost nothing: a small goose, a pudding &ldquo;like a speckled cannon-ball,&rdquo; and Tiny Tim on his stool beside the fire. At the Cratchit table, Bob proposes a toast to Scrooge as &ldquo;Founder of the Feast.&rdquo; The family drinks it without warmth. When Scrooge asks if Tiny Tim will live, the Spirit turns his own cruel words back on him: &ldquo;decrease the surplus population.&rdquo; At the end of Stave 3, Scrooge notices the Spirit is aging. From its robe emerge two ragged children: Ignorance and Want. The Spirit vanishes; the clock strikes midnight.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">In Stave 4, a silent black-hooded phantom appears. It only points. It shows Scrooge businessmen who discuss a dead man&rsquo;s &ldquo;cheap funeral&rdquo; without sorrow. It shows three thieves selling stolen bed-curtains and even the shirt off a corpse. It shows a debtor couple quietly relieved that their creditor is dead. Then it shows the Cratchit home, now hushed: Tiny Tim has died. Finally the Spirit points to a neglected gravestone: EBENEZER SCROOGE.</p>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128197; A CRAFT NOTE</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">Dickens gave the Ghost of Christmas Yet to Come no voice and no face. It is all darkness and one pointing hand. When you notice a craft choice like this, ask: why did the author make that decision? Silence can carry more dread than any words.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: Evaluative widget -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 3 &middot; READ &amp; NOTICE: WHAT DID SCROOGE SEE?</div>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9889; TRY IT</div>
+            <div class="widget-question">Use what you read to answer each question. Decide in your head first.</div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. Scrooge &lsquo;hung his head&rsquo; in penitence. Hearing his own words in the Spirit&rsquo;s mouth makes him feel their weight for the first time." data-hint="Look at what Scrooge does after the Spirit speaks. Does he feel reassured, or does something else happen?">
+                <div class="widget-row-prompt">1. In Stave 3, after Scrooge asks whether Tiny Tim will live, the Spirit quotes Scrooge&rsquo;s own earlier words back to him. What effect does this have?</div>
+                <div class="widget-options">
+                    <button data-choice="0">It reassures Scrooge that Tiny Tim will survive.</button>
+                    <button data-choice="1">It forces Scrooge to hear how cruel his own ideas sound.</button>
+                    <button data-choice="2">It makes Scrooge angry at the Spirit for interfering.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. The Spirit communicates only through silence and pointing. The grave is the last thing it shows." data-hint="The Spirit never uses words. What does it use instead, and what does Scrooge ultimately read?">
+                <div class="widget-row-prompt">2. The Ghost of Christmas Yet to Come never speaks. What does Dickens show Scrooge instead?</div>
+                <div class="widget-options">
+                    <button data-choice="0">A series of happy memories from Scrooge&rsquo;s past.</button>
+                    <button data-choice="1">A vision of Christmas yet to come for the Cratchit family only.</button>
+                    <button data-choice="2">A pointing hand, silent scenes, and finally a grave with Scrooge&rsquo;s own name.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. Scrooge connects the dead man&rsquo;s isolation directly to the life he himself has been living." data-hint="Scrooge says something that connects the dead man&rsquo;s fate to his own life. What does he realize?">
+                <div class="widget-row-prompt">3. In Stave 4, Scrooge watches thieves sell stolen items from a dead man&rsquo;s home. What does he say when he recognizes the situation?</div>
+                <div class="widget-options">
+                    <button data-choice="0">&lsquo;The case of this unhappy man might be my own.&rsquo;</button>
+                    <button data-choice="1">&lsquo;These people deserve punishment for what they have done.&rsquo;</button>
+                    <button data-choice="2">&lsquo;I do not understand why the Spirit has shown me this.&rsquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="3" data-fb="Right. &lsquo;This boy is Ignorance. This girl is Want. Beware them both, and all of their degree, but most of all beware this boy.&rsquo; Dickens is making a social argument." data-hint="The Spirit names them directly and singles out one as the more dangerous. What are the names?">
+                <div class="widget-row-prompt">4. Dickens names the two ragged children hidden in the Ghost of Christmas Present&rsquo;s robe. What are their names, and why does the Spirit say to beware them?</div>
+                <div class="widget-options">
+                    <button data-choice="0">Hope and Fear; they represent what Scrooge desires and dreads.</button>
+                    <button data-choice="1">Past and Future; they show what Scrooge has lost and what he may gain.</button>
+                    <button data-choice="2">Greed and Cruelty; they represent Scrooge&rsquo;s personal faults.</button>
+                    <button data-choice="3">Ignorance and Want; the Spirit says Ignorance is the more dangerous of the two.</button>
+                </div>
+            </div>
+
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4: Reading Journal -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 4 &middot; READ &amp; NOTICE: READING JOURNAL</div>
+
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px;">
+            <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px;">&#9999;&#65039; READING JOURNAL &middot; WEEK 2</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6; margin-bottom: 12px;">Add this to the Week 2 section of your Reading Journal.</div>
+            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                <div style="min-width: 22px; height: 22px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In Stave 3, the Ghost of Christmas Present shows Scrooge the Cratchit family&rsquo;s Christmas. What does their celebration show about what truly matters, and what does Scrooge notice that he had not noticed before?</div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                <div style="min-width: 22px; height: 22px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In Stave 4, why does Scrooge fear the Ghost of Christmas Yet to Come more than the others? Point to a detail from the text that shows his fear.</div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <div style="min-width: 22px; height: 22px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">What connects the two staves? What is Dickens saying about what happens to a person who lives only for himself?</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 2 entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete the three Reading Journal prompts above in the Week 2 section of your Journal. Your teacher reviews the Journal at the module checkpoints, not every week.</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65);">Module 3 &middot; A Christmas Carol &middot; Week 2 &middot; Lesson 3.04</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
