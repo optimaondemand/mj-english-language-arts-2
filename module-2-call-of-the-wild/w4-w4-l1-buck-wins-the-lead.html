@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.10</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Chapter 4, Who Has Won to Mastership</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">What transforms Buck, and what does his change reveal?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.10</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Buck Wins the Lead</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~12 min</span></div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Spitz is gone. Buck wants the lead, and François keeps putting Sol-leks there instead. Buck does not run away and he does not back down. He just keeps circling, waiting, refusing every place but the front. Why does the lead matter so much to him?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will read Chapter 4. You will look at how Buck takes the lead and then proves he deserves it, and how a sick dog named Dave shows the same fierce pride. Both moments are about the same idea: leadership and mastery in the world of the trail.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how Buck wins the lead and how he proves he has earned it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe what the chapter shows about leadership and mastery on the trail.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> connect a detail to my answer to the module question about how Buck is changing.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>The Call of the Wild</em>, Chapter 4, &ldquo;Who Has Won to Mastership.&rdquo; <a href="#" style="color: #2196D0;">[Teacher: link the Chapter 4 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Call of the Wild Reading Journal</strong> on OneDrive.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: the ladder to the lead -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 14px;">Buck does not just <em>take</em> the lead. He takes it, then earns it. The chapter title asks who has &ldquo;won to mastership,&rdquo; and the answer comes in two steps: first the claim, then the proof.</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 6px; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #C7922C; margin-bottom: 4px;">STEP 2 &middot; HE PROVES IT</div>
+                <div style="font-size: 16px; color: #0e1c42; line-height: 1.5;">Buck does what Spitz never could. He makes the loafer Pike pull, punishes the sour Joe, and breaks in new dogs so fast it takes the driver&rsquo;s breath away. The team becomes one again.</div>
+            </div>
+            <div style="text-align: center; font-size: 22px; color: #C7922C;">&#11014;&#65039;</div>
+            <div style="background: #EEF1F8; border-left: 6px solid #2A9D8F; border-radius: 6px; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #2A9D8F; margin-bottom: 4px;">STEP 1 &middot; HE CLAIMS IT</div>
+                <div style="font-size: 16px; color: #0e1c42; line-height: 1.5;">Buck will not take any place but the front. He circles the camp for an hour, dodging clubs, until the men give in. He wants the leadership. It is his by right.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 1: check-in -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU READ</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">When you think someone has truly earned a leadership role, what convinces you? (No wrong answer. Just check in with yourself.)</div>
+            <div class="widget-options">
+                <button data-response="A fair test. Buck wins this way. He keeps proving it day after day on the trail, not just in one big fight.">&#127941; They keep proving it over time.</button>
+                <button data-response="Good standard. Watch how Buck gets the whole team pulling as one dog again. A leader is judged by the group.">&#129309; The group works better with them in charge.</button>
+                <button data-response="That counts too. Notice that Buck does not run from the clubs but does not attack either. He holds his ground and waits.">&#128170; They stand firm under pressure.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: read -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: READ CHAPTER 4</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read Chapter 4 now. The morning after the fight with Spitz, Buck refuses every spot but the lead. François tries Sol-leks; Buck drives him out. The men chase Buck with clubs for nearly an hour, but he will not take a lesser place. When they finally throw down the club and call him to the front, he trots in &ldquo;laughing triumphantly.&rdquo; On the trail he proves the best leader the drivers have ever seen, and the team makes a record run to Skaguay.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Then Perrault and François hand the team to a Scotch half-breed driving the mail. The work turns to heavy, monotonous toil. One dog, Dave, falls sick. When the driver pulls him out of the harness to rest him, Dave fights to get back in. He would rather die in the traces than be replaced, because &ldquo;the pride of trace and trail was his.&rdquo;</p>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">London ties two ideas together in this chapter: <strong>leadership</strong> (who gets to be in front and command the team) and <strong>mastery</strong> (being so good at the work that others fall into line). Buck wins both. Dave already has them, and will not give them up even when they kill him.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: claim vs proof sorting -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; CLAIMING OR PROVING?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each detail below is from Chapter 4. Decide whether it shows Buck <em>claiming</em> the lead (demanding it) or <em>proving</em> the lead (earning it through results). Decide in your head before you choose.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="0" data-fb="Right. Driving Sol-leks out of the lead spot is Buck demanding the job. He is claiming it, not yet earning it." data-hint="Is Buck showing results here, or just refusing to accept any other place?">
+                <div class="widget-row-prompt">1. Buck springs on Sol-leks &ldquo;in a fury,&rdquo; driving him back and standing in his place.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Claiming the lead</button>
+                    <button data-choice="1">Proving the lead</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. Making the loafer Pike pull harder than ever before is a result. Buck is proving he can run the team." data-hint="Is this Buck demanding a spot, or showing what he can do once he has it?">
+                <div class="widget-row-prompt">2. By the end of the first day, Pike, who had always loafed, was pulling more than ever in his life.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Claiming the lead</button>
+                    <button data-choice="1">Proving the lead</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. Circling the camp and dodging clubs for an hour is Buck refusing every place but the front. That is claiming." data-hint="Has he done the work of leading yet, or is he still insisting on the role?">
+                <div class="widget-row-prompt">3. Buck circles the camp for nearly an hour, dodging thrown clubs, refusing to take any place but the lead.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Claiming the lead</button>
+                    <button data-choice="1">Proving the lead</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. Breaking in the two new huskies so fast it takes the driver's breath away is a result. Buck is proving his mastery." data-hint="Demanding the job, or delivering once he has it?">
+                <div class="widget-row-prompt">4. The speed with which Buck broke in the new dogs Teek and Koona &ldquo;took away François&rsquo;s breath.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Claiming the lead</button>
+                    <button data-choice="1">Proving the lead</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: Dave, commit-then-reveal + journal -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 4 &middot; READ &amp; NOTICE: DAVE AND THE PRIDE OF THE TRAIL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Dave is dying. The driver does the kind thing and takes him out of the harness so he can rest. But Dave fights to get back in. He bites through Sol-leks&rsquo;s traces and stands in his own place. London writes that &ldquo;the pride of trace and trail was his.&rdquo; The drivers decide to let him die in harness, &ldquo;heart-easy and content.&rdquo;</p>
+
+        <div style="background: #EEF1F8; border-radius: 8px; padding: 16px 18px; margin: 0 0 14px 0;">
+            <div style="font-size: 12px; color: #6b7a99; margin-bottom: 8px;">Think it through before you write:</div>
+            <div class="ow-flip optima-widget" style="background:#fff; border-left:5px solid #C7922C;">
+                <div class="ow-flip-front">
+                    <div style="font-size: 16px; color: #0e1c42; line-height: 1.55;"><strong>In your notebook, answer first:</strong> Why would a sick dog fight to keep doing the work that is killing him? Then click to compare.</div>
+                </div>
+                <div class="ow-flip-back">
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">For Dave, the work <em>is</em> who he is. His place in the traces gives him pride and purpose. Being cut out feels worse to him than the pain of pulling. That is the same drive that makes Buck demand the lead.</div>
+                </div>
+                <button class="widget-reset" style="margin-top:10px;">Reset</button>
+            </div>
+        </div>
+
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; ADD THIS TO THE WEEK 4 SECTION</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write a few sentences for each question. For each one, point to a detail you can find in Chapter 4.</p>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">
+                <li>How does Buck win the lead, and how does he then prove he deserves it? Name one moment of claiming and one moment of proving.</li>
+                <li>Dave fights to stay in the harness even though it is killing him. What does this show about what the trail means to these dogs?</li>
+                <li>In Section 1 of your Journal, add one line to your answer to the module question: how is the trail changing Buck this week?</li>
+            </ol>
+        </div>
+
+        <!-- AI awareness, natural here -->
+        <div style="background: #FDECEC; border-left: 5px solid #C0392B; border-top: 3px solid #E74C3C; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #8A1F16; margin-bottom: 8px;">&#9888;&#65039; WORTH KNOWING &middot; WHERE A TOOL STOPS AND YOU START</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">An AI tool can tell you that Buck becomes the lead dog. It cannot decide for you what that <em>means</em>: whether Buck is becoming a stronger creature or losing the gentle house dog he used to be. That judgment is the reading work, and it is yours. Build it on the details, and you will be able to defend it.</div>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 4 entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Answer the three questions above in the Week 4 section of your Reading Journal, pairing each answer with a detail. This is the mid-module week, so your teacher will collect the Journal soon for a Reading Journal Check.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Mastery in this chapter is not given. Buck demands the lead, then earns it day after day on the trail. Hold that idea. Next lesson the team gets new owners who have never earned anything on the trail, and the contrast will tell you a great deal.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.10 &middot; Buck Wins the Lead</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      if (w.classList.contains('ow-flip')) { w.classList.remove('flipped'); }
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip && !e.target.closest('.widget-reset')) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
