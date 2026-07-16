@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 4.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Gulliver&rsquo;s Travels</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.02</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Brobdingnag, Chapter 3</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">How does changing your perspective change what you see, in others and in yourself?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip with gold time pill -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.02</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Satire Reversed: Seeing Ourselves From Below</div>
+                <div style="font-size: 16px; color: #666;">Lesson</div>
+            </div>
+            <span style="background: #C7922C; color: #ffffff; font-size: 13px; padding: 4px 12px; border-radius: 12px; white-space: nowrap;">&#9201; ~12 min lesson</span>
+        </div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">In Lilliput, Swift shrank other people so we could laugh at their pride. In Brobdingnag, he shrinks Gulliver, who stands in for us. Now the joke is on humanity.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you read Chapter 3, where Gulliver is bought by the queen and meets the king. You will study how Swift reverses the satire to mock human pride from below, and how his vivid imagery makes you feel tiny right along with Gulliver.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how Swift uses the giants to satirize human pride.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe what the king of Brobdingnag thinks of humankind after Gulliver brags about Europe.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> identify imagery (vivid word pictures) that makes a scene feel huge or tiny.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>Gulliver&rsquo;s Travels</em>, Part II, Chapter 3. <a href="#" style="color: #2196D0;">[Teacher: link the Part II Chapter 3 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Gulliver&rsquo;s Travels Reading Journal</strong>.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: satire flips direction -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO: WHO THE JOKE IS ON</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; margin-bottom: 10px;">
+            <div style="flex: 1; min-width: 230px; background: #EEF1F8; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 13px; color: #6b7a99; margin-bottom: 4px;">PART I &middot; LILLIPUT</div>
+                <div style="font-size: 17px; color: #0e1c42; font-weight: bold; margin-bottom: 4px;">We laugh AT the tiny people</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">Their wars over which end of an egg to crack make human politics look silly. The joke points outward.</div>
+            </div>
+            <div style="display: flex; align-items: center; font-size: 26px; color: #C7922C;">&#10142;</div>
+            <div style="flex: 1; min-width: 230px; background: #FDF3E3; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 13px; color: #6b7a99; margin-bottom: 4px;">PART II &middot; BROBDINGNAG</div>
+                <div style="font-size: 17px; color: #0e1c42; font-weight: bold; margin-bottom: 4px;">The giants laugh AT us</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">Gulliver is the tiny one now, so when the king mocks "diminutive insects," he is mocking humankind. The joke points back at the reader.</div>
+            </div>
+        </div>
+        <div style="font-size: 15px; color: #666; font-style: italic;">Satire = humor and exaggeration used to criticize. In Part II, the target is human pride itself.</div>
+    </div>
+
+    <!-- PART 1: warm-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU BEGIN</div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">Gulliver is about to brag to a giant king about how great his home country is. How do you predict the king will react? (No wrong answer.)</div>
+            <div class="widget-options">
+                <button data-response="A fair guess. The king listens politely, then is not impressed. Watch the moment his opinion of humankind turns.">&#129488; He will be impressed</button>
+                <button data-response="You see where this is going. To a giant, a bragging six-inch man sounds a bit ridiculous. Notice how Swift uses that.">&#128556; He will find it funny</button>
+                <button data-response="A reader's instinct. The king takes Gulliver seriously enough to draw a hard conclusion about people. Notice exactly what he decides.">&#129300; He will judge humankind</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: the king's verdict -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: NOW READ CHAPTER 3</div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 4px 0 8px 0;">From a farmer&rsquo;s sideshow to the queen&rsquo;s court</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read Part II, Chapter 3 now. The farmer works Gulliver so hard at markets that he nearly dies, so he sells him to the queen. At court Gulliver finds safety and comfort, and Glumdalclitch stays as his nurse. The king, a serious and learned man, at first thinks Gulliver might be a clever piece of clockwork. His scholars cannot decide what Gulliver is and finally label him a freak of nature.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The key moment comes when the king questions Gulliver about Europe. Gulliver proudly describes his country&rsquo;s trade, its wars, and its politics. The king is not impressed. He picks Gulliver up, strokes him, and delivers his verdict on humankind:</p>
+
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 18px 22px; margin-bottom: 16px;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 8px;">&#128218; FROM THE TEXT (Part II, Chapter 3)</div>
+            <div style="font-size: 19px; color: #0e1c42; font-style: italic; line-height: 1.6;">&ldquo;...how contemptible a thing was human grandeur, which could be mimicked by such diminutive insects as I.&rdquo;</div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">To the king, human greatness is a small thing if a six-inch creature can act it out so completely. Then Gulliver admits something surprising. After living among the giants for months, he looks in a mirror beside the queen and starts to agree. He writes that he "really began to imagine myself dwindled many degrees below my usual size." The perspective flip has begun to change how Gulliver sees himself.</p>
+
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #E2725B; border-radius: 6px; padding: 14px 18px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #E2725B; margin-bottom: 6px;">&#9999;&#65039; ADD THIS TO YOUR READING JOURNAL</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In the Week 4 section of your Reading Journal, write two or three sentences: why does the king call human grandeur "contemptible," and what does Gulliver start to feel about his own size after living among the giants? Quote a few words from the chapter to back up your answer.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: imagery -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 3 &middot; READ &amp; NOTICE: IMAGERY THAT MAKES YOU FEEL TINY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><strong>Imagery</strong> is language that paints a picture for your senses. Swift fills Part II with imagery that forces you to feel the size difference. When the queen eats, she "would craunch the wing of a lark, bones and all, between her teeth." You do not just read that she is big. You hear the crunch and feel small.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">For each detail below, decide which sense it appeals to most. This is how you train your eye to notice imagery instead of skimming past it. Do each one in your head first.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9889; TRY IT &middot; WHICH SENSE DOES THE IMAGE USE?</div>
+            <div class="widget-question">Match each image from Chapter 3 to the sense it appeals to most strongly.</div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. The crunch of bones between teeth is a sound. Swift makes the queen&rsquo;s ordinary meal roar in tiny Gulliver&rsquo;s ears." data-hint="Close your eyes. What would you mostly notice here, a sound or a color?">
+                <div class="widget-row-prompt">1. The queen "would craunch the wing of a lark, bones and all, between her teeth."</div>
+                <div class="widget-options">
+                    <button data-choice="0">Mostly sight</button>
+                    <button data-choice="1">Mostly touch</button>
+                    <button data-choice="2">Mostly sound</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. The old scholar&rsquo;s eyes appearing "like the full moon shining into a chamber at two windows" is a picture for the eyes." data-hint="A full moon at two windows is something you picture. Which sense is that?">
+                <div class="widget-row-prompt">2. Through his spectacles, the dim-sighted scholar&rsquo;s eyes "appeared like the full moon shining into a chamber at two windows."</div>
+                <div class="widget-options">
+                    <button data-choice="0">Mostly sight</button>
+                    <button data-choice="1">Mostly sound</button>
+                    <button data-choice="2">Mostly taste</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. The dwarf dropping Gulliver into a bowl of cream is about the feel of falling and being soaked. That is touch." data-hint="Being plunged into cold cream is something you feel on your body. Which sense is that?">
+                <div class="widget-row-prompt">3. The queen&rsquo;s dwarf drops Gulliver into a "large silver bowl of cream," where he falls "over head and ears."</div>
+                <div class="widget-options">
+                    <button data-choice="0">Mostly sight</button>
+                    <button data-choice="1">Mostly touch</button>
+                    <button data-choice="2">Mostly smell</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI awareness, natural: imagery is the reader's noticing -->
+        <div style="background: #FDECEC; border-left: 5px solid #C0392B; border-top: 3px solid #E74C3C; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #8A1F16; margin-bottom: 8px;">&#9888;&#65039; WORTH KNOWING &middot; USING AI TO LOOK THINGS UP</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">An AI chatbot can define imagery for you in one line. What it cannot do is feel the crunch of the queen&rsquo;s teeth the way you can while reading, or decide which images in Chapter 3 hit you hardest and why. That sensing and judging is your work as a reader, and it is the skill you will keep needing long after the definition is easy to find.</div>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: Welcome to Brobdingnag</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Stage tiny Gulliver among giant objects and feel the scale flip for yourself. Open the assignment in Canvas.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A giant king has called human greatness "contemptible," and tiny Gulliver has half begun to agree. Keep asking the module question: when you see humankind from below, what does the view reveal about pride?</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.02 &middot; Satire Reversed: Seeing Ourselves From Below</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
