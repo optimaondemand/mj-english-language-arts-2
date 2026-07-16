@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 1.13</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Gulliver&rsquo;s Travels</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.13</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Brobdingnag, Chapter 6</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">How does changing your perspective change what you see?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.13</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The King&rsquo;s Judgment and the Theme of Pride</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~12 min</span></div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Gulliver spends hours describing England to the king of Brobdingnag, hoping the giant will admire it. The king listens carefully, then says something that lands like a slap. Why does Swift set it up this way?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will read Chapter 6. You will follow how a single idea, called a <strong>theme</strong>, runs through the chapter: the idea of human <strong>pride</strong>, and how small that pride looks when a wiser observer examines it up close.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what a theme is: an idea about life that an author builds across a whole story.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe what the king of Brobdingnag concludes about humankind, and trace that conclusion back to Gulliver&rsquo;s own words.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how Swift uses pride as the theme of this part of the book.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>Gulliver&rsquo;s Travels</em>, Part II, Chapter 6. <a href="#" style="color: #2196D0;">[Teacher: link the Part II Chapter 6 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Gulliver&rsquo;s Travels Reading Journal</strong> on OneDrive.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: the mirror of pride -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 16px;">A <strong>theme</strong> is one big idea an author returns to again and again. The theme here is <strong>pride</strong>. Watch what happens when Gulliver praises his country to someone wise enough to ask the hard questions. The bigger his boast, the smaller it looks. The king becomes a mirror.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch;">
+            <div style="flex: 1; min-width: 240px; background: #E8F6FB; border-left: 6px solid #2196D0; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 12px; color: #1B6A94; margin-bottom: 6px;">WHAT GULLIVER SAYS &middot; THE BOAST</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.55;">England is glorious. Its parliament is the &ldquo;most august assembly in Europe.&rdquo; Its judges are wise, its armies brave, its history grand.</div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; font-size: 26px; color: #C7922C; min-width: 30px;">&#10142;</div>
+            <div style="flex: 1; min-width: 240px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 12px; color: #C7922C; margin-bottom: 6px;">WHAT THE KING CONCLUDES &middot; THE MIRROR</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.55;">The bulk of Gulliver&rsquo;s countrymen are &ldquo;the most pernicious race of little odious vermin that nature ever suffered to crawl upon the surface of the earth.&rdquo;</div>
+            </div>
+        </div>
+        <div style="font-size: 15px; color: #6b7a99; line-height: 1.6; margin-top: 14px;">The harder Gulliver works to make England sound proud and great, the worse it sounds to the king. That gap is where Swift puts the theme of pride.</div>
+    </div>
+
+    <!-- PART 1: check-in (coral = read & notice) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU READ</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">When someone brags hard about a place or a team they love, how do you usually react? (No wrong answer. Just check in with yourself.)</div>
+            <div class="widget-options">
+                <button data-response="Fair. Sometimes the bigger the boast, the more we start to doubt it. The king feels the same way about Gulliver.">&#129488; I get a little suspicious.</button>
+                <button data-response="That is generous, and reasonable. Watch whether the king of Brobdingnag stays as patient with Gulliver as you would be.">&#128578; I let them enjoy it.</button>
+                <button data-response="Good instinct. The king does exactly that: he asks question after question until the boast cannot hold up.">&#128269; I start asking questions to test it.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: read -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: READ CHAPTER 6</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read Chapter 6 now. Gulliver, tiny in a land of giants, makes himself useful: he builds a comb from the king&rsquo;s beard stumps, weaves chairs from the queen&rsquo;s hair, and pounds out a jig on a sixty-foot spinet. Then the king sets him on the cabinet and they talk. Gulliver gives a long, glowing account of England: its parliament, its courts of justice, its treasury, its armies, its history.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The king does not argue. He asks questions. How do men become lords? Are judges ever bribed? Why do people spend fortunes to win a seat that pays nothing? Why keep a standing army in peacetime? After many hours, he gathers his notes, takes Gulliver gently into his hand, and delivers his verdict.</p>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">A <strong>theme</strong> is not the same as the plot. The plot is what happens: Gulliver talks, the king asks, the king judges. The theme is the idea underneath it: that pride can blind a person to the truth about themselves and their country.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: the king's questions become his judgment -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; WHAT IS THE KING REALLY ASKING?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">The king asks polite questions, but each one points at a flaw Gulliver did not mean to reveal. For each question below, choose what the king is quietly suggesting. Decide in your head before you choose.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="2" data-fb="Right. If a bribe could move a lord, then wealth, not wisdom, decides the law. The king has found a crack in the boast." data-hint="The king is not really asking for a yes or no. What worry sits behind the question?">
+                <div class="widget-row-prompt">1. The king asks whether a lord was ever made noble because of &ldquo;a sum of money to a court lady&rdquo; rather than merit.</div>
+                <div class="widget-options">
+                    <button data-choice="0">He admires how English lords are chosen.</button>
+                    <button data-choice="1">He wants to copy the English system.</button>
+                    <button data-choice="2">He suspects power is bought, not earned.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. The king cannot see why people would ruin themselves for a seat that pays nothing, unless they plan to make the money back in some hidden way." data-hint="Why would the king doubt that the motive is &lsquo;pure public spirit&rsquo;?">
+                <div class="widget-row-prompt">2. The king wonders why people spend fortunes, &ldquo;often to the ruin of their families,&rdquo; to win a seat in the Commons that pays no salary.</div>
+                <div class="widget-options">
+                    <button data-choice="0">He suspects they expect a hidden payoff.</button>
+                    <button data-choice="1">He thinks they are simply generous.</button>
+                    <button data-choice="2">He wants to run for a seat himself.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="3" data-fb="Right. If the people govern themselves by consent, the king cannot see who the army is meant to fight. He suspects the army threatens the people, not enemies." data-hint="Among &lsquo;a free people,&rsquo; in peacetime, who is a standing army actually for?">
+                <div class="widget-row-prompt">3. The king is &ldquo;amazed&rdquo; to hear of a paid standing army kept in peacetime among a free people.</div>
+                <div class="widget-options">
+                    <button data-choice="0">He thinks England needs a bigger army.</button>
+                    <button data-choice="1">He is impressed by English bravery.</button>
+                    <button data-choice="2">He wants to build an army of his own.</button>
+                    <button data-choice="3">He cannot tell whom the army is meant to fight.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. A real flaw, not a boast: the king finds it strange that a country could spend itself into ruin like a careless private person." data-hint="The king is doing math. What does he find strange about the numbers Gulliver gave?">
+                <div class="widget-row-prompt">4. The king notes that England&rsquo;s spending is often double its taxes, and asks how &ldquo;a kingdom could run out of its estate, like a private person.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">He thinks England is wisely managed.</button>
+                    <button data-choice="1">He sees a country living far beyond its means.</button>
+                    <button data-choice="2">He wants to borrow money from England.</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: the verdict, commit-then-reveal -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 4 &middot; READ &amp; NOTICE: THE KING&rsquo;S JUDGMENT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">At the end of the chapter the king gives his verdict. He calls Gulliver&rsquo;s account &ldquo;a most admirable panegyric&rdquo; (a speech of high praise) and then says it proves the opposite of what Gulliver hoped. He concludes that the bulk of Gulliver&rsquo;s countrymen are &ldquo;the most pernicious race of little odious vermin that nature ever suffered to crawl upon the surface of the earth.&rdquo;</p>
+
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; ADD THIS TO THE WEEK 5 SECTION OF YOUR READING JOURNAL</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Answer these in 2 to 4 sentences each. Point to a detail from Chapter 6, then explain your thinking:</div>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 10px 0 0 0;">
+                <li>Pick one of the king&rsquo;s questions about England (bought seats, bribed judges, or the standing army). What flaw in England does that question quietly expose?</li>
+                <li>The king calls Gulliver&rsquo;s countrymen &ldquo;the most pernicious race of little odious vermin.&rdquo; Using what Gulliver actually told him, why does the king reach this verdict?</li>
+                <li>State the theme of this chapter in your own words, then name one detail that supports it.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Update your Reading Journal</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Answer the three questions above in the Week 5 section of your Reading Journal. Your reading work lives in the Journal this module, not in a separate weekly assignment.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Swift puts a proud man in front of a wiser one and lets pride do its own damage. As you finish Brobdingnag, keep asking the theme question: where does pride keep a character from seeing the truth?</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.13 &middot; The King&rsquo;s Judgment and the Theme of Pride</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
