@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 1.16</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Gulliver&rsquo;s Travels</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.16</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Part IV, Chapters 1&ndash;4</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">How does changing your perspective change what you see?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip with gold time pill -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.16</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Two Societies, Side by Side</div>
+                <div style="font-size: 16px; color: #666;">Lesson</div>
+            </div>
+            <span style="background: #C7922C; color: #ffffff; font-size: 13px; padding: 4px 12px; border-radius: 12px; white-space: nowrap;">&#9201; ~10 min lesson</span>
+        </div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Gulliver washes up in a land where the calm, reasoning rulers are horses and the howling, greedy beasts are creatures that look exactly like him. Swift hands you two societies and dares you to compare them.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will read Chapters 1 through 4. As you read, you will <strong>compare and contrast</strong> the two groups Gulliver finds: the <strong>Houyhnhnms</strong> (the horse-people, governed by reason) and the <strong>Yahoos</strong> (the brutish creatures driven by appetite).</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe the Houyhnhnms and the Yahoos using details from Chapters 1 through 4.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> sort traits and behaviors into the right society, and name what each one is like.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why Swift makes the wise rulers horses and the brutes look like people.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>Gulliver&rsquo;s Travels</em>, Part IV, Chapters 1 through 4. <a href="#" style="color: #2196D0;">[Teacher: link the Part IV Chapter 1 through 4 PDFs in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Gulliver&rsquo;s Travels Reading Journal</strong> on OneDrive.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: the two-society contrast -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 16px;">To <strong>compare</strong> two things is to find how they are alike. To <strong>contrast</strong> them is to find how they differ. Swift sets two societies in the same country so the differences leap out. Watch the gap between them.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch;">
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-left: 6px solid #2196D0; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 12px; color: #1B6A94; margin-bottom: 6px;">THE HOUYHNHNMS &middot; THE HORSE-PEOPLE</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.55;">Calm and reasoning. Their grand maxim is &ldquo;to cultivate reason, and to be wholly governed by it.&rdquo; They are clean, honest, and orderly. Their word for themselves means &ldquo;the perfection of nature.&rdquo; They have no word for lying.</div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; font-size: 26px; color: #C7922C; min-width: 30px;">&#8596;</div>
+            <div style="flex: 1; min-width: 240px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 12px; color: #C7922C; margin-bottom: 6px;">THE YAHOOS &middot; THE BRUTES</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.55;">Greedy, filthy, and violent. They fight over food and over shiny stones. Gulliver calls them &ldquo;the most disagreeable animal&rdquo; he ever saw. The horror is that they have &ldquo;a perfect human figure.&rdquo;</div>
+            </div>
+        </div>
+        <div style="font-size: 15px; color: #6b7a99; line-height: 1.6; margin-top: 14px;">The shock of Part IV is the placement. The rational rulers are animals. The disgusting beasts look human. Swift flips the order on purpose, and that flip is where his point about human nature lives.</div>
+    </div>
+
+    <!-- CENTRAL IDEAS EXTENSION -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; ONE STEP FURTHER: THE CENTRAL IDEA EACH SOCIETY BUILDS</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 14px;">Describing how the two societies differ is only the first move. Swift is also building a specific central idea through each one, and those two ideas are not the same claim stated twice. Through the Houyhnhnms, he builds the idea that reason followed completely produces order and honesty without any need for law or lies. Through the Yahoos, he builds the idea that appetite left unchecked by reason produces greed and violence that serve no purpose at all. Neither idea sits still across Chapters 1 through 4. The Houyhnhnm idea grows more demanding, since their reason leaves no room even for a well-meant lie. The Yahoo idea grows more disturbing, since their brutishness turns out to live inside a human body.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-left: 6px solid #2196D0; border-radius: 8px; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #1B6A94; margin-bottom: 6px;">CENTRAL IDEA &middot; HOUYHNHNMS</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.55;">Reason, followed completely, needs no law and produces no lies.</div>
+            </div>
+            <div style="flex: 1; min-width: 240px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 8px; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #C7922C; margin-bottom: 6px;">CENTRAL IDEA &middot; YAHOOS</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.55;">Appetite, left unchecked, turns greedy and violent for no purpose at all.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 1: check-in (coral = read & notice) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU READ</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">Picture a country where horses are the wise rulers and the wild beasts look just like humans. What is your first reaction? (No wrong answer. Just check in with yourself.)</div>
+            <div class="widget-options">
+                <button data-response="Good. That backwards feeling is exactly what Swift is reaching for. The discomfort is part of the point.">&#128563; It feels backwards and a little uncomfortable.</button>
+                <button data-response="Fair. Strange settings let an author show something familiar from a new angle. Watch what the strangeness reveals about us.">&#129300; It seems strange, but I want to know why.</button>
+                <button data-response="That is a sharp instinct. Holding judgment until you have read is wise. Notice whether Gulliver does the same.">&#128064; I want to read more before I decide anything.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: read -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: READ CHAPTERS 1 THROUGH 4</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read Chapters 1 through 4 now. Gulliver&rsquo;s own crew turns pirate and leaves him on a strange shore. He first meets the Yahoos, a herd of hairy, clawed creatures who climb trees and fling filth at him. Then a calm gray horse studies him with &ldquo;manifest tokens of wonder,&rdquo; and Gulliver realizes the horses, the Houyhnhnms, are the reasoning rulers here.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">As Gulliver learns their language, his Houyhnhnm master makes a discovery that mortifies Gulliver: under his clothes, Gulliver is shaped just like a Yahoo. The master cannot even grasp the idea of lying, because his people have &ldquo;no word in their language to express lying or falsehood.&rdquo;</p>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">When you compare and contrast, look for the same kind of detail on both sides. If you note how the Houyhnhnms eat (oats and milk, &ldquo;with much decency and regularity&rdquo;), look for how the Yahoos eat (tearing flesh, fighting over it). Matching detail to detail is how a contrast becomes evidence.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: sorting widget -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; WHICH SOCIETY DOES THIS BELONG TO?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each detail below comes from Chapters 1 through 4. Decide whether it describes the <strong>Houyhnhnms</strong> or the <strong>Yahoos</strong>. Think it through before you choose.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="1" data-fb="Right. The horses neigh in a way that seems &lsquo;almost articulate&rsquo; and confer like &lsquo;persons deliberating.&rsquo; That is the Houyhnhnms." data-hint="Who behaves calmly, like people thinking a problem through?">
+                <div class="widget-row-prompt">1. They confer with one another &ldquo;like persons deliberating upon some affair of weight.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">The Yahoos</button>
+                    <button data-choice="1">The Houyhnhnms</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. The herd flings filth on Gulliver from the tree, then a single horse scatters them. That brutish behavior is the Yahoos." data-hint="Who throws filth and flees the moment a horse appears?">
+                <div class="widget-row-prompt">2. They leap into a tree and &ldquo;discharge their excrements&rdquo; on Gulliver&rsquo;s head.</div>
+                <div class="widget-options">
+                    <button data-choice="0">The Houyhnhnms</button>
+                    <button data-choice="1">Both groups equally</button>
+                    <button data-choice="2">The Yahoos</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. The master is so honest that he &lsquo;cannot tell how to behave&rsquo; around doubt. The Houyhnhnms have no word for lying." data-hint="Who finds the very idea of a lie impossible to understand?">
+                <div class="widget-row-prompt">3. They have &ldquo;no word in their language to express lying or falsehood.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">The Houyhnhnms</button>
+                    <button data-choice="1">The Yahoos</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. The mare gives Gulliver &lsquo;a most contemptuous look&rsquo; and the master notes Gulliver has &lsquo;a perfect human figure&rsquo; like the Yahoos. That is the Yahoo resemblance." data-hint="Whom does Gulliver, to his horror, physically resemble?">
+                <div class="widget-row-prompt">4. Gulliver discovers, &ldquo;to my everlasting mortification,&rdquo; that he is shaped like these creatures.</div>
+                <div class="widget-options">
+                    <button data-choice="0">The Houyhnhnms</button>
+                    <button data-choice="1">Neither group</button>
+                    <button data-choice="2">The Yahoos</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. The horses keep their food &lsquo;with much decency and regularity&rsquo; and live in a clean, orderly house. That is the Houyhnhnms." data-hint="Who eats &lsquo;with much decency and regularity&rsquo; in a clean house?">
+                <div class="widget-row-prompt">5. They eat oats and milk in clean vessels, &ldquo;after a very orderly and cleanly manner.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">The Yahoos</button>
+                    <button data-choice="1">The Houyhnhnms</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: commit-then-reveal -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 4 &middot; READ &amp; NOTICE: WHY THE FLIP?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Swift could have made the wise rulers human and the beasts some new monster. Instead he made the rulers horses and gave the beasts a human shape. That choice is not an accident.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">In your Reading Journal, in the Week 6 section, write one sentence: why does Swift make the disgusting Yahoos look exactly like humans? Tie your idea back to the resemblance Gulliver keeps trying to hide.</p>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Respond in your Reading Journal</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">In the Week 6 section of your Reading Journal, answer these three in 2 to 4 sentences each, pointing to a detail from Chapters 1 through 4:
+                    <ol style="margin: 8px 0 0 0; padding-left: 20px; line-height: 1.6;">
+                        <li>Describe one clear way the Houyhnhnms and the Yahoos are opposites. Give one detail about each side.</li>
+                        <li>Gulliver tries hard to hide that he is shaped like a Yahoo. Why is this so upsetting to him? Use a detail from the reading.</li>
+                        <li>The Houyhnhnms have no word for lying. What does that one missing word tell you about how they live?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Keep two lists in your Journal as you read on: what makes the Houyhnhnms admirable, and what makes the Yahoos repulsive. Tomorrow&rsquo;s lesson asks what Swift is saying about human nature through that gap, so the more detail you gather now, the stronger your evidence will be.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.16 &middot; Two Societies, Side by Side</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
