@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.14</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.14</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">A Northland story-poem and its form</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Reading Skill</div>
+        <div style="font-size: 16px; color: #0e1c42;">How form shapes meaning and tone</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.14</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">How a Story-Poem Makes Meaning</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; pairing a poem with the world of the novel</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~14 min</span></div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">London makes the frozen Northland feel real in prose. A poet can make the same wild country feel alive in a completely different way: through the sound and shape of the words themselves.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will read a short poem that tells a story set in the same frozen North as Buck&rsquo;s world. A poem like this is built to be heard. You will study four tools the poet uses, beat, rhyme, a repeated line, and storytelling, and notice how each one changes the way the poem feels.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name four tools a story-poem uses: a steady beat, end rhyme, a repeated line, and a clear plot.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how the beat and the repeated line change the tone of the poem.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> compare how the poem and the novel each bring the Northland to life.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: the four tools -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 16px;">A story told in a poem uses four tools to shape how it feels. Each tool does a job. Learn the job, not just the name.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+            <div style="flex: 1; min-width: 220px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 28px;">&#129345;</div>
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin: 6px 0;">A steady beat (rhythm)</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">The lines have a swinging, marching pulse you can almost tap. It carries you forward, like a steady stride across the snow.</div>
+            </div>
+            <div style="flex: 1; min-width: 220px; background: #EEF1F8; border-left: 6px solid #2A9D8F; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 28px;">&#128279;</div>
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin: 6px 0;">End rhyme</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">The line endings chime together. Rhyme ties lines into pairs and makes the poem easy to remember and fun to say aloud.</div>
+            </div>
+            <div style="flex: 1; min-width: 220px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 28px;">&#128260;</div>
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin: 6px 0;">A repeated line (refrain)</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">One line comes back again and again. It works like a chorus, hammering home the poem&rsquo;s main feeling each time it returns.</div>
+            </div>
+            <div style="flex: 1; min-width: 220px; background: #EEF1F8; border-left: 6px solid #2A9D8F; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 28px;">&#128220;</div>
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin: 6px 0;">A real plot</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">The poem tells a full story with characters and a beginning, middle, and end. It is a tale, set to a beat.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- THE POEM (teacher placeholder, do not fabricate) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: THE POEM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">This week&rsquo;s poem is <em>The Cremation of Sam McGee</em> by Robert Service, first published in 1907 in his collection <em>Songs of a Sourdough</em>. It tells the strange, darkly funny story of two prospectors in the frozen Yukon: the narrator and his friend Sam McGee, who dreads the cold so much that he asks, when he dies, to be cremated rather than left in the ice. The poem is in the public domain.</p>
+
+        <div style="background: #EEF1F8; border: 2px dashed #C7922C; border-radius: 8px; padding: 18px 22px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 8px;">&#128221; POEM TEXT</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.7;">[Teacher: paste the public-domain text of &ldquo;The Cremation of Sam McGee&rdquo; by Robert Service here, from a verified public-domain source such as Project Gutenberg&rsquo;s edition of <em>Songs of a Sourdough</em>. Keep the stanzas and line breaks intact so students can hear the beat and see the rhyme and the repeated line.]</div>
+        </div>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; HOW TO READ IT</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">Read the poem aloud, even quietly to yourself. This kind of poem is built for the ear. Tap the beat with your finger as you go. When you reach the line that comes back more than once, notice that you start to expect it, the way you expect the chorus of a song.</div>
+        </div>
+    </div>
+
+    <!-- PART 1: check-in -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; READ &amp; NOTICE: CHECK IN AFTER YOU READ</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">After reading the poem aloud, which tool did you feel the most? (No wrong answer. Just check in with yourself.)</div>
+            <div class="widget-options">
+                <button data-response="Good. That swinging beat is the rhythm. It gives the grim story a strange, bouncing energy, almost cheerful, against the deadly cold.">&#129345; The steady marching beat.</button>
+                <button data-response="Nice. The rhymes chime at the line endings and pull you from one line to the next. They make the poem easy to say and to remember.">&#128279; The way the line endings rhyme.</button>
+                <button data-response="That is the repeated line, the refrain. Each time it returns it lands a little differently, and it teaches you what the poem most wants you to feel.">&#128260; A line that kept coming back.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: teaching how form makes tone -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: HOW THE FORM SHAPES THE TONE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The story is dark: a man freezes to death in the Arctic and his friend burns the body. Yet the poem does not feel like a tragedy. The bouncy beat and the chiming rhymes give it a wild, almost grinning energy. The poet matched a light, sing-song form to a grim story on purpose, and that mismatch is exactly what makes the poem feel eerie and funny at the same time.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">That is the heart of today&rsquo;s skill: a poem&rsquo;s <strong>form</strong>, its beat, its rhyme, its repeated line, is not just decoration. It shapes the <strong>tone</strong>, the feeling the poem gives off. Change the form and you change how the same events feel.</p>
+
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">If this story were written as flat, plain sentences with no beat and no rhyme, it would read like a grim news report. The form is what turns it into something you want to say out loud by the fire.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: match the tool to its job -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; WHICH TOOL IS DOING THE WORK?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each statement describes something you noticed in the poem. Choose the tool that explains it. Decide in your head before you choose.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="2" data-fb="Right. A line that returns again and again is the repeated line, the refrain. It works like a chorus and drives home the main feeling." data-hint="A whole line, not just a sound, keeps coming back. What is that called?">
+                <div class="widget-row-prompt">1. One full line shows up several times in the poem, like a chorus.</div>
+                <div class="widget-options">
+                    <button data-choice="0">end rhyme</button>
+                    <button data-choice="1">a steady beat</button>
+                    <button data-choice="2">a repeated line</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. When the words at the ends of lines chime together, that is end rhyme. It links lines and makes the poem easy to remember." data-hint="The matching sounds are at the ends of the lines. What is that?">
+                <div class="widget-row-prompt">2. The word at the end of one line chimes with the word ending the next.</div>
+                <div class="widget-options">
+                    <button data-choice="0">end rhyme</button>
+                    <button data-choice="1">a real plot</button>
+                    <button data-choice="2">a repeated line</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. The swinging pulse you can tap along to is the beat, or rhythm. It gives the poem its forward drive." data-hint="You can tap along to it. It is the pulse of the lines.">
+                <div class="widget-row-prompt">3. You can feel a swinging pulse in the lines that you could tap a foot to.</div>
+                <div class="widget-options">
+                    <button data-choice="0">a real plot</button>
+                    <button data-choice="1">a steady beat</button>
+                    <button data-choice="2">end rhyme</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. Characters, a problem, and an ending make a real plot. This poem tells a full story, not just a mood." data-hint="It has characters and a beginning, middle, and end. What is that?">
+                <div class="widget-row-prompt">4. The poem follows two men through a problem from start to finish.</div>
+                <div class="widget-options">
+                    <button data-choice="0">a steady beat</button>
+                    <button data-choice="1">end rhyme</button>
+                    <button data-choice="2">a real plot</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: pair the poem with the novel, journal -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: THE POEM AND THE NOVEL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Both this poem and <em>The Call of the Wild</em> are set in the same frozen North, full of cold, danger, and gold-seekers. But they bring that world to life in different ways. London uses long, careful prose to put you inside Buck&rsquo;s mind. The poem uses beat, rhyme, and a repeated line to make the Northland feel like a wild song.</p>
+
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; ADD THIS TO THE WEEK 5 SECTION</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Answer in a few sentences each. Point to the poem for the first two.</p>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">
+                <li>Find the line that repeats in the poem. Why do you think the poet brings it back instead of saying it just once? What does the repetition do to the feeling?</li>
+                <li>The story is grim, but the poem feels lively, even funny. Name one tool of the poem&rsquo;s form (its beat, rhyme, or repeated line) and explain how it creates that mismatch in tone.</li>
+                <li>Both the poem and the novel show the frozen North. Name one thing the poem&rsquo;s form lets it do that London&rsquo;s prose does not, and one thing London&rsquo;s prose does that the poem cannot.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 5 entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Answer the three questions above in the Week 5 section of your Reading Journal.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: The Thornton Bond Scene</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Stage the moment of love between Buck and Thornton in VR. It feeds your final essay.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">The same wild country can be a careful novel or a bouncing song. The form a writer chooses is not just dressing. It decides how the story lands on you.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.14 &middot; How a Story-Poem Makes Meaning</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
