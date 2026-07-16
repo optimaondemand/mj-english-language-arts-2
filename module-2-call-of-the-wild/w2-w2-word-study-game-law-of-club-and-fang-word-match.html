@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Practice Game: Law of Club and Fang Word Match</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    .game-shell { background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 22px 26px; margin-bottom: 20px; }
+    .game-kicker { font-size: 11px; color: #2A9D8F; margin-bottom: 12px; letter-spacing: .4px; }
+    .game-hud { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+    .hud-pill { background: #EEF1F8; border: 1px solid #D0D9E8; border-radius: 20px; padding: 8px 16px; font-size: 14px; color: #0e1c42; display: flex; align-items: center; gap: 8px; }
+    .hud-pill b { color: #0E1C42; font-size: 16px; }
+
+    .board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    @media (max-width: 720px) { .board { grid-template-columns: repeat(2, 1fr); } }
+
+    .card { position: relative; height: 120px; cursor: pointer; perspective: 800px; }
+    .card-inner { position: relative; width: 100%; height: 100%; transition: transform .45s; transform-style: preserve-3d; }
+    .card.flipped .card-inner { transform: rotateY(180deg); }
+    .card.matched .card-inner { transform: rotateY(180deg); }
+    .card-face { position: absolute; width: 100%; height: 100%; border-radius: 10px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px; box-sizing: border-box; backface-visibility: hidden; font-size: 14px; line-height: 1.35; }
+    .card-back { background: linear-gradient(135deg, #0E1C42, #17285c); color: #55C8E8; font-size: 26px; }
+    .card-front { background: #FFFFFF; border: 2px solid #D0D9E8; color: #0e1c42; transform: rotateY(180deg); }
+    .card.matched .card-front { border-color: #2A9D5C; background: #EAF8EE; color: #1A6B3D; }
+    .card-front.word { font-size: 17px; font-weight: 600; color: #0E1C42; }
+    .card.matched .card-front.word { color: #1A6B3D; }
+    .card.wrong-pulse .card-front { animation: pulseRed .4s; }
+    @keyframes pulseRed { 0%,100% { background: #FFFFFF; } 50% { background: #FDECEC; border-color: #C0392B; } }
+
+    .game-feedback { min-height: 24px; font-size: 15px; color: #1a2340; margin-top: 16px; text-align: center; }
+    .end-card { display: none; text-align: center; padding: 26px 20px; }
+    .end-card.show { display: block; }
+    .end-badge { font-size: 50px; margin-bottom: 8px; }
+    .end-title { font-size: 22px; color: #0e1c42; margin-bottom: 6px; }
+    .end-sub { font-size: 15px; color: #44507a; margin-bottom: 16px; }
+    .confetti-wrap { position: relative; height: 0; overflow: visible; }
+    .confetti { position: absolute; top: -10px; font-size: 20px; opacity: 0; animation: fall 1.6s ease-in forwards; }
+    @keyframes fall { 0% { opacity: 1; transform: translateY(0) rotate(0deg); } 100% { opacity: 0; transform: translateY(220px) rotate(280deg); } }
+
+    .game-btn { background: #0E1C42; color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-size: 15px; cursor: pointer; font-family: inherit; }
+    .game-btn:hover { background: #17285c; }
+    .game-btn.ghost { background: transparent; border: 1px solid #2A9D8F; color: #2A9D8F; }
+    .game-btn.ghost:hover { background: #EAF6F3; }
+    .btn-row { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Practice Game</div>
+        <div style="font-size: 17px; color: #0e1c42;">Word Study</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Words from</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Chapter 2</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Graded?</div>
+        <div style="font-size: 15px; color: #0e1c42;">Optional extra practice</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">PRACTICE GAME</div>
+        <div style="font-size: 24px; color: #0e1c42; margin-bottom: 4px;">&#10052;&#65039; Law of Club and Fang Word Match</div>
+        <div style="font-size: 16px; color: #666;">Optional extra practice <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">&#8776;6 min</span></div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 24px; margin-bottom: 20px;">
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Flip two cards at a time to match each of this week&rsquo;s five words to its meaning. Fewer moves means a better score. This is ungraded, just for practice before your Word Study assignment.</div>
+    </div>
+
+    <div class="game-shell">
+        <div class="game-kicker">&#10052;&#65039; MATCH THE PAIRS</div>
+
+        <div class="game-hud">
+            <div class="hud-pill">Moves <b id="movesVal">0</b></div>
+            <div class="hud-pill">Matched <b id="matchedVal">0</b> / 5</div>
+            <div class="hud-pill">Time <b id="timeVal">0:00</b></div>
+        </div>
+
+        <div class="board" id="board"></div>
+        <div class="game-feedback" id="feedback">Flip a card to begin.</div>
+
+        <div class="end-card" id="endCard">
+            <div class="confetti-wrap" id="confettiWrap"></div>
+            <div class="end-badge" id="endBadge">&#127942;</div>
+            <div class="end-title" id="endTitle">All matched!</div>
+            <div class="end-sub" id="endSub"></div>
+        </div>
+
+        <div class="btn-row">
+            <button class="game-btn ghost" id="resetBtn">Reset</button>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 24px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#128161; STUCK?</div>
+        <div style="font-size: 15px; color: #1a2340; line-height: 1.6;">Notice the roots. <em>Primordial</em> comes from <em>primus</em> (first) and <em>ordium</em> (beginning), so it points to the very start of things. <em>Retrogression</em> comes from <em>retro-</em> (backward) plus <em>gress</em> (to step), a step backward. <em>Vicarious</em> comes from <em>vic-</em> (a substitute), an experience you get by standing in someone else&rsquo;s place.</div>
+    </div>
+
+</div>
+
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Practice Game</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65);">Word Study &middot; Law of Club and Fang Word Match (ungraded)</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  var PAIRS = [
+    { word: "primordial",     def: "belonging to the earliest, most ancient times; wild and primitive" },
+    { word: "vicarious",      def: "experienced through watching someone else rather than going through it yourself" },
+    { word: "ignominiously",  def: "in a way that brings shame or disgrace" },
+    { word: "fastidiousness", def: "fussiness; the habit of being very picky" },
+    { word: "retrogression",  def: "a change backward to an earlier or lower state" }
+  ];
+
+  var board = document.getElementById('board');
+  var feedback = document.getElementById('feedback');
+  var movesVal = document.getElementById('movesVal');
+  var matchedVal = document.getElementById('matchedVal');
+  var timeVal = document.getElementById('timeVal');
+  var endCard = document.getElementById('endCard');
+  var confettiWrap = document.getElementById('confettiWrap');
+
+  var moves = 0, matched = 0, seconds = 0, timerId = null;
+  var flippedCards = [];
+  var lock = false;
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function buildDeck() {
+    var deck = [];
+    PAIRS.forEach(function (p, i) {
+      deck.push({ pairId: i, text: p.word, type: 'word' });
+      deck.push({ pairId: i, text: p.def, type: 'def' });
+    });
+    return shuffle(deck);
+  }
+
+  function startTimer() {
+    stopTimer();
+    seconds = 0;
+    timerId = setInterval(function () {
+      seconds += 1;
+      var m = Math.floor(seconds / 60), s = seconds % 60;
+      timeVal.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+  }
+  function stopTimer() { if (timerId) clearInterval(timerId); timerId = null; }
+
+  function render() {
+    board.innerHTML = '';
+    var deck = buildDeck();
+    deck.forEach(function (item, i) {
+      var card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.pairId = item.pairId;
+      card.dataset.type = item.type;
+      card.innerHTML =
+        '<div class="card-inner">' +
+          '<div class="card-face card-back">&#10068;</div>' +
+          '<div class="card-face card-front' + (item.type === 'word' ? ' word' : '') + '">' + item.text + '</div>' +
+        '</div>';
+      board.appendChild(card);
+    });
+  }
+
+  function resetGame() {
+    moves = 0; matched = 0; flippedCards = []; lock = false;
+    movesVal.textContent = '0';
+    matchedVal.textContent = '0';
+    timeVal.textContent = '0:00';
+    feedback.textContent = 'Flip a card to begin.';
+    endCard.classList.remove('show');
+    board.style.display = '';
+    render();
+    startTimer();
+  }
+
+  board.addEventListener('click', function (e) {
+    var card = e.target.closest('.card');
+    if (!card || lock) return;
+    if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+    if (flippedCards.length === 2) return;
+
+    card.classList.add('flipped');
+    flippedCards.push(card);
+
+    if (flippedCards.length === 2) {
+      moves += 1;
+      movesVal.textContent = moves;
+      var a = flippedCards[0], b = flippedCards[1];
+      var isMatch = a.dataset.pairId === b.dataset.pairId && a.dataset.type !== b.dataset.type;
+      lock = true;
+      if (isMatch) {
+        setTimeout(function () {
+          a.classList.add('matched'); b.classList.add('matched');
+          matched += 1; matchedVal.textContent = matched;
+          feedback.textContent = 'Nice, that\'s a match.';
+          flippedCards = []; lock = false;
+          if (matched === PAIRS.length) finishGame();
+        }, 500);
+      } else {
+        a.classList.add('wrong-pulse'); b.classList.add('wrong-pulse');
+        feedback.textContent = 'Not a match. Keep the meanings in mind and try again.';
+        setTimeout(function () {
+          a.classList.remove('flipped', 'wrong-pulse');
+          b.classList.remove('flipped', 'wrong-pulse');
+          flippedCards = []; lock = false;
+        }, 900);
+      }
+    }
+  });
+
+  function finishGame() {
+    stopTimer();
+    board.style.display = 'none';
+    endCard.classList.add('show');
+    var rating = moves <= 7 ? 'Word Detective!' : (moves <= 11 ? 'Sharp memory!' : 'All matched!');
+    document.getElementById('endTitle').textContent = rating;
+    document.getElementById('endBadge').textContent = moves <= 7 ? '🥇' : (moves <= 11 ? '🎖️' : '👍');
+    document.getElementById('endSub').textContent = 'You matched all five words in ' + moves + ' moves and ' + timeVal.textContent + '.';
+    fireConfetti();
+  }
+
+  function fireConfetti() {
+    var glyphs = ['🎉', '✨', '👏', '🌈'];
+    for (var i = 0; i < 16; i++) {
+      var c = document.createElement('div');
+      c.className = 'confetti';
+      c.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+      c.style.left = (Math.random() * 90) + '%';
+      c.style.animationDelay = (Math.random() * .4) + 's';
+      confettiWrap.appendChild(c);
+    }
+    setTimeout(function () { confettiWrap.innerHTML = ''; }, 2200);
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', resetGame);
+
+  resetGame();
+})();
+</script>
+
+</body>
+</html>
