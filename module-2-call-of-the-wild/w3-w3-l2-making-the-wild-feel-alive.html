@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.08</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.08</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Chapter 3: figurative language</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">What transforms Buck, and what does his change reveal?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.08</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Making the Wild Feel Alive</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~12 min</span></div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">London does not just say the snow was cold. He says the wind &ldquo;cut like a white-hot knife&rdquo; and the rabbit fled &ldquo;like some pale frost wraith.&rdquo; The frozen world is not a backdrop. It feels alive.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will finish Chapter 3, the fight to the death between Buck and Spitz. Then you will study three tools London uses to make the wild feel alive: comparing one thing to another, giving the land human qualities, and choosing words that hit hard.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell a simile from a metaphor and from personification in London&rsquo;s writing.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find figurative language in Chapter 3 and explain the feeling it creates.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how London&rsquo;s word choices make the wild feel like a living force, not just scenery.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>The Call of the Wild</em>, Chapter 3 (second half, the rabbit chase through the end of the fight with Spitz). <a href="#" style="color: #2196D0;">[Teacher: link the Chapter 3 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Call of the Wild Reading Journal</strong> on OneDrive.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: three tools -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THREE TOOLS THAT BRING THE WILD TO LIFE</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 16px;">Figurative language means words that mean more than their plain, literal sense. London leans on three kinds. Each example below is from Chapter 3.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+            <div style="flex: 1; min-width: 220px; background: #EEF1F8; border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="font-size: 28px;">&#129695;</div>
+                <div style="font-size: 17px; color: #2A9D8F; font-weight: bold; margin: 6px 0;">Simile</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">Compares two things using <em>like</em> or <em>as</em>.<br />&ldquo;a wind that cut <strong>like</strong> a white-hot knife&rdquo;</div>
+            </div>
+            <div style="flex: 1; min-width: 220px; background: #EEF1F8; border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="font-size: 28px;">&#128293;</div>
+                <div style="font-size: 17px; color: #2A9D8F; font-weight: bold; margin: 6px 0;">Metaphor</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">Says one thing <em>is</em> another, with no <em>like</em> or <em>as</em>.<br />&ldquo;the dominant primordial <strong>beast</strong>&rdquo; in Buck</div>
+            </div>
+            <div style="flex: 1; min-width: 220px; background: #EEF1F8; border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="font-size: 28px;">&#127794;</div>
+                <div style="font-size: 17px; color: #2A9D8F; font-weight: bold; margin: 6px 0;">Personification</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">Gives a thing or idea human qualities.<br />the cry of <strong>Life</strong> plunging down from <strong>Life&rsquo;s</strong> apex</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 1: check-in -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU READ</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">A writer could say &ldquo;the rabbit ran fast&rdquo; or could say the rabbit fled &ldquo;like some pale frost wraith.&rdquo; Why might London pick the second one? (No wrong answer.)</div>
+            <div class="widget-options">
+                <button data-response="Yes. The comparison gives you a picture and a mood, ghostly and cold, that plain words miss. That is the work figurative language does.">&#128065;&#65039; It paints a picture you can actually see.</button>
+                <button data-response="Good. Frost wraith makes the chase feel eerie and dangerous, not just quick. The words carry feeling, not only facts.">&#10052;&#65039; It makes the moment feel eerie and alive.</button>
+                <button data-response="Fair. The fancy words slow you down and make the scene feel important. London saves them for his biggest moments.">&#9203; It signals this moment matters.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: read -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: FINISH CHAPTER 3</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read from the rabbit chase to the end of the chapter. The team chases a snowshoe rabbit by moonlight, and Buck feels &ldquo;the blood lust, the joy to kill.&rdquo; Spitz cuts across the bend and kills the rabbit first. Buck drives in, and the long war ends in a fight to the death, watched by a silent circle of sixty dogs. Buck wins by using his head as well as his teeth, and he stands at the end as &ldquo;the dominant primordial beast who had made his kill and found it good.&rdquo;</p>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">As you read, notice the words London capitalizes, like <strong>Life</strong>, <strong>Death</strong>, and <strong>Time</strong>. He treats them like characters with power. That is personification, and it is one way he makes the wild feel like a living force pulling at Buck.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: name the device -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; NAME THE TOOL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each line below is from Chapter 3. Decide which tool London is using. Think first, then choose.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="2" data-fb="A simile. The word like signals a comparison: the teeth are compared to a steel trap to show how hard and final they are." data-hint="Look for the word like. That word is the giveaway for one of the three tools.">
+                <div class="widget-row-prompt">1. &ldquo;Twice his teeth clipped together, like the steel jaws of a trap.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Metaphor</button>
+                    <button data-choice="1">Personification</button>
+                    <button data-choice="2">Simile</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Personification. Mercy is an idea, but London gives it a human-like life, calling it a thing reserved for gentler climes." data-hint="Mercy is not a person, yet London treats it like one. Which tool is that?">
+                <div class="widget-row-prompt">2. &ldquo;Mercy was a thing reserved for gentler climes.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Simile</button>
+                    <button data-choice="1">Personification</button>
+                    <button data-choice="2">Metaphor</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="A metaphor. London calls Buck a frost wraith outright, with no like or as. The cold, ghostly image becomes Buck himself." data-hint="There is no like or as here. One thing simply is called another.">
+                <div class="widget-row-prompt">3. Buck chases &ldquo;like some pale frost wraith,&rdquo; and the rabbit is &ldquo;a frost wraith&rdquo; too.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Metaphor</button>
+                    <button data-choice="1">Personification</button>
+                    <button data-choice="2">Simile</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Personification. Life and Death are ideas, but London makes them act, plunging and gripping, like living rivals in the scene." data-hint="London makes Life and Death do things. Giving ideas human action is which tool?">
+                <div class="widget-row-prompt">4. &ldquo;the cry of Life plunging down from Life&rsquo;s apex in the grip of Death.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Simile</button>
+                    <button data-choice="1">Metaphor</button>
+                    <button data-choice="2">Personification</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: commit-then-reveal worked example -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 4 &middot; READ &amp; NOTICE: FROM TOOL TO FEELING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Naming the tool is only step one. The real work is explaining the <em>feeling</em> it creates. Take the simile &ldquo;a wind that cut like a white-hot knife.&rdquo; In your notebook, write one sentence: what does that comparison make the cold feel like? A knife cuts and a white-hot one burns, so the comparison makes the cold feel sharp and painful at the same time. The wind is not just unpleasant. It is an attacker. That is how London turns weather into one more enemy Buck has to survive.</p>
+
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; ADD THIS TO THE WEEK 3 SECTION</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write a few sentences for each question. Point to the exact words from Chapter 3 each time.</p>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">
+                <li>Find one example of figurative language in the fight scene. Quote it, name the tool, and explain the feeling it creates.</li>
+                <li>London keeps comparing Buck and the other dogs to wolves and ghosts (&ldquo;ill-tamed wolves,&rdquo; &ldquo;frost wraith&rdquo;). What does that pattern suggest about where Buck is heading?</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: The Rivalry Scene</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Stage the Buck and Spitz fight in VR and mark the figurative language that brings it to life. It feeds your final project.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">London could have written a plain report of a dog fight. Instead he made the snow, the cold, and even Death feel alive. That choice is why the scene grips you. When you write your own evidence this week, the right quote will do the same work: it will make your point feel alive.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.08 &middot; Making the Wild Feel Alive</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
