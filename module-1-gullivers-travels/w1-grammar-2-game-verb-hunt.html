@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Practice Game: Verb Hunt</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    .game-shell { background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 22px 26px; margin-bottom: 20px; }
+    .game-kicker { font-size: 11px; color: #E2725B; margin-bottom: 12px; letter-spacing: .4px; }
+    .game-hud { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+    .hud-pill { background: #EEF1F8; border: 1px solid #D0D9E8; border-radius: 20px; padding: 8px 16px; font-size: 14px; color: #0e1c42; display: flex; align-items: center; gap: 8px; }
+    .hud-pill b { color: #0E1C42; font-size: 16px; }
+    .hud-pill.streak b { color: #C7922C; }
+
+    .stage { position: relative; min-height: 380px; }
+    .bins { display: flex; gap: 16px; margin-bottom: 20px; }
+    .bin { flex: 1; min-height: 110px; border-radius: 12px; padding: 14px; border: 2px dashed #C5D2E8; background: #F7F9FD; transition: background .15s, border-color .15s, transform .1s; }
+    .bin-label { font-size: 13px; color: #0e1c42; text-align: center; margin-bottom: 8px; letter-spacing: .3px; }
+    .bin.verb-bin .bin-label { color: #1B6A94; }
+    .bin.notverb-bin .bin-label { color: #A85A2E; }
+    .bin.drop-hover { background: #E8F6FB; border-color: #55C8E8; transform: scale(1.02); }
+    .bin-chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 30px; justify-content: center; }
+    .landed-chip { background: #ffffff; border: 1.5px solid #D0D9E8; border-radius: 16px; padding: 6px 14px; font-size: 14px; color: #0e1c42; }
+    .landed-chip.right { border-color: #2A9D5C; background: #EAF8EE; color: #1A6B3D; }
+    .landed-chip.wrong { border-color: #C0392B; background: #FDECEC; color: #8A1F16; }
+
+    .rack { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 18px; background: #FFFFFF; border-radius: 10px; border: 1px solid #EEF1F8; }
+    .word-tile { cursor: pointer; user-select: none; background: #0E1C42; color: #ffffff; font-size: 17px; padding: 10px 18px; border-radius: 10px; box-shadow: 0 2px 4px rgba(14,28,66,.25); transition: transform .12s, box-shadow .12s, opacity .2s; }
+    .word-tile:hover { transform: translateY(-3px); box-shadow: 0 5px 10px rgba(14,28,66,.3); }
+    .word-tile.placed { opacity: 0; transform: scale(.4); pointer-events: none; }
+    .word-tile.shake { animation: shake .32s; }
+    @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+    .source-line { background: #FDF3E3; border-left: 4px solid #C7922C; border-radius: 6px; padding: 10px 16px; font-size: 15px; color: #6b4f10; font-style: italic; margin-top: 16px; display: none; }
+    .source-line.show { display: block; }
+
+    .game-feedback { min-height: 26px; font-size: 15px; color: #1a2340; margin-top: 12px; text-align: center; }
+    .game-feedback.right { color: #1A6B3D; }
+    .game-feedback.wrong { color: #8A1F16; }
+
+    .end-card { display: none; text-align: center; padding: 30px 20px; }
+    .end-card.show { display: block; }
+    .end-badge { font-size: 54px; margin-bottom: 10px; }
+    .end-title { font-size: 24px; color: #0e1c42; margin-bottom: 8px; }
+    .end-sub { font-size: 16px; color: #44507a; margin-bottom: 18px; }
+    .confetti-wrap { position: relative; height: 0; overflow: visible; }
+    .confetti { position: absolute; top: -10px; font-size: 20px; opacity: 0; animation: fall 1.6s ease-in forwards; }
+    @keyframes fall { 0% { opacity: 1; transform: translateY(0) rotate(0deg); } 100% { opacity: 0; transform: translateY(220px) rotate(280deg); } }
+
+    .game-btn { background: #0E1C42; color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-size: 15px; cursor: pointer; font-family: inherit; }
+    .game-btn:hover { background: #17285c; }
+    .game-btn.ghost { background: transparent; border: 1px solid #C7922C; color: #C7922C; }
+    .game-btn.ghost:hover { background: #FDF3E3; }
+    .btn-row { display: flex; gap: 10px; justify-content: center; margin-top: 8px; }
+    .progress-track { height: 8px; background: #EEF1F8; border-radius: 5px; overflow: hidden; margin-bottom: 18px; }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #55C8E8, #2A9D8F); transition: width .25s; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Gulliver&rsquo;s Travels</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Practice Game</div>
+        <div style="font-size: 17px; color: #0e1c42;">Grammar 1.02</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Skill</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Graded?</div>
+        <div style="font-size: 15px; color: #0e1c42;">Optional extra practice</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">PRACTICE GAME</div>
+        <div style="font-size: 24px; color: #0e1c42; margin-bottom: 4px;">&#128269; Verb Hunt</div>
+        <div style="font-size: 16px; color: #666;">Optional extra practice <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">&#8776;6 min</span></div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 24px; margin-bottom: 20px;">
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Every word below comes from a sentence in this week&rsquo;s Verbs lesson, pulled from Chapters 1 and 2 of <em>Gulliver&rsquo;s Travels</em>. Sort each one into the correct pen: <strong>Verb</strong> or <strong>Not a Verb</strong>. Watch out: some of these words name people and things, or describe them, they do not tell you what the subject does or is. Get five in a row correct for a streak bonus. This is ungraded, just for practice.</div>
+    </div>
+
+    <div class="game-shell">
+        <div class="game-kicker">&#128269; SORT THE WORDS &middot; ROUND <span id="roundNum">1</span> OF <span id="roundTotal">1</span></div>
+
+        <div class="game-hud">
+            <div class="hud-pill">Score <b id="scoreVal">0</b></div>
+            <div class="hud-pill streak">Streak <b id="streakVal">0</b> &#128293;</div>
+            <div class="hud-pill">Remaining <b id="remainVal">10</b></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+        <div class="stage" id="stage">
+            <div class="bins">
+                <div class="bin verb-bin" data-bin="verb">
+                    <div class="bin-label">&#9889; VERB</div>
+                    <div class="bin-chips" id="binVerb"></div>
+                </div>
+                <div class="bin notverb-bin" data-bin="notverb">
+                    <div class="bin-label">&#128683; NOT A VERB</div>
+                    <div class="bin-chips" id="binNotVerb"></div>
+                </div>
+            </div>
+
+            <div class="rack" id="rack"></div>
+
+            <div class="source-line" id="sourceLine"></div>
+            <div class="game-feedback" id="feedback"></div>
+        </div>
+
+        <div class="end-card" id="endCard">
+            <div class="confetti-wrap" id="confettiWrap"></div>
+            <div class="end-badge" id="endBadge">&#127942;</div>
+            <div class="end-title" id="endTitle">Hunt complete!</div>
+            <div class="end-sub" id="endSub"></div>
+            <div class="btn-row">
+                <button class="game-btn" id="playAgainBtn">Play Again</button>
+            </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:16px;">
+            <button class="game-btn ghost" id="resetBtn">Reset</button>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 24px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#128161; STUCK?</div>
+        <div style="font-size: 15px; color: #1a2340; line-height: 1.6;">Find the subject first: who or what the sentence is about. Then ask, &ldquo;What is being said about the subject?&rdquo; The word that answers that question, whether it shows an action or a state of being, is the verb. If a word only names something or only describes it, it is not a verb.</div>
+    </div>
+
+</div>
+
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 1 &middot; Practice Game</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65);">Grammar 1.02 &middot; Verb Hunt (ungraded)</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  // Each item: the word as it appears, whether it is a verb, and the real line it comes from.
+  var WORDS = [
+    { w: "swam",      verb: true,  line: "“I swam as fortune directed me, and was pushed forward by wind and tide.” (swam tells what Gulliver did: it is an action verb.)" },
+    { w: "directed",  verb: true,  line: "“I swam as fortune directed me...” (directed tells what fortune did: it is an action verb.)" },
+    { w: "was",       verb: true,  line: "“...and was pushed forward by wind and tide.” (was is the helping verb that teams up with pushed.)" },
+    { w: "pushed",    verb: true,  line: "“...and was pushed forward by wind and tide.” (pushed is the main verb: it tells what happened to Gulliver.)" },
+    { w: "slept",     verb: true,  line: "“...where I slept sounder than ever...” (slept tells what Gulliver did: it is an action verb.)" },
+    { w: "roared",    verb: true,  line: "“I was in the utmost astonishment, and roared so loud...” (roared tells what Gulliver did: it is an action verb.)" },
+    { w: "held",      verb: true,  line: "“He held his sword drawn in his hand...” (held tells what the emperor did: it is an action verb.)" },
+    { w: "is",        verb: true,  line: "“...that prince, who is an excellent horseman.” (is links prince to a description: it is a linking verb.)" },
+    { w: "fortune",   verb: false, line: "“I swam as fortune directed me...” (fortune names the thing doing the directing: it is a noun.)" },
+    { w: "sword",     verb: false, line: "“He held his sword drawn in his hand...” (sword names the thing the emperor held: it is a noun.)" },
+    { w: "prince",    verb: false, line: "“...that prince, who is an excellent horseman.” (prince names a person: it is a noun.)" },
+    { w: "excellent", verb: false, line: "“...who is an excellent horseman.” (excellent describes the horseman: it is an adjective.)" }
+  ];
+
+  var ROUND_SIZE = 10;
+  var deck = [];
+  var idx = 0;
+  var score = 0;
+  var streak = 0;
+
+  var rack = document.getElementById('rack');
+  var binVerb = document.getElementById('binVerb');
+  var binNotVerb = document.getElementById('binNotVerb');
+  var scoreVal = document.getElementById('scoreVal');
+  var streakVal = document.getElementById('streakVal');
+  var remainVal = document.getElementById('remainVal');
+  var feedback = document.getElementById('feedback');
+  var sourceLine = document.getElementById('sourceLine');
+  var progressFill = document.getElementById('progressFill');
+  var stage = document.getElementById('stage');
+  var endCard = document.getElementById('endCard');
+  var confettiWrap = document.getElementById('confettiWrap');
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function startRound() {
+    deck = shuffle(WORDS).slice(0, ROUND_SIZE);
+    idx = 0; score = 0; streak = 0;
+    binVerb.innerHTML = ''; binNotVerb.innerHTML = '';
+    feedback.textContent = ''; feedback.className = 'game-feedback';
+    sourceLine.className = 'source-line';
+    endCard.classList.remove('show');
+    stage.style.display = '';
+    updateHud();
+    renderTile();
+  }
+
+  function updateHud() {
+    scoreVal.textContent = score;
+    streakVal.textContent = streak;
+    remainVal.textContent = Math.max(deck.length - idx, 0);
+    progressFill.style.width = (idx / deck.length * 100) + '%';
+  }
+
+  var currentTile = null;
+
+  function renderTile() {
+    rack.innerHTML = '';
+    sourceLine.className = 'source-line';
+    feedback.textContent = 'Where does this word belong?';
+    feedback.className = 'game-feedback';
+    if (idx >= deck.length) { return finishRound(); }
+    var item = deck[idx];
+    var tile = document.createElement('div');
+    tile.className = 'word-tile';
+    tile.textContent = item.w;
+    tile.dataset.verb = item.verb ? '1' : '0';
+    tile.dataset.line = item.line;
+    currentTile = tile;
+    rack.appendChild(tile);
+  }
+
+  function handleDrop(binType) {
+    if (!currentTile) return;
+    var isVerb = currentTile.dataset.verb === '1';
+    var correct = (binType === 'verb') === isVerb;
+    var chip = document.createElement('div');
+    chip.className = 'landed-chip ' + (correct ? 'right' : 'wrong');
+    chip.textContent = currentTile.textContent;
+    (binType === 'verb' ? binVerb : binNotVerb).appendChild(chip);
+
+    sourceLine.textContent = currentTile.dataset.line;
+    sourceLine.classList.add('show');
+
+    if (correct) {
+      score += 10; streak += 1;
+      feedback.textContent = streak >= 5 ? 'Right! Five in a row. You are on fire. 🔥' : 'Right. That is exactly how to test it.';
+      feedback.className = 'game-feedback right';
+    } else {
+      streak = 0;
+      currentTile.classList.add('shake');
+      feedback.textContent = 'Not quite. Read the line above, then keep going.';
+      feedback.className = 'game-feedback wrong';
+    }
+    currentTile.classList.add('placed');
+    updateHud();
+    idx += 1;
+    setTimeout(renderTile, 900);
+  }
+
+  function finishRound() {
+    stage.style.display = 'none';
+    endCard.classList.add('show');
+    document.getElementById('endTitle').textContent =
+      score >= 90 ? 'Sharp-eyed reader!' : (score >= 60 ? 'Solid hunt!' : 'Good first pass!');
+    document.getElementById('endBadge').textContent = score >= 90 ? '🥇' : (score >= 60 ? '🎖️' : '👍');
+    document.getElementById('endSub').textContent = 'You scored ' + score + ' out of 100, with a best streak of ' + bestStreak + ' in a row.';
+    if (score >= 60) fireConfetti();
+  }
+
+  var bestStreak = 0;
+
+  document.addEventListener('click', function (e) {
+    var bin = e.target.closest('.bin');
+    if (bin && currentTile) { handleDrop(bin.dataset.bin); return; }
+    if (e.target.id === 'resetBtn') { startRound(); return; }
+    if (e.target.id === 'playAgainBtn') { startRound(); return; }
+  });
+
+  // Track best streak as it changes.
+  var streakObserver = setInterval(function () { if (streak > bestStreak) bestStreak = streak; }, 200);
+
+  function fireConfetti() {
+    var glyphs = ['🎉', '✨', '👏', '🌈'];
+    for (var i = 0; i < 16; i++) {
+      var c = document.createElement('div');
+      c.className = 'confetti';
+      c.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+      c.style.left = (Math.random() * 90) + '%';
+      c.style.animationDelay = (Math.random() * .4) + 's';
+      confettiWrap.appendChild(c);
+    }
+    setTimeout(function () { confettiWrap.innerHTML = ''; }, 2200);
+  }
+
+  startRound();
+})();
+</script>
+
+</body>
+</html>
