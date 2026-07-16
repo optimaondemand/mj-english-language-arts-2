@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Chapter 1, the Santa Clara Valley</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">What transforms Buck, and what does his change reveal?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Meet Jack London, and Meet Buck</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~12 min</span></div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A dog named Buck rules a sunny California estate without a worry in the world. By the end of this book he is the leader of a wolf pack in the frozen North. What turns one animal into the other?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will meet the author, Jack London, and read the opening of Chapter 1, where you meet Buck in his old life. London believed that a creature is shaped powerfully by the place it lives. As you read, you will start watching how the setting of a story works on a character.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe Buck&rsquo;s life and character at the start of the book, using details from the Santa Clara Valley pages.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what the setting of a story is, and why where a character lives shapes who that character is.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> predict how a sudden change of setting might begin to change Buck.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>The Call of the Wild</em>, Chapter 1, &ldquo;Into the Primitive,&rdquo; the opening pages through Buck&rsquo;s last day at Judge Miller&rsquo;s place. <a href="#" style="color: #2196D0;">[Teacher: link the Chapter 1 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Call of the Wild Reading Journal</strong> on OneDrive.</div>
+        </div>
+    </div>
+
+    <!-- HISTORY / CONTEXT BOX (distinct color per optima-ela) -->
+    <div style="background: #F3EEF7; border-top: 3px solid #7E57C2; border: 1px solid #D9CCE8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #5E35B1; margin-bottom: 12px;">&#127963;&#65039; WHEN AND WHERE THIS WAS WRITTEN</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.65;">Jack London published <em>The Call of the Wild</em> in 1903. A few years earlier, in 1897, gold was found in the Klondike, a region of the far Northwest, and thousands of people rushed north to dig for it. They needed strong dogs to haul sleds across the snow. London had gone north himself during that gold rush, so he wrote about a world he had seen with his own eyes: the cold, the hunger, the harshness, and the dogs caught up in it. He wrote in a plain, hard style that matched the world he was describing.</div>
+    </div>
+
+    <!-- CORE VISUAL: setting shapes the creature -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 14px;">The <strong>setting</strong> is the time and place a story happens. London believed a place does more than sit in the background. It presses on a creature and shapes what that creature becomes. Hold these two settings side by side, and you can predict the whole book.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+            <div style="flex: 1; min-width: 240px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 12px; color: #C7922C; margin-bottom: 6px;">&#9728;&#65039; THE OLD SETTING</div>
+                <div style="font-size: 17px; color: #0e1c42; margin-bottom: 6px; font-weight: bold;">Santa Clara Valley, California</div>
+                <div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Warm sun, wide lawns, a roaring library fire, full meals. Buck is safe, respected, and in charge.</div>
+            </div>
+            <div style="flex: 0 0 auto; align-self: center; font-size: 26px; color: #C7922C;">&#10145;&#65039;</div>
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-left: 6px solid #2A9D8F; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 12px; color: #2A9D8F; margin-bottom: 6px;">&#10052;&#65039; THE NEW SETTING</div>
+                <div style="font-size: 17px; color: #0e1c42; margin-bottom: 6px; font-weight: bold;">The Northland, on the way to the Klondike</div>
+                <div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Cold, snow, hunger, rope, and the club. Nothing is safe, and nothing is given. Buck must change to live.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 1: check-in -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU READ</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">Think of a place where you feel completely comfortable and in charge. If you were suddenly dropped somewhere cold, strange, and unfriendly, what do you think would change about you first? (No wrong answer. Just check in with yourself.)</div>
+            <div class="widget-options">
+                <button data-response="That fits Buck exactly. His first reaction is anger and a refusal to give in. Watch how long that lasts in the new place.">&#128545; My temper. I would get angry.</button>
+                <button data-response="Good instinct. Survival pushes the senses awake. London says Buck has to become alert every moment to stay alive.">&#128064; I would get watchful and careful.</button>
+                <button data-response="A real answer. Comfort can soften us. London asks what we lose, and what we gain, when comfort is stripped away.">&#128556; I would miss the easy life.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: read -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: READ THE OPENING OF CHAPTER 1</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read the start of Chapter 1, up to the night Buck is led away. London opens with a warning: men have found gold in the North, and now they want big, strong, warm-coated dogs to pull their sleds. Then he shows you what Buck has to lose. Buck lives at Judge Miller&rsquo;s place in the sun-kissed Santa Clara Valley, a huge estate with stables, orchards, and a swimming tank. He is four years old, weighs one hundred and forty pounds, and London calls him &ldquo;king&rsquo;&rdquo; over the whole place. He swims with the Judge&rsquo;s sons, escorts the daughters on walks, and lies by the library fire on winter nights.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">London is careful to tell you that Buck is not soft. Hunting and outdoor life have kept his muscles hard. He has &ldquo;a fine pride in himself.&rdquo; That pride matters: it is the part of Buck the new world is about to test.</p>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">London does not waste the description of the estate. Every comfort he shows you, Buck is about to lose. When an author spends this much time on a setting, ask what the setting is doing to the character, not just where the character happens to be.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: sort details about Buck's old life -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; WHAT DOES THE TEXT SHOW US ABOUT BUCK?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each statement is about Buck&rsquo;s old life. Decide whether London tells it to you directly on the page, or whether it is a conclusion you have to build from the details. Decide in your head before you choose.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="0" data-fb="Right. London states this plainly: Buck weighed one hundred and forty pounds and had lived four years at the estate. You can point to it." data-hint="Could you underline these exact facts on the page, or did you reason them out?">
+                <div class="widget-row-prompt">1. Buck weighs one hundred and forty pounds and has lived four years at Judge Miller&rsquo;s place.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Stated detail</button>
+                    <button data-choice="1">Conclusion you build</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. London never says Buck is unprepared for cruelty. You conclude it from how easy and safe his whole life has been." data-hint="Does the text say this, or do you reason it from the comfort London describes?">
+                <div class="widget-row-prompt">2. Buck has no experience with hunger, cold, or being treated cruelly.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Stated detail</button>
+                    <button data-choice="1">Conclusion you build</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. London shows the comfort but never announces that it has made Buck proud and a little spoiled. You build that from the details, plus London's word &ldquo;king.&rdquo;" data-hint="Is the judgment printed on the page, or is it the conclusion you reach about the page?">
+                <div class="widget-row-prompt">3. The easy life at the estate has made Buck proud and used to being in charge.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Stated detail</button>
+                    <button data-choice="1">Conclusion you build</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. London states it directly: hunting and outdoor life had kept down the fat and hardened his muscles. The fact is on the page." data-hint="This one is written out. Can you find the sentence about his muscles?">
+                <div class="widget-row-prompt">4. Hunting and outdoor life have kept Buck&rsquo;s body hard, not soft.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Stated detail</button>
+                    <button data-choice="1">Conclusion you build</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: reading-response prompt to Reading Journal -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 4 &middot; READ &amp; NOTICE: WRITE ABOUT WHAT YOU READ</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">London spends his first pages building a comfortable world so the loss of it will land harder. Use the questions below to capture Buck&rsquo;s old life in your own words.</p>
+
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; ADD THIS TO THE WEEK 1 SECTION</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write a few sentences for each question. Point to a detail from the reading whenever you can.</p>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">
+                <li>Describe Buck&rsquo;s life at Judge Miller&rsquo;s place. Name three details that show how comfortable and respected he is.</li>
+                <li>London calls Buck &ldquo;king&rdquo; of the estate and says Buck has &ldquo;a fine pride in himself.&rdquo; What kind of dog is Buck because of where he lives?</li>
+                <li>The very first sentence warns that &ldquo;trouble was brewing.&rdquo; Predict: when Buck is taken to a cold, harsh place, what is the first part of him you think will be tested?</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 1 entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Answer the three questions above in the Week 1 section of your Reading Journal. Your teacher reviews the Journal at the module checkpoints, not every week.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Right now Buck is a comfortable king. Keep that picture clear, because the rest of the book is the story of what the cold North does to it. The setting is not just scenery here. It is the force that will remake the dog.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.01 &middot; Meet Jack London, and Meet Buck</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
