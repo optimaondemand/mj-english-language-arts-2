@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.05</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Tone and Word Choice in Chapter 2</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">What transforms Buck, and what does his change reveal?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Tone: How London's Word Choice Builds the Mood</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~12 min</span></div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">London could have written &ldquo;Buck&rsquo;s first day was busy.&rdquo; Instead he wrote that it &ldquo;was like a nightmare,&rdquo; filled with &ldquo;shock and surprise.&rdquo; Same day. Very different feeling. That feeling is tone.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will look again at Chapter 2 to study <strong>tone</strong>: the attitude an author builds through the exact words chosen. You will see how a few hard, cold word choices make the Northland feel brutal.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> define tone as the attitude an author builds through word choice.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> point to specific words in Chapter 2 that create a brutal, dangerous mood.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> swap a harsh word for a milder one and explain how the tone changes.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: word swap -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 16px;">Two writers can report the same event. The words they choose decide how it feels. London picks hard, violent words on purpose, so the reader feels the danger Buck feels.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-radius: 8px; border-top: 5px solid #6b7a99; padding: 16px 18px;">
+                <div style="font-size: 13px; color: #6b7a99; margin-bottom: 6px;">A FLAT, NEUTRAL VERSION</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55; font-style: italic;">&ldquo;The other dog bit Curly&rsquo;s face. The dogs gathered around. Soon she had died.&rdquo;</div>
+                <div style="font-size: 14px; color: #6b7a99; margin-top: 8px;">Tells you what happened. You feel almost nothing.</div>
+            </div>
+            <div style="flex: 1; min-width: 240px; background: #FDF3E3; border-radius: 8px; border-top: 5px solid #C0392B; padding: 16px 18px;">
+                <div style="font-size: 13px; color: #C0392B; margin-bottom: 6px;">LONDON'S VERSION</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55; font-style: italic;">&ldquo;Curly&rsquo;s face was ripped open from eye to jaw... she was buried, screaming with agony, beneath the bristling mass of bodies.&rdquo;</div>
+                <div style="font-size: 14px; color: #C0392B; margin-top: 8px;">Same event. Now you feel the horror. The words do that.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 1: check-in (coral) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: WARM UP YOUR EAR</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">London calls the dogs &ldquo;savages&rdquo; and &ldquo;wolfish creatures&rdquo; instead of just &ldquo;dogs.&rdquo; What feeling does that word choice give you before anything even happens? (No wrong answer.)</div>
+            <div class="widget-options">
+                <button data-response="Right on. Savage and wolfish warn you of danger up front. London sets a tense, threatening tone before the first fight begins.">&#9888;&#65039; It feels dangerous, like a warning.</button>
+                <button data-response="Good ear. Those words make the dogs sound wild and uncontrolled, not like pets. That wildness is exactly the tone London wants.">&#128058; It makes them feel wild and out of control.</button>
+                <button data-response="Fair. The words pull you out of the cozy Southland and into a harsher place. That shift in feeling is the work tone does.">&#10052;&#65039; It feels cold and far from home.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: teaching diction -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: HOW WORD CHOICE BUILDS TONE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Reread the opening of Chapter 2 and the death of Curly. Notice the kinds of words London reaches for: <em>nightmare, shock, peril, savages, vicious, ripped, screaming, agony, bloody, trampled, lifeless.</em> They are short, hard, and violent. Stacked together, they build one steady feeling: this place is brutal and unsafe.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The word an author picks for a thing is called <strong>diction</strong>. Diction is the main tool that builds tone. A &ldquo;crowd&rdquo; of dogs feels neutral. A &ldquo;bristling mass of bodies&rdquo; feels menacing. Both name the same dogs. Only the second one sets the tone.</p>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;"><strong>Tone</strong> is the author&rsquo;s attitude, the feeling the writing gives off. <strong>Diction</strong> is the word choice that creates it. To name a tone, point to the exact words that build it. A tone with no words behind it is just a guess.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: which word sets the tone (select) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; WHICH WORD CARRIES THE TONE?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each line is from Chapter 2. One word in each does the most to make the moment feel harsh or dangerous. Choose it. Decide in your head first.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="2" data-fb="Right. Peril means deadly danger. It tells you that even an ordinary moment here could kill Buck. That is the brutal tone." data-hint="Which word warns you that life itself is at risk every moment?">
+                <div class="widget-row-prompt">1. &ldquo;...every moment life and limb were in peril.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">moment</button>
+                    <button data-choice="1">life</button>
+                    <button data-choice="2">peril</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. Ripped is sudden and violent. London could have written cut or opened, but ripped makes you flinch. That is tone through word choice." data-hint="Which verb is the most violent way to describe the wound?">
+                <div class="widget-row-prompt">2. &ldquo;...Curly&rsquo;s face was ripped open from eye to jaw.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">ripped</button>
+                    <button data-choice="1">face</button>
+                    <button data-choice="2">open</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. Bristling makes the pile of dogs feel sharp, alive, and threatening, not just a heap. The word sets a menacing tone." data-hint="Which word makes the mass of dogs feel sharp and dangerous, not just crowded?">
+                <div class="widget-row-prompt">3. &ldquo;...buried beneath the bristling mass of bodies.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">bodies</button>
+                    <button data-choice="1">bristling</button>
+                    <button data-choice="2">mass</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. Nightmare tells you the day was not just hard but terrifying. One word sets the tone for the whole chapter." data-hint="Which word turns a hard first day into a frightening one?">
+                <div class="widget-row-prompt">4. &ldquo;Buck&rsquo;s first day on the Dyea beach was like a nightmare.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">first</button>
+                    <button data-choice="1">beach</button>
+                    <button data-choice="2">nightmare</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4: swap the word, commit-then-reveal flip -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 4 &middot; READ &amp; NOTICE: TEST THE TONE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Here is the best test of whether a word is carrying the tone: swap it for a milder one and see what happens to the feeling.</p>
+
+        <div class="optima-widget">
+            <div class="ow-flip">
+                <div class="ow-flip-front">
+                    <div style="font-size: 13px; color: #1B6A94; margin-bottom: 6px;">&#128302; CLICK TO FLIP</div>
+                    <div style="font-size: 18px; color: #0e1c42; line-height: 1.5;">London wrote that the dogs were &ldquo;savages.&rdquo; In your head, swap that word for &ldquo;strangers.&rdquo; How does the tone change? Decide before you flip.</div>
+                </div>
+                <div class="ow-flip-back">
+                    <div style="font-size: 13px; color: #2A9D8F; margin-bottom: 6px;">&#128172; ONE WAY TO SEE IT</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">&ldquo;Strangers&rdquo; is just unfamiliar. The danger drains out. &ldquo;Savages&rdquo; says the dogs are wild and will hurt you. The plot is identical, but the brutal tone is gone with one word swapped. That proves the word, not the event, is what built the feeling.</div>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; ADD THIS TO THE WEEK 2 SECTION</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Answer each question in a few sentences. Quote the exact word or phrase you are talking about.</p>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">
+                <li>In one word, how would you name the tone of Chapter 2 (for example: brutal, tense, cold). Then quote three words from the chapter that build that tone.</li>
+                <li>Pick one of London&rsquo;s harsh words and swap it for a milder one. Write both versions and explain how the feeling changes.</li>
+                <li>Why might London want a brutal tone in this chapter? What does it help you understand about the world Buck must now survive?</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 2 entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Answer the three tone questions above in the Week 2 section of your Reading Journal, quoting the exact words each time.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: The Law of Club and Fang</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Stage the moment that teaches Buck the law of club and fang, and mark the words that build its harsh tone. This feeds your module project.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">The events of a story are only half of it. The other half is how the author makes them feel. From now on, when a passage hits you hard, slow down and ask which exact words did the hitting.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.05 &middot; Tone and Word Choice</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
