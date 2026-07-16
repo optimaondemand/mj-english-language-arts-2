@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.12</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.12</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Friday Workshop: Building an Argument, Step 3</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">What transforms Buck, and what does his change reveal?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.12 &middot; Friday Workshop</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Answering the Other Side</div>
+        <div style="font-size: 16px; color: #666;">Short lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#9999;&#65039; TODAY'S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~10 min</span></div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A strong argument does not pretend the other side does not exist. It names the strongest point against it, answers it honestly, and then lands on a firm conclusion.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You have built a claim, then evidence and explanation. This is the third step: the <strong>counterclaim</strong> and the <strong>conclusion</strong>. You will learn how to acknowledge the other side and answer it, then close your argument. In your Quick Write you will write a counterclaim and conclusion for your building argument about Buck.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state a fair counterclaim: the strongest point someone could make against my claim.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> answer the counterclaim and show why my claim still holds.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write a conclusion that restates my claim and leaves the reader with the main idea.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: the argument so far + the new step -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 14px;">Your argument is being built one step at a time. The first two steps are done. Today you add the last two pieces.</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: #EEF1F8; border-left: 6px solid #C0C7D6; border-radius: 6px; padding: 12px 16px;">
+                <div style="font-size: 12px; color: #6b7a99; margin-bottom: 2px;">STEP 1 (DONE) &middot; CLAIM</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">What you argue. (Week 2 Quick Write)</div>
+            </div>
+            <div style="background: #EEF1F8; border-left: 6px solid #C0C7D6; border-radius: 6px; padding: 12px 16px;">
+                <div style="font-size: 12px; color: #6b7a99; margin-bottom: 2px;">STEP 2 (DONE) &middot; EVIDENCE + EXPLANATION</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">A detail from the text, plus how it supports your claim. (Week 3 Quick Write)</div>
+            </div>
+            <div style="background: #FDF3E3; border-left: 6px solid #E2725B; border-radius: 6px; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #E2725B; margin-bottom: 2px;">STEP 3a (TODAY) &middot; COUNTERCLAIM AND ANSWER</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">Name the strongest point against you, then answer it: &ldquo;Some might say&hellip; but&hellip;&rdquo;</div>
+            </div>
+            <div style="background: #FDF3E3; border-left: 6px solid #2A9D8F; border-radius: 6px; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #2A9D8F; margin-bottom: 2px;">STEP 3b (TODAY) &middot; CONCLUSION</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">Restate your claim in fresh words and leave the reader with your main point.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Worked example -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; WATCH ONE GET BUILT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Here is a worked example built on a claim about Chapters 4 and 5. Read how the counterclaim is named, answered, and then closed.</p>
+        <div style="background: #EEF1F8; border-radius: 8px; padding: 16px 18px; line-height: 1.7; font-size: 16px; color: #1a2340;">
+            <div style="margin-bottom: 8px;"><span style="color:#6b7a99; font-size:12px;">CLAIM:</span> Survival on the trail depends on judgment, not on kindness.</div>
+            <div style="margin-bottom: 8px;"><span style="color:#6b7a99; font-size:12px;">EVIDENCE + EXPLANATION:</span> The skilled drivers fed the dogs first and never overloaded the sled, and the team made a record run. Their judgment kept the dogs alive.</div>
+            <div style="margin-bottom: 8px;"><span style="color:#E2725B; font-size:12px;">COUNTERCLAIM + ANSWER:</span> Some might argue that Mercedes was the kindest owner, since she wept over the dogs and begged Hal not to whip them. But her kindness had no judgment behind it. She rode the sled while the dogs starved, so her feelings made things worse, not better.</div>
+            <div><span style="color:#2A9D8F; font-size:12px;">CONCLUSION:</span> Caring about the dogs was not enough. On the trail, it is knowing what to do that decides who survives.</div>
+        </div>
+    </div>
+
+    <!-- Practice: which is a fair counterclaim -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; IS THIS A FAIR COUNTERCLAIM?</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-question">A counterclaim should be the strongest <em>fair</em> point against your claim, stated honestly. For the claim &ldquo;Survival on the trail depends on judgment, not kindness,&rdquo; decide whether each statement is a fair counterclaim or not. Decide in your head before you click.</div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. This is a fair, real counterclaim. Mercedes truly was the most tender-hearted owner, so it is the strongest honest point against the claim. You can then answer it." data-hint="Is this a real, honest point someone could make, or is it a weak straw argument?">
+                <div class="widget-row-prompt">1. &ldquo;Mercedes cared the most about the dogs, so feeling, not judgment, is what counts.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Fair counterclaim</button>
+                    <button data-choice="1">Not a fair counterclaim</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. This is not fair. It twists the other side into something silly that no one would argue. A counterclaim should be the strongest honest point, not a weak one set up to knock down." data-hint="Would anyone actually argue this, or is it a weak version set up just to be easy to beat?">
+                <div class="widget-row-prompt">2. &ldquo;Some people think dogs do not need any food at all to pull a sled.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Fair counterclaim</button>
+                    <button data-choice="1">Not a fair counterclaim</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. This is a fair counterclaim. The skilled drivers were harsh, so someone could reasonably argue toughness, not judgment, is the key. You can answer that their toughness was guided by judgment." data-hint="Is this a real point a thoughtful reader might raise?">
+                <div class="widget-row-prompt">3. &ldquo;The skilled drivers were harsh and clubbed the dogs too, so maybe toughness is what really matters.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Fair counterclaim</button>
+                    <button data-choice="1">Not a fair counterclaim</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. This is not a counterclaim at all. It just repeats your own claim back. A counterclaim names the other side, not your own side." data-hint="Does this state the OTHER side, or just repeat your own argument?">
+                <div class="widget-row-prompt">4. &ldquo;Judgment is clearly the most important thing for survival on the trail.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Fair counterclaim</button>
+                    <button data-choice="1">Not a fair counterclaim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- One step further: naming flawed reasoning -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128269; ONE STEP FURTHER: SPOTTING FLAWED REASONING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">You just decided whether a counterclaim was fair or not. That same skill works when you are reading anyone else's argument, not just building your own. Careful readers watch for the moment when a writer's or speaker's reasoning breaks down. Here are three common ways an argument goes wrong.</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: #EEF1F8; border-left: 6px solid #E2725B; border-radius: 6px; padding: 12px 16px;">
+                <div style="font-size: 12px; color: #6b7a99; margin-bottom: 2px;">ATTACKING THE PERSON, NOT THE ARGUMENT</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">Criticizing the person who makes an argument instead of answering the argument itself. <em>Example: &ldquo;Don&rsquo;t listen to Marcus about the class schedule, he&rsquo;s always late to school.&rdquo;</em> Whether Marcus is late says nothing about whether his idea about the schedule is right.</div>
+            </div>
+            <div style="background: #EEF1F8; border-left: 6px solid #E2725B; border-radius: 6px; padding: 12px 16px;">
+                <div style="font-size: 12px; color: #6b7a99; margin-bottom: 2px;">A FALSE EITHER/OR</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">Presenting only two options as if they were the only possibilities, when more choices actually exist. <em>Example: &ldquo;Either we cancel recess completely, or the whole school stays out of control.&rdquo;</em> There are many options between those two extremes.</div>
+            </div>
+            <div style="background: #EEF1F8; border-left: 6px solid #E2725B; border-radius: 6px; padding: 12px 16px;">
+                <div style="font-size: 12px; color: #6b7a99; margin-bottom: 2px;">A HASTY GENERALIZATION</div>
+                <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">Drawing a broad conclusion from just one or two examples, without enough evidence to support it. <em>Example: &ldquo;My neighbor&rsquo;s dog barked at me once, so every dog in this neighborhood must be aggressive.&rdquo;</em> One dog&rsquo;s behavior does not prove a rule about all the others.</div>
+            </div>
+        </div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.65; margin: 14px 0 0 0;">None of these examples come from <em>The Call of the Wild</em>. They are everyday arguments so you can practice noticing the pattern before you look for it in harder reading.</p>
+    </div>
+
+    <!-- Practice: spot the flawed reasoning -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; SPOT THE FLAWED REASONING</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-question">Read each short argument below. None of them come from the novel. Decide whether the reasoning is sound or flawed, and be ready to say why. Decide in your head before you click.</div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. This is a false either/or. Turning in an essay a little late for a good reason does not make the whole class lazy. There are explanations between &ldquo;everyone is early&rdquo; and &ldquo;everyone is lazy.&rdquo;" data-hint="Are there really only two possibilities here, or is the writer skipping over other explanations?">
+                <div class="widget-row-prompt">1. &ldquo;Either everyone in class turns in their essay early, or the whole class deserves a lower grade for being lazy.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Sound reasoning</button>
+                    <button data-choice="1">Flawed reasoning</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. This is sound. It is a small, careful claim: a pattern showed up with three students, so the teacher wants to test it with more students before deciding anything bigger. It does not overclaim." data-hint="Does this claim stay careful and testable, or does it jump to a big conclusion?">
+                <div class="widget-row-prompt">2. &ldquo;Three students in our class scored higher on the quiz after using the study guide, so the teacher plans to try it with the rest of the class next week to see if the pattern holds.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Sound reasoning</button>
+                    <button data-choice="1">Flawed reasoning</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. This attacks Elena instead of her argument. Forgetting homework says nothing about whether rescheduling the field trip is actually a good idea." data-hint="Does this respond to the argument about the field trip, or does it go after the person instead?">
+                <div class="widget-row-prompt">3. &ldquo;You shouldn&rsquo;t trust Elena&rsquo;s argument that the field trip should be rescheduled. She forgot her homework twice this month.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Sound reasoning</button>
+                    <button data-choice="1">Flawed reasoning</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sentence starters -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#129520; SENTENCE FRAMES YOU CAN USE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.9;">
+            <strong>To name the counterclaim:</strong> &ldquo;Some readers might argue that&hellip;&rdquo; / &ldquo;It is true that&hellip;&rdquo;<br />
+            <strong>To answer it:</strong> &ldquo;But&hellip;&rdquo; / &ldquo;However, the text shows&hellip;&rdquo; / &ldquo;Even so&hellip;&rdquo;<br />
+            <strong>To conclude:</strong> &ldquo;In the end&hellip;&rdquo; / &ldquo;The chapter makes clear that&hellip;&rdquo;
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Quick Write 4: a counterclaim and conclusion</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">In a Word doc, write a counterclaim and conclusion for your building argument about Buck. This is the next piece of your Module 2 essay.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Friday Check-up</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Take the short cumulative quiz on this week&rsquo;s reading, grammar, and writing, then confirm your submissions.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Answering the other side does not weaken your argument. It strengthens it. A reader trusts a writer who has looked at the strongest objection and still stands by the claim.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.12 &middot; Answering the Other Side</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
