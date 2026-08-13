@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Research 1</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">The Call of the Wild</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Research 1</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Reading an informational text, then finding a source of your own</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">What transforms Buck, and what does his change reveal?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Research 1</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Real Klondike: Reading for Information, Then Finding More</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~16 min</span></div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Jack London wrote fiction, but the world Buck moves through was real. Where would you look to find out what was actually true about it?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">First you will read a short informational text about the real Klondike Gold Rush, the world behind the story. Then you will learn how to search for a source of your own on <strong>JStor</strong>, and how to tell whether a source is worth trusting. You will finish by finding one real source about a piece of that world, for your Reading Journal.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the main idea of an informational text and point to the text feature that organizes it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> search JStor with two or three key words and find a source about a real-world topic.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> ask who wrote a source, what it claims, what it rests on, and what it leaves out before I trust it.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">A device with a browser and your Canvas login.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Call of the Wild Reading Journal</strong> on OneDrive.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">The <strong>Research Starting Points</strong> reference page and the <strong>Research and JStor Access</strong> page in Canvas (links below).</div>
+        </div>
+    </div>
+
+    <!-- PART 1: informational text -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: THE REAL KLONDIKE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Read this informational text about the world London is writing into. Notice how it is organized.</p>
+
+        <div style="background: #EEF1F8; border-radius: 8px; padding: 18px 20px; margin-bottom: 14px;">
+            <div style="font-size: 16px; color: #0e1c42; margin-bottom: 4px;">Freight, Furs, and Forty Below: Supplying the Klondike Gold Rush</div>
+        </div>
+
+        <div style="font-size: 12px; color: #2A9D8F; font-weight: bold; letter-spacing: .04em; margin: 0 0 4px 0;">GETTING THERE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">In 1897, tens of thousands of people rushed toward the Klondike goldfields in Canada&rsquo;s Yukon Territory, most traveling through the port towns of Skagway and Dyea in Alaska. From there, the only way north was on foot, over mountain passes like the Chilkoot, carrying everything they would need. Canadian officials at the border required each person to bring about a ton of food and gear, roughly enough to last a year, so that the rush would not turn into a famine. Almost no one could carry a ton in one trip, so people climbed the pass again and again, ferrying their supplies load by load.</p>
+
+        <div style="font-size: 12px; color: #2A9D8F; font-weight: bold; letter-spacing: .04em; margin: 0 0 4px 0;">WHAT THEY CARRIED</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">A typical outfit was heavy on food that would not spoil: bacon, beans, flour, dried fruit, and hardtack, a hard biscuit that lasts almost indefinitely. Clothing had to survive temperatures far below zero: heavy wool layers, fur coats and hats, and mukluks, soft boots suited to deep snow. None of it was decorative. Every item had to earn its place in the pack.</p>
+
+        <div style="font-size: 12px; color: #2A9D8F; font-weight: bold; letter-spacing: .04em; margin: 0 0 4px 0;">MOVING FREIGHT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Once supplies reached the interior, sled dogs did much of the heavy work, hauling freight, mail, and passengers over frozen rivers and trails where no other transportation could get through. A strong team of dogs could move loads that would be impossible for a person on foot alone, which is exactly the kind of work Buck is bred and beaten into doing.</p>
+
+        <div style="font-size: 12px; color: #2A9D8F; font-weight: bold; letter-spacing: .04em; margin: 0 0 4px 0;">DAWSON CITY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;">By 1898, Dawson City, at the meeting of the Klondike and Yukon Rivers, had grown from a small camp into a boomtown of thousands, seemingly overnight. Much of the Yukon&rsquo;s interior was still being mapped as prospectors arrived; surveyors and explorers were still filling in the details of a region that, only a few years earlier, had barely appeared on any map at all.</p>
+
+        <div class="optima-widget ow-select" style="margin-top:16px;">
+            <div class="widget-kicker">&#9998; TRY IT &middot; NOTICE THE INFORMATIONAL TEXT</div>
+            <div class="widget-row" data-correct="1" data-hint="A main idea has to hold true across the whole text, not just one paragraph.">
+                <div class="widget-row-prompt">1. Which sentence best states the main idea of the whole text?</div>
+                <div class="widget-options">
+                    <button data-choice="0">Dawson City grew into a boomtown almost overnight.</button>
+                    <button data-choice="1" data-fb="Right. Every paragraph, the pass, the packing list, the dog teams, the boomtown, supports this one idea.">Reaching and supplying the Klondike gold rush took careful preparation, hard labor, and animals like sled dogs to move what people alone could not.</button>
+                    <button data-choice="2">Bacon and beans were the only food available in the Yukon.</button>
+                    <button data-choice="3">Mukluks were more popular than wool coats.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="2" data-hint="Look at the four short lines in capital letters. What job are they doing for the reader?">
+                <div class="widget-row-prompt">2. Which text feature organizes this page for the reader?</div>
+                <div class="widget-options">
+                    <button data-choice="0">dialogue between two characters</button>
+                    <button data-choice="1">a rhyme scheme</button>
+                    <button data-choice="2" data-fb="Right. The four short subheadings (Getting There, What They Carried, Moving Freight, Dawson City) mark each stage and make the text easy to navigate." >short subheadings marking each stage</button>
+                    <button data-choice="3">footnotes at the bottom of the page</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: JSTOR two-step -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; FINDING A SOURCE OF YOUR OWN</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; WARM-UP &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">You want to check whether something you read online about history is actually true. What do you look at first?</div>
+            <div class="widget-options">
+                <button data-response="Good instinct, and worth keeping. Now add one more step: check who wrote it and what it is based on, not just how it looks.">Whether the page looks professional</button>
+                <button data-response="Exactly the right move. Who wrote it, and what they are basing the claim on, tells you far more than how the page looks.">Who wrote it and what they are basing it on</button>
+                <button data-response="Reasonable, but popularity is not the same as accuracy. A wrong claim can be shared a lot. Check who wrote it and what it rests on instead.">How many other sites say the same thing</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;"><strong>JStor</strong> is a large digital library of articles that other experts have checked before publishing. Getting the most out of it takes two steps:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-radius: 8px; padding: 16px 18px; border-top: 4px solid #2A9D8F;">
+                <div style="font-size: 13px; color: #2A9D8F; font-weight: bold; margin-bottom: 8px;">STEP 1 &middot; JSTOR DAILY (daily.jstor.org)</div>
+                <div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Free, no login. Short, readable articles, and every one links to the scholarship behind it. Start here to find your angle.</div>
+            </div>
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-radius: 8px; padding: 16px 18px; border-top: 4px solid #C7922C;">
+                <div style="font-size: 13px; color: #C7922C; font-weight: bold; margin-bottom: 8px;">STEP 2 &middot; JSTOR (jstor.org)</div>
+                <div style="font-size: 15px; color: #1a2340; line-height: 1.55;">Follow the link into the full article, or search directly with two or three key words.</div>
+            </div>
+        </div>
+
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128273; GETTING IN, AND WHERE TO SEE THE FULL SOURCE BANK</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">The JStor login is shared and, for security, is not printed on any GitHub-hosted page. Open the <strong>Research and JStor Access</strong> page in Canvas to sign in. For a fuller list of free, reputable places to search beyond JStor, and for search-term ideas about this world, open the <strong>Research Starting Points</strong> reference page. Bookmark both.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: judge what you find -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9878;&#65039; PART 3 &middot; JUDGE WHAT YOU FIND</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">You already know how to test a character&rsquo;s argument from the <strong>How Arguments Work</strong> reference page. Testing a source you found uses the same habit of mind:</p>
+        <ol style="font-size: 17px; color: #1a2340; line-height: 1.8; margin: 0 0 10px 0; padding-left: 22px;">
+            <li><strong>Who wrote it?</strong> A scholar, a journalist, a company selling something?</li>
+            <li><strong>What does it claim?</strong> State the main point in one sentence, in your own words.</li>
+            <li><strong>What does it rest on?</strong> Primary documents and named experts, or nothing you can check?</li>
+            <li><strong>Who was it written for?</strong> A general reader, other scholars, a customer?</li>
+            <li><strong>What does it leave out?</strong> Name one thing a fuller account would need to mention.</li>
+        </ol>
+        <p style="font-size: 15px; color: #6b7a99; line-height: 1.55; margin: 0;">Want more practice telling a strong source from a weak one? The <strong>Research Starting Points</strong> reference page has two more examples to try.</p>
+    </div>
+
+    <!-- PART 4: gentle research task -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#9999;&#65039; YOUR TURN: FIND ONE REAL SOURCE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Pick <strong>one</strong> topic from the world of the book, then go find <strong>one or two</strong> real sources about it using JStor, JStor Daily, or the Research Starting Points bank:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+            <span style="background:#EEF1F8; border:1px solid #D0D9E8; border-radius:14px; padding:6px 14px; font-size:14px; color:#0e1c42;">sled dogs</span>
+            <span style="background:#EEF1F8; border:1px solid #D0D9E8; border-radius:14px; padding:6px 14px; font-size:14px; color:#0e1c42;">gold rush food</span>
+            <span style="background:#EEF1F8; border:1px solid #D0D9E8; border-radius:14px; padding:6px 14px; font-size:14px; color:#0e1c42;">cold weather clothing</span>
+            <span style="background:#EEF1F8; border:1px solid #D0D9E8; border-radius:14px; padding:6px 14px; font-size:14px; color:#0e1c42;">the Chilkoot Pass</span>
+            <span style="background:#EEF1F8; border:1px solid #D0D9E8; border-radius:14px; padding:6px 14px; font-size:14px; color:#0e1c42;">dogsled freight</span>
+            <span style="background:#EEF1F8; border:1px solid #D0D9E8; border-radius:14px; padding:6px 14px; font-size:14px; color:#0e1c42;">1897 Dawson City</span>
+            <span style="background:#EEF1F8; border:1px solid #D0D9E8; border-radius:14px; padding:6px 14px; font-size:14px; color:#0e1c42;">mapping the Yukon</span>
+        </div>
+
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px; margin: 0 0 14px 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; ADD THIS TO THE WEEK 4 SECTION</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">For your one or two sources, record:</p>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">
+                <li>The topic you chose, and the title and site of each source.</li>
+                <li>One fact or claim each source makes, in your own words.</li>
+                <li>A one-line evaluation of one source: who wrote it, and what it rests on.</li>
+            </ol>
+        </div>
+        <p style="font-size: 15px; color: #6b7a99; line-height: 1.55; margin: 0;">This is a light, exploratory search, not a research paper. One or two sources is enough. Your teacher reviews the Journal at the module checkpoint, not this task on its own.</p>
+    </div>
+
+    <!-- AI callout -->
+    <div style="background: #FDECEC; border-left: 5px solid #C0392B; border-top: 3px solid #E74C3C; border-radius: 6px; padding: 14px 20px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #8A1F16; margin-bottom: 8px;">&#9888;&#65039; WORTH KNOWING &middot; AI AND SOURCES</div>
+        <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">An AI tool can help you turn your topic into search words. It cannot tell you what sources actually exist, and it sometimes invents titles and authors that sound real but are not. Only record a source you found and opened yourself.</div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Log your source in the Reading Journal, then move on to Grammar 1</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Bookmark the Research Starting Points page and the Research and JStor Access page in Canvas. You will use them again whenever a later lesson asks you to go find something out.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">London invented Buck, but he did not invent the cold, the passes, or the work the dogs really did. Knowing where the real world ends and the story begins is part of reading well, and knowing how to check a claim for yourself is a skill that outlasts this book.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Research 1 &middot; The Real Klondike</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
