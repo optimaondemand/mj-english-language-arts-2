@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; How Arguments Work</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">All Modules</div>
+        <div style="font-size: 12px; color: #666;">Keep this page bookmarked</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Page Type</div>
+        <div style="font-size: 17px; color: #0e1c42;">Reference Page</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Three ways people reason</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">When someone tries to convince you, how do you tell strong reasoning from weak?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Reference Page</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">How Arguments Work</div>
+                <div style="font-size: 16px; color: #666;">Three ways people reason, and how to judge them</div>
+            </div>
+            <span style="background: #C7922C; color: #ffffff; font-size: 13px; padding: 4px 12px; border-radius: 12px; white-space: nowrap;">&#9201; ~12 min</span>
+        </div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; WHY THIS PAGE EXISTS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Characters in the books you read spend a great deal of time trying to convince each other. So will people you meet for the rest of your life.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">This page gives you three names for three ways of reasoning. Once you have them, you will start seeing them everywhere: in Gulliver&rsquo;s attempts to impress a king, in a character defending a choice, in an advertisement, in an argument at your own dinner table. You will come back to this page all year. Bookmark it.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS PAGE YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell the difference between reasoning from a rule, reasoning from examples, and reasoning to the likeliest explanation.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what makes each kind strong and where each one tends to break.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use four questions to weigh any argument a character makes in the books we read.</div>
+        </div>
+    </div>
+
+    <!-- The three kinds -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128161; THE ONE IDEA TO HOLD ONTO &middot; THREE WAYS TO REASON</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 16px;">Every argument moves in one of three directions. Learn the direction, not just the label.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+            <div style="flex: 1; min-width: 250px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 28px;">&#128273;</div>
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin: 6px 0;">Deductive: from the rule down</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">You start with a rule everyone accepts, add a fact, and the conclusion has to follow. If the rule and the fact are true, the conclusion cannot be false.</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5; margin-top: 10px; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 8px;"><em>All whales are mammals. A beluga is a whale. So a beluga is a mammal.</em></div>
+            </div>
+            <div style="flex: 1; min-width: 250px; background: #EEF1F8; border-left: 6px solid #2A9D8F; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 28px;">&#128200;</div>
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin: 6px 0;">Inductive: from examples up</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">You start with things you have actually seen and reason toward a general conclusion. More examples make it stronger, but it is never airtight.</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5; margin-top: 10px; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 8px;"><em>The bakery has had a line out the door every morning this month. So the bakery is probably popular.</em></div>
+            </div>
+            <div style="flex: 1; min-width: 250px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 28px;">&#128269;</div>
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin: 6px 0;">Abductive: the best available guess</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5;">You see something and reason back to the likeliest explanation. Detectives do this. It is useful, and it is the easiest of the three to get wrong.</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.5; margin-top: 10px; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 8px;"><em>The kitchen floor is wet and the window is open. It probably rained in.</em></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The hinge: where abduction goes wrong -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128269; WHERE THE THIRD KIND GOES WRONG</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Reasoning to the likeliest explanation is genuinely useful. It is also the one that slides most easily into a bad conclusion, because a guess can feel finished before it has been checked.</p>
+        <div style="background: #FDECEC; border-left: 5px solid #C0392B; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 15px; color: #8A1F16; margin-bottom: 8px;">Watch this one slip:</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;"><em>&ldquo;My grandparents all have gray hair. So all elderly people have gray hair.&rdquo;</em></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Three people is not enough people. The guess ran straight past &ldquo;probably&rdquo; and landed on &ldquo;all.&rdquo; Watch for this overreach as you read this year, and expect to meet it head on when we look at weak reasoning during <em>The Call of the Wild</em>. A good explanation stays a candidate until you have checked it against more than the handful of cases that suggested it.</p>
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; THE TEST THAT CATCHES IT</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">Ask: <strong>what else would explain this just as well?</strong> If you can name a second explanation the speaker never considered, the argument is not finished yet.</div>
+        </div>
+    </div>
+
+    <!-- Practice widget -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; WHICH DIRECTION IS THE REASONING GOING?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Read each one and decide which way it moves. Decide in your head before you choose.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="1" data-fb="Right. This starts from things actually observed, four cold mornings, and reasons upward to a general claim. More mornings would make it stronger, but it is still a probability, not a certainty." data-hint="Is it starting from a rule, or from things someone has actually seen?">
+                <div class="widget-row-prompt">1. &ldquo;It has frozen every morning this week, so it will probably freeze tomorrow.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">from a rule down</button>
+                    <button data-choice="1">from examples up</button>
+                    <button data-choice="2">to the likeliest explanation</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. You are looking at a result, the empty plate, and reasoning backward to what most likely caused it. Useful, and worth checking: what else would explain it?" data-hint="Something already happened. The speaker is guessing at the cause.">
+                <div class="widget-row-prompt">2. &ldquo;The plate is empty and the dog looks guilty. The dog ate it.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">from a rule down</button>
+                    <button data-choice="1">from examples up</button>
+                    <button data-choice="2">to the likeliest explanation</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. It begins with a rule taken as settled and applies it to one case. If both the rule and the fact hold, the conclusion is locked in." data-hint="It opens with something stated as always true.">
+                <div class="widget-row-prompt">3. &ldquo;Every student in this course keeps a Reading Journal. Maya is in this course. So Maya keeps a Reading Journal.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">from a rule down</button>
+                    <button data-choice="1">from examples up</button>
+                    <button data-choice="2">to the likeliest explanation</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. Two examples, reasoning upward to a claim about a whole group. Notice how few examples it rests on. That is exactly where this kind gets weak." data-hint="Count how many cases it is built on, and what it concludes about.">
+                <div class="widget-row-prompt">4. &ldquo;The two books we have read this year both end sadly, so this author&rsquo;s books always end sadly.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">from a rule down</button>
+                    <button data-choice="1">from examples up</button>
+                    <button data-choice="2">to the likeliest explanation</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- The four questions: the recurring engine -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 14px;">&#128221; THE FOUR QUESTIONS &middot; USE THESE ALL YEAR</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Whenever a character in one of our books tries to convince someone, ask these four. You will see them again in every module.</p>
+        <ol style="font-size: 17px; color: #1a2340; line-height: 1.8; margin: 0; padding-left: 22px;">
+            <li><strong>What are they trying to get?</strong> Name what the speaker wants the listener to believe or do.</li>
+            <li><strong>What are they resting it on?</strong> A rule, a set of examples, or a guess about a cause?</li>
+            <li><strong>Who are they talking to?</strong> People shape an argument around the person in front of them. Notice what the speaker assumes that listener already believes.</li>
+            <li><strong>What did they leave out?</strong> Name one thing that would weaken the argument, and ask why it never came up.</li>
+        </ol>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You now have three names and four questions. That is enough to start taking arguments apart. The next time a character in one of our books tries to win someone over, you will not just notice that they are arguing. You will be able to say how, and whether it holds.</p>
+    </div>
+
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Reference Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Reference &middot; How Arguments Work</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
