@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade ELA &mdash; Lesson 5.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 4</div>
+        <div style="font-size: 12px; color: #666;">The Outsiders</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.02</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Sequence of Events and the Theme of Family</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Week</div>
+        <div style="font-size: 16px; color: #0e1c42;">Week 5 &middot; Day 2</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Sequence of Events and the Theme of Family</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; ~14 min</div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">When you map the events in order, what does the sequence reveal about what actually holds these characters together?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">In Chapters 9 and 10, events build quickly toward a crisis. In this lesson you will lay those events out in the order they happen, identify the moment that changes everything, and ask what that sequence tells you about the novel's central theme: family as something people choose rather than something they are simply born into.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> map the sequence of key events in Chapters 9 and 10 in chronological order.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how the order of events shapes the reader's understanding of the climax.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 0;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> identify one relationship in these chapters that illustrates the novel's idea of family as something beyond biology.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your copy of <em>The Outsiders</em> by S. E. Hinton. Read Chapters 9 and 10 before completing this lesson. [Teacher: link the approved student copy or purchase/library access information here.]</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 0; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Reading Journal (Week 5 section open and ready).</div>
+        </div>
+    </div>
+
+    <!-- ===== CORE CONCEPT VISUAL: SEQUENCE CHAIN ===== -->
+    <div style="margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; letter-spacing: 0.5px; margin-bottom: 10px; padding-left: 4px;">&#128218; THE CORE IDEA</div>
+        <!-- Sequence Chain Visual -->
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 4px solid #E2725B; border-radius: 10px; padding: 24px 28px;">
+            <div style="font-size: 19px; color: #0E1C42; font-weight: 600; margin-bottom: 6px;">The Sequence Chain</div>
+            <div style="font-size: 15px; color: #555; margin-bottom: 22px;">Order matters. The same events in a different order would tell a completely different story.</div>
+            <!-- Chain boxes -->
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0;">
+                <!-- Box 1 -->
+                <div style="background: #FEF3EF; border: 2px solid #E2725B; border-radius: 8px; padding: 14px 18px; min-width: 130px; text-align: center; flex: 1;">
+                    <div style="font-size: 22px; color: #E2725B; font-weight: 700; margin-bottom: 4px;">1</div>
+                    <div style="font-size: 14px; color: #0E1C42; font-weight: 600;">Event 1</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 4px;">Something happens</div>
+                </div>
+                <!-- Arrow -->
+                <div style="font-size: 26px; color: #E2725B; padding: 0 8px; flex-shrink: 0;">&#8594;</div>
+                <!-- Box 2 -->
+                <div style="background: #FEF3EF; border: 2px solid #E2725B; border-radius: 8px; padding: 14px 18px; min-width: 130px; text-align: center; flex: 1;">
+                    <div style="font-size: 22px; color: #E2725B; font-weight: 700; margin-bottom: 4px;">2</div>
+                    <div style="font-size: 14px; color: #0E1C42; font-weight: 600;">Event 2</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 4px;">It leads to this</div>
+                </div>
+                <!-- Arrow -->
+                <div style="font-size: 26px; color: #E2725B; padding: 0 8px; flex-shrink: 0;">&#8594;</div>
+                <!-- Box 3 -->
+                <div style="background: #FEF3EF; border: 2px solid #E2725B; border-radius: 8px; padding: 14px 18px; min-width: 130px; text-align: center; flex: 1;">
+                    <div style="font-size: 22px; color: #E2725B; font-weight: 700; margin-bottom: 4px;">3</div>
+                    <div style="font-size: 14px; color: #0E1C42; font-weight: 600;">Event 3</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 4px;">Tension builds</div>
+                </div>
+                <!-- Arrow -->
+                <div style="font-size: 26px; color: #E2725B; padding: 0 8px; flex-shrink: 0;">&#8594;</div>
+                <!-- Box 4: The Turn -->
+                <div style="background: #0E1C42; border: 2px solid #0E1C42; border-radius: 8px; padding: 14px 18px; min-width: 130px; text-align: center; flex: 1;">
+                    <div style="font-size: 22px; color: #55C8E8; font-weight: 700; margin-bottom: 4px;">&#9733;</div>
+                    <div style="font-size: 14px; color: #FFFFFF; font-weight: 600;">The Turn</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px;">Everything changes here</div>
+                </div>
+            </div>
+            <!-- Note below chain -->
+            <div style="background: #E8F6FB; border-left: 4px solid #2196D0; border-radius: 5px; padding: 10px 16px; margin-top: 18px; font-size: 15px; color: #0E1C42; line-height: 1.55;">
+                <strong>The turn</strong> is the event that changes everything that follows. Once it happens, the characters cannot go back to how things were before.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PART 1: READ & NOTICE (Reflective Check-In) ===== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px; letter-spacing: 0.5px;">&#128218; PART 1 &middot; READ &amp; NOTICE <span style="background: #E2725B; color: #fff; border-radius: 10px; padding: 2px 10px; font-size: 11px; margin-left: 8px;">5 min</span></div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 10px 0;">Before You Map</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 16px 0;">Take a moment to think about something before you start tracking events. Does the order in which a story's events happen actually matter? Could you shuffle them around and get the same effect? There is no single right answer here. Pick the response that fits your current thinking best, then read the explanation that appears.</p>
+
+        <!-- ow-reflect widget -->
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128172; CHECK-IN &middot; No wrong answer</div>
+            <div class="widget-question">Before you map the sequence, think: does the order in which a story's events happen change how you feel about them?</div>
+            <div class="widget-options">
+                <button data-response="Yes, order shapes everything. A story that begins with loss feels different from one that ends with it, even if the events are identical. The sequence controls how readers build understanding and feel tension. Good instinct to notice that.">Yes, the order shapes how I feel about events.</button>
+                <button data-response="That's worth exploring. Some stories do shuffle time deliberately, and it changes the emotional effect in interesting ways. As you track this novel's sequence, notice how the author's chosen order pulls you toward the climax.">Sometimes, but not always. It depends on the story.</button>
+                <button data-response="You're thinking like an editor. In some genres, a flat list of facts could work that way. But in fiction, the order a writer chooses is itself a decision that carries meaning. Watch for that as you work through Chapters 9 and 10.">Not really. Events are events no matter when they're told.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ===== PART 2: READ & NOTICE (Teaching + Reading Journal) ===== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px; letter-spacing: 0.5px;">&#128218; PART 2 &middot; READ &amp; NOTICE <span style="background: #E2725B; color: #fff; border-radius: 10px; padding: 2px 10px; font-size: 11px; margin-left: 8px;">4 min</span></div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 10px 0;">Why Sequence Matters</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Tracking the sequence of events in a novel is not the same as summarizing the plot. It is about understanding cause and effect: why does one event make the next possible? When you list events in order, patterns become visible that are easy to miss when you are reading quickly.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">In a story with a clear climax, the sequence also shows you how tension builds. Events that come just before the turning point matter more than they seem in the moment, because they are setting up the conditions for everything that follows. The order is not random; the author made choices about what to show first.</p>
+
+        <!-- Summary of key events from Ch. 9-10 -->
+        <div style="background: #F4F9FC; border: 1px solid #C5DCE5; border-left: 5px solid #E2725B; border-radius: 7px; padding: 16px 20px; margin-bottom: 18px;">
+            <div style="font-size: 11px; color: #E2725B; margin-bottom: 10px; letter-spacing: 0.4px;">&#128203; KEY EVENTS: CHAPTERS 9 AND 10 (in order)</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="min-width: 24px; height: 24px; background: #E2725B; color: #fff; border-radius: 50%; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">1</div>
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The rival gangs prepare to meet for the rumble. Both sides ready themselves for a fight that has been building for weeks, each group drawing on loyalty to their own members to push forward despite fear.</div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="min-width: 24px; height: 24px; background: #E2725B; color: #fff; border-radius: 50%; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">2</div>
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The rumble takes place. One side eventually forces the other to retreat, and the narrator feels the adrenaline of winning, but the victory feels hollow almost immediately.</div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="min-width: 24px; height: 24px; background: #E2725B; color: #fff; border-radius: 50%; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">3</div>
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A trusted character who had been seriously injured earlier in the novel dies. The news arrives after the rumble, shifting the emotional register of the story entirely from action to grief.</div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="min-width: 24px; height: 24px; background: #E2725B; color: #fff; border-radius: 50%; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">4</div>
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A second death follows quickly. Another central character, who has been struggling to control his own rage throughout the novel, reaches a breaking point and acts in a way that cannot be undone.</div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="min-width: 24px; height: 24px; background: #E2725B; color: #fff; border-radius: 50%; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;">5</div>
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The narrator, in deep shock, is brought home. The surviving members of his group gather around him. In the quiet of this scene, after so much violence, what holds them together is visible: it is not blood relation but shared grief and loyalty.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reading Journal prompt -->
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 18px; margin-bottom: 0;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 8px;">&#128221; READING JOURNAL &middot; Week 5</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.65;">Open the Week 5 section of your Reading Journal. List the 4 most important events from Chapters 9 and 10 in the order they happen. Circle the one you consider the turning point and write one sentence explaining your choice.</div>
+        </div>
+    </div>
+
+    <!-- ===== PART 3: READ & NOTICE (Evaluative Widget) ===== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px; letter-spacing: 0.5px;">&#128218; PART 3 &middot; READ &amp; NOTICE <span style="background: #E2725B; color: #fff; border-radius: 10px; padding: 2px 10px; font-size: 11px; margin-left: 8px;">3 min</span></div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 10px 0;">Does the Sequence Matter Here?</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Read each statement below. For each one, decide whether the order of events in Chapters 9 and 10 affects the meaning in the way the statement describes.</p>
+
+        <!-- ow-select widget -->
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9997;&#65039; CHECK YOUR THINKING &middot; Select the best answer for each row</div>
+            <div class="widget-question">Does the sequence matter here?</div>
+
+            <!-- Row 1: data-correct="2" (third button) -->
+            <div class="widget-row" data-correct="2">
+                <div class="widget-row-prompt">If the deaths in Chapter 10 had been revealed before the rumble, what would that change about how the reader experiences the fighting in Chapter 9?</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Think about suspense. If you already knew the outcome, would the rumble feel as tense?">Nothing. The events would feel the same.</button>
+                    <button data-choice="1" data-fb="The setting doesn't change based on the order of revelation. Consider the emotional effect on the reader instead.">The setting would feel different.</button>
+                    <button data-choice="2" data-fb="Correct. Knowing the deaths first would drain the tension from the rumble. The reader's experience of the fighting depends on not knowing what follows. That's why sequence is a craft choice, not just a plot list.">The rumble would feel less tense because the outcome would already be known.</button>
+                </div>
+            </div>
+
+            <!-- Row 2: data-correct="0" (first button) -->
+            <div class="widget-row" data-correct="0">
+                <div class="widget-row-prompt">The two deaths in Chapter 10 happen close together in the sequence. What does placing them so close to each other do for the reader?</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Yes. Stacking two major losses so close together creates a sense of accumulating grief that neither death alone would produce. The sequence makes the emotional weight heavier than the sum of its parts.">It makes the grief feel overwhelming rather than manageable.</button>
+                    <button data-choice="1" data-fb="Closer together actually intensifies the effect rather than separating them emotionally. Think about how rapidly the narrator has to process both losses.">It lets the reader process each death separately.</button>
+                    <button data-choice="2" data-fb="Actually, this proximity heightens the impact. Consider what it would feel like to lose two people close together versus far apart.">It reduces the impact of each individual death.</button>
+                </div>
+            </div>
+
+            <!-- Row 3: data-correct="1" (second button) -->
+            <div class="widget-row" data-correct="1">
+                <div class="widget-row-prompt">The rumble comes before the deaths in Chapter 10, not after. Why might the author have chosen this order?</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="The real contrast the author builds is between the hollow 'win' of the rumble and the loss that follows, not about geographic location.">To show that the rumble happened in a different part of town.</button>
+                    <button data-choice="1" data-fb="Right. The rumble offers a moment of group victory that the deaths immediately undercut. Putting the deaths first would have made the rumble feel pointless before it began, rather than allowing the reader to feel the contrast between victory and grief.">To create a contrast: the temporary feeling of winning, followed by irreversible loss.</button>
+                    <button data-choice="2" data-fb="Actually, the rumble is placed first deliberately. The sequence creates an emotional arc from action to consequence.">Because the deaths are less important than the rumble.</button>
+                </div>
+            </div>
+
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ===== PART 4: MAKE & APPLY (Family Theme) ===== -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 14px; letter-spacing: 0.5px;">&#9998;&#65039; PART 4 &middot; MAKE &amp; APPLY <span style="background: #2A9D8F; color: #fff; border-radius: 10px; padding: 2px 10px; font-size: 11px; margin-left: 8px;">4 min</span></div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 10px 0;">Family as a Theme: Not Just Who You Are Born To</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">In Chapters 9 and 10, the novel shows the idea of family in a way that has nothing to do with who is biologically related to whom. The characters who show up for each other in crisis, who stay when things are at their worst, who carry someone's grief alongside their own: these are the relationships the novel holds up as family. Loyalty, protection, and belonging are the three forces that define it.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 18px 0;">This theme matters for your Module 4 final project. When you write your literary-analysis essay, you will need to point to specific relationships as evidence. These two chapters give you some of the strongest examples in the entire novel.</p>
+
+        <!-- Commit-then-reveal -->
+        <div style="background: #EEF9F7; border: 1px solid #2A9D8F; border-radius: 8px; padding: 16px 20px; margin-bottom: 0;">
+            <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 10px; letter-spacing: 0.4px;">&#9998; IN YOUR NOTEBOOK</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6; margin-bottom: 14px;">Think of one pair of characters from Chapters 9 and 10 whose relationship shows what family means in this novel. Write their names and one sentence explaining how their relationship shows loyalty, protection, or belonging.</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.65; background: #FFFFFF; padding: 14px 18px; border-radius: 6px; border-left: 4px solid #2A9D8F;">
+                In these chapters, the novel distinguishes between the people a character is born to and the people a character would stay for. The relationships that fit the novel's idea of family are the ones built through shared experience and voluntary loyalty: showing up when it costs something, staying when leaving would be easier, carrying a grief that belongs to someone else. The novel suggests that chosen family can carry more weight than biological family, precisely because it is chosen again and again under pressure, rather than being a given.
+            </div>
+        </div>
+    </div>
+
+    <!-- AI-Awareness Callout -->
+    <div style="background: #F4F6FA; border-left: 5px solid #2196D0; border: 1px solid #C5DCE5; border-radius: 8px; padding: 16px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px; letter-spacing: 0.4px;">&#129302; AI AND SEQUENCE WORK</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.65;">An AI tool can generate a timeline or list of events from a text in seconds. That might save you time on a first draft. What it cannot do is decide which event is the turning point. That requires reading carefully and understanding what changes for the characters at that moment: their knowledge, their choices, their sense of what is possible. The analytical judgment is yours to make.</div>
+    </div>
+
+    <!-- Required Notice -->
+    <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+        <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#9432; REQUIRED NOTICE</div>
+        <div style="font-size: 15px; color: #0E1C42; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 0;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>W5 VR 1: Turning Points Station</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">In your VR headset, you will build a simple sequence display showing the key turning points you mapped in this lesson. Your work here feeds directly into the Module 4 final project. Due Day 3.</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Q3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Q3 &middot; Module 4 &middot; The Outsiders &middot; Lesson 5.02</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

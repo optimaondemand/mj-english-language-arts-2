@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Grammar 2</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 4B</div>
+        <div style="font-size: 12px; color: #666;">A Midsummer Night&rsquo;s Dream</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Grammar 2</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Semicolons, Colons, and Dashes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 15px; color: #0e1c42;">Everyone in this play tells a story about what happened in the wood. Whose account can we trust, and how would we know?</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Grammar 2</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Semicolons, Colons, and Dashes: Marks That Do the Work of Words</div>
+                <div style="font-size: 16px; color: #666;">Lesson</div>
+            </div>
+            <span style="background: #C7922C; color: #ffffff; font-size: 13px; padding: 4px 12px; border-radius: 12px; white-space: nowrap;">&#9201; ~12 min</span>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128221; TODAY&rsquo;S FOCUS</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Some punctuation marks do the work of a whole word. Today you will learn when to use a semicolon, a colon, and a dash. Each one has a specific job, and choosing the right one changes how your sentence feels.</div>
+    </div>
+
+    <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 8px;">&#128218; THIS WEEK&rsquo;S SENTENCE (original example)</div>
+        <div style="font-size: 19px; color: #0e1c42; font-style: italic; line-height: 1.6;">&ldquo;Egeus made one demand: Hermia must marry Demetrius; if she refused, the law offered only two paths -- death or a convent.&rdquo;</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; WARM-UP</div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">Before the lesson, how confident are you about semicolons and colons? (No wrong answer.)</div>
+            <div class="widget-options">
+                <button data-response="Good. Use today to sharpen the rule for semicolons in particular: they are easy to misplace.">&#128077; Pretty confident</button>
+                <button data-response="Perfect spot to be. Each mark has a specific job, and by the end you will have a clear test for each one.">&#129300; Somewhat sure</button>
+                <button data-response="That is exactly why we have this lesson. We start with one sentence and one mark at a time. By the end it will click.">&#129488; Honestly not sure</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE THREE MARKS AND THEIR JOBS</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px;">
+            <div style="flex: 1; min-width: 200px; background: #FDF3E3; border-left: 4px solid #E2725B; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 22px; color: #E2725B; font-weight: bold; margin-bottom: 4px;">Semicolon &nbsp;;</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.6; margin-bottom: 6px;">Joins two complete, closely related sentences.</div>
+                <div style="font-size: 13px; color: #666; font-style: italic;">&ldquo;The Duke ruled quickly; the court had no more questions.&rdquo;</div>
+            </div>
+            <div style="flex: 1; min-width: 200px; background: #EEF1F8; border-left: 4px solid #2A9D8F; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 22px; color: #2A9D8F; font-weight: bold; margin-bottom: 4px;">Colon &nbsp;:</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.6; margin-bottom: 6px;">Introduces a list or explanation after a complete sentence.</div>
+                <div style="font-size: 13px; color: #666; font-style: italic;">&ldquo;Hermia had three options: obey, marry, or refuse.&rdquo;</div>
+            </div>
+            <div style="flex: 1; min-width: 200px; background: #EEF1F8; border-left: 4px solid #0E1C42; border-radius: 8px; padding: 16px;">
+                <div style="font-size: 22px; color: #0E1C42; font-weight: bold; margin-bottom: 4px;">Dash &nbsp;(--)</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.6; margin-bottom: 6px;">Creates emphasis or a sharp, dramatic pause. Use sparingly.</div>
+                <div style="font-size: 13px; color: #666; font-style: italic;">&ldquo;She had one path left -- her own choice.&rdquo;</div>
+            </div>
+        </div>
+        <div style="background: #FDF3E3; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #1a2340; line-height: 1.6;">Note: in typed student writing, the long dash mark is written as two hyphens (--), which is how it appears in this lesson. Use it sparingly: one or two per page at most.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; HOW TO USE EACH MARK: ASK QUESTIONS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The surest way to choose the right mark is to ask questions about what each part of your sentence is doing. Watch how it works on this week&rsquo;s sentence.</p>
+        <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 14px 0;">
+            <li><strong>What comes right after the first punctuation mark?</strong> &nbsp;&ldquo;Hermia must marry Demetrius,&rdquo; a complete sentence explaining the demand. The colon signals that an explanation is coming after a complete statement.</li>
+            <li><strong>Could a period go there instead?</strong> &nbsp;Yes, but the colon shows the reader that what follows explains exactly what the demand was, which is a tighter connection than a period allows.</li>
+            <li><strong>What joins the second and third parts?</strong> &nbsp;A semicolon. &ldquo;Hermia must marry Demetrius&rdquo; and &ldquo;if she refused, the law offered only two paths&rdquo; can both stand as complete sentences on their own, and they are closely related, so the semicolon correctly links them.</li>
+            <li><strong>Where does the dash create emphasis?</strong> &nbsp;Right before the final phrase, &ldquo;death or a convent.&rdquo; The dash sets that phrase apart and gives it a sharper, more dramatic weight than a comma would.</li>
+        </ol>
+
+        <div style="background: #EEF1F8; border-radius: 8px; padding: 16px 18px; margin: 0 0 12px 0;">
+            <div style="font-size: 12px; color: #6b7a99; margin-bottom: 10px;">Label what you found:</div>
+            <div style="font-size: 17px; color: #0e1c42; line-height: 2.2; overflow-x: auto;">
+                <span style="display:inline-block; text-align:center; margin:0 3px;">Egeus made one demand</span>
+                <span style="display:inline-block; text-align:center; margin:0 3px;">:<br /><span style="font-size:11px; color:#E2725B;">colon (explanation follows)</span></span>
+                <span style="display:inline-block; text-align:center; margin:0 3px;">Hermia must marry Demetrius</span>
+                <span style="display:inline-block; text-align:center; margin:0 3px;">;<br /><span style="font-size:11px; color:#2A9D8F;">semicolon (joins two full sentences)</span></span>
+                <span style="display:inline-block; text-align:center; margin:0 3px;">if she refused, the law offered only two paths</span>
+                <span style="display:inline-block; text-align:center; margin:0 3px;">--<br /><span style="font-size:11px; color:#0E1C42;">dash (emphasis)</span></span>
+                <span style="display:inline-block; text-align:center; margin:0 3px;">death or a convent.</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; YOUR TURN: CHOOSE THE RIGHT MARK</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9889; TRY IT &middot; WHAT IS THIS MARK DOING?</div>
+            <div class="widget-question">Each sentence below is an original example. Decide what the punctuation mark does. Decide in your head before you click.</div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. Both parts are complete sentences, and a semicolon correctly joins two closely related independent clauses." data-hint="Can both sides stand alone as a complete sentence? If yes, a semicolon can join them.">
+                <div class="widget-row-prompt">1. &ldquo;Lysander made his plan; Hermia agreed to it at once.&rdquo; What does the semicolon do?</div>
+                <div class="widget-options">
+                    <button data-choice="0">It introduces a list.</button>
+                    <button data-choice="1">It adds a dramatic pause at the end.</button>
+                    <button data-choice="2">It joins two closely related complete sentences.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. The colon follows a complete sentence and introduces the specific thing she wanted, which is the explanation the sentence has been building toward." data-hint="What comes after the colon? Is it a list or an explanation that follows a complete statement?">
+                <div class="widget-row-prompt">2. &ldquo;Helena wanted only one thing: Demetrius&rsquo;s attention.&rdquo; What does the colon do?</div>
+                <div class="widget-options">
+                    <button data-choice="0">It introduces what Helena wanted.</button>
+                    <button data-choice="1">It joins two sentences.</button>
+                    <button data-choice="2">It adds a dramatic pause at the very end.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. Replacing the comma with a dash before the final word would sharpen and dramatize that moment, making the reader feel the weight of it more forcefully." data-hint="A dash creates emphasis and a sharp break. How would the sentence feel different with a dash instead of a comma?">
+                <div class="widget-row-prompt">3. &ldquo;The wood outside Athens held one thing neither of them expected, danger.&rdquo; If the writer replaced the comma before &lsquo;danger&rsquo; with a dash, what effect would it create?</div>
+                <div class="widget-options">
+                    <button data-choice="0">A signal that a list is coming.</button>
+                    <button data-choice="1">Stronger emphasis on the final word.</button>
+                    <button data-choice="2">A softer, quieter tone.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#9999;&#65039; APPLY IT IN YOUR WRITING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">In your Reading Journal, write two original sentences: one using a semicolon correctly to join two related sentences, and one using a colon to introduce a list. Then write a third sentence that uses a dash (typed as two hyphens) for emphasis. Label each mark in the margin: semicolon, colon, or dash.</p>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Grammar POP! Quiz</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A short auto-graded quiz covering both this week&rsquo;s grammar topics: verb tenses and semicolons, colons, and dashes. Open it in Canvas after this lesson.</div>
+            </div>
+        </div>
+    </div>
+
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Grammar 2 &middot; Semicolons, Colons, and Dashes: Marks That Do the Work of Words</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

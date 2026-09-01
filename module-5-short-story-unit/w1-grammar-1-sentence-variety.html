@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar 1 — Sentence Variety | 7th Grade ELA</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+
+    /* Header */
+    .site-header { background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 24px 32px; display: flex; align-items: center; gap: 18px; }
+    .logo-circle { width: 52px; height: 52px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-owl { font-size: 28px; line-height: 1; }
+    .header-text { flex: 1; }
+    .header-school { font-size: 28px; color: #ffffff; font-weight: 700; line-height: 1.1; }
+    .header-tagline { font-size: 12px; color: #55C8E8; letter-spacing: 0.5px; margin-top: 2px; }
+    .header-course { font-size: 36px; color: #ffffff; font-weight: 800; margin-top: 6px; line-height: 1.1; }
+
+    /* Metadata strip */
+    .meta-strip { background: #EEF1F8; border-bottom: 1px solid #D0D9E8; padding: 10px 32px; font-size: 13px; color: #4a5568; letter-spacing: 0.3px; }
+
+    /* Content area */
+    .content-area { padding: 28px 32px 40px; }
+
+    /* Title card */
+    .title-card { background: #EDECF7; border-radius: 10px; padding: 22px 26px; margin-bottom: 22px; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .title-card .kicker { font-size: 12px; color: #6B63A0; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+    .title-card h1 { font-size: 30px; color: #0E1C42; font-weight: 800; margin: 0; }
+    .time-pill { background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; white-space: nowrap; align-self: flex-start; }
+
+    /* Section cards */
+    .section-card { border-radius: 10px; overflow: hidden; margin-bottom: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .section-card-head { padding: 12px 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; }
+    .section-card-head.gold { background: #C7922C; }
+    .section-card-head.coral { background: #E2725B; }
+    .section-card-head.teal { background: #2A9D8F; }
+    .section-card-body { padding: 18px 20px; background: #ffffff; }
+
+    /* Sentence-length visual */
+    .length-split { display: flex; gap: 16px; flex-wrap: wrap; margin: 10px 0; }
+    .length-panel { flex: 1; min-width: 260px; border-radius: 8px; overflow: hidden; }
+    .length-panel-head { padding: 10px 16px; font-size: 14px; font-weight: 700; letter-spacing: 0.4px; color: #ffffff; text-transform: uppercase; }
+    .length-panel-head.coral { background: #E2725B; }
+    .length-panel-head.teal { background: #2A9D8F; }
+    .length-panel-body { background: #EEF1F8; padding: 16px; font-size: 14px; color: #1a2340; line-height: 1.6; }
+    .length-panel-body .example-sentence { font-style: italic; font-size: 15px; font-weight: 600; color: #0E1C42; display: block; margin-bottom: 6px; }
+    .length-panel-body .attribution { font-size: 12px; color: #6B63A0; margin-bottom: 10px; }
+
+    /* Classified sentence */
+    .classified-box { background: #EEF1F8; border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; }
+    .classified-box .sent-title { font-size: 12px; font-weight: 700; color: #6B63A0; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .classified-words { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+    .classified-word { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .word-text { font-size: 17px; font-weight: 700; color: #0E1C42; }
+    .word-label { font-size: 11px; color: #ffffff; padding: 2px 8px; border-radius: 4px; white-space: nowrap; font-weight: 600; }
+    .label-sn { background: #2A9D8F; }
+    .label-v { background: #E2725B; }
+    .label-av { background: #E2725B; }
+    .label-adv { background: #C7922C; }
+    .label-art { background: #6B63A0; }
+    .label-op { background: #555; }
+    .label-pp { background: #555; }
+    .label-p { background: #9B59B6; }
+    .label-conj { background: #2196D0; }
+    .label-on { background: #2A9D8F; }
+    .label-hv { background: #E2725B; }
+    .label-mv { background: #E2725B; }
+    .punct { font-size: 17px; font-weight: 700; color: #0E1C42; align-self: flex-end; padding-bottom: 4px; }
+
+    /* How it works bullets */
+    .how-list { list-style: none; padding: 0; margin: 0; }
+    .how-list li { padding: 10px 0; border-bottom: 1px solid #EEF1F8; font-size: 15px; color: #1a2340; line-height: 1.6; display: flex; gap: 10px; align-items: flex-start; }
+    .how-list li:last-child { border-bottom: none; }
+    .how-num { background: #E2725B; color: #fff; font-weight: 700; font-size: 13px; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+    /* Practice */
+    .practice-box { background: #EEF1F8; border-radius: 6px; padding: 14px 18px; font-size: 15px; color: #1a2340; line-height: 1.6; }
+
+    /* What next */
+    .next-step { background: #EEF1F8; border-radius: 6px; padding: 13px 16px; font-size: 15px; color: #1a2340; line-height: 1.55; }
+    .next-step ol { margin: 8px 0 0; padding-left: 20px; }
+    .next-step ol li { margin-bottom: 6px; }
+
+    /* Footer */
+    .site-footer { background: #0E1C42; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .footer-left { font-size: 13px; color: #9ECFDF; }
+    .footer-right { font-size: 13px; color: #9ECFDF; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo-circle">
+      <span class="logo-owl">&#127944;</span>
+    </div>
+    <div class="header-text">
+      <div class="header-school">Optima Academy Online</div>
+      <div class="header-tagline">An Education Experience Company</div>
+      <div class="header-course">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+  </header>
+
+  <!-- Metadata strip -->
+  <div class="meta-strip">
+    Q3 &nbsp;&middot;&nbsp; Module 5 / Short Story Unit &nbsp;&middot;&nbsp; Grammar 1 &nbsp;&middot;&nbsp; Topic: Sentence Variety
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+
+    <!-- Title card -->
+    <div class="title-card">
+      <div>
+        <div class="kicker">Grammar 1</div>
+        <h1>Sentence Variety: Short and Long Sentences</h1>
+      </div>
+      <span class="time-pill">~12 min</span>
+    </div>
+
+    <!-- Today's Focus -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#127919; TODAY&#8217;S FOCUS</div>
+      <div class="section-card-body" style="font-size: 16px; color: #1a2340; line-height: 1.7;">
+        Short sentences hit hard. Long sentences build and layer. A writer who knows how to mix them can speed your heart up or slow it down. Today you will see how sentence length controls tension in a suspense story, and you will practice mixing sentence lengths in your own writing.
+      </div>
+    </div>
+
+    <!-- Core Visual: Two Lengths -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#128161; TWO LENGTHS, TWO EFFECTS</div>
+      <div class="section-card-body">
+        <div class="length-split">
+          <div class="length-panel">
+            <div class="length-panel-head coral">Short</div>
+            <div class="length-panel-body">
+              <span class="example-sentence">&#8220;He lived.&#8221;</span>
+              <span class="attribution">Richard Connell, &#8220;The Most Dangerous Game&#8221; (1924, public domain)</span>
+              <strong>Effect:</strong> The reader stops. The world stops. Then everything continues. Two words carry the full weight of everything that came before them. Short sentences create urgency, surprise, and finality.
+            </div>
+          </div>
+          <div class="length-panel">
+            <div class="length-panel-head teal">Long + Layered</div>
+            <div class="length-panel-body">
+              <span class="example-sentence">&#8220;Even so zealous a hunter as General Zaroff could not trace him there, he told himself; his training had taught him that a still hunter could outwait a moving one.&#8221;</span>
+              <span class="attribution">Richard Connell, &#8220;The Most Dangerous Game&#8221; (1924, public domain)</span>
+              <strong>Effect:</strong> We feel the tangle of the moment: a mind working fast while the body struggles. Long sentences layer detail and stretch out time, letting dread build while we wait to find out what happens.
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 14px; color: #4a5568; margin: 10px 0 0; line-height: 1.55;">Both are from the same story. Both are doing work. The choice of length is a craft decision.</p>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="section-card">
+      <div class="section-card-head coral">&#9889; HOW IT WORKS</div>
+      <div class="section-card-body">
+        <ul class="how-list">
+          <li>
+            <span class="how-num">1</span>
+            <span>A very short sentence placed after a long one makes the reader feel a jolt. It is the sentence equivalent of a jump cut in film. The contrast is what creates the effect.</span>
+          </li>
+          <li>
+            <span class="how-num">2</span>
+            <span>A long sentence can hold back information, giving us detail while we wait to find out what happens. The reader&#8217;s mind fills in the tension during all that delay.</span>
+          </li>
+          <li>
+            <span class="how-num">3</span>
+            <span>In suspense writing, sentence length is part of the pacing. To understand any sentence you work with, ask: &#8220;What is being said about [the subject]?&#8221; to find the verb. Then ask &#8220;Who or what [verb]?&#8221; to find the subject. Once you know the core of the sentence, you can see clearly how much the writer has added or stripped away.</span>
+          </li>
+        </ul>
+
+        <!-- Worked example 1: short sentence -->
+        <div style="margin-top: 18px;">
+          <p style="font-size: 14px; font-weight: 700; color: #0E1C42; margin-bottom: 8px;">Worked example: a short sentence</p>
+          <div class="classified-box">
+            <div class="sent-title">Classified sentence</div>
+            <div class="classified-words">
+              <div class="classified-word">
+                <span class="word-text">He</span>
+                <span class="word-label label-sn">subject pronoun</span>
+              </div>
+              <div class="classified-word">
+                <span class="word-text">lived</span>
+                <span class="word-label label-av">action verb</span>
+              </div>
+              <span class="punct">.</span>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: #4a5568; line-height: 1.55; margin: 6px 0 0;">Two parts. Nothing extra. The subject pronoun is <em>He</em> (ask: &#8220;Who lived?&#8221;). The action verb is <em>lived</em> (ask: &#8220;What is being said about He?&#8221;). Connell stripped everything away to create maximum impact.</p>
+        </div>
+
+        <!-- Worked example 2: long sentence -->
+        <div style="margin-top: 18px;">
+          <p style="font-size: 14px; font-weight: 700; color: #0E1C42; margin-bottom: 8px;">Worked example: finding the core of a long sentence</p>
+          <div class="classified-box">
+            <div class="sent-title">Sentence: &#8220;Rainsford had not entirely forgotten the trap he had made.&#8221; (core only)</div>
+            <div class="classified-words">
+              <div class="classified-word">
+                <span class="word-text">Rainsford</span>
+                <span class="word-label label-sn">subject noun</span>
+              </div>
+              <div class="classified-word">
+                <span class="word-text">had</span>
+                <span class="word-label label-hv">helping verb</span>
+              </div>
+              <div class="classified-word">
+                <span class="word-text">forgotten</span>
+                <span class="word-label label-mv">main verb</span>
+              </div>
+              <div class="classified-word">
+                <span class="word-text">trap</span>
+                <span class="word-label label-on">object noun</span>
+              </div>
+              <span class="punct">...</span>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: #4a5568; line-height: 1.55; margin: 6px 0 0;">The subject noun is <em>Rainsford</em> (ask: &#8220;Who had forgotten?&#8221;). The helping verb is <em>had</em>, the main verb is <em>forgotten</em> (ask: &#8220;What is being said about Rainsford?&#8221;). Everything else in the full sentence is layered on top of this core.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Warm-up widget -->
+    <div class="optima-widget ow-reflect" style="border-left-color: #E2725B;">
+      <div class="widget-kicker">&#9744; CHECK-IN</div>
+      <div class="widget-question">Think about a scary or tense scene you have read or watched. Did the story slow down or speed up right at the scariest moment?</div>
+      <div class="widget-options">
+        <button data-response="Many writers and filmmakers do slow down at the scariest moment. They stretch out every detail so the dread builds. Sentence length is one way they do that in writing.">It slowed down. Every second felt stretched out.</button>
+        <button data-response="Some do the opposite: short, sharp cuts, rapid sentences. The speed makes it feel chaotic and urgent. Both approaches can work depending on the effect the writer wants.">It sped up. Things happened too fast to process.</button>
+        <button data-response="That is interesting to notice. The shift itself is often the technique: change the pace, and the reader feels the change emotionally before they know why.">It changed pace right at the critical moment.</button>
+      </div>
+      <div class="widget-feedback"></div>
+      <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- Evaluative widget -->
+    <div class="optima-widget ow-select" style="border-left-color: #E2725B;">
+      <div class="widget-kicker">&#9744; PRACTICE: SHORT OR LONG?</div>
+      <div class="widget-question">Which sentence type would work better in each situation? Pick Short or Long, then read the feedback.</div>
+
+      <!-- Row 1 -->
+      <div class="widget-row" data-correct="short">
+        <div class="widget-row-prompt">A hunter hears a twig snap behind him.</div>
+        <div class="widget-options">
+          <button data-choice="short" data-fb="A short sentence here creates a sudden stop, like the moment of fear itself. One snap. One beat. Nothing else.">Short</button>
+          <button data-choice="long" data-fb="A long sentence could work, but the snap is an instant. A short sentence matches the speed and shock of that moment more precisely.">Long</button>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="widget-row" data-correct="long">
+        <div class="widget-row-prompt">The writer wants to describe the jungle in detail while the hunter slowly realizes he is being watched.</div>
+        <div class="widget-options">
+          <button data-choice="short" data-fb="A short sentence would rush past the detail too quickly. The whole point here is to stretch the moment: let the reader feel the slow, creeping awareness.">Short</button>
+          <button data-choice="long" data-fb="A long sentence layers detail and stretches the moment, building unease. The reader lives inside the scene longer and feels the danger gathering.">Long</button>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="widget-row" data-correct="short">
+        <div class="widget-row-prompt">The hunter finally escapes after a desperate chase. The writer wants to mark that moment with maximum weight.</div>
+        <div class="widget-options">
+          <button data-choice="short" data-fb="The shortest sentences carry the biggest emotional weight when they arrive after tension. One short sentence after a long chase lands like a door slamming shut.">Short</button>
+          <button data-choice="long" data-fb="A long sentence would dilute the impact. After the buildup, the reader needs a stop, not more layering. A short sentence provides that.">Long</button>
+        </div>
+      </div>
+
+      <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- Your Turn -->
+    <div class="section-card">
+      <div class="section-card-head coral">&#128221; YOUR TURN</div>
+      <div class="section-card-body">
+        <div class="practice-box">
+          <p style="margin-top: 0; font-size: 15px; line-height: 1.6;">In your Reading Journal, write two sentences about Rainsford swimming to the island:</p>
+          <ul style="font-size: 15px; line-height: 1.7; margin-bottom: 0;">
+            <li><strong>One SHORT sentence</strong> capturing the moment he arrives at the shore.</li>
+            <li><strong>One LONG sentence</strong> describing what he sees and feels as he swims toward it.</li>
+          </ul>
+          <p style="font-size: 14px; color: #4a5568; margin-bottom: 0; margin-top: 10px; line-height: 1.55;">For each sentence: ask &#8220;What is being said about [the subject]?&#8221; to make sure it has a clear verb. Then ask &#8220;Who or what [verb]?&#8221; to confirm your subject.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div class="section-card">
+      <div class="section-card-head teal">&#9989; WHAT YOU&#8217;LL DO NEXT</div>
+      <div class="section-card-body">
+        <div class="next-step">
+          Practice: write your two sentences in the Reading Journal as described above. That is the only turn-in for today. On Day 4, after you complete Grammar 2, you will take the combined Grammar POP! quiz, which covers both this lesson and tomorrow&#8217;s.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-left">Optima Academy Online &nbsp;&middot;&nbsp; 7TH GRADE ENGLISH LANGUAGE ARTS &nbsp;&middot;&nbsp; Quarter 3 &nbsp;&middot;&nbsp; Short Story Unit</div>
+    <div class="footer-right">Grammar 1 &nbsp;&middot;&nbsp; Sentence Variety</div>
+  </footer>
+
+</div><!-- /canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+</body>
+</html>

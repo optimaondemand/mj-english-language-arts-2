@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5 — Week 1 Map | 7th Grade ELA</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+
+    /* Header */
+    .site-header { background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 24px 32px; display: flex; align-items: center; gap: 18px; }
+    .logo-circle { width: 52px; height: 52px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .logo-circle img { width: 44px; height: 44px; object-fit: contain; }
+    .logo-owl { font-size: 28px; line-height: 1; }
+    .header-text { flex: 1; }
+    .header-school { font-size: 28px; color: #ffffff; font-weight: 700; line-height: 1.1; }
+    .header-tagline { font-size: 12px; color: #55C8E8; letter-spacing: 0.5px; margin-top: 2px; }
+    .header-course { font-size: 36px; color: #ffffff; font-weight: 800; margin-top: 6px; line-height: 1.1; }
+
+    /* Metadata strip */
+    .meta-strip { background: #EEF1F8; border-bottom: 1px solid #D0D9E8; padding: 10px 32px; font-size: 13px; color: #4a5568; letter-spacing: 0.3px; }
+
+    /* Content area */
+    .content-area { padding: 28px 32px 40px; }
+
+    /* Title card */
+    .title-card { background: #EDECF7; border-radius: 10px; padding: 22px 26px; margin-bottom: 22px; }
+    .title-card .kicker { font-size: 12px; color: #6B63A0; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+    .title-card h1 { font-size: 30px; color: #0E1C42; font-weight: 800; margin: 0 0 4px 0; }
+    .title-card .subtitle { font-size: 16px; color: #4a5568; margin: 0; }
+
+    /* Section cards */
+    .section-card { border-radius: 10px; overflow: hidden; margin-bottom: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .section-card-head { padding: 12px 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; }
+    .section-card-head.gold { background: #C7922C; }
+    .section-card-head.navy { background: #0E1C42; }
+    .section-card-head.teal { background: #2A9D8F; }
+    .section-card-body { padding: 18px 20px; background: #ffffff; }
+
+    /* Schedule table */
+    .schedule-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .schedule-table th { background: #EEF1F8; color: #0E1C42; font-weight: 700; padding: 10px 12px; text-align: left; border-bottom: 2px solid #D0D9E8; }
+    .schedule-table td { padding: 11px 12px; border-bottom: 1px solid #EEF1F8; color: #1a2340; vertical-align: top; line-height: 1.5; }
+    .schedule-table tr:last-child td { border-bottom: none; }
+    .schedule-table tr.reading-row td { background: #FFF8EE; }
+    .schedule-table tr.total-row td { background: #0E1C42; color: #55C8E8; font-weight: 700; }
+    .schedule-table tr:hover td { background: #F7F9FD; }
+    .schedule-table tr.total-row:hover td { background: #0E1C42; }
+    .schedule-table tr.reading-row:hover td { background: #FFF4E0; }
+
+    .day-label { font-weight: 700; white-space: nowrap; }
+    .time-pill { background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px; white-space: nowrap; display: inline-block; }
+
+    /* Ongoing card */
+    .ongoing-list { list-style: none; padding: 0; margin: 0; }
+    .ongoing-list li { padding: 8px 0; border-bottom: 1px solid #EEF1F8; font-size: 15px; color: #1a2340; line-height: 1.5; }
+    .ongoing-list li:last-child { border-bottom: none; }
+
+    /* Footer */
+    .site-footer { background: #0E1C42; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .footer-left { font-size: 13px; color: #9ECFDF; }
+    .footer-right { font-size: 13px; color: #9ECFDF; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo-circle">
+      <span class="logo-owl">&#127944;</span>
+    </div>
+    <div class="header-text">
+      <div class="header-school">Optima Academy Online</div>
+      <div class="header-tagline">An Education Experience Company</div>
+      <div class="header-course">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+  </header>
+
+  <!-- Metadata strip -->
+  <div class="meta-strip">
+    Q3 &nbsp;&middot;&nbsp; Module 5 / Short Story Unit &nbsp;&middot;&nbsp; Week 1 &nbsp;&middot;&nbsp; About 250 minutes
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+
+    <!-- Title card -->
+    <div class="title-card">
+      <div class="kicker">W1 Map</div>
+      <h1>The Hunt for Suspense</h1>
+      <p class="subtitle">Your plan for the week</p>
+    </div>
+
+    <!-- This week's question -->
+    <div class="section-card">
+      <div class="section-card-head gold">THIS WEEK&#8217;S QUESTION</div>
+      <div class="section-card-body" style="font-size: 17px; color: #0E1C42; font-style: italic; line-height: 1.65;">
+        What makes a suspense story work: what we are told, or what we are not told?
+      </div>
+    </div>
+
+    <!-- Five days table -->
+    <div class="section-card">
+      <div class="section-card-head navy">&#128197; YOUR FIVE DAYS THIS WEEK</div>
+      <div class="section-card-body" style="padding: 0;">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th style="width:90px;">Day</th>
+              <th>Lesson / Activity</th>
+              <th style="width:240px;">Turn in</th>
+              <th style="width:90px;">Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="reading-row">
+              <td class="day-label">&#128214; Reading</td>
+              <td>Read &#8220;The Most Dangerous Game&#8221; (PDF link provided in L1)</td>
+              <td>Notes in your Reading Journal</td>
+              <td><span class="time-pill">~35 min</span></td>
+            </tr>
+            <tr>
+              <td class="day-label">Day 1</td>
+              <td>Lesson 1.01: The Hunter and the Hunted (irony)</td>
+              <td>Reading Journal: Week 1 entry</td>
+              <td><span class="time-pill">~35 min</span></td>
+            </tr>
+            <tr>
+              <td class="day-label">Day 2</td>
+              <td>Grammar 1: Sentence Variety &nbsp;&middot;&nbsp; Word Study</td>
+              <td>Word Study assignment</td>
+              <td><span class="time-pill">~50 min</span></td>
+            </tr>
+            <tr>
+              <td class="day-label">Day 3</td>
+              <td>Lesson 1.02: Building Suspense &nbsp;&middot;&nbsp; VR Activity 1</td>
+              <td>VR Activity 1 &nbsp;&middot;&nbsp; Reading Journal entry</td>
+              <td><span class="time-pill">~50 min</span></td>
+            </tr>
+            <tr>
+              <td class="day-label">Day 4</td>
+              <td>Grammar 2: Punctuation for Pacing &nbsp;&middot;&nbsp; VR Activity 2</td>
+              <td>Grammar POP! quiz &nbsp;&middot;&nbsp; VR Activity 2</td>
+              <td><span class="time-pill">~50 min</span></td>
+            </tr>
+            <tr>
+              <td class="day-label">Day 5</td>
+              <td>Lesson 1.03: The Twist Ending &nbsp;&middot;&nbsp; Quick Write</td>
+              <td>Quick Write 1 &nbsp;&middot;&nbsp; Check-up</td>
+              <td><span class="time-pill">~40 min</span></td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3" style="text-align:right; padding-right: 16px; font-size:13px; letter-spacing:0.3px;">TOTAL (with reading woven across days)</td>
+              <td><span style="font-size:15px; font-weight:800;">~260 min</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Ongoing card -->
+    <div class="section-card">
+      <div class="section-card-head teal">&#9889; ONGOING ALL WEEK</div>
+      <div class="section-card-body">
+        <ul class="ongoing-list">
+          <li>&#128221; Keep your <strong>Short Story Reading Journal</strong> open every day this week. It is your central workspace for notes, vocabulary, and ideas.</li>
+          <li>&#128205; Add new vocabulary words as you meet them in the story. Write the word, the sentence it came from, and what you think it means in context.</li>
+          <li>&#127919; Jot running notes on the module question: <em>What makes a suspense story work: what we are told, or what we are not told?</em> Your thinking can evolve. There is no single right answer yet.</li>
+          <li>&#9989; Your teacher collects the Reading Journal at checkpoint, not every week. Keep it complete and honest so it tells the real story of your reading.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-left">Optima Academy Online &nbsp;&middot;&nbsp; 7TH GRADE ENGLISH LANGUAGE ARTS &nbsp;&middot;&nbsp; Quarter 3 &nbsp;&middot;&nbsp; Module Map</div>
+    <div class="footer-right">Module 5 &nbsp;&middot;&nbsp; Short Story Unit &nbsp;&middot;&nbsp; Week 1</div>
+  </footer>
+
+</div><!-- /canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+</body>
+</html>

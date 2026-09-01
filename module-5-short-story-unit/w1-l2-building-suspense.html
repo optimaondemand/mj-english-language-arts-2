@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1.02 &ndash; Building Suspense | 7th Grade ELA</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* Header */
+    .site-header { background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 24px 32px; display: flex; align-items: center; gap: 18px; }
+    .logo-circle { width: 52px; height: 52px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .logo-circle img { width: 44px; height: 40px; object-fit: contain; }
+    .header-text { flex: 1; }
+    .header-school { font-size: 28px; color: #ffffff; font-weight: 700; line-height: 1.1; }
+    .header-tagline { font-size: 12px; color: #55C8E8; letter-spacing: 0.5px; margin-top: 2px; }
+    .header-course { font-size: 36px; color: #ffffff; font-weight: 800; margin-top: 6px; line-height: 1.1; }
+
+    /* Meta strip */
+    .meta-strip { background: #EEF1F8; border-bottom: 1px solid #D0D9E8; padding: 10px 32px; font-size: 13px; color: #4a5568; letter-spacing: 0.3px; }
+
+    /* Content */
+    .content-area { padding: 28px 32px 40px; }
+
+    /* Title card */
+    .title-card { background: #EDECF7; border-radius: 10px; padding: 22px 26px; margin-bottom: 22px; }
+    .title-card .kicker { font-size: 12px; color: #6B63A0; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+    .title-card h1 { font-size: 30px; color: #0E1C42; font-weight: 800; margin: 0 0 6px 0; line-height: 1.2; }
+    .title-card .subtitle { font-size: 16px; color: #4a5568; margin: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+
+    /* Time pill */
+    .time-pill { background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; display: inline-block; }
+
+    /* Section cards */
+    .section-card { border-radius: 10px; overflow: hidden; margin-bottom: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .section-card-head { padding: 12px 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; }
+    .section-card-head.gold { background: #C7922C; }
+    .section-card-head.coral { background: #E2725B; }
+    .section-card-head.teal { background: #2A9D8F; }
+    .section-card-body { padding: 18px 20px; background: #ffffff; }
+
+    /* Three-tools visual */
+    .tools-grid { display: flex; gap: 0; border-radius: 8px; overflow: hidden; border: 1px solid #D0D9E8; margin: 0; }
+    .tool-panel { flex: 1; padding: 20px 18px; }
+    .tool-panel.coral-bg { background: #FDF0ED; }
+    .tool-panel.teal-bg { background: #E8F6F4; }
+    .tool-panel.navy-bg { background: #EEF1F8; }
+    .tool-panel + .tool-panel { border-left: 1px solid #D0D9E8; }
+    .tool-label { font-size: 13px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
+    .tool-label.coral-text { color: #E2725B; }
+    .tool-label.teal-text { color: #2A9D8F; }
+    .tool-label.navy-text { color: #0E1C42; }
+    .tool-desc { font-size: 15px; color: #1a2340; line-height: 1.6; margin-bottom: 8px; }
+    .tool-example { font-size: 13px; color: #555; font-style: italic; line-height: 1.5; background: rgba(255,255,255,0.7); border-radius: 4px; padding: 8px 10px; }
+
+    /* Objectives list */
+    .obj-list { list-style: none; padding: 0; margin: 0; }
+    .obj-list li { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #EEF1F8; font-size: 16px; color: #1a2340; line-height: 1.55; }
+    .obj-list li:last-child { border-bottom: none; }
+    .obj-num { min-width: 24px; height: 24px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+    /* Read & notice moments */
+    .moment-block { background: #FFF8F6; border-left: 4px solid #E2725B; border-radius: 0 6px 6px 0; padding: 14px 18px; margin-bottom: 14px; }
+    .moment-block:last-child { margin-bottom: 0; }
+    .moment-label { font-size: 11px; color: #E2725B; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+    .moment-quote { font-size: 15px; color: #1a2340; font-style: italic; background: #FFFFFF; border-radius: 4px; padding: 8px 12px; margin: 8px 0; line-height: 1.6; border: 1px solid #F0D8D3; }
+    .moment-question { font-size: 15px; color: #1a2340; line-height: 1.6; }
+    .rj-note { font-size: 13px; color: #E2725B; margin-top: 6px; font-style: italic; }
+
+    /* Widgets */
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; text-transform: uppercase; font-weight: 600; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row:last-of-type { margin-bottom: 0; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 10px; display: block; }
+    .widget-reset:hover { background: #FDF3E3; }
+
+    /* Reading Journal card */
+    .rj-list { list-style: none; padding: 0; margin: 0; counter-reset: rj-counter; }
+    .rj-list li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #E8F6F4; font-size: 16px; color: #1a2340; line-height: 1.6; }
+    .rj-list li:last-child { border-bottom: none; }
+    .rj-num { min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+    /* What next */
+    .next-list { list-style: none; padding: 0; margin: 0; }
+    .next-list li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #E8F6F4; font-size: 16px; color: #1a2340; line-height: 1.55; }
+    .next-list li:last-child { border-bottom: none; }
+
+    /* Footer */
+    .site-footer { background: #0E1C42; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .footer-left { font-size: 13px; color: #9ECFDF; }
+    .footer-right { font-size: 13px; color: #9ECFDF; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo-circle">
+      <img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" />
+    </div>
+    <div class="header-text">
+      <div class="header-school">Optima Academy Online</div>
+      <div class="header-tagline">An Education Experience Company</div>
+      <div class="header-course">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+  </header>
+
+  <!-- Metadata strip -->
+  <div class="meta-strip">
+    Q3 &nbsp;&middot;&nbsp; Module 5 / Short Story Unit &nbsp;&middot;&nbsp; Lesson 1.02 &nbsp;&middot;&nbsp; <em>What makes a suspense story work: what we are told, or what we are not told?</em>
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+
+    <!-- Title card -->
+    <div class="title-card">
+      <div class="kicker">Lesson 1.02</div>
+      <h1>Building Suspense: What We Know vs. What We Fear</h1>
+      <div class="subtitle">
+        Interactive Lesson
+        <span class="time-pill">~14 min</span>
+      </div>
+    </div>
+
+    <!-- Objectives -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#127919; WHAT YOU WILL BE ABLE TO DO</div>
+      <div class="section-card-body">
+        <ul class="obj-list">
+          <li><div class="obj-num">1</div><div>Explain what pacing means and describe how a writer controls it.</div></li>
+          <li><div class="obj-num">2</div><div>Identify foreshadowing and explain what it adds to a story.</div></li>
+          <li><div class="obj-num">3</div><div>Describe how the gap between what the reader knows and what the character fears creates suspense.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TODAY'S FOCUS -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#128214; TODAY&#8217;S FOCUS</div>
+      <div class="section-card-body">
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">The middle of &#8220;The Most Dangerous Game&#8221; is a masterclass in pacing. Zaroff tells Rainsford exactly what will happen. The reader sees it coming. But the way Connell stretches, slows, and accelerates the hunt is what makes the story unforgettable. Today you analyze the tools he uses: pacing, foreshadowing, and the gap between what the reader knows and what the character fears.</p>
+      </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 6px; padding: 14px 20px; margin-bottom: 22px; font-size: 15px; color: #1a2340; line-height: 1.6;">
+      <strong>Materials:</strong> The Most Dangerous Game PDF (linked in Lesson 1.01) &middot; Short Story Reading Journal
+    </div>
+
+    <!-- CORE VISUAL: Three Tools of Suspense -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#9889; THREE TOOLS OF SUSPENSE</div>
+      <div class="section-card-body" style="padding: 16px;">
+        <div class="tools-grid">
+          <div class="tool-panel coral-bg">
+            <div class="tool-label coral-text">Pacing</div>
+            <div class="tool-desc">How fast or slow a story moves. Short sentences create speed and urgency. Long, winding sentences slow the reader down. Gaps and silences stretch time until it becomes unbearable.</div>
+            <div class="tool-example">&#8220;He ran. He stumbled. He ran again.&#8221; Three beats. Three pauses. The reader feels each one.</div>
+          </div>
+          <div class="tool-panel teal-bg">
+            <div class="tool-label teal-text">Foreshadowing</div>
+            <div class="tool-desc">Clues planted early that hint at what comes later. The reader feels something coming. The character may not notice at all. The gap between what the reader senses and what the character misses is where dread lives.</div>
+            <div class="tool-example">A detail that seems small in chapter one becomes enormous in chapter three. The writer put it there on purpose.</div>
+          </div>
+          <div class="tool-panel navy-bg">
+            <div class="tool-label navy-text">The Knowledge Gap</div>
+            <div class="tool-desc">When the reader knows (or suspects) something the character does not. That gap creates a particular kind of dread: the reader watches the character move toward something terrible and cannot warn them.</div>
+            <div class="tool-example">You have figured out the danger. The character has not. Every step they take feels worse than the last.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Warm-up widget (ow-reflect) -->
+    <div class="optima-widget ow-reflect">
+      <div class="widget-kicker">&#128161; WARM-UP: CHECK IN</div>
+      <div class="widget-question">When you read a suspense story, what makes you most anxious? Pick the one that fits you best.</div>
+      <div class="widget-options">
+        <button data-response="That feeling of inevitability is one of the most powerful things a story can create. You are experiencing the knowledge gap from the inside. Connell builds this exact feeling all through the hunt.">When I know something bad is coming but cannot stop it.</button>
+        <button data-response="That kind of suspense comes from withholding: the writer keeps information from you deliberately. Every new detail could be the one that changes everything, and you cannot look away.">When I have no idea what is coming next.</button>
+        <button data-response="That is dramatic irony at work: you see what the character cannot. Connell uses this throughout MDG, especially once Zaroff explains the hunt and Rainsford has to play along without showing he understands.">When the character is walking right into danger and does not know it.</button>
+      </div>
+      <div class="widget-feedback"></div>
+      <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- CORAL: Read & Notice -->
+    <div class="section-card">
+      <div class="section-card-head coral">&#128214; READ &amp; NOTICE: THREE MOMENTS FROM THE MIDDLE</div>
+      <div class="section-card-body">
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.65; margin: 0 0 16px;">Here are three moments from the hunt section of &#8220;The Most Dangerous Game.&#8221; Read each one. Notice what Connell is doing. Add your answers to the Week 1 section of your Reading Journal.</p>
+
+        <div class="moment-block">
+          <div class="moment-label">Moment A: Zaroff&#8217;s Dinner Conversation</div>
+          <p class="moment-question">Zaroff describes hunting with terrifying calm before Rainsford fully understands what is being said.</p>
+          <div class="moment-quote">&#8220;I have invented a new sensation. I have invented a new animal to hunt. May I show you my new collection of heads? Will you have another glass of Chablis?&#8221;</div>
+          <p class="moment-question">What does Zaroff know that he is not quite saying yet? What is Rainsford still missing? Write a sentence or two in your Reading Journal about what is happening in this moment.</p>
+          <div class="rj-note">&#9989; Add to Reading Journal: Week 1, Moment A.</div>
+        </div>
+
+        <div class="moment-block">
+          <div class="moment-label">Moment B: Rainsford in the Jungle, Night 1 (The Malay Man-Catcher)</div>
+          <p class="moment-question">After Rainsford sets his trap and waits, Connell writes:</p>
+          <div class="moment-quote">&#8220;Rainsford did not want to believe what his reason told him was true, but the truth was as evident as the sun that had by now pushed through the morning mists.&#8221;</div>
+          <p class="moment-question">What does Connell slow down in this sentence, and why? Notice how the long, heavy sentence moves compared to an action sentence. What effect does that pace have on the reader?</p>
+          <div class="rj-note">&#9989; Add to Reading Journal: Week 1, Moment B.</div>
+        </div>
+
+        <div class="moment-block">
+          <div class="moment-label">Moment C: The Third Night</div>
+          <p class="moment-question">Zaroff ends the hunt early and walks back to his chateau. Rainsford follows. A trap springs. Ivan is killed. Connell writes:</p>
+          <div class="moment-quote">&#8220;He heard it as he heard the sound of the sea. Then he did not hear it anymore.&#8221;</div>
+          <p class="moment-question">How does Connell use short sentences here to control the reader&#8217;s experience? What does the shortness of those sentences do to time? Write a sentence about what those two lines accomplish.</p>
+          <div class="rj-note">&#9989; Add to Reading Journal: Week 1, Moment C.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evaluative widget (ow-select) -->
+    <div class="optima-widget ow-select">
+      <div class="widget-kicker">&#9889; CHECK YOUR THINKING</div>
+      <div class="widget-question">Which tool is Connell using in each of these moments? Select the best answer for each row.</div>
+
+      <div class="widget-row" data-correct="Knowledge gap">
+        <div class="widget-row-prompt">Zaroff describes his &#8220;new animal&#8221; to Rainsford over dinner. The reader has already understood what Zaroff means. Rainsford is still catching up.</div>
+        <div class="widget-options">
+          <button data-choice="Pacing">Pacing</button>
+          <button data-choice="Foreshadowing">Foreshadowing</button>
+          <button data-choice="Knowledge gap" data-fb="The reader is ahead of Rainsford. That gap is exactly what makes the scene so unbearable to read.">Knowledge gap</button>
+        </div>
+      </div>
+
+      <div class="widget-row" data-correct="Foreshadowing">
+        <div class="widget-row-prompt">Whitney says Ship-Trap Island has a bad reputation among sailors before anything dangerous has happened in the story.</div>
+        <div class="widget-options">
+          <button data-choice="Pacing">Pacing</button>
+          <button data-choice="Foreshadowing" data-fb="This early detail plants a sense of dread that pays off much later. The reader carries it forward without knowing why.">Foreshadowing</button>
+          <button data-choice="Knowledge gap">Knowledge gap</button>
+        </div>
+      </div>
+
+      <div class="widget-row" data-correct="Pacing">
+        <div class="widget-row-prompt">At the climax, after Rainsford leaps into the sea and surfaces at Zaroff&#8217;s window, Connell writes: &#8220;He lived.&#8221; That is the whole sentence.</div>
+        <div class="widget-options">
+          <button data-choice="Pacing" data-fb="The shortest sentence arrives at the highest moment. The pace itself is the payoff. Everything the story has built comes down to two words.">Pacing</button>
+          <button data-choice="Foreshadowing">Foreshadowing</button>
+          <button data-choice="Knowledge gap">Knowledge gap</button>
+        </div>
+      </div>
+
+      <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- TEAL: Reading Journal prompts -->
+    <div class="section-card">
+      <div class="section-card-head teal">&#128221; READING JOURNAL: ADD THIS TO WEEK 1</div>
+      <div class="section-card-body">
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.65; margin: 0 0 14px;">Open your Short Story Reading Journal to the Week 1 section and respond to both prompts. Write in complete sentences.</p>
+        <ul class="rj-list">
+          <li>
+            <div class="rj-num">1</div>
+            <div>Pick one moment from the hunt that gave you the most suspense. Describe what Connell does in that moment. Is it pacing, foreshadowing, or the knowledge gap, and why does it work?</div>
+          </li>
+          <li>
+            <div class="rj-num">2</div>
+            <div>By the middle of the story, what do you know that Rainsford does not? How does that affect how you read the scenes with him?</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TEAL: What You'll Do Next -->
+    <div class="section-card">
+      <div class="section-card-head teal">&#9989; WHAT YOU WILL DO NEXT</div>
+      <div class="section-card-body">
+        <ul class="next-list">
+          <li><span style="color:#2A9D8F; font-size:18px; flex-shrink:0;">&#9679;</span><div>Add your two Reading Journal responses from this lesson to your Week 1 section.</div></li>
+          <li><span style="color:#2A9D8F; font-size:18px; flex-shrink:0;">&#9679;</span><div>Then open <strong>VR Activity 1: What We Know vs. What We Don&#8217;t</strong> and complete that activity. It builds directly on today&#8217;s lesson and feeds the final project.</div></li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-left">Optima Academy Online &nbsp;&middot;&nbsp; 7TH GRADE ENGLISH LANGUAGE ARTS &nbsp;&middot;&nbsp; Quarter 3 &nbsp;&middot;&nbsp; Short Story Unit</div>
+    <div class="footer-right">Lesson 1.02 &nbsp;&middot;&nbsp; Building Suspense</div>
+  </footer>
+
+</div><!-- /canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    // Reset button
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    // ow-reflect
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    // ow-select
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right
+        ? (sBtn.dataset.fb || row.dataset.fb || 'Correct.')
+        : (row.dataset.hint || 'Not quite. Look at the description again and try another option.');
+      var rf = row.querySelector('.row-feedback');
+      if (!rf) { rf = document.createElement('div'); row.appendChild(rf); }
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+</body>
+</html>

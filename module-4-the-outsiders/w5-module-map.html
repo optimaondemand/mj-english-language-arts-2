@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7TH GRADE ELA &#8212; Module 4 Week 5 Module Map</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+        .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+        .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+        .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+        .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+        .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+        .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+        .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+        .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+        .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+        .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+        .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+        .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+        .widget-feedback.show { display: block; }
+        .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+        .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+        .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+        .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+        .widget-reset:hover { background: #FDF3E3; }
+        .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+        .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+        .ow-flip.flipped .ow-flip-front { display: none; }
+        .ow-flip.flipped .ow-flip-back { display: block; }
+
+        /* Page-specific styles */
+        .meta-strip { display: grid; grid-template-columns: repeat(4, 1fr); background: #0E1C42; }
+        .meta-cell { padding: 10px 16px; border-right: 1px solid rgba(255,255,255,0.12); }
+        .meta-cell:last-child { border-right: none; }
+        .meta-label { font-size: 10px; color: #55C8E8; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 3px; }
+        .meta-value { font-size: 13px; color: #FFFFFF; font-weight: 600; }
+
+        .title-strip { background: #EDE7F6; border-top: 4px solid #7C4DFF; padding: 28px 34px 22px; }
+        .title-kicker { font-size: 11px; color: #5B3B99; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 6px; }
+        .title-main { font-size: 32px; color: #0E1C42; font-weight: 700; line-height: 1.15; margin-bottom: 4px; }
+        .title-sub { font-size: 16px; color: #5B3B99; font-weight: 400; }
+
+        .page-body { padding: 28px 34px 40px; }
+
+        .info-card { border-radius: 8px; border: 1px solid #D0D9E8; padding: 20px 24px; margin-bottom: 22px; }
+        .card-kicker { font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+        .card-body { font-size: 15px; color: #1a2340; line-height: 1.65; }
+
+        .reading-card { border-top: 4px solid #E2725B; }
+        .reading-card .card-kicker { color: #E2725B; }
+
+        .schedule-card { border-top: 4px solid #0E1C42; }
+        .schedule-card .card-kicker { color: #0E1C42; }
+
+        .journal-card { border-top: 4px solid #C7922C; }
+        .journal-card .card-kicker { color: #C7922C; }
+
+        .ongoing-card { border-top: 4px solid #2A9D8F; }
+        .ongoing-card .card-kicker { color: #2A9D8F; }
+
+        /* Day schedule grid */
+        .day-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+        @media (max-width: 700px) { .day-grid { grid-template-columns: 1fr; } }
+        .day-card { border-radius: 8px; border: 1px solid #D0D9E8; padding: 14px 16px; background: #FAFBFD; display: flex; flex-direction: column; gap: 6px; }
+        .day-card.coral { border-left: 5px solid #E2725B; }
+        .day-card.teal { border-left: 5px solid #2A9D8F; }
+        .day-label { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+        .day-card.coral .day-label { color: #E2725B; }
+        .day-card.teal .day-label { color: #2A9D8F; }
+        .day-title { font-size: 14px; font-weight: 700; color: #0E1C42; line-height: 1.3; }
+        .day-activities { font-size: 13px; color: #3a4a6a; line-height: 1.55; }
+        .day-activities ul { margin: 4px 0 0 0; padding-left: 18px; }
+        .day-activities ul li { margin-bottom: 2px; }
+        .time-pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-top: 4px; align-self: flex-start; }
+        .day-card.coral .time-pill { background: #FCE9E5; color: #B04A34; }
+        .day-card.teal .time-pill { background: #D7F0ED; color: #1A7068; }
+
+        .total-row { grid-column: 1 / -1; background: #0E1C42; border-radius: 8px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+        .total-label { font-size: 13px; color: #55C8E8; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
+        .total-value { font-size: 15px; color: #FFFFFF; font-weight: 700; }
+
+        .journal-question { font-size: 17px; color: #0E1C42; font-style: italic; line-height: 1.6; margin-bottom: 10px; }
+        .journal-instruction { font-size: 14px; color: #4a5a7a; line-height: 1.55; }
+
+        .ongoing-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #EEF0F5; }
+        .ongoing-item:last-child { border-bottom: none; }
+        .ongoing-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+        .ongoing-text { font-size: 15px; color: #1a2340; line-height: 1.55; }
+        .ongoing-text strong { color: #0E1C42; }
+
+        .page-footer { background: #0E1C42; border-top: 3px solid #55C8E8; padding: 14px 34px; display: flex; justify-content: space-between; align-items: center; }
+        .footer-meta { font-size: 12px; color: #55C8E8; }
+        .footer-copy { font-size: 12px; color: rgba(255,255,255,0.55); }
+
+        .placeholder-note { font-size: 12px; color: #7A8BA8; font-style: italic; background: #F4F6FA; border: 1px dashed #C5D0E0; border-radius: 4px; padding: 5px 10px; display: inline-block; margin-top: 4px; }
+    </style>
+</head>
+<body>
+<div class="canvas-frame">
+
+    <!-- HEADER -->
+    <div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+            <div>
+                <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+                <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+            </div>
+        </div>
+        <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+
+    <!-- METADATA STRIP -->
+    <div class="meta-strip">
+        <div class="meta-cell">
+            <div class="meta-label">Course</div>
+            <div class="meta-value">Q3 &middot; Module 4 | The Outsiders</div>
+        </div>
+        <div class="meta-cell">
+            <div class="meta-label">Week</div>
+            <div class="meta-value">Week 5</div>
+        </div>
+        <div class="meta-cell">
+            <div class="meta-label">Page Type</div>
+            <div class="meta-value">Module Map</div>
+        </div>
+        <div class="meta-cell">
+            <div class="meta-label">Module Question</div>
+            <div class="meta-value" style="font-size: 11px; font-weight: 400; line-height: 1.45;">What divides the greasers and the Socs, and what does the novel say stays the same on both sides?</div>
+        </div>
+    </div>
+
+    <!-- TITLE STRIP -->
+    <div class="title-strip">
+        <div class="title-kicker">Week 5 of Module 4</div>
+        <div class="title-main">Week 5 at a Glance</div>
+        <div class="title-sub">Module Map</div>
+    </div>
+
+    <!-- PAGE BODY -->
+    <div class="page-body">
+
+        <!-- THIS WEEK'S READING -->
+        <div class="info-card reading-card">
+            <div class="card-kicker">&#128214; This Week's Reading</div>
+            <div class="card-body">
+                <p style="margin: 0 0 8px;">Read Chapters 9&ndash;10 in your copy of <em>The Outsiders</em>. (~35 min across the week)</p>
+                <p style="margin: 0 0 8px;"><strong>Assignment:</strong> Read Chapters 9&ndash;10 in your copy of <em>The Outsiders</em>.</p>
+                <span class="placeholder-note">[Teacher: link the approved student copy, purchase option, or library access here]</span>
+                <p style="margin: 10px 0 0; font-size: 14px; color: #4a5a7a;">Keep your Reading Journal open as you read.</p>
+            </div>
+        </div>
+
+        <!-- THIS WEEK'S SCHEDULE -->
+        <div class="info-card schedule-card">
+            <div class="card-kicker">&#128197; This Week's Schedule</div>
+            <div class="day-grid">
+
+                <!-- Day 1 -->
+                <div class="day-card coral">
+                    <div class="day-label">Day 1</div>
+                    <div class="day-title">Lesson 5.01: The Climax</div>
+                    <div class="day-activities">
+                        <ul>
+                            <li>The rumble and the hospital</li>
+                            <li>Reading Journal entry</li>
+                        </ul>
+                    </div>
+                    <span class="time-pill">~50 min</span>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="day-card teal">
+                    <div class="day-label">Day 2</div>
+                    <div class="day-title">Grammar: Dialogue Punctuation + Word Study</div>
+                    <div class="day-activities">
+                        <ul>
+                            <li>Dialogue punctuation rules and practice</li>
+                            <li>Word Study: Chapters 9&ndash;10</li>
+                        </ul>
+                    </div>
+                    <span class="time-pill">~50 min</span>
+                </div>
+
+                <!-- Day 3 -->
+                <div class="day-card teal">
+                    <div class="day-label">Day 3</div>
+                    <div class="day-title">Lesson 5.02: Sequence of Events and Family</div>
+                    <div class="day-activities">
+                        <ul>
+                            <li>Sequence of events analysis</li>
+                            <li>Family themes in the novel</li>
+                            <li>VR Activity 1</li>
+                        </ul>
+                    </div>
+                    <span class="time-pill">~50 min</span>
+                </div>
+
+                <!-- Day 4 -->
+                <div class="day-card teal">
+                    <div class="day-label">Day 4</div>
+                    <div class="day-title">Grammar: Correcting Dialogue + POP Quiz</div>
+                    <div class="day-activities">
+                        <ul>
+                            <li>Correcting dialogue punctuation</li>
+                            <li>Grammar POP Quiz</li>
+                            <li>VR Activity 2</li>
+                        </ul>
+                    </div>
+                    <span class="time-pill">~50 min</span>
+                </div>
+
+                <!-- Day 5 (full width) -->
+                <div class="day-card coral" style="grid-column: 1 / -1;">
+                    <div class="day-label">Day 5</div>
+                    <div class="day-title">Lesson 5.03: Weekly Workshop</div>
+                    <div class="day-activities" style="display: flex; gap: 24px; flex-wrap: wrap;">
+                        <ul style="margin: 4px 0 0 0; padding-left: 18px; flex: 1; min-width: 160px;">
+                            <li>Weekly Workshop activities</li>
+                            <li>Quick Write 5</li>
+                            <li>Check-up</li>
+                        </ul>
+                    </div>
+                    <span class="time-pill">~25 min</span>
+                </div>
+
+                <!-- Total row -->
+                <div class="total-row">
+                    <span class="total-label">Total this week</span>
+                    <span class="total-value">~260 min</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- THIS WEEK'S JOURNAL QUESTION -->
+        <div class="info-card journal-card">
+            <div class="card-kicker">&#128221; This Week's Journal Question</div>
+            <div class="card-body">
+                <p class="journal-question">"At the end of Chapters 9&ndash;10, what two things happen that change everything Ponyboy thought he knew? Which one hits harder, and why?"</p>
+                <p class="journal-instruction">Write your answer in the Week 5 section of your Reading Journal. Aim for 4&ndash;6 sentences.</p>
+            </div>
+        </div>
+
+        <!-- ONGOING WORK -->
+        <div class="info-card ongoing-card">
+            <div class="card-kicker">&#128203; Ongoing Work</div>
+            <div class="card-body">
+                <div class="ongoing-item">
+                    <div class="ongoing-icon">&#128196;</div>
+                    <div class="ongoing-text">
+                        <strong>The Outsiders Reading Journal:</strong> your digital Word document. Keep it open every day this week and update it as you read and reflect.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REQUIRED NOTICE -->
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#9432; REQUIRED NOTICE</div>
+            <div style="font-size: 15px; color: #0E1C42; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+        </div>
+
+    </div><!-- /page-body -->
+
+    <!-- FOOTER -->
+    <div class="page-footer">
+        <div class="footer-meta">Q3 &middot; Module 4 &middot; Module Map</div>
+        <div class="footer-copy">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+    </div>
+
+</div><!-- /canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+</body>
+</html>

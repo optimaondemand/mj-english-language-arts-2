@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 4.02: The Hidden Hero</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* ===== WIDGET CSS ===== */
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">The Scarlet Pimpernel</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.02</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Reading</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Ch. 11&ndash;16</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 13px; color: #0e1c42;">Heroism in disguise: what kind of courage does the novel celebrate, and when is it right to risk everything for strangers?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Hidden Hero: How Orczy Keeps the Pimpernel's Identity Secret</div>
+        <div style="font-size: 16px; color: #666;">Lesson <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">&#8776;14 min</span></div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Sir Percy Blakeney is asleep in a corner of the supper-room while Chauvelin waits for the Scarlet Pimpernel to walk in. We readers see Percy there. Chauvelin sees him too. Yet no one in the novel puts these facts together. How does Orczy make that possible?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">In Chapters 11 through 16, the plot tightens and the reader knows more than any single character does. Today you will name what Orczy is doing, trace two of her main techniques, and notice why this particular gap between reader knowledge and character knowledge creates such powerful suspense.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what dramatic irony is and find one example in Ch 11&ndash;16.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name two techniques Orczy uses to keep the Pimpernel's identity hidden.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why the reader feels suspense even when we are not sure who the Pimpernel is.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>The Scarlet Pimpernel</em>, Ch. 11&ndash;16. <a href="#" style="color: #2196D0;">[Teacher: link the Ch 11&ndash;16 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Scarlet Pimpernel Reading Journal</strong> (Word doc in OneDrive).</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: Two-Level Reading / Dramatic Irony diagram -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#128161; THE BIG IDEA: TWO-LEVEL READING</div>
+
+        <!-- Top bar: reader level -->
+        <div style="background: #FDF3E3; border: 1.5px solid #C7922C; border-radius: 8px; padding: 18px 22px; margin-bottom: 6px;">
+            <div style="font-size: 12px; color: #C7922C; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px;">WHAT YOU KNOW AS A READER</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <div style="background: #FFFFFF; border: 1px solid #C7922C; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #0E1C42; line-height: 1.5;">Percy is asleep exactly where Chauvelin set his trap, at one o'clock.</div>
+                <div style="background: #FFFFFF; border: 1px solid #C7922C; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #0E1C42; line-height: 1.5;">Percy's doggerel verse mocks the very search Chauvelin is running.</div>
+                <div style="background: #FFFFFF; border: 1px solid #C7922C; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #0E1C42; line-height: 1.5;">Percy has already promised Marguerite he will help Armand.</div>
+            </div>
+        </div>
+
+        <!-- Gap label -->
+        <div style="text-align: center; padding: 8px 0; font-size: 13px; color: #0E1C42; font-weight: bold; letter-spacing: 0.4px; background: #EEF1F8; border-left: 1px solid #D0D9E8; border-right: 1px solid #D0D9E8;">
+            &#8595;&#8193; DRAMATIC IRONY: the gap between what you know and what the characters know &#8193;&#8595;
+        </div>
+
+        <!-- Bottom bar: character level -->
+        <div style="background: #EEF1F8; border: 1.5px solid #0E1C42; border-radius: 8px; padding: 18px 22px; margin-top: 6px; margin-bottom: 14px;">
+            <div style="font-size: 12px; color: #0E1C42; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px;">WHAT MARGUERITE AND CHAUVELIN KNOW</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <div style="background: #FFFFFF; border: 1px solid #0E1C42; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #1a2340; line-height: 1.5;">A mysterious Englishman will appear in the supper-room at one o'clock.</div>
+                <div style="background: #FFFFFF; border: 1px solid #0E1C42; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #1a2340; line-height: 1.5;">Sir Percy is a witty fop: loud, good-natured, not to be taken seriously.</div>
+                <div style="background: #FFFFFF; border: 1px solid #0E1C42; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #1a2340; line-height: 1.5;">The Pimpernel is still at large. The trap has caught nobody.</div>
+            </div>
+        </div>
+
+        <div style="font-size: 15px; color: #666; font-style: italic; text-align: center;">Orczy gives the reader more information than any character has. That gap is what creates suspense.</div>
+    </div>
+
+    <!-- PART 1: Warm-up reflective check-in -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; PART 1 &middot; BEFORE YOU READ FURTHER</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">When you watch a mystery story and you suspect who did it before the detective does, what does that feel like? (No wrong answer: just check in with yourself.)</div>
+            <div class="widget-options">
+                <button data-response="That excitement is exactly what Orczy is creating. She gives us enough to suspect, but not enough to be certain. That gap keeps you reading.">&#127917; Exciting. I want to shout at the screen.</button>
+                <button data-response="That tension has a name: dramatic irony. You know something the characters do not, and you wait to see when they will catch up.">&#128552; Tense. I keep waiting for the reveal.</button>
+                <button data-response="Good instinct. Orczy does put the reader slightly ahead of Marguerite and Chauvelin, by design. Notice where that gap appears in these chapters.">&#129300; Satisfying. Like I am smarter than the characters.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: Read and Notice -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: HOW ORCZY DOES IT</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">In Ch 14, when Chauvelin goes downstairs to spring his trap, he finds Sir Percy Blakeney asleep on a sofa in the corner. Orczy places this detail precisely. A reader who has been paying attention will feel the weight of it: Percy is there, in the supper-room, at one o'clock. Chauvelin does not connect the dots. Marguerite does not know. This is dramatic irony: the reader holds information that no character fully grasps.</p>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Orczy uses two main techniques to sustain it. First, she keeps Percy performing the role of the dim, witty fop throughout these chapters. He delivers his famous doggerel quatrain at Lord Grenville's ball, laughs loudly, and loses at cards. Nothing about his behavior suggests a brilliant spy. Second, Orczy filters most of the story through Marguerite's point of view, and Marguerite is looking at the wrong person. She studies Chauvelin, worries about Armand, and never focuses on her husband. The reader is watching all of them at once.</p>
+
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin: 14px 0; padding: 16px 18px; background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; font-size: 17px; color: #1a2340; line-height: 1.65;">
+            <span style="font-size: 22px; flex-shrink: 0; color: #C7922C;">&#128218;</span>
+            <span>Now read or review Ch 11&ndash;16, paying attention to any moment where you, as a reader, hold information a character does not. <a href="#" style="color: #2196D0;">[Teacher: link the Ch 11&ndash;16 PDF here]</a></span>
+        </div>
+
+        <!-- Reading Journal prompt -->
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin-top: 16px;">
+            <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px;">&#9999;&#65039; READING JOURNAL &middot; WEEK 4</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Add this to the Week 4 section of your Reading Journal. In 2 to 4 sentences: Name one moment in Ch 11&ndash;16 where you, as a reader, knew something a character did not. Explain what you knew and what the character was missing.</div>
+        </div>
+    </div>
+
+    <!-- PART 3: Interactive Check -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; PART 3 &middot; TRY IT: WHAT DOES THE READER KNOW THAT THE CHARACTER DOES NOT?</div>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9889; TRY IT &middot; READER vs. CHARACTER</div>
+            <div class="widget-question">For each detail from Ch 11&ndash;16, choose who has this information: the reader, the named character, or both.</div>
+
+            <div class="widget-row" data-correct="0"
+                 data-fb="Right. Orczy shows us Percy sleeping there. Chauvelin sees him too, but dismisses it. That gap between seeing and understanding is how dramatic irony works."
+                 data-hint="Who is in the room? Who does Chauvelin think that person is?">
+                <div class="widget-row-prompt">1. Sir Percy is asleep in the exact corner of the supper-room where Chauvelin set his trap for the Pimpernel at one o'clock.</div>
+                <div class="widget-options">
+                    <button data-choice="0">The reader sees it. Chauvelin does not connect it.</button>
+                    <button data-choice="1">Chauvelin knows this and plans for it.</button>
+                    <button data-choice="2">Neither the reader nor Chauvelin notices.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1"
+                 data-fb="Right. Orczy tells us what Marguerite told Chauvelin. Both we and Chauvelin know the time and place. The suspense comes from not knowing whether the trap will work."
+                 data-hint="Marguerite made a choice to tell Chauvelin. After she tells him, who knows?">
+                <div class="widget-row-prompt">2. Marguerite tells Chauvelin that the note says the Pimpernel will be in the supper-room at one o'clock precisely.</div>
+                <div class="widget-options">
+                    <button data-choice="0">The reader knows. Chauvelin does not.</button>
+                    <button data-choice="1">Both the reader and Chauvelin know this.</button>
+                    <button data-choice="2">Only Marguerite knows and keeps it secret.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2"
+                 data-fb="Right. The verse is funny on the surface. Chauvelin does not take Percy seriously as a suspect. A careful reader may sense that Percy's joke lands a little too perfectly: but Orczy does not let us be certain."
+                 data-hint="Who is laughing, and who might be performing?">
+                <div class="widget-row-prompt">3. Sir Percy's doggerel verse &mdash; &ldquo;We seek him here, we seek him there&rdquo; &mdash; makes everyone at the ball laugh, including Chauvelin.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Only Chauvelin sees through it as a clue.</button>
+                    <button data-choice="1">The reader understands it is a coded warning.</button>
+                    <button data-choice="2">The reader may sense an irony. Chauvelin and the guests treat it as a joke.</button>
+                </div>
+            </div>
+
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: Clues to the Pimpernel's Identity</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">You will map the clues Orczy has placed in the text as an inference station. See the VR activity page linked in this module.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Percy kneels and kisses the steps where Marguerite walked. Orczy shows us this. Marguerite does not see it. One small image holds the entire shape of the novel's dramatic irony: the reader knows things each character cannot afford to show. Keep the module question in mind as you move into Week 4's VR work: when the Pimpernel risks everything, and no one around him knows who he is, what kind of courage is that?</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.02 &middot; The Hidden Hero: How Orczy Keeps the Pimpernel's Identity Secret</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

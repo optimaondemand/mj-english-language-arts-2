@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+
+    /* Section headers */
+    .section-header-coral { border-left: 5px solid #E2725B; background: #FFF5F3; border-radius: 0 6px 6px 0; padding: 12px 18px; margin: 28px 0 16px 0; display: flex; align-items: center; gap: 14px; }
+    .section-header-coral .sh-label { font-size: 13px; font-weight: 700; color: #E2725B; letter-spacing: 0.6px; text-transform: uppercase; }
+    .section-header-coral .sh-time { background: #FDF3E3; border: 1px solid #C7922C; color: #C7922C; border-radius: 20px; padding: 3px 10px; font-size: 12px; margin-left: auto; white-space: nowrap; }
+
+    /* Lesson intro card */
+    .lesson-intro-card { border-left: 5px solid #0E1C42; background: #EEF1F8; border-radius: 0 8px 8px 0; padding: 18px 22px; margin-bottom: 20px; }
+    .lesson-intro-card .lic-label { font-size: 11px; color: #55C8E8; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+    .lesson-intro-card p { font-size: 15px; color: #1a2340; line-height: 1.65; margin: 0; }
+
+    /* Objectives card */
+    .objectives-card { background: #EEF1F8; border-radius: 8px; padding: 18px 22px; margin-bottom: 20px; }
+    .objectives-card .obj-label { font-size: 11px; color: #0E1C42; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; font-weight: 700; }
+    .objectives-card ol { margin: 0; padding-left: 20px; }
+    .objectives-card li { font-size: 15px; color: #1a2340; line-height: 1.6; margin-bottom: 8px; }
+
+    /* Materials card */
+    .materials-card { background: #f8f9fc; border: 1px solid #D0D9E8; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .materials-card .mat-label { font-size: 11px; color: #6b7a99; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+    .materials-card p { font-size: 15px; color: #1a2340; line-height: 1.6; margin: 0 0 6px 0; }
+    .materials-card .teacher-note { font-size: 12px; color: #6b7a99; font-style: italic; margin-top: 4px; }
+
+    /* Core visual */
+    .core-visual-frame { background: #EEF1F8; border-radius: 10px; padding: 20px; margin: 20px 0; }
+    .core-visual-steps { display: flex; align-items: stretch; gap: 0; }
+    .cv-step { border-radius: 6px; padding: 14px 16px; flex: 1; background: #ffffff; }
+    .cv-step-label { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+    .cv-step p { font-size: 14px; color: #1a2340; line-height: 1.55; margin: 0; }
+    .cv-step.coral { border-left: 4px solid #E2725B; }
+    .cv-step.coral .cv-step-label { color: #E2725B; }
+    .cv-step.gold { border-left: 4px solid #C7922C; }
+    .cv-step.gold .cv-step-label { color: #C7922C; }
+    .cv-step.teal { border-left: 4px solid #2A9D8F; }
+    .cv-step.teal .cv-step-label { color: #2A9D8F; }
+    .cv-arrow { display: flex; align-items: center; justify-content: center; padding: 0 10px; font-size: 22px; color: #0E1C42; flex-shrink: 0; }
+
+    /* Reading journal prompt */
+    .rj-card { background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 8px; padding: 18px 22px; margin: 20px 0; }
+    .rj-kicker { font-size: 11px; color: #E2725B; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+    .rj-card ol { margin: 0; padding-left: 20px; }
+    .rj-card li { font-size: 15px; color: #1a2340; line-height: 1.65; margin-bottom: 10px; }
+
+    /* What you'll do next */
+    .next-card { border-left: 5px solid #2A9D8F; background: #F0FAF9; border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 20px 0; }
+    .next-label { font-size: 11px; color: #2A9D8F; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+    .next-card p { font-size: 15px; color: #1a2340; line-height: 1.6; margin: 0; }
+
+    /* Closing sentence */
+    .closing-sentence { font-size: 15px; color: #6b7a99; font-style: italic; line-height: 1.65; margin: 20px 0 8px 0; }
+
+    /* Metadata strip */
+    .meta-strip { background: #0E1C42; border-bottom: 2px solid #55C8E8; display: flex; }
+    .meta-cell { flex: 1; padding: 12px 16px; border-right: 1px solid rgba(85,200,232,0.2); }
+    .meta-cell:last-child { border-right: none; }
+    .meta-label { font-size: 10px; color: #55C8E8; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+    .meta-value { font-size: 13px; color: #ffffff; line-height: 1.4; }
+
+    /* Lesson title bar */
+    .lesson-title-bar { background: #EEF1F8; border-bottom: 1px solid #D0D9E8; padding: 16px 34px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .lesson-title-text { font-size: 22px; color: #0E1C42; font-weight: 700; flex: 1; min-width: 200px; }
+    .time-pill { background: #FDF3E3; border: 1px solid #C7922C; color: #C7922C; border-radius: 20px; padding: 4px 12px; font-size: 12px; white-space: nowrap; }
+
+    /* Body text */
+    p.body { font-size: 15px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0; }
+    h3.sub-heading { font-size: 17px; color: #0E1C42; margin: 20px 0 10px 0; font-weight: 700; }
+
+    /* Info callout */
+    .info-callout { background: #E8F6FB; border-left: 4px solid #2196D0; border-radius: 6px; padding: 14px 18px; margin: 16px 0; }
+    .info-callout p { font-size: 14px; color: #1a2340; line-height: 1.6; margin: 0; }
+    .info-callout .callout-label { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+    <!-- HEADER -->
+    <div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+            <div>
+                <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+                <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+            </div>
+        </div>
+        <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+
+    <!-- METADATA STRIP -->
+    <div class="meta-strip">
+        <div class="meta-cell">
+            <div class="meta-label">Quarter / Module</div>
+            <div class="meta-value">Q3 &middot; Module 4 / The Outsiders</div>
+        </div>
+        <div class="meta-cell">
+            <div class="meta-label">Lesson</div>
+            <div class="meta-value">Lesson 2.02</div>
+        </div>
+        <div class="meta-cell">
+            <div class="meta-label">Topic</div>
+            <div class="meta-value">The Outsiders, Ch. 4</div>
+        </div>
+        <div class="meta-cell">
+            <div class="meta-label">Module Question</div>
+            <div class="meta-value" style="font-style: italic;">"What divides the greasers and the Socs, and what stays the same on both sides?"</div>
+        </div>
+    </div>
+
+    <!-- LESSON TITLE BAR -->
+    <div class="lesson-title-bar">
+        <div class="lesson-title-text">A Choice and Its Consequences</div>
+        <div class="time-pill">~12 min</div>
+    </div>
+
+    <div style="padding: 24px 34px;">
+
+        <!-- LESSON INTRO CARD -->
+        <div class="lesson-intro-card">
+            <div class="lic-label">Today's Focus</div>
+            <p>Chapter 4 of The Outsiders contains one of the most important events in the whole novel. An already tense situation turns suddenly dangerous, and two characters make a decision in a moment of crisis. Today you will look carefully at what leads up to that moment, what happens, and how the characters respond. The question the chapter asks is real: when something terrible happens and you had a role in it, even if you were trying to protect someone, what do you do next?</p>
+        </div>
+
+        <!-- OBJECTIVES -->
+        <div class="objectives-card">
+            <div class="obj-label">By the End of This Lesson</div>
+            <ol>
+                <li>I will be able to describe the key events of Chapter 4 in my own words, without reproducing the author's text.</li>
+                <li>I will be able to analyze why the characters made the choices they did, using details from the chapter.</li>
+                <li>I will be able to form my own position on whether the decision at the end of the chapter was justified.</li>
+            </ol>
+        </div>
+
+        <!-- MATERIALS -->
+        <div class="materials-card">
+            <div class="mat-label">Materials</div>
+            <p>Read Chapter 4 in your copy of <em>The Outsiders</em>.</p>
+            <p class="teacher-note">[Teacher: link the approved student copy / purchase or library access here]</p>
+            <p style="margin-top: 10px;">Your Outsiders Reading Journal on OneDrive.</p>
+        </div>
+
+        <!-- CORE VISUAL: EVENT, CHOICE, CONSEQUENCE -->
+        <div class="core-visual-frame">
+            <div style="font-size: 12px; color: #6b7a99; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.4px;">Chapter 4 at a Glance</div>
+            <div class="core-visual-steps">
+                <div class="cv-step coral">
+                    <div class="cv-step-label">The Event</div>
+                    <p>A confrontation between the greasers and the Socs turns dangerous.</p>
+                </div>
+                <div class="cv-arrow">&#8594;</div>
+                <div class="cv-step gold">
+                    <div class="cv-step-label">The Choice</div>
+                    <p>Ponyboy and Johnny must decide what to do in the immediate aftermath.</p>
+                </div>
+                <div class="cv-arrow">&#8594;</div>
+                <div class="cv-step teal">
+                    <div class="cv-step-label">The Consequence</div>
+                    <p>Their decision sets the entire rest of the novel in motion.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COPYRIGHT NOTICE -->
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 20px; margin-bottom: 20px;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 8px;">&#128274; COPYRIGHT NOTICE</div>
+            <div style="font-size: 14px; color: #1a2340; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+        </div>
+
+        <!-- PART 1 SECTION HEADER -->
+        <div class="section-header-coral">
+            <div class="sh-label">Part 1: Read &amp; Notice</div>
+            <div class="sh-time">~2 min</div>
+        </div>
+
+        <p class="body">Before you read Chapter 4, think about how people make decisions in a crisis.</p>
+
+        <!-- WIDGET 1: OW-REFLECT -->
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">CHECK IN</div>
+            <div class="widget-question">Think about a time when someone had to make a fast decision in a scary or stressful moment. Did they have time to think, or did they just react? (No wrong answer.)</div>
+            <div class="widget-options">
+                <button data-response="That instant-reaction moment is exactly what this chapter puts on the page. When there is no time to think, what a character does reveals who they are at their core.">They had to react fast without thinking.</button>
+                <button data-response="That split-second calculation -- weigh the options, act -- is one of the most revealing moments in fiction. Even a brief pause is a choice about what matters most.">They thought for a second but had to decide quickly.</button>
+                <button data-response="Freezing is also a response, and it has consequences too. In Chapter 4, the characters do not freeze -- but the pressure to act fast shapes every decision they make.">They froze and someone else made the call.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <!-- PART 2 SECTION HEADER -->
+        <div class="section-header-coral">
+            <div class="sh-label">Part 2: Chapter 4 in Focus</div>
+            <div class="sh-time">~5 min</div>
+        </div>
+
+        <p class="body">Read Chapter 4 in your copy. Then use the summary below to anchor your analysis.</p>
+
+        <h3 class="sub-heading">What Happens in Chapter 4</h3>
+
+        <p class="body">Chapter 4 opens where Chapter 3 left off: Ponyboy is still out past curfew, and the tension between the greasers and the Socs has not resolved. A group of Socs confronts Ponyboy and Johnny in the park. The confrontation is not a conversation. It escalates quickly into a physical attack.</p>
+
+        <p class="body">What happens next is the pivotal moment of the novel. Ponyboy is in direct physical danger. Johnny, acting to stop the attack and protect his friend, intervenes with force. The outcome of that intervention is irreversible: a member of the Socs dies. This is not a dramatic flourish in the novel -- it is handled with brevity and weight, because what matters to the author is not the violence itself but what comes after.</p>
+
+        <p class="body">Ponyboy and Johnny face an immediate decision. They can stay and try to explain what happened, or they can run. They choose to run. They find Dally -- one of the older, harder greasers -- and ask for help. He gives them money, a weapon, and directions to a hiding place outside of town. By the time the chapter ends, the two boys are alone in an abandoned building, cut off from their neighborhood, their brothers, and the life they knew.</p>
+
+        <div class="info-callout">
+            <div class="callout-label">A Note on This Chapter</div>
+            <p>Chapter 4 contains a serious, violent event. The novel treats it with weight. As you analyze it, focus on why the characters make the choices they do, not just what happens. That is what the author wants you to think about.</p>
+        </div>
+
+        <!-- PART 3 SECTION HEADER -->
+        <div class="section-header-coral">
+            <div class="sh-label">Part 3: A Question of Justification</div>
+            <div class="sh-time">~5 min</div>
+        </div>
+
+        <p class="body">When someone uses force to stop an attack against another person, the question of whether that force was justified is not always easy. Self-defense means acting to prevent harm to yourself or someone else when there is no other way to stop it. Whether Chapter 4 fits that description is something careful readers have debated. The novel does not settle the question for you. It puts the evidence in front of you and lets you decide.</p>
+
+        <!-- WIDGET 2: OW-SELECT -->
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">TRY IT: WHICH SIDE DOES THIS EVIDENCE SUPPORT?</div>
+            <div class="widget-question">For each piece of evidence below, decide whether it supports a self-defense argument or raises a question about it.</div>
+
+            <div class="widget-row" data-correct="0">
+                <div class="widget-row-prompt">Ponyboy was being physically attacked and held under water at the moment Johnny acted.</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Right. A direct physical threat to another person's safety is the core condition for a self-defense argument.">Supports self-defense</button>
+                    <button data-choice="1" data-fb="Consider: was there an immediate threat to Ponyboy's life at that moment? That changes which side this evidence falls on.">Raises a question</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1">
+                <div class="widget-row-prompt">The characters chose to run rather than staying to explain what happened.</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Think about it: does running the scene strengthen or weaken a self-defense argument for outside observers?">Supports self-defense</button>
+                    <button data-choice="1" data-fb="Yes. Fleeing the scene can complicate a self-defense argument because it makes it harder to establish what the person was thinking when they acted.">Raises a question</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0">
+                <div class="widget-row-prompt">The attack was ongoing: the Socs had not stopped and showed no sign of stopping.</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Right. If the attack was still happening, the force used to stop it can be argued as necessary and proportionate.">Supports self-defense</button>
+                    <button data-choice="1" data-fb="Consider: at the exact moment Johnny acted, had the attack ended or was it still going? That distinction matters for this argument.">Raises a question</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1">
+                <div class="widget-row-prompt">Johnny carried a weapon, which suggests he was prepared for a fight before that night.</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Think about it: does carrying a weapon in advance strengthen or complicate the claim that the act was purely defensive?">Supports self-defense</button>
+                    <button data-choice="1" data-fb="Yes. Carrying a weapon in advance can be used to question intent. It does not settle the question, but it is a fact a reader should notice.">Raises a question</button>
+                </div>
+            </div>
+
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <!-- READING JOURNAL PROMPT -->
+        <div class="rj-card">
+            <div class="rj-kicker">Reading Journal: Add This to the Week 2 Section</div>
+            <ol>
+                <li>In your own words, describe what happens in Chapter 4 and why Johnny acted the way he did. What was at risk in that moment?</li>
+                <li>Do you think Johnny's action was justified? Use at least one specific detail from the chapter to support your answer. You do not have to agree with what he did, but you do have to have a reason for your position.</li>
+                <li>At the end of Chapter 4, Ponyboy and Johnny choose to run. What does that choice tell you about them? What are they afraid of?</li>
+            </ol>
+        </div>
+
+        <!-- WHAT YOU'LL DO NEXT -->
+        <div class="next-card">
+            <div class="next-label">What You'll Do Next</div>
+            <p>Answer the three questions above in the Week 2 section of your Outsiders Reading Journal. Write in your own words. Do not reproduce sentences from the chapter. Your teacher reviews the Journal at module checkpoints, not every week. Then complete VR Activity 1: Signs and Clues.</p>
+        </div>
+
+        <!-- BEFORE YOU GO -->
+        <p class="closing-sentence">The events of Chapter 4 change everything that comes after them. As you read, keep asking: what did each character think they had to do, and why? That question has no easy answer. That is exactly why Hinton wrote it.</p>
+
+    </div><!-- end content padding -->
+
+    <!-- FOOTER -->
+    <div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+        <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.65);">Lesson 2.02 &middot; A Choice and Its Consequences</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+    </div>
+
+</div><!-- end canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+</body>
+</html>

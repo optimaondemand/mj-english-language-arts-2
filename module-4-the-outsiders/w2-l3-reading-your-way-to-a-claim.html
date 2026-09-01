@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #0E1C42; border-bottom: 2px solid #55C8E8; padding: 14px 34px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 0;">
+        <div style="flex: 1; min-width: 180px; padding: 6px 18px 6px 0; border-right: 1px solid rgba(85,200,232,0.25);">
+            <div style="font-size: 10px; color: #55C8E8; letter-spacing: 0.6px; margin-bottom: 4px;">QUARTER / MODULE</div>
+            <div style="font-size: 14px; color: #ffffff;">Q3 &middot; Module 4 / The Outsiders</div>
+        </div>
+        <div style="flex: 1; min-width: 140px; padding: 6px 18px; border-right: 1px solid rgba(85,200,232,0.25);">
+            <div style="font-size: 10px; color: #55C8E8; letter-spacing: 0.6px; margin-bottom: 4px;">LESSON</div>
+            <div style="font-size: 14px; color: #ffffff;">Lesson 2.03</div>
+        </div>
+        <div style="flex: 1; min-width: 140px; padding: 6px 18px; border-right: 1px solid rgba(85,200,232,0.25);">
+            <div style="font-size: 10px; color: #55C8E8; letter-spacing: 0.6px; margin-bottom: 4px;">TOPIC</div>
+            <div style="font-size: 14px; color: #ffffff;">Weekly Workshop</div>
+        </div>
+        <div style="flex: 2; min-width: 240px; padding: 6px 0 6px 18px;">
+            <div style="font-size: 10px; color: #55C8E8; letter-spacing: 0.6px; margin-bottom: 4px;">MODULE QUESTION</div>
+            <div style="font-size: 14px; color: #ffffff;">"What divides the greasers and the Socs, and what stays the same on both sides?"</div>
+        </div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <!-- LESSON TITLE + TIME PILL -->
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+        <div>
+            <div style="font-size: 11px; color: #6b7a99; letter-spacing: 0.5px; margin-bottom: 6px;">LESSON 4.06</div>
+            <h1 style="margin: 0; font-size: 30px; color: #0E1C42; line-height: 1.2;">Reading Your Way to a Claim</h1>
+            <div style="font-size: 14px; color: #6b7a99; margin-top: 6px;">Weekly Workshop</div>
+        </div>
+        <div style="background: #C7922C; color: #ffffff; border-radius: 20px; padding: 8px 18px; font-size: 13px; font-weight: 600; white-space: nowrap; align-self: flex-start; margin-top: 4px;">~10 min</div>
+    </div>
+
+    <!-- LESSON INTRO CARD -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 8px; padding: 18px 22px; margin-bottom: 24px;">
+        <div style="font-size: 11px; color: #55C8E8; letter-spacing: 0.6px; margin-bottom: 10px;">TODAY'S FOCUS</div>
+        <p style="margin: 0; font-size: 16px; color: #1a2340; line-height: 1.65;">This is your weekly workshop lesson. It is shorter than the others. The goal is to pull together what you have read and practiced this week and put it into one analytical sentence. That sentence is your Quick Write 2 claim: a statement about a character's choice in Chapters 3 or 4 that you can support with details from the novel.</p>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #EEF1F8; border-radius: 8px; padding: 18px 22px; margin-bottom: 24px;">
+        <div style="font-size: 11px; color: #0E1C42; letter-spacing: 0.6px; margin-bottom: 12px; font-weight: 700;">BY THE END OF THIS LESSON</div>
+        <ol style="margin: 0; padding-left: 22px; color: #1a2340; font-size: 15px; line-height: 1.75;">
+            <li>I will be able to state an original claim about a character's choice in Chapters 3-4.</li>
+            <li>I will be able to identify at least one piece of support for that claim from the chapters.</li>
+        </ol>
+    </div>
+
+    <!-- MATERIALS -->
+    <div style="background: #f8f9fc; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #6b7a99; letter-spacing: 0.6px; margin-bottom: 12px; font-weight: 700;">MATERIALS</div>
+        <ul style="margin: 0; padding-left: 22px; color: #1a2340; font-size: 15px; line-height: 1.8;">
+            <li>Your Outsiders Reading Journal (with your Week 2 notes).</li>
+            <li>Your copy of The Outsiders, Chapters 3-4.</li>
+            <li>Microsoft Word for your Quick Write.</li>
+        </ul>
+    </div>
+
+    <!-- COPYRIGHT NOTICE -->
+    <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 20px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 8px;">&#128274; COPYRIGHT NOTICE</div>
+        <div style="font-size: 14px; color: #1a2340; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+    </div>
+
+    <!-- CORE VISUAL: WHAT MAKES A CLAIM? -->
+    <div style="background: #EEF1F8; border-radius: 10px; padding: 20px; margin: 20px 0;">
+        <div style="font-size: 13px; color: #0E1C42; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 16px; text-transform: uppercase;">What Makes a Claim?</div>
+        <div style="display: flex; align-items: stretch; gap: 0; flex-wrap: wrap;">
+            <!-- Left: Not a Claim -->
+            <div style="flex: 1; min-width: 220px; border-left: 4px solid #E2725B; background: #ffffff; border-radius: 6px; padding: 14px 16px;">
+                <div style="font-size: 11px; color: #E2725B; letter-spacing: 0.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px;">Not a Claim</div>
+                <p style="margin: 0 0 10px 0; font-size: 15px; color: #6b7a99; font-style: italic; line-height: 1.6;">In Chapter 4, something bad happens and Johnny and Ponyboy run away.</p>
+                <div style="font-size: 12px; color: #9aa5bc;">This just retells events.</div>
+            </div>
+            <!-- Center arrow -->
+            <div style="flex-shrink: 0; padding: 0 12px; color: #6b7a99; font-size: 13px; align-self: center; text-align: center; min-width: 100px;">
+                &#8594; Add your interpretation. &#8594;
+            </div>
+            <!-- Right: A Claim -->
+            <div style="flex: 1; min-width: 220px; border-left: 4px solid #2A9D8F; background: #ffffff; border-radius: 6px; padding: 14px 16px;">
+                <div style="font-size: 11px; color: #2A9D8F; letter-spacing: 0.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px;">A Claim</div>
+                <p style="margin: 0 0 10px 0; font-size: 15px; color: #1a2340; line-height: 1.6;">Johnny's decision in Chapter 4, though drastic, was driven by loyalty rather than anger.</p>
+                <div style="font-size: 12px; color: #9aa5bc;">This takes a position that needs support.</div>
+            </div>
+        </div>
+        <!-- Bottom note -->
+        <div style="background: #ffffff; border-top: 2px solid #D0D9E8; padding: 10px 14px; font-size: 13px; color: #6b7a99; margin-top: 14px; border-radius: 0 0 6px 6px;">
+            A claim does not just describe what happened. It says what you think it means.
+        </div>
+    </div>
+
+    <!-- PART 1: READ & NOTICE -->
+    <div style="border-left: 5px solid #E2725B; background: #FFF5F3; border-radius: 0 8px 8px 0; padding: 14px 20px; margin: 28px 0 16px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <div>
+            <div style="font-size: 11px; color: #E2725B; letter-spacing: 0.6px; font-weight: 700; margin-bottom: 4px;">PART 1: READ &amp; NOTICE</div>
+        </div>
+        <div style="background: #C7922C; color: #ffffff; border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600;">~2 min</div>
+    </div>
+
+    <p style="font-size: 16px; color: #1a2340; line-height: 1.65; margin: 0 0 16px 0;">Before you build your claim, think about which character's choices have been on your mind this week.</p>
+
+    <!-- Widget 1: Warm-Up Reflect -->
+    <div class="optima-widget ow-reflect">
+        <div class="widget-kicker">WARM-UP</div>
+        <div class="widget-question">Which character's choice from Chapters 3 or 4 are you most curious about? (Pick one to start thinking.)</div>
+        <div class="widget-options">
+            <button data-response="Ponyboy is the narrator, which means every reader gets the story filtered through his perspective. A claim about Ponyboy often comes down to asking: what does he believe, and is he right?">Ponyboy's feelings and reactions.</button>
+            <button data-response="Johnny's decision is the engine that drives the novel's second half. A strong claim about it usually centers on motive: what was he protecting, and at what cost?">Johnny's decision in Chapter 4.</button>
+            <button data-response="Looking at the Socs as decision-makers rather than just antagonists opens up the module question. What do their choices reveal about why the divide between the groups exists?">The choices made by the Socs.</button>
+        </div>
+        <div class="widget-feedback"></div>
+        <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- PART 2: MAKE & APPLY -->
+    <div style="border-left: 5px solid #2A9D8F; background: #F0FAF8; border-radius: 0 8px 8px 0; padding: 14px 20px; margin: 28px 0 16px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <div>
+            <div style="font-size: 11px; color: #2A9D8F; letter-spacing: 0.6px; font-weight: 700; margin-bottom: 4px;">PART 2: BUILDING YOUR CLAIM</div>
+        </div>
+        <div style="background: #C7922C; color: #ffffff; border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600;">~6 min</div>
+    </div>
+
+    <p style="font-size: 16px; color: #1a2340; line-height: 1.65; margin: 0 0 20px 0;">A claim is a sentence that says what you think and that someone could argue against. If no one could disagree, it is not a claim. It is just a fact. Read the examples below. Each card shows a starting point on the front. Click the card to see a stronger version of the same idea as a full claim.</p>
+
+    <!-- Flip Card 1 -->
+    <div class="optima-widget" style="padding: 0; border: none; background: none;">
+        <div class="ow-flip" style="background: #ffffff; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center;">
+            <div class="ow-flip-front">
+                <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px; letter-spacing: 0.4px;">STARTING POINT: Click to see a stronger claim.</div>
+                <div style="font-size: 17px; color: #0E1C42; line-height: 1.55; font-style: italic;">Johnny made a choice in Chapter 4.</div>
+            </div>
+            <div class="ow-flip-back">
+                <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px; letter-spacing: 0.4px;">STRONGER CLAIM</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Johnny acted to protect someone he cared about, which shows that loyalty is a more powerful force in this novel than law or consequence.</div>
+            </div>
+        </div>
+        <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- Flip Card 2 -->
+    <div class="optima-widget" style="padding: 0; border: none; background: none;">
+        <div class="ow-flip" style="background: #ffffff; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center;">
+            <div class="ow-flip-front">
+                <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px; letter-spacing: 0.4px;">STARTING POINT: Click to see a stronger claim.</div>
+                <div style="font-size: 17px; color: #0E1C42; line-height: 1.55; font-style: italic;">Ponyboy reacted to the events of Chapter 3.</div>
+            </div>
+            <div class="ow-flip-back">
+                <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px; letter-spacing: 0.4px;">STRONGER CLAIM</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Ponyboy's reaction to Cherry at the movies shows that the divide between greasers and Socs is more about economics than about who people actually are inside.</div>
+            </div>
+        </div>
+        <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- Flip Card 3 -->
+    <div class="optima-widget" style="padding: 0; border: none; background: none;">
+        <div class="ow-flip" style="background: #ffffff; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center;">
+            <div class="ow-flip-front">
+                <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px; letter-spacing: 0.4px;">STARTING POINT: Click to see a stronger claim.</div>
+                <div style="font-size: 17px; color: #0E1C42; line-height: 1.55; font-style: italic;">Dally gave Ponyboy and Johnny advice after the events of Chapter 4.</div>
+            </div>
+            <div class="ow-flip-back">
+                <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px; letter-spacing: 0.4px;">STRONGER CLAIM</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Dally's advice to run rather than face the consequences reveals that the greasers have learned to distrust a justice system that was never designed to protect them.</div>
+            </div>
+        </div>
+        <button class="widget-reset">Reset</button>
+    </div>
+
+    <p style="font-size: 14px; color: #6b7a99; font-style: italic; margin: 4px 0 24px 0;">These are examples only. Your Quick Write 2 claim should be your own.</p>
+
+    <!-- READING JOURNAL PROMPT -->
+    <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 8px; padding: 18px 22px; margin: 20px 0;">
+        <div style="font-size: 11px; color: #E2725B; letter-spacing: 0.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px;">Reading Journal: Week 2 Section</div>
+        <p style="margin: 0; font-size: 15px; color: #1a2340; line-height: 1.65;">Before you start Quick Write 2, write two sentences in your journal: your working claim about a character's choice, and one detail from Chapters 3 or 4 that you think supports it.</p>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="border: 2px solid #2A9D8F; border-radius: 8px; padding: 18px 22px; margin: 24px 0;">
+        <div style="font-size: 11px; color: #2A9D8F; letter-spacing: 0.6px; font-weight: 700; margin-bottom: 14px;">WHAT YOU'LL DO NEXT</div>
+        <ol style="margin: 0; padding-left: 22px; color: #1a2340; font-size: 15px; line-height: 1.8;">
+            <li>Quick Write 2 (assignment): Write your claim about a character's choice. Use the M365 Word doc and save it to your OneDrive.</li>
+            <li>Check-up (quiz): Covers this week's reading and grammar. Then confirm your submissions.</li>
+        </ol>
+    </div>
+
+    <!-- BEFORE YOU GO -->
+    <div style="background: #EEF1F8; border-radius: 8px; padding: 20px 24px; margin: 24px 0 8px 0;">
+        <div style="font-size: 11px; color: #0E1C42; letter-spacing: 0.6px; font-weight: 700; margin-bottom: 10px;">BEFORE YOU GO</div>
+        <p style="margin: 0; font-size: 16px; color: #1a2340; line-height: 1.7;">A strong analytical sentence does more work than a summary. It says what you think the evidence means. This week you practiced noticing signals, weighing a difficult decision, and now building a position. That is the whole arc of reading like an analyst.</p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65);">Lesson 2.03 &middot; Reading Your Way to a Claim</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+</body>
+</html>

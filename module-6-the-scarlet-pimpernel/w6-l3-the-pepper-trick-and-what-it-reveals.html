@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 6.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">The Scarlet Pimpernel</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.03 &middot; Weekly Workshop</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Situational Irony and Character</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Reading</div>
+        <div style="font-size: 17px; color: #0e1c42;">Ch. 25&ndash;26</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Pepper Trick and What It Reveals</div>
+        <div style="font-size: 16px; color: #666;">Weekly Workshop <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">~15 min</span></div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">By the end of Chapter 25, Percy has left Chauvelin sneezing helplessly at a table. The most powerful secret agent in France has been beaten by a pinch of pepper.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you will look at why this moment is funny and serious at the same time, what it tells you about Percy's character, and how it fits your argument.</div>
+    </div>
+
+    <!-- WARM-UP: ow-reflect -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: BEFORE YOU BEGIN</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">After reading the pepper scene, what do you think of Percy?</div>
+            <div class="widget-options">
+                <button data-response="Neither did Chauvelin. The gap between what Percy seemed and what he was doing is exactly what the scene plays on.">&#128513; He is a genius -- I never saw it coming</button>
+                <button data-response="That is an interesting tension. Keep it in mind for your argument: is there a difference between courage and recklessness here?">&#129300; Clever, but also reckless</button>
+                <button data-response="Good place to be. Orczy wants you to reconsider your first impression of Percy. Use today's lesson to build your own reading.">&#128554; I am not sure what to think of him</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- TEACHING SECTION -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: WHAT THE PEPPER TRICK SHOWS</div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 0 0;">In Chapter 25, Percy does something unexpected: instead of running or fighting, he offers Chauvelin a pinch of snuff laced with pepper from the table. The trick is absurd, the kind of thing a clown might try -- yet it works perfectly. Orczy has spent the novel presenting Percy as a man the world thinks is foolish: his drawling speech, his affected manners, his loud laugh. Now those same manners become cover for a precise, controlled act of strategy. He keeps Chauvelin talking while he palms the pepper. He waits for exactly the right moment: when Desgas and the soldiers are close enough that Percy must act, but Chauvelin is still alone. The situational irony lands here: the character written off as a fop -- a shallow social ornament -- turns out to be the shrewdest person in the room. The reader expected Chauvelin, the cunning Frenchman, to close the trap. Instead, the trap is turned by a handful of seasoning.</p>
+    </div>
+
+    <!-- CORE VISUAL: The Eagle and the Fox -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; "THE EAGLE AND THE FOX" -- A COMPARISON</div>
+
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 18px;">
+            <!-- Fox / Chauvelin -->
+            <div style="flex: 1; min-width: 220px; border: 2px solid #E2725B; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 13px; color: #E2725B; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.3px;">THE FOX -- CHAUVELIN</div>
+                <ul style="margin: 0; padding-left: 18px; font-size: 16px; color: #1a2340; line-height: 1.75;">
+                    <li>Planned for weeks</li>
+                    <li>Controlled every road</li>
+                    <li>Directed forty soldiers</li>
+                    <li>Knew Percy's identity</li>
+                    <li>Checked his watch three times waiting for Desgas</li>
+                </ul>
+            </div>
+            <!-- Eagle / Percy -->
+            <div style="flex: 1; min-width: 220px; border: 2px solid #2A9D8F; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 13px; color: #2A9D8F; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.3px;">THE EAGLE -- PERCY</div>
+                <ul style="margin: 0; padding-left: 18px; font-size: 16px; color: #1a2340; line-height: 1.75;">
+                    <li>Arrived singing</li>
+                    <li>Sat down to eat the enemy's soup</li>
+                    <li>Kept him talking</li>
+                    <li>Palmed the pepper</li>
+                    <li>Walked out calmly while Chauvelin sneezed</li>
+                </ul>
+            </div>
+        </div>
+        <div style="font-size: 17px; color: #0e1c42; font-weight: bold; line-height: 1.6;">Which of the two was actually in control of the scene?</div>
+    </div>
+
+    <!-- READ AND NOTICE: Reading Journal -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: ADD TO YOUR READING JOURNAL</div>
+
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin-bottom: 16px;">
+            <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px;">&#9999;&#65039; READING JOURNAL &middot; WEEK 6</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6; margin-bottom: 12px;">Open the Week 6 section of your Reading Journal. Write your answers after reading Chapters 25 and 26.</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6; margin-bottom: 10px;"><strong>1.</strong> In Chapter 25, the narrator describes Percy's clothes and manner in detail before telling you what he is actually doing. What effect does that order create?</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>2.</strong> By the end of Chapter 26, Chauvelin is back in pursuit with a cart and more soldiers. What does this tell you about how the situation has changed -- or not changed -- for Percy?</div>
+        </div>
+    </div>
+
+    <!-- QUICK EVALUATIVE WIDGET: ow-select -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; READ &amp; NOTICE: WHAT DOES THE TEXT SHOW?</div>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9889; CHECK WHAT YOU READ</div>
+            <div class="widget-question">Choose the answer that the text of Chapters 25&ndash;26 most directly supports.</div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. The text says Chauvelin was listening for the approaching footsteps and had never even remotely guessed the trick which was being played upon him." data-hint="Re-read what Chauvelin was focused on just before Percy offered him the snuffbox.">
+                <div class="widget-row-prompt">1. The pepper trick works because...</div>
+                <div class="widget-options">
+                    <button data-choice="0">Chauvelin had already decided to let Percy go.</button>
+                    <button data-choice="1">Percy had a sword hidden in his coat.</button>
+                    <button data-choice="2">Chauvelin was too intent on listening for Desgas to notice what Percy was doing.</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. Chauvelin knows Percy is heading for Pere Blanchard's hut. He still plans to catch him there." data-hint="What is Chauvelin's original plan for where to catch Percy?">
+                <div class="widget-row-prompt">2. In Chapter 26, why does Chauvelin say there is not much harm done?</div>
+                <div class="widget-options">
+                    <button data-choice="0">Because Percy has not yet reached the fugitives, so the trap at the hut can still close.</button>
+                    <button data-choice="1">Because he has already arrested Percy.</button>
+                    <button data-choice="2">Because he does not care whether Percy escapes.</button>
+                </div>
+            </div>
+
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CONNECT TO YOUR ARGUMENT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#9999;&#65039; MAKE &amp; APPLY: TOWARD YOUR ESSAY</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 12px;">TOWARD YOUR ESSAY</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.65;">The pepper trick gives you a specific moment to use as evidence. Before you move to Quick Write 6, write one sentence in your Reading Journal that names what this scene proves about Percy's kind of courage. Use it as a piece of evidence you might cite in your argument.</div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Complete the Reading Journal questions and the evidence sentence above.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Open Quick Write 6: a letter written by a character in this story.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Complete the Check-up.</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.03 &middot; The Pepper Trick and What It Reveals</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (row.dataset.fb || 'Right.') : (row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

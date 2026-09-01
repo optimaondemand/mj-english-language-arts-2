@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Grammar 1</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 4B</div>
+        <div style="font-size: 12px; color: #666;">A Midsummer Night&rsquo;s Dream</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Grammar 1</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Parts of Speech Review</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 15px; color: #0e1c42;">Everyone in this play tells a story about what happened in the wood. Whose account can we trust, and how would we know?</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Grammar 1</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Parts of Speech Review</div>
+                <div style="font-size: 16px; color: #666;">Lesson</div>
+            </div>
+            <span style="background: #C7922C; color: #ffffff; font-size: 13px; padding: 4px 12px; border-radius: 12px; white-space: nowrap;">&#9201; ~12 min</span>
+        </div>
+    </div>
+
+    <div style="background: #FFFDF5; border: 1px solid #E8D9A8; border-top: 4px solid #C7922C; border-radius: 7px; padding: 18px 22px; margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="font-size: 12px; color: #C7922C; font-weight: 600; letter-spacing: 0.5px;">TODAY&rsquo;S FOCUS</div>
+            <div style="background: #C7922C; color: #fff; font-size: 11px; border-radius: 12px; padding: 2px 10px;">~12 min</div>
+        </div>
+        <div style="font-size: 15px; color: #1a2340; line-height: 1.7;">This lesson brings together all eight parts of speech you have studied so far. When you can name every word in a sentence, you can write with more control and read more carefully. Today you will classify a new sentence, asking the questions that identify each part of speech.</div>
+    </div>
+
+    <div style="margin-bottom: 28px;">
+        <div style="font-size: 13px; color: #6b7a99; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 12px;">THE EIGHT PARTS OF SPEECH</div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+            <div style="background: #EEF1F8; border-radius: 8px; padding: 14px 12px; text-align: center;"><div style="font-size: 22px; margin-bottom: 6px;">&#128100;</div><div style="font-size: 14px; color: #2A9D8F; font-weight: 700; margin-bottom: 5px;">Noun</div><div style="font-size: 13px; color: #1a2340; line-height: 1.5;">Names a person, place, thing, or idea</div></div>
+            <div style="background: #EEF1F8; border-radius: 8px; padding: 14px 12px; text-align: center;"><div style="font-size: 22px; margin-bottom: 6px;">&#128260;</div><div style="font-size: 14px; color: #2A9D8F; font-weight: 700; margin-bottom: 5px;">Pronoun</div><div style="font-size: 13px; color: #1a2340; line-height: 1.5;">Replaces a noun (I, he, they, we)</div></div>
+            <div style="background: #EEF1F8; border-radius: 8px; padding: 14px 12px; text-align: center;"><div style="font-size: 22px; margin-bottom: 6px;">&#9889;</div><div style="font-size: 14px; color: #2A9D8F; font-weight: 700; margin-bottom: 5px;">Verb</div><div style="font-size: 13px; color: #1a2340; line-height: 1.5;">Tells what is being said (action, linking, helping)</div></div>
+            <div style="background: #EEF1F8; border-radius: 8px; padding: 14px 12px; text-align: center;"><div style="font-size: 22px; margin-bottom: 6px;">&#127775;</div><div style="font-size: 14px; color: #2A9D8F; font-weight: 700; margin-bottom: 5px;">Adjective</div><div style="font-size: 13px; color: #1a2340; line-height: 1.5;">Describes a noun (What kind? Which one? How many?). Includes article adjective (a/an/the)</div></div>
+            <div style="background: #EEF1F8; border-radius: 8px; padding: 14px 12px; text-align: center;"><div style="font-size: 22px; margin-bottom: 6px;">&#128336;</div><div style="font-size: 14px; color: #2A9D8F; font-weight: 700; margin-bottom: 5px;">Adverb</div><div style="font-size: 13px; color: #1a2340; line-height: 1.5;">Describes a verb, adjective, or adverb (How? When? Where? To what extent?)</div></div>
+            <div style="background: #EEF1F8; border-radius: 8px; padding: 14px 12px; text-align: center;"><div style="font-size: 22px; margin-bottom: 6px;">&#128205;</div><div style="font-size: 14px; color: #2A9D8F; font-weight: 700; margin-bottom: 5px;">Preposition</div><div style="font-size: 13px; color: #1a2340; line-height: 1.5;">Shows a relationship; its noun = object of the preposition</div></div>
+            <div style="background: #EEF1F8; border-radius: 8px; padding: 14px 12px; text-align: center;"><div style="font-size: 22px; margin-bottom: 6px;">&#128279;</div><div style="font-size: 14px; color: #2A9D8F; font-weight: 700; margin-bottom: 5px;">Conjunction</div><div style="font-size: 13px; color: #1a2340; line-height: 1.5;">Joins words or groups of words</div></div>
+            <div style="background: #EEF1F8; border-radius: 8px; padding: 14px 12px; text-align: center;"><div style="font-size: 22px; margin-bottom: 6px;">&#129325;</div><div style="font-size: 14px; color: #2A9D8F; font-weight: 700; margin-bottom: 5px;">Interjection</div><div style="font-size: 13px; color: #1a2340; line-height: 1.5;">An exclamation standing apart from the rest of the sentence</div></div>
+        </div>
+    </div>
+
+    <div class="optima-widget ow-reflect">
+        <div class="widget-kicker">WARM-UP</div>
+        <div class="widget-question">Pick the part of speech you feel most confident about right now. (No wrong answer.)</div>
+        <div class="widget-options">
+            <button data-response="Nouns are the foundation. Every sentence needs something to talk about, and naming things precisely makes your writing stronger.">Noun</button>
+            <button data-response="Verbs are the engine of every sentence. Knowing action, linking, and helping verbs puts you in control of what your sentences do.">Verb</button>
+            <button data-response="Adjectives sharpen the picture. The three questions (What kind? Which one? How many?) give you a reliable way to spot them every time.">Adjective</button>
+            <button data-response="Adverbs are flexible. They can describe verbs, adjectives, or other adverbs, and their four questions make them findable in any sentence.">Adverb</button>
+            <button data-response="Prepositions show relationships other words cannot. Once you can spot the object of the preposition, you can unpack even complex sentences.">Preposition</button>
+        </div>
+        <div class="widget-feedback"></div>
+        <button class="widget-reset">Reset</button>
+    </div>
+
+    <div style="border-left: 5px solid #E2725B; background: #FEF5F3; border-radius: 7px; padding: 16px 22px; margin-bottom: 8px;">
+        <div style="font-size: 11px; color: #E2725B; font-weight: 700; letter-spacing: 0.6px; margin-bottom: 4px;">&#128065; READ &amp; NOTICE</div>
+        <div style="font-size: 17px; color: #0E1C42; font-weight: 600;">HOW TO CLASSIFY THIS SENTENCE</div>
+    </div>
+
+    <div style="background: #FDF3E3; border: 1px solid #E8D9A8; border-radius: 7px; padding: 16px 22px; margin-bottom: 20px; text-align: center;">
+        <div style="font-size: 11px; color: #C7922C; margin-bottom: 8px; letter-spacing: 0.4px;">FOCUS SENTENCE</div>
+        <div style="font-size: 20px; color: #0E1C42; font-style: italic; line-height: 1.6;">&ldquo;The mischievous fairy quietly dropped shimmering juice on the sleeping traveler.&rdquo;</div>
+    </div>
+
+    <div style="margin-bottom: 24px;">
+        <div style="font-size: 15px; color: #1a2340; line-height: 1.8;">
+            <p style="margin: 0 0 10px 0;"><span style="background: #EEF1F8; border-radius: 4px; padding: 2px 8px; font-size: 13px; color: #0E1C42; font-weight: 600;">Step 1</span> What is being said about the fairy? The fairy dropped juice. <em>Dropped</em> is the verb (action verb).</p>
+            <p style="margin: 0 0 10px 0;"><span style="background: #EEF1F8; border-radius: 4px; padding: 2px 8px; font-size: 13px; color: #0E1C42; font-weight: 600;">Step 2</span> Who or what dropped? The fairy. <em>Fairy</em> is the subject noun.</p>
+            <p style="margin: 0 0 10px 0;"><span style="background: #EEF1F8; border-radius: 4px; padding: 2px 8px; font-size: 13px; color: #0E1C42; font-weight: 600;">Step 3</span> <em>The</em> and <em>mischievous</em> describe fairy. <em>The</em> answers &ldquo;which one&rdquo;: article adjective. <em>Mischievous</em> answers &ldquo;what kind&rdquo;: adjective.</p>
+            <p style="margin: 0 0 10px 0;"><span style="background: #EEF1F8; border-radius: 4px; padding: 2px 8px; font-size: 13px; color: #0E1C42; font-weight: 600;">Step 4</span> Dropped how? Quietly. <em>Quietly</em> is an adverb (answers &ldquo;how&rdquo;).</p>
+            <p style="margin: 0 0 10px 0;"><span style="background: #EEF1F8; border-radius: 4px; padding: 2px 8px; font-size: 13px; color: #0E1C42; font-weight: 600;">Step 5</span> <em>Shimmering</em> describes juice (what kind: adjective). <em>Juice</em> receives the action: noun (direct object).</p>
+            <p style="margin: 0;"><span style="background: #EEF1F8; border-radius: 4px; padding: 2px 8px; font-size: 13px; color: #0E1C42; font-weight: 600;">Step 6</span> <em>On</em> is a preposition. <em>Sleeping</em> describes traveler (what kind: adjective). <em>Traveler</em> is the object of the preposition.</p>
+        </div>
+    </div>
+
+    <div style="background: #F8FAFB; border: 1px solid #D0D9E8; border-radius: 8px; padding: 22px 24px; margin-bottom: 28px; overflow-x: auto;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 16px; letter-spacing: 0.4px; text-transform: uppercase;">Classified Sentence</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: flex-end;">
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">The</span><span style="font-size: 11px; color: #2A9D8F; font-style: italic; white-space: nowrap;">article adj.</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">mischievous</span><span style="font-size: 11px; color: #2A9D8F; font-style: italic; white-space: nowrap;">adjective</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">fairy</span><span style="font-size: 11px; color: #3598db; font-style: italic; white-space: nowrap;">subject noun</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">quietly</span><span style="font-size: 11px; color: #E2725B; font-style: italic; white-space: nowrap;">adverb</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">dropped</span><span style="font-size: 11px; color: #888; font-style: italic; white-space: nowrap;">verb (action)</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">shimmering</span><span style="font-size: 11px; color: #2A9D8F; font-style: italic; white-space: nowrap;">adjective</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">juice</span><span style="font-size: 11px; color: #6b7a99; font-style: italic; white-space: nowrap;">noun (direct obj.)</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">on</span><span style="font-size: 11px; color: #6b7a99; font-style: italic; white-space: nowrap;">preposition</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">the</span><span style="font-size: 11px; color: #2A9D8F; font-style: italic; white-space: nowrap;">article adj.</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">sleeping</span><span style="font-size: 11px; color: #2A9D8F; font-style: italic; white-space: nowrap;">adjective</span></div>
+            <div style="display: inline-flex; flex-direction: column; align-items: center; gap: 4px;"><span style="font-size: 18px; color: #0E1C42; font-weight: 500;">traveler</span><span style="font-size: 11px; color: #6b7a99; font-style: italic; white-space: nowrap;">obj. of prep.</span></div>
+        </div>
+    </div>
+
+    <div style="border-left: 5px solid #E2725B; background: #FEF5F3; border-radius: 7px; padding: 16px 22px; margin-bottom: 8px;">
+        <div style="font-size: 11px; color: #E2725B; font-weight: 700; letter-spacing: 0.6px;">&#128221; PRACTICE</div>
+    </div>
+
+    <div class="optima-widget ow-select">
+        <div class="widget-kicker">YOUR TURN: NAME THE PART OF SPEECH</div>
+        <div class="widget-question">Read each sentence. Identify the part of speech of the bolded word.</div>
+
+        <div class="widget-row" data-correct="1">
+            <div class="widget-row-prompt">&ldquo;The startled sprite darted <strong>swiftly</strong> between the trees.&rdquo; What part of speech is the bolded word?</div>
+            <div class="widget-options">
+                <button data-choice="0" data-fb="Not quite. Adjectives describe nouns. Ask what word this one describes, and what question it answers." data-hint="Find the verb darted, then ask &quot;darted how?&quot;">adjective</button>
+                <button data-choice="1" data-fb="Right. Swiftly tells how the sprite darted, so it answers &quot;how&quot;; that makes it an adverb.">adverb</button>
+                <button data-choice="2" data-fb="Not quite. A preposition would show a relationship between nouns. Try asking &quot;darted how?&quot;" data-hint="Find the verb darted, then ask &quot;darted how?&quot;">preposition</button>
+                <button data-choice="3" data-fb="Not quite. The verb in this sentence is darted. Ask what question swiftly answers about that verb." data-hint="Find the verb darted, then ask &quot;darted how?&quot;">verb</button>
+            </div>
+        </div>
+
+        <div class="widget-row" data-correct="2">
+            <div class="widget-row-prompt">&ldquo;Two <strong>weary</strong> travelers rested beneath an old oak.&rdquo; What part of speech is the bolded word?</div>
+            <div class="widget-options">
+                <button data-choice="0" data-fb="Not quite. Adverbs describe verbs, adjectives, or adverbs. Ask what kind of travelers these are." data-hint="Ask &quot;what kind of travelers&quot; about the noun travelers.">adverb</button>
+                <button data-choice="1" data-fb="Not quite. The verb here is rested. Ask what weary tells you about travelers." data-hint="Ask &quot;what kind of travelers&quot; about the noun travelers.">verb</button>
+                <button data-choice="2" data-fb="Yes. Weary tells what kind of travelers, so it answers &quot;what kind&quot;; it is an adjective.">adjective</button>
+                <button data-choice="3" data-fb="Not quite. A conjunction joins words or groups of words. Ask what question weary answers about the noun travelers." data-hint="Ask &quot;what kind of travelers&quot; about the noun travelers.">conjunction</button>
+            </div>
+        </div>
+
+        <div class="widget-row" data-correct="3">
+            <div class="widget-row-prompt">&ldquo;Puck hid the flower <strong>behind</strong> a mossy stone.&rdquo; What part of speech is the bolded word?</div>
+            <div class="widget-options">
+                <button data-choice="0" data-fb="Not quite. Adjectives describe nouns. Ask whether behind describes the flower or the stone, or shows a relationship between them." data-hint="Behind tells where the flower is in relation to something; that is a preposition's job.">adjective</button>
+                <button data-choice="1" data-fb="Not quite. Adverbs answer how, when, where, or to what extent about a verb. Here, behind introduces a noun, stone, which is its object." data-hint="Behind tells where the flower is in relation to something; that is a preposition's job.">adverb</button>
+                <button data-choice="2" data-fb="Not quite. A noun names a person, place, thing, or idea. Ask whether behind names something or shows a location relationship." data-hint="Behind tells where the flower is in relation to something; that is a preposition's job.">noun</button>
+                <button data-choice="3" data-fb="Right. Behind shows the relationship between the flower and the stone, and stone is its object of the preposition.">preposition</button>
+            </div>
+        </div>
+
+        <div class="widget-row" data-correct="0">
+            <div class="widget-row-prompt">&ldquo;<strong>Alas</strong>, the wrong man now loves her!&rdquo; What part of speech is the bolded word?</div>
+            <div class="widget-options">
+                <button data-choice="0" data-fb="Yes. Alas is an exclamation that stands apart from the sentence. That is an interjection.">interjection</button>
+                <button data-choice="1" data-fb="Not quite. Adverbs answer how, when, where, or to what extent. Ask whether alas answers any of those questions about a verb." data-hint="Does this word describe, connect, or replace anything, or does it just express a feeling?">adverb</button>
+                <button data-choice="2" data-fb="Not quite. A conjunction joins words or groups of words. Alas is not connecting anything; it stands alone." data-hint="Does this word describe, connect, or replace anything, or does it just express a feeling?">conjunction</button>
+                <button data-choice="3" data-fb="Not quite. A pronoun replaces a noun. Alas does not stand in for any person or thing; it just expresses a feeling." data-hint="Does this word describe, connect, or replace anything, or does it just express a feeling?">pronoun</button>
+            </div>
+        </div>
+        <button class="widget-reset">Reset</button>
+    </div>
+
+    <div style="border-left: 5px solid #2A9D8F; background: #F0FAF9; border-radius: 7px; padding: 16px 22px; margin-bottom: 24px;">
+        <div style="font-size: 11px; color: #2A9D8F; font-weight: 700; letter-spacing: 0.6px; margin-bottom: 8px;">&#9998;&#65039; MAKE &amp; APPLY</div>
+        <div style="font-size: 15px; color: #1a2340; line-height: 1.7;">In the Week 2 section of your Reading Journal, write two original sentences. In each one, underline the subject noun or subject pronoun, circle the verb, and put a box around any adverb. Use at least one article adjective in each sentence.</div>
+    </div>
+
+    <div style="background: #EEF1F8; border-radius: 7px; padding: 16px 22px;">
+        <div style="font-size: 12px; color: #6b7a99; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="font-size: 15px; color: #1a2340; line-height: 1.7;">Practice in your Reading Journal: finish the two-sentence activity above. You will study active and passive voice in the next grammar lesson, then take one Grammar POP! quiz covering both topics.</div>
+    </div>
+
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Grammar 1 &middot; Parts of Speech Review</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

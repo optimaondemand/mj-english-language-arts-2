@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>7th Grade English Language Arts — Lesson 5.03</title>
+  <style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+  </style>
+</head>
+<body>
+<div class="canvas-frame">
+
+  <!-- HEADER -->
+  <div style="background:#0E1C42; border-bottom:3px solid #55C8E8; padding:22px 34px; display:flex; align-items:center; gap:20px;">
+    <div style="background:#FFFFFF; border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+      <img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" width="50" height="40" alt="Optima owl logo">
+    </div>
+    <div style="flex:1;">
+      <div style="font-size:28px; color:#FFFFFF; font-weight:700; line-height:1.2;">Optima Academy Online</div>
+      <div style="font-size:12px; color:#55c8e8; letter-spacing:0.5px;">An Education Experience Company</div>
+    </div>
+    <div style="font-size:36px; color:#FFFFFF; font-weight:700; letter-spacing:0.5px; text-align:right;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+  </div>
+
+  <!-- METADATA STRIP -->
+  <div style="background:#FFFFFF; border-bottom:2px solid #D0D9E8; display:flex; flex-wrap:wrap;">
+    <div style="flex:1; padding:14px 20px; border-right:1px solid #D0D9E8; min-width:160px;">
+      <div style="font-size:10px; color:#888; letter-spacing:0.5px; margin-bottom:3px; text-transform:uppercase;">Quarter / Module</div>
+      <div style="font-size:15px; color:#0E1C42; font-weight:700;">Q4 &middot; Module 6</div>
+      <div style="font-size:13px; color:#555; font-style:italic;">The Scarlet Pimpernel</div>
+    </div>
+    <div style="flex:0.6; padding:14px 20px; border-right:1px solid #D0D9E8; min-width:120px;">
+      <div style="font-size:10px; color:#888; letter-spacing:0.5px; margin-bottom:3px; text-transform:uppercase;">Lesson</div>
+      <div style="font-size:15px; color:#0E1C42; font-weight:700;">Lesson 5.03</div>
+    </div>
+    <div style="flex:1; padding:14px 20px; border-right:1px solid #D0D9E8; min-width:160px;">
+      <div style="font-size:10px; color:#888; letter-spacing:0.5px; margin-bottom:3px; text-transform:uppercase;">Topic</div>
+      <div style="font-size:14px; color:#1a2340; font-style:italic;">The Scarlet Pimpernel, Ch. 21&ndash;22</div>
+    </div>
+    <div style="flex:2; padding:14px 20px; min-width:220px;">
+      <div style="font-size:10px; color:#888; letter-spacing:0.5px; margin-bottom:3px; text-transform:uppercase;">Module Question</div>
+      <div style="font-size:13px; color:#1a2340; line-height:1.5;">Heroism in disguise: what kind of courage does the novel celebrate, and when is it right to risk everything for strangers?</div>
+    </div>
+  </div>
+
+  <!-- BODY WRAPPER -->
+  <div style="padding:24px 34px;">
+
+    <!-- 1. TITLE CARD -->
+    <div style="background:#EEF1F8; border-left:5px solid #0E1C42; border-radius:7px; padding:18px 22px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#555; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:6px;">Lesson 5.03</div>
+      <div style="font-size:22px; color:#0E1C42; font-weight:700; line-height:1.3; margin-bottom:10px;">Reading the Race to Calais: How Orczy Builds Suspense</div>
+      <span style="background:#C7922C; color:#fff; font-size:13px; padding:3px 12px; border-radius:10px;">&#8776;12 min</span>
+    </div>
+
+    <!-- 2. TODAY'S FOCUS CARD -->
+    <div style="background:#FFFFFF; border-top:3px solid #C7922C; border:1px solid #D0D9E8; border-radius:8px; padding:20px 24px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#C7922C; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:10px; font-weight:700;">&#128214; TODAY'S FOCUS</div>
+      <div style="font-size:20px; color:#0E1C42; font-style:italic; line-height:1.55; margin-bottom:14px;">In Ch. 21, Marguerite races to Dover to cross to France. The storm stops her for an entire night. Why would a novelist slow down the action at the moment readers are most eager to move forward?</div>
+      <div style="font-size:18px; color:#1a2340; line-height:1.65;">Today you look at how Orczy uses delay and setting details to build suspense. You will be able to explain one technique Orczy uses to keep readers anxious.</div>
+    </div>
+
+    <!-- 3. MATERIALS CARD -->
+    <div style="background:#FFFFFF; border:1px solid #D0D9E8; border-radius:8px; padding:20px 24px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#555; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:14px; font-weight:700;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; align-items:flex-start; gap:10px; border-left:3px solid #D0D9E8; padding-left:14px;">
+          <span style="color:#E2725B; font-size:13px; margin-top:2px;">&#9654;</span>
+          <div style="font-size:16px; color:#1a2340;"><a href="#" style="color:#2196D0; text-decoration:underline;">Ch. 21-22 PDF [Teacher: link Ch. 21-22 here]</a></div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:10px; border-left:3px solid #D0D9E8; padding-left:14px;">
+          <span style="color:#E2725B; font-size:13px; margin-top:2px;">&#9654;</span>
+          <div style="font-size:16px; color:#1a2340;">Your Reading Journal (the Word document you saved to OneDrive at the start of the module)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. CORE VISUAL: The Storm as Suspense Machine -->
+    <div style="background:#FFFFFF; border-top:3px solid #2A9D8F; border:1px solid #D0D9E8; border-radius:8px; padding:20px 24px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#2A9D8F; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:8px; font-weight:700;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+      <div style="font-size:15px; font-style:italic; color:#1a2340; margin-bottom:16px;">Orczy withholds the crossing for an entire chapter. That is not an accident: delay is how a novelist makes readers feel urgency.</div>
+
+      <!-- Vertical Timeline -->
+      <div style="display:flex; flex-direction:column; align-items:stretch; max-width:700px; margin:0 auto;">
+
+        <!-- Step 1 (teal) -->
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+            <div style="width:40px; height:40px; background:#2A9D8F; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:14px; font-weight:bold;">1</div>
+          </div>
+          <div style="flex:1; background:#F4F9FC; border-radius:6px; padding:10px 14px; margin-bottom:0;">
+            <div style="font-weight:700; color:#1a2340; font-size:15px; margin-bottom:4px;">Marguerite arrives at Fisherman's Rest: midnight</div>
+            <div style="font-size:14px; color:#1a2340;">The coast is closed. A storm is raging.</div>
+          </div>
+        </div>
+
+        <!-- Connector -->
+        <div style="display:flex; align-items:center; gap:16px; margin:0;">
+          <div style="width:40px; display:flex; justify-content:center; flex-shrink:0;">
+            <div style="width:2px; height:20px; background:#D0D9E8;"></div>
+          </div>
+          <div style="flex:1;"></div>
+        </div>
+
+        <!-- Step 2 (gold) -->
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+            <div style="width:40px; height:40px; background:#C7922C; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:14px; font-weight:bold;">2</div>
+          </div>
+          <div style="flex:1; background:#FDF3E3; border-radius:6px; padding:10px 14px;">
+            <div style="font-weight:700; color:#1a2340; font-size:15px; margin-bottom:4px;">Sir Andrew arrives</div>
+            <div style="font-size:14px; color:#1a2340;">They wait. Both sides wait.</div>
+          </div>
+        </div>
+
+        <!-- Connector -->
+        <div style="display:flex; align-items:center; gap:16px; margin:0;">
+          <div style="width:40px; display:flex; justify-content:center; flex-shrink:0;">
+            <div style="width:2px; height:20px; background:#D0D9E8;"></div>
+          </div>
+          <div style="flex:1;"></div>
+        </div>
+
+        <!-- Step 3 (teal) -->
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+            <div style="width:40px; height:40px; background:#2A9D8F; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:14px; font-weight:bold;">3</div>
+          </div>
+          <div style="flex:1; background:#F4F9FC; border-radius:6px; padding:10px 14px;">
+            <div style="font-weight:700; color:#1a2340; font-size:15px; margin-bottom:4px;">Morning: storm has abated</div>
+            <div style="font-size:14px; color:#1a2340;">Another delay. The tide is out.</div>
+          </div>
+        </div>
+
+        <!-- Connector -->
+        <div style="display:flex; align-items:center; gap:16px; margin:0;">
+          <div style="width:40px; display:flex; justify-content:center; flex-shrink:0;">
+            <div style="width:2px; height:20px; background:#D0D9E8;"></div>
+          </div>
+          <div style="flex:1;"></div>
+        </div>
+
+        <!-- Step 4 (gold) -->
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+            <div style="width:40px; height:40px; background:#C7922C; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:14px; font-weight:bold;">4</div>
+          </div>
+          <div style="flex:1; background:#FDF3E3; border-radius:6px; padding:10px 14px;">
+            <div style="font-weight:700; color:#1a2340; font-size:15px; margin-bottom:4px;">Midday: Chauvelin possibly already ahead</div>
+            <div style="font-size:14px; color:#1a2340;">Every hour means danger.</div>
+          </div>
+        </div>
+
+        <!-- Connector -->
+        <div style="display:flex; align-items:center; gap:16px; margin:0;">
+          <div style="width:40px; display:flex; justify-content:center; flex-shrink:0;">
+            <div style="width:2px; height:20px; background:#D0D9E8;"></div>
+          </div>
+          <div style="flex:1;"></div>
+        </div>
+
+        <!-- Step 5 (teal) -->
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+            <div style="width:40px; height:40px; background:#2A9D8F; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:14px; font-weight:bold;">5</div>
+          </div>
+          <div style="flex:1; background:#F4F9FC; border-radius:6px; padding:10px 14px;">
+            <div style="font-weight:700; color:#1a2340; font-size:15px; margin-bottom:4px;">5 p.m.: they sail</div>
+            <div style="font-size:14px; color:#1a2340;">Fourteen hours lost.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 5. PART 1: WARM-UP -->
+    <div style="background:#FFFFFF; border-top:3px solid #E2725B; border:1px solid #D0D9E8; border-radius:8px; padding:20px 24px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#E2725B; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:14px; font-weight:700;">&#128218; PART 1 &middot; WARM-UP</div>
+
+      <div class="optima-widget ow-reflect">
+        <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+        <div class="widget-question">Think about a time you were forced to wait when you desperately wanted to act. How did the waiting feel compared to the action? (No wrong answer.)</div>
+        <div class="widget-options">
+          <button data-response="That is exactly what Orczy captures in Ch. 21. Marguerite sits in the inn while the storm rages outside. The chapter is called &#8216;Suspense&#8217; for a reason.">Worse than the action. The waiting was harder.</button>
+          <button data-response="Orczy would agree. In Ch. 21, the waiting is just as charged as the action. Marguerite cannot cross the Channel, but she cannot stop thinking about what Chauvelin is doing while she sits still.">About the same. Both were hard.</button>
+          <button data-response="That is a fair view. But Orczy&#8217;s point is that the waiting costs Marguerite something too: every hour in the inn is an hour Chauvelin has on Percy. Keep that in mind as you read.">The action was harder. At least waiting is safe.</button>
+        </div>
+        <div class="widget-feedback"></div>
+        <button class="widget-reset">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <!-- 6. PART 2: THE DELAY -->
+    <div style="background:#FFFFFF; border-top:3px solid #E2725B; border:1px solid #D0D9E8; border-radius:8px; padding:20px 24px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#E2725B; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:14px; font-weight:700;">&#128218; PART 2 &middot; READ &amp; NOTICE: THE DELAY</div>
+
+      <p style="font-size:17px; color:#1a2340; line-height:1.65; margin-top:0; margin-bottom:16px;">In Ch. 21, Marguerite does something unusually brave: she sits in the Fisherman's Rest at midnight, alone, listening to the storm, and waits. The grandfather clock ticks. The breakers crash. Orczy lingers on all of this. The chapter is called &#8216;Suspense.&#8217; It works because Orczy gives us Marguerite sitting still while everything outside rages. That stillness is not weakness. It is Orczy making us feel the weight of every lost hour.</p>
+
+      <p style="font-size:17px; color:#1a2340; line-height:1.65; margin-top:0; margin-bottom:16px;">In Ch. 22, when Marguerite finally lands in Calais and walks through the muddy streets to the Chat Gris, Orczy makes a point of describing the tavern in detail: squalid, broken, badly lit. Then she gives us the one piece of hope. Percy ordered supper and will return. That is hope. But the chapter ends there, on that small fact, with everything still uncertain. That is how suspense works: give the reader just enough hope to keep them afraid.</p>
+
+      <div class="optima-widget ow-select">
+        <div class="widget-kicker">&#9889; TRY IT</div>
+        <div class="widget-question">Think through each question, then choose.</div>
+
+        <!-- Row 1: correct = 0 -->
+        <div class="widget-row" data-correct="0" data-fb="Right. Orczy builds suspense by describing the storm and Marguerite&#8217;s helpless waiting. External chaos and internal stillness at once." data-hint="Suspense comes from uncertainty and helplessness. Which option creates that?">
+          <div class="widget-row-prompt">In Ch. 21, the chapter title is &#8216;Suspense.&#8217; Which technique most creates that suspense?</div>
+          <div class="widget-options">
+            <button data-choice="0">Orczy describes the storm in detail and shows Marguerite waiting without any power to act</button>
+            <button data-choice="1">A character explains the plan step by step</button>
+            <button data-choice="2">The chapter ends with Percy being captured</button>
+          </div>
+        </div>
+
+        <!-- Row 2: correct = 1 -->
+        <div class="widget-row" data-correct="1" data-fb="Right. The dilapidated Chat Gris mirrors the danger and uncertainty of Marguerite&#8217;s mission. Setting is doing work here." data-hint="How does the author&#8217;s description of the room make you feel about what is about to happen?">
+          <div class="widget-row-prompt">In Ch. 22, how does Orczy use the setting of the Chat Gris to create mood?</div>
+          <div class="widget-options">
+            <button data-choice="0">The bright, clean tavern signals that everything will be fine</button>
+            <button data-choice="1">The squalid, broken-down room makes the mission feel as grim and uncertain as the setting</button>
+            <button data-choice="2">The setting has no effect on mood</button>
+          </div>
+        </div>
+
+        <!-- Row 3: correct = 1 -->
+        <div class="widget-row" data-correct="1" data-fb="Right. It is the first good news in chapters, but Percy is not there, Chauvelin may also be arriving, and nothing is decided. The suspense continues." data-hint="Does this information solve the main problem, or does it just change the shape of the danger?">
+          <div class="widget-row-prompt">Brogard tells Marguerite and Sir Andrew that the tall Englishman ordered supper and will return. What effect does this have on the reader?</div>
+          <div class="widget-options">
+            <button data-choice="0">It ends the suspense completely</button>
+            <button data-choice="1">It gives hope but leaves everything still unresolved</button>
+            <button data-choice="2">It tells us Percy is safe</button>
+          </div>
+        </div>
+
+        <button class="widget-reset">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <!-- 7. PART 3: READING JOURNAL -->
+    <div style="background:#FFFFFF; border-top:3px solid #E2725B; border:1px solid #D0D9E8; border-radius:8px; padding:20px 24px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#E2725B; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:14px; font-weight:700;">&#128218; PART 3 &middot; READING JOURNAL</div>
+
+      <div style="background:#FFFFFF; border:1px solid #D0D9E8; border-left:4px solid #2A9D8F; border-radius:6px; padding:14px 18px; margin:14px 0;">
+        <div style="font-size:11px; color:#2A9D8F; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:8px; font-weight:700;">&#9999;&#65039; READING JOURNAL &middot; WEEK 5</div>
+        <div style="font-size:16px; color:#1a2340; margin-bottom:12px;">Open the Week 5 section of your Reading Journal and answer these questions in 2-4 sentences each:</div>
+        <ol style="font-size:17px; color:#1a2340; line-height:1.6; margin:0; padding-left:22px;">
+          <li style="margin-bottom:10px;">In Ch. 21, Marguerite waits through a storm she cannot control. What does the way she handles the wait show about her character?</li>
+          <li style="margin-bottom:0;">In Ch. 22, what does the setting of the Chat Gris tell you about the world Percy operates in and the risks he takes?</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 8. WHAT YOU'LL DO NEXT -->
+    <div style="background:#FFFFFF; border-top:3px solid #0E1C42; border:1px solid #D0D9E8; border-radius:8px; padding:20px 24px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#C7922C; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:14px; font-weight:700;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; align-items:flex-start; gap:14px;">
+          <div style="width:28px; height:28px; background:#0E1C42; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:13px; font-weight:700; flex-shrink:0;">1</div>
+          <div style="font-size:16px; color:#1a2340; line-height:1.6; padding-top:3px;">After this lesson, open Quick Write 5. The counterargument you write today will become a key part of your essay outline in Week 8.</div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:14px;">
+          <div style="width:28px; height:28px; background:#0E1C42; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:13px; font-weight:700; flex-shrink:0;">2</div>
+          <div style="font-size:16px; color:#1a2340; line-height:1.6; padding-top:3px;">Then complete the Check-up.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. BEFORE YOU GO -->
+    <div style="background:#FFFFFF; border-top:3px solid #C7922C; border:1px solid #D0D9E8; border-radius:8px; padding:20px 24px; margin-bottom:20px;">
+      <div style="font-size:11px; color:#C7922C; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:10px; font-weight:700;">&#128170; BEFORE YOU GO</div>
+      <div style="font-size:18px; color:#1a2340; line-height:1.65;">The storm in Ch. 21 does not stop Marguerite. It just slows her down. By Ch. 22 she is in Calais, in a squalid tavern, waiting for her husband. Keep that image in mind when you write your counterargument today.</div>
+    </div>
+
+  </div><!-- end body wrapper -->
+
+  <!-- FOOTER -->
+  <div style="background:#0E1C42; border-top:3px solid #55C8E8; padding:22px 34px; text-align:center;">
+    <div style="font-size:13px; color:#55C8E8; margin-bottom:4px;">Optima Academy Online &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size:13px; color:#FFFFFF; margin-bottom:4px;">Lesson 5.03 &middot; Reading the Race to Calais</div>
+    <div style="font-size:12px; color:#aac4d0;">&copy; 2026 Optima Academy Online. All rights reserved.</div>
+  </div>
+
+</div><!-- end canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+</body>
+</html>

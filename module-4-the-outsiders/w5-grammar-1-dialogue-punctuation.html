@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7TH GRADE ELA &#8212; Grammar 1: Dialogue Punctuation</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+        .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+        .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+        .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+        .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+        .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+        .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+        .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+        .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+        .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+        .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+        .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+        .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+        .widget-feedback.show { display: block; }
+        .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+        .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+        .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+        .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+        .widget-reset:hover { background: #FDF3E3; }
+        .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+        .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+        .ow-flip.flipped .ow-flip-front { display: none; }
+        .ow-flip.flipped .ow-flip-back { display: block; }
+
+        /* Page-specific styles */
+        .metadata-strip { display: flex; flex-wrap: wrap; background: #0E1C42; }
+        .metadata-cell { flex: 1 1 200px; padding: 8px 18px; font-size: 12px; color: #55C8E8; border-right: 1px solid rgba(85,200,232,0.2); }
+        .metadata-cell:last-child { border-right: none; }
+        .metadata-cell span { display: block; color: #ffffff; font-size: 13px; font-weight: 600; margin-top: 2px; }
+
+        .title-strip { background: #E8E4F4; border-top: 4px solid #7B6BB5; padding: 22px 34px 18px; }
+        .title-kicker { font-size: 11px; color: #7B6BB5; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 6px; }
+        .title-main { font-size: 32px; color: #0E1C42; font-weight: 700; line-height: 1.15; margin-bottom: 4px; }
+        .title-sub { font-size: 15px; color: #4A5578; }
+
+        .content-body { padding: 28px 34px; }
+
+        .focus-card { background: #FFFBF3; border: 1px solid #E8D8B0; border-top: 3px solid #C7922C; border-radius: 8px; padding: 18px 22px; margin-bottom: 20px; }
+        .focus-label { font-size: 11px; color: #C7922C; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+        .focus-text { font-size: 16px; color: #0E1C42; line-height: 1.65; }
+
+        .obj-card { background: #F4F6FA; border: 1px solid #D0D9E8; border-top: 3px solid #0E1C42; border-radius: 8px; padding: 18px 22px; margin-bottom: 24px; }
+        .obj-label { font-size: 11px; color: #0E1C42; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+        .obj-list { margin: 0; padding-left: 20px; }
+        .obj-list li { font-size: 15px; color: #1a2340; line-height: 1.65; margin-bottom: 4px; }
+
+        /* Core concept visual */
+        .concept-card { border: 1px solid #D0D9E8; border-top: 4px solid #0E1C42; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+        .concept-header { background: #0E1C42; color: #ffffff; font-size: 18px; font-weight: 700; padding: 12px 18px; border-radius: 4px; margin-bottom: 18px; letter-spacing: 0.5px; text-align: center; }
+        .pattern-row { padding: 16px 0; border-bottom: 1px solid #EEF0F6; }
+        .pattern-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .pattern-pill { display: inline-block; border-radius: 20px; padding: 4px 14px; font-size: 12px; color: #ffffff; font-weight: 700; letter-spacing: 0.3px; margin-bottom: 10px; }
+        .pill-coral { background: #E2725B; }
+        .pill-teal { background: #2A9D8F; }
+        .pill-gold { background: #C7922C; }
+        .pattern-example { font-family: "Courier New", Courier, monospace; font-size: 17px; color: #0E1C42; margin: 8px 0; line-height: 1.5; }
+        .pattern-annotation { font-size: 12px; color: #6b7a99; font-style: italic; margin-top: 4px; }
+
+        /* Section cards */
+        .section-card { border: 1px solid #D0D9E8; border-radius: 8px; padding: 22px 26px; margin-bottom: 24px; }
+        .section-coral { border-top: 3px solid #E2725B; }
+        .section-teal { border-top: 3px solid #2A9D8F; }
+        .section-kicker { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
+        .kicker-coral { color: #E2725B; }
+        .kicker-teal { color: #2A9D8F; }
+
+        /* Sentence diagram */
+        .sentence-diagram { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-end; margin: 14px 0; padding: 16px; background: #F8F9FC; border: 1px solid #D0D9E8; border-radius: 6px; }
+        .diagram-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .diagram-word { font-size: 17px; color: #0E1C42; font-family: "Courier New", Courier, monospace; padding: 4px 8px; border-bottom: 2px solid #0E1C42; white-space: nowrap; }
+        .diagram-label { font-size: 11px; color: #6b7a99; font-style: italic; text-align: center; white-space: nowrap; }
+
+        .teaching-note { background: #F4F6FA; border-left: 4px solid #2196D0; padding: 12px 16px; font-size: 15px; color: #1a2340; line-height: 1.6; border-radius: 0 4px 4px 0; margin: 14px 0; }
+
+        .apply-box { background: #FDF3E3; border-left: 4px solid #C7922C; padding: 14px 18px; border-radius: 6px; font-size: 15px; color: #1a2340; line-height: 1.65; margin: 14px 0; }
+
+        .next-card { background: #F4F6FA; border: 1px solid #D0D9E8; border-top: 3px solid #0E1C42; border-radius: 8px; padding: 16px 22px; margin: 24px 0; }
+        .next-kicker { font-size: 11px; color: #0E1C42; letter-spacing: 0.6px; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+        .next-text { font-size: 15px; color: #1a2340; line-height: 1.65; }
+
+        .page-footer { background: #0E1C42; color: #55C8E8; font-size: 12px; text-align: center; padding: 14px 20px; margin-top: 0; }
+
+        h3.pattern-subhead { font-size: 18px; color: #0E1C42; margin: 20px 0 8px; }
+        p.body-text { font-size: 15px; color: #1a2340; line-height: 1.7; margin: 0 0 14px; }
+    </style>
+</head>
+<body>
+<div class="canvas-frame">
+
+    <!-- HEADER -->
+    <div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+            <div>
+                <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+                <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+            </div>
+        </div>
+        <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+
+    <!-- METADATA STRIP -->
+    <div class="metadata-strip">
+        <div class="metadata-cell">Q3 &middot; Module 4<span>The Outsiders</span></div>
+        <div class="metadata-cell">Lesson Code<span>Grammar 1</span></div>
+        <div class="metadata-cell">Topic<span>Dialogue Punctuation</span></div>
+        <div class="metadata-cell">Skill<span>Sentence from writing practice</span></div>
+    </div>
+
+    <!-- TITLE STRIP -->
+    <div class="title-strip">
+        <div class="title-kicker">Grammar 1</div>
+        <div class="title-main">Dialogue Punctuation</div>
+        <div class="title-sub">Grammar &middot; ~12 min</div>
+    </div>
+
+    <div class="content-body">
+
+        <!-- TODAY'S FOCUS -->
+        <div class="focus-card">
+            <div class="focus-label">&#127919; Today&#39;s Focus</div>
+            <div class="focus-text">
+                "When a character speaks, you need punctuation to show where the words begin and end, and how to connect those words to the speaker."
+            </div>
+            <div style="font-size: 15px; color: #4A5578; margin-top: 12px; line-height: 1.65;">
+                Written dialogue follows a clear set of patterns. Once you recognize the three patterns, you can punctuate any line of dialogue correctly.
+            </div>
+        </div>
+
+        <!-- OBJECTIVES -->
+        <div class="obj-card">
+            <div class="obj-label">&#127919; Objectives</div>
+            <ol class="obj-list">
+                <li>Identify where quotation marks, commas, and end punctuation go in a line of dialogue.</li>
+                <li>Apply the three main dialogue patterns correctly in your own writing.</li>
+            </ol>
+        </div>
+
+        <!-- CORE CONCEPT VISUAL -->
+        <div class="concept-card">
+            <div class="concept-header">DIALOGUE PUNCTUATION: THREE PATTERNS</div>
+
+            <!-- Pattern 1 -->
+            <div class="pattern-row">
+                <div><span class="pattern-pill pill-coral">SPEAKER AT THE END</span></div>
+                <div class="pattern-example">&#8220;I left my notebook on the bus,&#8221; Elena said.</div>
+                <div class="pattern-annotation">
+                    quotation mark &nbsp;&middot;&nbsp; dialogue words &nbsp;&middot;&nbsp; comma inside closing quote &nbsp;&middot;&nbsp; dialogue tag &nbsp;&middot;&nbsp; period
+                </div>
+            </div>
+
+            <!-- Pattern 2 -->
+            <div class="pattern-row">
+                <div><span class="pattern-pill pill-teal">SPEAKER AT THE START</span></div>
+                <div class="pattern-example">Marco said, &#8220;We should leave before the rain starts.&#8221;</div>
+                <div class="pattern-annotation">
+                    dialogue tag &nbsp;&middot;&nbsp; comma &nbsp;&middot;&nbsp; quotation mark &nbsp;&middot;&nbsp; dialogue words &nbsp;&middot;&nbsp; period inside closing quote
+                </div>
+            </div>
+
+            <!-- Pattern 3 -->
+            <div class="pattern-row">
+                <div><span class="pattern-pill pill-gold">SPEAKER IN THE MIDDLE (INTERRUPTED)</span></div>
+                <div class="pattern-example">&#8220;I thought,&#8221; Priya said, &#8220;that the meeting was tomorrow.&#8221;</div>
+                <div class="pattern-annotation">
+                    first half of dialogue &nbsp;&middot;&nbsp; comma inside quote &nbsp;&middot;&nbsp; dialogue tag &nbsp;&middot;&nbsp; comma &nbsp;&middot;&nbsp; second half of dialogue &nbsp;&middot;&nbsp; period inside closing quote
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 1: WARM-UP -->
+        <div class="section-card section-coral">
+            <div class="section-kicker kicker-coral">&#128214; PART 1 &middot; WARM-UP</div>
+
+            <div class="optima-widget ow-reflect">
+                <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+                <div class="widget-question">How confident do you feel about where to put commas and quotation marks when someone speaks? (No wrong answer.)</div>
+                <div class="widget-options">
+                    <button data-response="That is a completely fair starting point. Most writers learned this by trial and error. Today you will have three clear patterns to work with.">&#128514; Just guessing, honestly</button>
+                    <button data-response="The commas and the periods are the tricky part. The patterns today will clear up exactly where each mark goes.">&#128578; Somewhat. I get confused</button>
+                    <button data-response="Good. This lesson will sharpen what you already know and give you language to explain your choices.">&#9989; Pretty confident</button>
+                </div>
+                <div class="widget-feedback"></div>
+                <button class="widget-reset">Reset</button>
+            </div>
+        </div>
+
+        <!-- PART 2: THE THREE PATTERNS -->
+        <div class="section-card section-coral">
+            <div class="section-kicker kicker-coral">&#128214; PART 2 &middot; THE THREE PATTERNS</div>
+
+            <h3 class="pattern-subhead">Three Patterns, Every Dialogue Sentence</h3>
+            <p class="body-text">Every line of written dialogue fits one of three patterns based on where the speaker's name (the dialogue tag) appears. The punctuation follows from the pattern. Learn the pattern, and the punctuation follows automatically.</p>
+
+            <!-- Pattern 1 walkthrough -->
+            <h3 class="pattern-subhead"><span class="pattern-pill pill-coral" style="font-size:13px;">Pattern 1: Speaker at the End</span></h3>
+            <div class="pattern-example" style="margin: 10px 0 4px;">&#8220;The game starts at seven,&#8221; Dev said.</div>
+
+            <div class="sentence-diagram">
+                <div class="diagram-unit">
+                    <div class="diagram-word">&#8220;</div>
+                    <div class="diagram-label">open quote</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">The game starts at seven,</div>
+                    <div class="diagram-label">dialogue words</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">&#8221;</div>
+                    <div class="diagram-label">comma + close quote</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">Dev</div>
+                    <div class="diagram-label">subject noun</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">said</div>
+                    <div class="diagram-label">action verb</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">.</div>
+                    <div class="diagram-label">period</div>
+                </div>
+            </div>
+
+            <div class="teaching-note">When the dialogue tag comes at the end, the comma goes inside the closing quotation mark, and the sentence ends with a period after the tag.</div>
+
+            <!-- Pattern 2 walkthrough -->
+            <h3 class="pattern-subhead"><span class="pattern-pill pill-teal" style="font-size:13px;">Pattern 2: Speaker at the Start</span></h3>
+            <div class="pattern-example" style="margin: 10px 0 4px;">Elena said, &#8220;We will need more time than that.&#8221;</div>
+
+            <div class="sentence-diagram">
+                <div class="diagram-unit">
+                    <div class="diagram-word">Elena</div>
+                    <div class="diagram-label">subject noun</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">said,</div>
+                    <div class="diagram-label">action verb + comma</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">&#8220;</div>
+                    <div class="diagram-label">open quote</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">We will need more time than that.</div>
+                    <div class="diagram-label">dialogue words + period</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">&#8221;</div>
+                    <div class="diagram-label">close quote</div>
+                </div>
+            </div>
+
+            <div class="teaching-note">When the dialogue tag comes first, a comma follows the tag (outside the quotation mark), and the period goes inside the closing quotation mark.</div>
+
+            <!-- Pattern 3 walkthrough -->
+            <h3 class="pattern-subhead"><span class="pattern-pill pill-gold" style="font-size:13px;">Pattern 3: Speaker in the Middle (Interrupted)</span></h3>
+            <div class="pattern-example" style="margin: 10px 0 4px;">&#8220;I think,&#8221; Marco said, &#8220;we are going the wrong direction.&#8221;</div>
+
+            <div class="sentence-diagram">
+                <div class="diagram-unit">
+                    <div class="diagram-word">&#8220;</div>
+                    <div class="diagram-label">open quote</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">I think,</div>
+                    <div class="diagram-label">dialogue + comma</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">&#8221;</div>
+                    <div class="diagram-label">close quote</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">Marco</div>
+                    <div class="diagram-label">subject noun</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">said,</div>
+                    <div class="diagram-label">action verb + comma</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">&#8220;</div>
+                    <div class="diagram-label">open quote</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">we are going the wrong direction.</div>
+                    <div class="diagram-label">rest of dialogue + period</div>
+                </div>
+                <div class="diagram-unit">
+                    <div class="diagram-word">&#8221;</div>
+                    <div class="diagram-label">close quote</div>
+                </div>
+            </div>
+
+            <div class="teaching-note">When the tag interrupts the dialogue, both halves get quotation marks. A comma closes the first half (inside the quote), and another comma follows the tag. The second half ends with a period inside its closing quotation mark.</div>
+        </div>
+
+        <!-- PART 3: PRACTICE -->
+        <div class="section-card section-coral">
+            <div class="section-kicker kicker-coral">&#128214; PART 3 &middot; PRACTICE</div>
+
+            <div class="optima-widget ow-select">
+                <div class="widget-kicker">&#9889; TRY IT &middot; WHERE DOES THE COMMA GO?</div>
+                <div class="widget-question">Each sentence below has a dialogue punctuation question. Choose the correct answer. You will see feedback right away.</div>
+
+                <!-- Row 1: correct = 2 -->
+                <div class="widget-row" data-correct="2" data-fb="Right. When the dialogue tag comes at the end, the comma goes inside the closing quotation mark." data-hint="Look at Pattern 1. The tag is at the end. Where does the comma go relative to the closing quotation mark?">
+                    <div class="widget-row-prompt">A student writes: &#8220;I finished the report ___ &#8221; Priya said. Where does the comma go?</div>
+                    <div style="font-size: 15px; color: #0E1C42; margin-bottom: 10px; font-family: 'Courier New', Courier, monospace;">&#8220;I finished the report ___ &#8221; Priya said.</div>
+                    <div class="widget-options">
+                        <button data-choice="0">After the closing quotation mark.</button>
+                        <button data-choice="1">There is no comma needed.</button>
+                        <button data-choice="2">Inside the closing quotation mark, right after the last word of the dialogue.</button>
+                    </div>
+                </div>
+
+                <!-- Row 2: correct = 0 -->
+                <div class="widget-row" data-correct="0" data-fb="Correct. When the tag comes first, a comma separates it from the opening quotation mark." data-hint="Look at Pattern 2. Something goes between the tag and the opening quotation mark.">
+                    <div class="widget-row-prompt">A student writes: Dev said ___ &#8220;The bus already left.&#8221; What goes in the blank?</div>
+                    <div style="font-size: 15px; color: #0E1C42; margin-bottom: 10px; font-family: 'Courier New', Courier, monospace;">Dev said ___ &#8220;The bus already left.&#8221;</div>
+                    <div class="widget-options">
+                        <button data-choice="0">A comma, placed after &#8220;said&#8221; and before the opening quotation mark.</button>
+                        <button data-choice="1">A period, because &#8220;Dev said&#8221; is a complete sentence.</button>
+                        <button data-choice="2">Nothing. No punctuation is needed between the tag and the quote.</button>
+                    </div>
+                </div>
+
+                <!-- Row 3: correct = 1 -->
+                <div class="widget-row" data-correct="1" data-fb="Right. In the interrupted pattern, a comma closes the first half of the dialogue (inside the quote), and the continuation begins with a lowercase word." data-hint="Look at Pattern 3 carefully. What punctuation closes the first half of the dialogue, and what is the capitalization rule for the second half?">
+                    <div class="widget-row-prompt">A student writes the sentence below and something is wrong. What is the first mistake?</div>
+                    <div style="font-size: 15px; color: #0E1C42; margin-bottom: 10px; font-family: 'Courier New', Courier, monospace;">&#8220;I thought we were meeting at noon&#8221; Elena said &#8220;Not at two.&#8221;</div>
+                    <div class="widget-options">
+                        <button data-choice="0">The sentence has too many dialogue tags.</button>
+                        <button data-choice="1">The first half of the dialogue needs a comma before the closing quotation mark, and the word &#8220;Not&#8221; should be lowercase.</button>
+                        <button data-choice="2">The period after &#8220;two&#8221; should be outside the final closing quotation mark.</button>
+                    </div>
+                </div>
+
+                <button class="widget-reset">Reset</button>
+            </div>
+        </div>
+
+        <!-- PART 4: APPLY -->
+        <div class="section-card section-teal">
+            <div class="section-kicker kicker-teal">&#128221; PART 4 &middot; APPLY</div>
+
+            <p class="body-text">Now try the patterns in your own writing.</p>
+
+            <div class="apply-box">
+                In your Reading Journal, write two original sentences of dialogue: one with the speaker at the end (Pattern 1), and one with the speaker at the beginning (Pattern 2). Use characters you make up. Do not use characters from the novel.
+            </div>
+        </div>
+
+        <!-- WHAT YOU'LL DO NEXT -->
+        <div class="next-card">
+            <div class="next-kicker">&#10145;&#65039; WHAT YOU&#39;LL DO NEXT</div>
+            <div class="next-text">Tomorrow you will work on Word Study for Chapters 9&#8211;10. The combined Grammar POP! quiz covers both dialogue lessons and runs on Day 4.</div>
+        </div>
+
+        <!-- REQUIRED NOTICE -->
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#9432; REQUIRED NOTICE</div>
+            <div style="font-size: 15px; color: #0E1C42; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+        </div>
+
+    </div><!-- end content-body -->
+
+    <!-- FOOTER -->
+    <div class="page-footer">
+        Q3 &middot; Module 4 &middot; The Outsiders &nbsp;|&nbsp; Grammar 1 &middot; Dialogue Punctuation &nbsp;|&nbsp; &copy; Optima Academy Online &middot; An Education Experience Company
+    </div>
+
+</div><!-- end canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+</body>
+</html>

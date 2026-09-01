@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Work Session 2</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-scale .widget-options { justify-content: space-between; }
+    .ow-scale .widget-options button { flex: 1; text-align: center; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 4</div>
+        <div style="font-size: 12px; color: #666;">The Outsiders</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Project Work Session</div>
+        <div style="font-size: 17px; color: #0e1c42;">Session 2</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The creative component and VR scene</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Builds toward</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Outsiders Final Project - Creative + VR (assignment)</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Copyright notice callout -->
+    <div style="background: #FDF3E3; border: 1px solid #C7922C; border-left: 5px solid #C7922C; border-radius: 7px; padding: 14px 20px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 6px;">&#128274; COPYRIGHT NOTICE</div>
+        <div style="font-size: 15px; color: #1a2340; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+    </div>
+
+    <!-- Lavender title strip with gold time pill -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Work Session 2 &middot; Project Week</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Building Your Creative Component</div>
+                <div style="font-size: 16px; color: #666;">Guided work session (ungraded)</div>
+            </div>
+            <span style="background: #C7922C; color: #FFFFFF; font-size: 13px; padding: 5px 14px; border-radius: 12px; white-space: nowrap;">~15 min</span>
+        </div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; WHAT THIS SESSION IS FOR</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Show the theme, not just say it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will plan the creative half of your project. First, choose your creative option: a character collage or a short social-issue research piece. Then plan a VR thematic scene that connects to your chosen theme. Then write a short reflection that ties the whole thing together. By the end you will know exactly what to make for the <strong>The Outsiders Final Project - Creative + VR (assignment)</strong> page. This session is practice. It is not graded.</div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED OPEN</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your own copy of <em>The Outsiders</em> and your Reading Journal, open to any notes on loyalty, family, or staying gold.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your VR headset and your choice of tools for the creative piece: a drawing or design app for a digital collage, or a Word or Pages doc if you are doing the research piece.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">The <strong>The Outsiders Final Project - Creative + VR (assignment)</strong> page (open it in Canvas in the Module Wrappers and Project area).</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: two creative options side by side -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; YOUR TWO CREATIVE OPTIONS</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 18px;">Pick one. Both ask you to do something with the theme, not just describe the plot. Choose whichever fits how you think and work best.</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-top: 4px solid #E2725B; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 13px; color: #E2725B; margin-bottom: 6px;">OPTION A &middot; CHARACTER COLLAGE</div>
+                <div style="font-size: 19px; color: #0e1c42; margin-bottom: 10px;">A visual built around your theme</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 8px;">Create a collage (digital or handmade) that represents your chosen theme through images, symbols, words, and colors connected to the novel. The collage should show the theme, not just name the characters.</div>
+                <div style="font-size: 14px; color: #6b7a99; line-height: 1.5;">Format: digital image, scan, or photo. Submitted with the reflection.</div>
+            </div>
+            <div style="flex: 1; min-width: 240px; background: #EEF1F8; border-top: 4px solid #2A9D8F; border-radius: 8px; padding: 16px 18px;">
+                <div style="font-size: 13px; color: #2A9D8F; margin-bottom: 6px;">OPTION B &middot; SHORT SOCIAL-ISSUE RESEARCH PIECE</div>
+                <div style="font-size: 19px; color: #0e1c42; margin-bottom: 10px;">A short research write-up on the novel&rsquo;s real-world issue</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 8px;">Research one social issue the novel raises (class division, teen conflict, or belonging) using two credible sources. Write a short piece (200 to 300 words) explaining what the issue is and how the novel connects to it. Cite your sources in MLA format.</div>
+                <div style="font-size: 14px; color: #6b7a99; line-height: 1.5;">Format: Word document on OneDrive. Submitted with the reflection.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 2: plan the VR thematic scene (platform-agnostic) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 14px;">&#129504; PLAN YOUR VR THEMATIC SCENE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Your VR scene is a thematic space: it should make a viewer feel the emotion or tension behind your chosen theme, not recreate a specific scene from the novel. Put on your VR headset and <strong>choose any setting you like</strong> with enough open ground to arrange objects and labels.</p>
+
+        <!-- VR policy box -->
+        <div style="background: #FDF3E3; border: 1px solid #C7922C; border-left: 4px solid #C7922C; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px;">
+            <div style="font-size: 12px; color: #c7922c; margin-bottom: 6px;">&#9888;&#65039; IMPORTANT: WHAT YOUR VR SCENE MUST AND MUST NOT DO</div>
+            <div style="font-size: 15px; color: #1a2340; line-height: 1.65;"><strong>Must do:</strong> use symbolic or thematic objects, labels, and your own original narration. Choose a setting of your own. The scene expresses a theme concept, not a plot event.<br /><br /><strong>Must not do:</strong> recreate a specific scene from the novel, name or portray specific characters, recreate costumes or dialogue from the book, or reproduce any protected text on a label or board. Use original labels and questions only.</div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;"><div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div><div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Choose your setting freely. Open ground, a rooftop, a park, or any other virtual environment works. Your setting does not need to match anything in the novel.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;"><div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div><div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Arrange objects or shapes that represent your theme. For loyalty: two objects close together and a barrier between them and the rest. For staying gold: something fragile or bright surrounded by darker shapes. For family: a cluster of different-sized objects facing the same direction. Use what your setting offers.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;"><div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div><div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Add two labels or sticky notes in your own words: one that names what the arrangement shows about the theme, and one that asks a question you think the novel raises about it. Both must be your own sentences.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;"><div style="min-width: 26px; height: 26px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div><div style="font-size: 17px; color: #1a2340; line-height: 1.6;">When the scene is ready, <strong>record a short video or take a screenshot</strong> that shows the full arrangement and both labels. If you cannot capture inside VR, write a short description (four to six sentences) of what your scene contains and what it shows about the theme instead.</div></div>
+    </div>
+
+    <!-- COMMIT-THEN-REVEAL: what makes a strong reflection -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PLAN YOUR REFLECTION</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Your reflection is 200 to 250 words. It connects your creative piece and your VR scene to the theme you analyzed in the essay. It should explain what your choices show about the theme, not just describe what you made.</p>
+
+    </div>
+
+    <!-- TRY IT: strong vs weak reflection moves -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 14px;">&#9889; TRY IT &middot; IS THIS REFLECTION SENTENCE STRONG OR WEAK?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">For each sentence, decide: does it explain an idea about the theme (strong), only describe what was made (weak), or land somewhere in between? Decide first, then choose.</p>
+
+        <div class="optima-widget ow-scale">
+            <div class="widget-row" data-correct="0" data-fb="Right. This only lists materials. It never reaches an idea about loyalty or what the collage means. That makes it weak as a reflection." data-hint="Does this sentence say what the creative choice shows about the theme, or does it stop at listing what is in the piece?">
+                <div class="widget-row-prompt">1. &ldquo;I used gold and black paper and cut out pictures of hands holding together for my collage.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Weak (only describes)</button>
+                    <button data-choice="1">In between</button>
+                    <button data-choice="2">Strong (explains the theme)</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. This is strong. It explains what a specific choice shows about the theme: gold fading connects directly to the idea that staying gold is temporary, which is the point of the theme." data-hint="Does this sentence say what the color choice means about the theme, or does it just report that a color was used?">
+                <div class="widget-row-prompt">2. &ldquo;I used gold to represent what Ponyboy is trying to hold onto, and I let the edges fade to gray to show how the novel says that kind of innocence does not last forever.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Weak (only describes)</button>
+                    <button data-choice="1">In between</button>
+                    <button data-choice="2">Strong (explains the theme)</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. This starts to connect the VR scene to an idea, but it stops before naming what family means in the novel. One more sentence about what the arrangement reveals would make it strong." data-hint="Does it reach an idea about family in the novel, or does it stop halfway after naming the arrangement?">
+                <div class="widget-row-prompt">3. &ldquo;In my VR scene I placed three different-sized objects in a cluster facing the same direction, which felt like the greasers as a family.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Weak (only describes)</button>
+                    <button data-choice="1">In between</button>
+                    <button data-choice="2">Strong (explains the theme)</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. This is strong. It connects the research finding directly to the novel: the social issue in the real world is the same one the novel explores, and the reflection says so." data-hint="Does this sentence tie the research to the novel's theme, or does it just report what the research said?">
+                <div class="widget-row-prompt">4. &ldquo;My research showed that class division still separates teenagers in many American cities, which is exactly the barrier the novel argues keeps the greasers and Socs from seeing each other clearly.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Weak (only describes)</button>
+                    <button data-choice="1">In between</button>
+                    <button data-choice="2">Strong (explains the theme)</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Build the three pieces</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete your creative piece (collage or research write-up), stage and capture your VR thematic scene, and write your 200 to 250 word reflection. Submit them on the <strong>The Outsiders Final Project - Creative + VR (assignment)</strong> page.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Run the Submission Checklist</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Before you turn anything in, open the <strong>W7 - Submission Checklist</strong> page and confirm every piece of both components is ready.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You read the whole novel, built your thinking across six Quick Writes, and now you are turning that thinking into something you made. Choose an option that lets you show what the theme means to you. Build the VR scene around that same idea. Then let your reflection tie all three pieces together so a reader can see what you understood.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Work Session 2 &middot; Building Your Creative Component</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

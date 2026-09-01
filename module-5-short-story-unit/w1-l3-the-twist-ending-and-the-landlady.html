@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7TH GRADE ELA &#8212; Lesson 1.03</title>
+  <style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+  </style>
+</head>
+<body>
+<div class="canvas-frame">
+
+  <!-- HEADER -->
+  <div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+      <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+      <div><div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div><div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div></div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+  </div>
+
+  <!-- METADATA STRIP -->
+  <div style="display: flex; background: #F4F6FA; border-bottom: 1px solid #D0D9E8; padding: 10px 34px; gap: 0;">
+    <div style="flex: 1; padding: 8px 12px; border-right: 1px solid #D0D9E8; font-size: 13px;">
+      <div style="color: #888; font-weight: 700; margin-bottom: 2px;">QUARTER / MODULE</div>
+      <div style="color: #0E1C42;">Q3 &middot; Module 5 / Short Story Unit</div>
+    </div>
+    <div style="flex: 1; padding: 8px 12px; border-right: 1px solid #D0D9E8; font-size: 13px;">
+      <div style="color: #888; font-weight: 700; margin-bottom: 2px;">LESSON</div>
+      <div style="color: #0E1C42;">Lesson 1.03</div>
+    </div>
+    <div style="flex: 1; padding: 8px 12px; border-right: 1px solid #D0D9E8; font-size: 13px;">
+      <div style="color: #888; font-weight: 700; margin-bottom: 2px;">TOPIC</div>
+      <div style="color: #0E1C42;">The Twist Ending: What We Were Not Told</div>
+    </div>
+    <div style="flex: 1; padding: 8px 12px; font-size: 13px;">
+      <div style="color: #888; font-weight: 700; margin-bottom: 2px;">MODULE QUESTION</div>
+      <div style="color: #0E1C42;">What makes a suspense story work, what we are told or what we are not?</div>
+    </div>
+  </div>
+
+  <!-- BODY WRAPPER -->
+  <div style="padding: 24px 34px;">
+
+    <!-- 1. TITLE STRIP -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 6px; padding: 18px 22px; margin-bottom: 20px;">
+      <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Lesson 1.03</div>
+      <div style="font-size: 26px; color: #0E1C42; font-weight: 700;">The Twist Ending: What We Were Not Told <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">~14 min</span></div>
+    </div>
+
+    <!-- 2. COPYRIGHT NOTICE CALLOUT -->
+    <div style="background: #FDF0EE; border-left: 5px solid #E2725B; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #c0392b; font-weight: 700; margin-bottom: 6px;">&#9888;&#65039; REQUIRED NOTICE</div>
+      <p style="font-size: 14px; color: #6b2013; line-height: 1.6; margin: 0;">'The Landlady' by Roald Dahl is an in-copyright work. You must read it at CommonLit (link below) or with your own lawful copy. Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</p>
+    </div>
+
+    <!-- 3. TODAY'S FOCUS -->
+    <div style="border-top: 3px solid #C7922C; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #C7922C; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px;">&#128214; TODAY'S FOCUS</div>
+      <p style="font-size: 16px; color: #0E1C42; line-height: 1.65; margin: 0;">The best twist endings are not tricks. They are promises the story kept all along. You just did not notice. Today you look at how 'The Most Dangerous Game' ends, what the twist reveals about irony, and then compare it with 'The Landlady' by Roald Dahl, which works with the same tool: what the writer does not say.</p>
+    </div>
+
+    <!-- 4. OBJECTIVES -->
+    <div style="border-top: 3px solid #C7922C; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #C7922C; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO...</div>
+      <div style="display: flex; align-items: flex-start; gap: 0; margin-bottom: 12px;">
+        <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">1</div>
+        <div style="font-size: 15px; color: #0E1C42; line-height: 1.5; margin-left: 10px;">Explain how the twist ending of 'The Most Dangerous Game' resolves the central irony.</div>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 0; margin-bottom: 12px;">
+        <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">2</div>
+        <div style="font-size: 15px; color: #0E1C42; line-height: 1.5; margin-left: 10px;">Read 'The Landlady' on CommonLit and identify what Dahl leaves unsaid.</div>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 0; margin-bottom: 12px;">
+        <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">3</div>
+        <div style="font-size: 15px; color: #0E1C42; line-height: 1.5; margin-left: 10px;">Annotate for irony: locate places in both stories where the reader knows something the character does not.</div>
+      </div>
+    </div>
+
+    <!-- 5. MATERIALS -->
+    <div style="border-top: 3px solid #C7922C; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #C7922C; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 12px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+      <ul style="font-size: 15px; color: #0E1C42; line-height: 1.8; margin: 0; padding-left: 22px;">
+        <li>'The Most Dangerous Game' by Richard Connell (PDF; your teacher will provide the link)</li>
+        <li>'The Landlady' by Roald Dahl on CommonLit: <a href="https://www.commonlit.org/en/texts/the-landlady" target="_blank" style="color: #2196D0;">Read 'The Landlady' on CommonLit</a></li>
+        <li>Short Story Reading Journal (Word document in your OneDrive course folder)</li>
+      </ul>
+    </div>
+
+    <!-- 6. PART 1 -->
+    <div style="border-top: 3px solid #E2725B; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #E2725B; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 14px;">&#128302; PART 1 &middot; THE ANATOMY OF A TWIST</div>
+
+      <div style="font-size: 20px; color: #0E1C42; font-weight: 700; margin-bottom: 14px;">The Anatomy of a Twist</div>
+
+      <!-- VISUAL CARD -->
+      <div style="background: #fff; border: 1px solid #D0D9E8; border-radius: 8px; overflow: hidden; margin-bottom: 18px;">
+        <div style="background: #C7922C; color: white; padding: 10px 16px; font-size: 16px; font-weight: 700;">The Anatomy of a Twist</div>
+        <div style="display: flex; gap: 16px; padding: 16px;">
+          <div style="background: #FDF0EE; border: 1px solid #E2725B; border-radius: 6px; padding: 16px; flex: 1;">
+            <div style="color: #E2725B; font-size: 13px; font-weight: 700; margin-bottom: 8px;">WHAT WE WERE NOT TOLD</div>
+            <p style="font-size: 15px; color: #3a1a10; line-height: 1.6; margin: 0;">The twist works because the writer withheld something. We had the clues. We just did not see them for what they were.</p>
+          </div>
+          <div style="background: #E8F7F5; border: 1px solid #2A9D8F; border-radius: 6px; padding: 16px; flex: 1;">
+            <div style="color: #2A9D8F; font-size: 13px; font-weight: 700; margin-bottom: 8px;">WHAT IRONY DOES AT THE END</div>
+            <p style="font-size: 15px; color: #0e3330; line-height: 1.6; margin: 0;">Situational: the outcome flips what was expected. Dramatic: looking back, we see we knew all along. The twist is the moment both ironies land at once.</p>
+          </div>
+        </div>
+        <!-- SUSPENSE ARC DIAGRAM -->
+        <div style="background: #f9fafc; border-top: 1px solid #D0D9E8; padding: 16px;">
+          <div style="font-size: 11px; color: #6b7a99; margin-bottom: 10px; font-weight: 700; letter-spacing: 0.5px;">SUSPENSE ARC</div>
+          <div style="display: flex; align-items: center;">
+            <div style="background: #0E1C42; color: white; font-size: 13px; padding: 8px 12px; border-radius: 6px; text-align: center; flex: 1;">
+              <span style="font-weight: 700; display: block;">Setup</span>
+              <span style="font-size: 11px; color: #55c8e8;">irony planted</span>
+            </div>
+            <span style="color: #C7922C; font-size: 18px; padding: 0 8px;">&#9654;</span>
+            <div style="background: #0E1C42; color: white; font-size: 13px; padding: 8px 12px; border-radius: 6px; text-align: center; flex: 1;">
+              <span style="font-weight: 700; display: block;">Rising Tension</span>
+              <span style="font-size: 11px; color: #55c8e8;">knowledge gap grows</span>
+            </div>
+            <span style="color: #C7922C; font-size: 18px; padding: 0 8px;">&#9654;</span>
+            <div style="background: #C7922C; color: white; font-size: 13px; padding: 8px 12px; border-radius: 6px; text-align: center; flex: 1;">
+              <span style="font-weight: 700; display: block;">TWIST</span>
+              <span style="font-size: 11px; color: rgba(255,255,255,0.8);">ironies collide</span>
+            </div>
+            <span style="color: #C7922C; font-size: 18px; padding: 0 8px;">&#9654;</span>
+            <div style="background: #0E1C42; color: white; font-size: 13px; padding: 8px 12px; border-radius: 6px; text-align: center; flex: 1;">
+              <span style="font-weight: 700; display: block;">Resolution</span>
+              <span style="font-size: 11px; color: #55c8e8;">we see what we missed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WARM-UP WIDGET -->
+      <div class="optima-widget ow-reflect">
+        <div class="widget-kicker">&#128161; WARM-UP: NO WRONG ANSWER</div>
+        <div class="widget-question">Before you read 'The Landlady': What would most likely make you trust a stranger in an unfamiliar place?</div>
+        <div class="widget-options">
+          <button data-choice="A" data-response="The way a home looks can signal safety or warmth. Notice whether Billy uses that same logic.">The way their home looks</button>
+          <button data-choice="B" data-response="Friendliness can be genuine or performed. That gap is exactly what Dahl explores.">How friendly and warm they seem</button>
+          <button data-choice="C" data-response="Specific words can be revealing or misleading. Keep that in mind as you read.">The specific things they say</button>
+        </div>
+        <div class="widget-feedback"></div>
+        <button class="widget-reset">Reset</button>
+      </div>
+    </div>
+
+    <!-- 7. PART 2 -->
+    <div style="border-top: 3px solid #E2725B; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #E2725B; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 14px;">&#128214; PART 2 &middot; THE MDG ENDING: WHAT CONNELL DID NOT SHOW</div>
+
+      <div style="font-size: 20px; color: #0E1C42; font-weight: 700; margin-bottom: 14px;">The Last Line</div>
+
+      <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; padding: 14px 20px; border-radius: 6px; margin: 12px 0;">
+        <div style="font-size: 19px; color: #0E1C42; font-style: italic;">"He had never slept in a better bed, Rainsford decided."</div>
+        <div style="font-size: 13px; color: #666; margin-top: 6px;">Richard Connell, 'The Most Dangerous Game' (public domain)</div>
+      </div>
+
+      <p style="font-size: 17px; line-height: 1.65; margin-bottom: 12px; color: #0E1C42;">This last line tells us Rainsford survived and won. But Connell does not show us the fight. We infer. The twist is the sudden resolution after all the drawn-out tension.</p>
+
+      <p style="font-size: 15px; line-height: 1.65; margin-bottom: 16px; color: #0E1C42;">Looking back: the situational irony (the hunter becoming the hunted) is resolved. The dramatic irony (we always feared for Rainsford) pays off.</p>
+
+      <!-- READING JOURNAL PROMPT BOX -->
+      <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 18px; margin: 16px 0;">
+        <div style="font-size: 11px; color: #c7922c; font-weight: 700; margin-bottom: 6px;">&#128221; READING JOURNAL</div>
+        <p style="font-size: 15px; color: #3a2000; line-height: 1.6; margin: 0;">Go back to the moment Zaroff first describes his 'new animal.' How did you feel reading it then? Now that you know the ending, does the same passage read differently? Write two sentences in your Reading Journal about this. Do this before moving on.</p>
+      </div>
+
+      <!-- EVALUATIVE WIDGET -->
+      <div class="optima-widget ow-select">
+        <div class="widget-kicker">&#9889; CHECK YOUR READING: WHICH TYPE OF IRONY?</div>
+        <div class="widget-question">Is each moment situational irony, dramatic irony, or both? Select the best answer for each row.</div>
+
+        <!-- Row 1 -->
+        <div class="widget-row" data-correct="A">
+          <div class="widget-row-prompt">Rainsford says animals feel no fear, only men do. Later, Rainsford runs through the jungle in terror.</div>
+          <div class="widget-options">
+            <button data-choice="A" data-fb="The outcome directly contradicts what Rainsford claimed to believe. That is situational irony.">Situational irony</button>
+            <button data-choice="B" data-hint="Think about whose belief is being contradicted here: Rainsford's own words versus his experience. That is a flip in outcome, not a reader-character knowledge gap.">Dramatic irony</button>
+            <button data-choice="C" data-hint="Only one type fits best here. Whose words are being turned against him by the events?">Both</button>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="widget-row" data-correct="B">
+          <div class="widget-row-prompt">We suspect Zaroff hunts humans while Rainsford still thinks Zaroff is just eccentric.</div>
+          <div class="widget-options">
+            <button data-choice="A" data-hint="No outcome has flipped yet in this moment. Ask: who knows something that someone else does not?">Situational irony</button>
+            <button data-choice="B" data-fb="We know (or strongly suspect) something Rainsford does not. That is dramatic irony.">Dramatic irony</button>
+            <button data-choice="C" data-hint="Only one type is operating at this specific moment. Is the outcome flipped, or is there a knowledge gap?">Both</button>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="widget-row" data-correct="C">
+          <div class="widget-row-prompt">Looking back after the twist ending, we realize the whole story was telling us the hunter would become the hunted.</div>
+          <div class="widget-options">
+            <button data-choice="A" data-hint="Situational irony is part of it, but so is something else. Think about what the reader lived through the whole time.">Situational irony</button>
+            <button data-choice="B" data-hint="Dramatic irony is part of it, but so is something else. Think about what the outcome of the story resolves.">Dramatic irony</button>
+            <button data-choice="C" data-fb="The twist resolves the situational setup AND reveals the dramatic irony we lived through the whole time.">Both</button>
+          </div>
+        </div>
+
+        <button class="widget-reset">Reset</button>
+      </div>
+    </div>
+
+    <!-- 8. PART 3 -->
+    <div style="border-top: 3px solid #2A9D8F; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #2A9D8F; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 14px;">&#128214; PART 3 &middot; THE LANDLADY: WHAT DAHL DOES NOT SAY</div>
+
+      <div style="font-size: 20px; color: #0E1C42; font-weight: 700; margin-bottom: 10px;">Read First</div>
+      <p style="font-size: 15px; color: #0E1C42; line-height: 1.65; margin-bottom: 12px;">Before you work through the annotation guidance below, read 'The Landlady' on CommonLit.</p>
+
+      <div style="text-align: center; margin: 12px 0;">
+        <a href="https://www.commonlit.org/en/texts/the-landlady" target="_blank" style="display: inline-block; background: #2A9D8F; color: #ffffff; font-size: 16px; padding: 10px 24px; border-radius: 8px; text-decoration: none;">"The Landlady" by Roald Dahl on CommonLit &#8599;</a>
+        <div style="font-size: 13px; color: #666; margin-top: 8px;">Opens in a new tab. Your teacher will assign this on CommonLit if required.</div>
+      </div>
+
+      <div style="font-size: 20px; color: #0E1C42; font-weight: 700; margin-top: 20px; margin-bottom: 10px;">Annotation Guidance</div>
+      <p style="font-size: 15px; color: #0E1C42; line-height: 1.65; margin-bottom: 14px;">As you read, watch for these three things. Annotate directly in CommonLit or in your Reading Journal.</p>
+
+      <!-- Annotation callout a -->
+      <div style="background: #E8F7F5; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px;">
+        <div style="font-size: 11px; color: #2A9D8F; font-weight: 700; margin-bottom: 6px;">ANNOTATE: WHAT DOES BILLY KNOW?</div>
+        <p style="font-size: 14px; color: #0e3330; line-height: 1.6; margin: 0;">Moments where Billy feels inexplicably drawn or comfortable. Ask yourself: What does Billy know here? What does the reader suspect? Mark the gap.</p>
+      </div>
+
+      <!-- Annotation callout b -->
+      <div style="background: #E8F7F5; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px;">
+        <div style="font-size: 11px; color: #2A9D8F; font-weight: 700; margin-bottom: 6px;">ANNOTATE: FORESHADOWING OR DRAMATIC IRONY?</div>
+        <p style="font-size: 14px; color: #0e3330; line-height: 1.6; margin: 0;">The small details: the pets, the register, the tea. For each one, ask: Is this foreshadowing (a hint at what comes) or dramatic irony (the reader understands something the character does not)? How does Dahl plant the clue?</p>
+      </div>
+
+      <!-- Annotation callout c -->
+      <div style="background: #E8F7F5; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px;">
+        <div style="font-size: 11px; color: #2A9D8F; font-weight: 700; margin-bottom: 6px;">ANNOTATE: WHAT IS LEFT UNSAID?</div>
+        <p style="font-size: 14px; color: #0e3330; line-height: 1.6; margin: 0;">The ending. Ask: What does Dahl leave unsaid? How does silence work as a tool? Write one sentence about this in your Reading Journal.</p>
+      </div>
+
+      <!-- AI AWARENESS CALLOUT -->
+      <div style="background: #EBF5FB; border-left: 5px solid #2196D0; border-radius: 6px; padding: 14px 18px; margin: 16px 0;">
+        <div style="font-size: 11px; color: #1B6A94; font-weight: 700; margin-bottom: 6px;">&#128161; A NOTE ON AI TOOLS</div>
+        <p style="font-size: 14px; color: #1a2340; line-height: 1.6; margin: 0;">Some AI tools can summarize or analyze short stories. If you use one for brainstorming, treat its summary as a starting point, not a final answer. AI tools can miss the specific word choices and silences that make a story like this one work. Read the original.</p>
+      </div>
+    </div>
+
+    <!-- 8B. TWO AUTHORS, ONE HIDDEN DANGER -->
+    <div style="border-top: 3px solid #2A9D8F; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #2A9D8F; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 14px;">&#128269; TWO AUTHORS, ONE HIDDEN DANGER</div>
+
+      <div style="font-size: 20px; color: #0E1C42; font-weight: 700; margin-bottom: 14px;">Beyond the Twist: What Does Each Writer Seem to Believe?</div>
+
+      <p style="font-size: 16px; color: #0E1C42; line-height: 1.65; margin-bottom: 16px;">So far you have looked at how Connell and Dahl build their twist endings through irony and withheld information. But both stories share more than a technique. They share a topic: danger that hides inside a person or place that seems ordinary, even welcoming. Each writer treats that idea differently. Neither one states it directly, so you have to work it out from what actually happens in the story.</p>
+
+      <!-- COMPARISON CARD -->
+      <div style="background: #fff; border: 1px solid #D0D9E8; border-radius: 8px; overflow: hidden; margin-bottom: 18px;">
+        <div style="background: #2A9D8F; color: white; padding: 10px 16px; font-size: 16px; font-weight: 700;">Where Does Each Author Hide the Danger?</div>
+        <div style="display: flex; gap: 16px; padding: 16px;">
+          <div style="background: #FDF0EE; border: 1px solid #E2725B; border-radius: 6px; padding: 16px; flex: 1;">
+            <div style="color: #E2725B; font-size: 13px; font-weight: 700; margin-bottom: 8px;">CONNELL: THE CIVILIZED HOST</div>
+            <p style="font-size: 15px; color: #3a1a10; line-height: 1.6; margin: 0;">General Zaroff is cultured, well mannered, and lives in a comfortable chateau. Rainsford, and the reader, first read him as a gracious host. Notice what the story suggests about danger that arrives dressed as refinement.</p>
+          </div>
+          <div style="background: #E8F7F5; border: 1px solid #2A9D8F; border-radius: 6px; padding: 16px; flex: 1;">
+            <div style="color: #2A9D8F; font-size: 13px; font-weight: 700; margin-bottom: 8px;">DAHL: THE ORDINARY LANDLADY</div>
+            <p style="font-size: 15px; color: #0e3330; line-height: 1.6; margin: 0;">The landlady offers Billy exactly what a tired traveler wants: a cheap room, tea, a warm welcome. Notice what the story suggests about danger that arrives dressed as hospitality.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- READING JOURNAL PROMPT BOX -->
+      <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 18px; margin: 16px 0;">
+        <div style="font-size: 11px; color: #c7922c; font-weight: 700; margin-bottom: 6px;">&#128221; READING JOURNAL</div>
+        <p style="font-size: 15px; color: #3a2000; line-height: 1.6; margin: 0;">Both stories place their most dangerous character in a role we normally trust: a gracious host, a kind landlady. What does 'The Most Dangerous Game' seem to say about danger that hides behind good manners and comfort? What does 'The Landlady' seem to say about danger that hides behind ordinary kindness? Write your answer in your Reading Journal. Do this before moving on.</p>
+      </div>
+    </div>
+
+    <!-- 9. PART 4 -->
+    <div style="border-top: 3px solid #2A9D8F; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #2A9D8F; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 14px;">&#128221; PART 4 &middot; READING JOURNAL: WEEK 1</div>
+
+      <div style="font-size: 20px; color: #0E1C42; font-weight: 700; margin-bottom: 16px;">Add this to the Week 1 section of your Reading Journal.</div>
+
+      <!-- Prompt 1 -->
+      <div style="background: #FDF3E3; border-left: 5px solid #C7922C; padding: 14px 18px; border-radius: 6px; margin-bottom: 12px;">
+        <div style="display: flex; align-items: flex-start; gap: 0;">
+          <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">1</div>
+          <div style="font-size: 15px; color: #3a2000; line-height: 1.6; margin-left: 10px;">After reading 'The Landlady': What is the one thing Dahl never tells you directly? How did he make you figure it out?</div>
+        </div>
+      </div>
+
+      <!-- Prompt 2 -->
+      <div style="background: #FDF3E3; border-left: 5px solid #C7922C; padding: 14px 18px; border-radius: 6px; margin-bottom: 12px;">
+        <div style="display: flex; align-items: flex-start; gap: 0;">
+          <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">2</div>
+          <div style="font-size: 15px; color: #3a2000; line-height: 1.6; margin-left: 10px;">Compare the endings of the two stories. Both use what is NOT said. How does each writer's silence work differently?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. WHAT'S NEXT -->
+    <div style="border-top: 3px solid #0E1C42; padding-top: 14px; margin-bottom: 20px;">
+      <div style="font-size: 11px; color: #0E1C42; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 14px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+
+      <!-- Item 1 -->
+      <div style="display: flex; align-items: flex-start; gap: 0; margin-bottom: 12px;">
+        <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">1</div>
+        <div style="font-size: 15px; color: #0E1C42; line-height: 1.5; margin-left: 10px;"><span style="font-weight: 700;">Quick Write 1: Write a Short Suspense Scene</span> Write a 150-200 word suspense scene with a knowledge gap. Use at least one technique from this week. Submit your Word document.</div>
+      </div>
+
+      <!-- Item 2 -->
+      <div style="display: flex; align-items: flex-start; gap: 0; margin-bottom: 12px;">
+        <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">2</div>
+        <div style="font-size: 15px; color: #0E1C42; line-height: 1.5; margin-left: 10px;"><span style="font-weight: 700;">Check-up</span> Complete the Week 1 Check-up to confirm your reading and concept work.</div>
+      </div>
+    </div>
+
+  </div><!-- end body wrapper -->
+
+  <!-- FOOTER -->
+  <div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Short Story Unit</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65);">Lesson 1.03 &middot; The Twist Ending and The Landlady</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+  </div>
+
+</div><!-- end canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+</body>
+</html>

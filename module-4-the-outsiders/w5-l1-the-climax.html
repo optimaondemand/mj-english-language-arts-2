@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7TH GRADE ELA &#8212; Lesson 5.01: The Climax</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+        .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+        .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+        .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+        .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+        .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+        .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+        .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+        .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+        .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+        .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+        .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+        .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+        .widget-feedback.show { display: block; }
+        .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+        .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+        .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+        .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+        .widget-reset:hover { background: #FDF3E3; }
+        .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+        .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+        .ow-flip.flipped .ow-flip-front { display: none; }
+        .ow-flip.flipped .ow-flip-back { display: block; }
+    </style>
+</head>
+<body>
+<div class="canvas-frame">
+
+    <!-- HEADER -->
+    <div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+            <div>
+                <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+                <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+            </div>
+        </div>
+        <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+
+    <!-- METADATA STRIP -->
+    <div style="display: flex; flex-wrap: wrap; background: #0E1C42; border-bottom: 2px solid #55C8E8; padding: 0;">
+        <div style="flex: 1; min-width: 180px; padding: 10px 18px; border-right: 1px solid #1e3060; color: #55C8E8; font-size: 13px; font-weight: 600;">Q3 &middot; Module 4 | The Outsiders</div>
+        <div style="flex: 0 0 auto; padding: 10px 18px; border-right: 1px solid #1e3060; color: #ffffff; font-size: 13px;">Lesson 5.01</div>
+        <div style="flex: 2; min-width: 220px; padding: 10px 18px; border-right: 1px solid #1e3060; color: #ffffff; font-size: 13px;">The Climax: The Rumble and the Hospital</div>
+        <div style="flex: 2; min-width: 220px; padding: 10px 18px; color: #C7D8FF; font-size: 12px; font-style: italic;">Module Question: What divides the greasers and the Socs, and what stays the same?</div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div style="padding: 30px 34px 40px;">
+
+        <!-- LAVENDER TITLE STRIP -->
+        <div style="border-left: 5px solid #0E1C42; background: #EEF1F8; border-radius: 4px; padding: 16px 22px; margin-bottom: 24px;">
+            <div style="font-size: 11px; color: #5566AA; letter-spacing: 0.5px; margin-bottom: 4px;">Lesson 5.01</div>
+            <div style="font-size: 28px; color: #0E1C42; font-weight: 700; line-height: 1.2; margin-bottom: 4px;">The Climax: The Rumble and the Hospital</div>
+            <div style="font-size: 14px; color: #556688;">Lesson &middot; ~14 min</div>
+        </div>
+
+        <!-- TODAY'S FOCUS CARD -->
+        <div style="border-top: 3px solid #C7922C; border: 1px solid #E8D8B0; border-top: 3px solid #C7922C; border-radius: 6px; padding: 20px 24px; margin-bottom: 22px; background: #FFFDF5;">
+            <div style="font-size: 11px; color: #A07020; letter-spacing: 0.5px; margin-bottom: 10px; text-transform: uppercase;">Today's Focus</div>
+            <div style="font-size: 18px; color: #0E1C42; font-style: italic; font-weight: 600; margin-bottom: 14px; line-height: 1.4;">"A rumble settles the territory dispute, but what does the novel say it actually settles?"</div>
+            <p style="font-size: 16px; color: #1a2340; line-height: 1.7; margin: 0;">Chapters 9 and 10 bring the tension that has been building since the very first page to its breaking point. Two major events happen in quick succession, and neither one lands the way Ponyboy expected. By the time Chapter 10 ends, he is looking at his world differently.</p>
+        </div>
+
+        <!-- OBJECTIVES CARD -->
+        <div style="border: 1px solid #D0D9E8; border-radius: 6px; padding: 20px 24px; margin-bottom: 22px; background: #ffffff;">
+            <div style="font-size: 11px; color: #1B6A94; letter-spacing: 0.5px; margin-bottom: 14px; text-transform: uppercase;">Objectives</div>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 30px; height: 30px; background: #C7922C; border-radius: 50%; color: #fff; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.6; padding-top: 4px;">Describe the two major events in Chapters 9-10 in your own words.</div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 30px; height: 30px; background: #C7922C; border-radius: 50%; color: #fff; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.6; padding-top: 4px;">Identify which moment functions as the true climax and explain why.</div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 30px; height: 30px; background: #C7922C; border-radius: 50%; color: #fff; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+                    <div style="font-size: 16px; color: #1a2340; line-height: 1.6; padding-top: 4px;">Explain what these chapters reveal about loyalty and the cost of belonging to a group.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MATERIALS CARD -->
+        <div style="border: 1px solid #D0D9E8; border-radius: 6px; padding: 18px 24px; margin-bottom: 28px; background: #F9FBFD;">
+            <div style="font-size: 11px; color: #1B6A94; letter-spacing: 0.5px; margin-bottom: 12px; text-transform: uppercase;">Materials</div>
+            <ul style="margin: 0; padding-left: 20px; font-size: 16px; color: #1a2340; line-height: 1.9;">
+                <li>Read Chapters 9-10 in your copy of <em>The Outsiders</em>. <span style="font-size: 13px; background: #E8F6FB; border: 1px solid #B0D8E8; border-radius: 4px; padding: 2px 8px; color: #1B6A94;">[Teacher: link the approved student copy / purchase or library access here]</span></li>
+                <li>Reading Journal Word document (Week 5 section open)</li>
+            </ul>
+        </div>
+
+        <!-- CORE CONCEPT VISUAL: STORY ARC -->
+        <div style="border-top: 3px solid #C7922C; border: 1px solid #E8D8B0; border-top: 3px solid #C7922C; border-radius: 6px; padding: 24px 28px 28px; margin-bottom: 28px; background: #ffffff;">
+            <div style="font-size: 11px; color: #A07020; letter-spacing: 0.5px; margin-bottom: 6px; text-transform: uppercase;">Core Concept</div>
+            <div style="font-size: 20px; color: #0E1C42; font-weight: 700; margin-bottom: 18px;">What Is a Climax?</div>
+
+            <!-- SVG Story Arc Diagram -->
+            <div style="display: flex; justify-content: center; align-items: center; padding: 10px 0 20px;">
+                <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 680px; min-height: 210px;" aria-label="Story arc diagram showing rising action, climax at the peak, falling action, and resolution">
+
+                    <!-- Mountain fill -->
+                    <polygon points="40,240 350,30 660,240" fill="#EEF1F8" stroke="#0E1C42" stroke-width="2.5"/>
+
+                    <!-- Baseline -->
+                    <line x1="20" y1="240" x2="680" y2="240" stroke="#0E1C42" stroke-width="2"/>
+
+                    <!-- CLIMAX label at peak -->
+                    <text x="350" y="18" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0E1C42">CLIMAX</text>
+                    <text x="350" y="58" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#C7922C">Highest tension.</text>
+                    <text x="350" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#C7922C">The conflict is decided here.</text>
+
+                    <!-- Peak dot -->
+                    <circle cx="350" cy="30" r="7" fill="#C7922C" stroke="#ffffff" stroke-width="2"/>
+
+                    <!-- Rising Action label on left slope -->
+                    <text x="148" y="168" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#0E1C42" transform="rotate(-38,148,168)">Rising Action</text>
+
+                    <!-- Falling Action label on right slope -->
+                    <text x="552" y="168" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#0E1C42" transform="rotate(38,552,168)">Falling Action</text>
+
+                    <!-- Exposition left label -->
+                    <text x="40" y="260" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#556688">Exposition</text>
+
+                    <!-- Resolution right label -->
+                    <text x="660" y="260" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#556688">Resolution</text>
+
+                    <!-- Arrow along left slope -->
+                    <line x1="80" y1="220" x2="300" y2="70" stroke="#2A9D8F" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowUp)"/>
+
+                    <!-- Arrow along right slope -->
+                    <line x1="400" y1="70" x2="620" y2="220" stroke="#E2725B" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowDown)"/>
+
+                    <defs>
+                        <marker id="arrowUp" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                            <path d="M0,8 L4,0 L8,8" fill="none" stroke="#2A9D8F" stroke-width="1.5"/>
+                        </marker>
+                        <marker id="arrowDown" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                            <path d="M0,0 L4,8 L8,0" fill="none" stroke="#E2725B" stroke-width="1.5"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+
+            <!-- Legend row -->
+            <div style="display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; font-size: 13px; color: #1a2340; margin-top: 4px;">
+                <div style="display: flex; align-items: center; gap: 7px;"><span style="display:inline-block;width:18px;height:4px;background:#2A9D8F;border-radius:2px;"></span> Rising tension builds toward the peak</div>
+                <div style="display: flex; align-items: center; gap: 7px;"><span style="display:inline-block;width:14px;height:14px;background:#C7922C;border-radius:50%;"></span> Climax: the turning point</div>
+                <div style="display: flex; align-items: center; gap: 7px;"><span style="display:inline-block;width:18px;height:4px;background:#E2725B;border-radius:2px;"></span> Falling action resolves what remains</div>
+            </div>
+        </div>
+
+        <!-- PART 1: READ AND NOTICE (Coral) -->
+        <div style="border-top: 3px solid #E2725B; border: 1px solid #F0D0CA; border-top: 3px solid #E2725B; border-radius: 6px; padding: 20px 24px 22px; margin-bottom: 24px; background: #FDF8F7;">
+            <div style="font-size: 11px; color: #B04030; letter-spacing: 0.5px; margin-bottom: 14px; text-transform: uppercase; font-weight: 600;">&#128214; PART 1 &middot; READ AND NOTICE</div>
+
+            <div class="optima-widget ow-reflect">
+                <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+                <div class="widget-question">Before you dive in: what do you expect a big fight scene to settle in a story like this? (No wrong answer.)</div>
+                <div class="widget-options">
+                    <button data-response="Territory is one thing, but stories rarely let a fistfight be the final answer. Watch what the fight actually resolves, and what it leaves unresolved.">Territory or turf</button>
+                    <button data-response="Grudges can fuel a fight, but they tend to outlast it too. Pay attention to how the characters feel after the rumble ends, not just during it.">A score or grudge</button>
+                    <button data-response="That instinct serves you well here. Keep it in mind as you read what follows the rumble.">Nothing, really</button>
+                </div>
+                <div class="widget-feedback"></div>
+                <button class="widget-reset">Reset</button>
+            </div>
+        </div>
+
+        <!-- PART 2: WHAT HAPPENS IN CHAPTERS 9-10 (Coral) -->
+        <div style="border-top: 3px solid #E2725B; border: 1px solid #F0D0CA; border-top: 3px solid #E2725B; border-radius: 6px; padding: 20px 24px 22px; margin-bottom: 24px; background: #FDF8F7;">
+            <div style="font-size: 11px; color: #B04030; letter-spacing: 0.5px; margin-bottom: 14px; text-transform: uppercase; font-weight: 600;">&#128214; PART 2 &middot; WHAT HAPPENS IN CHAPTERS 9-10</div>
+
+            <p style="font-size: 16px; color: #1a2340; line-height: 1.75; margin: 0 0 16px;">Chapters 9 and 10 open with the greasers preparing for the rumble, a planned fight between their group and the Socs to settle the conflict that has been running through the novel. The fight happens on their turf at night, and the greasers win. But the outcome feels hollow even as it is happening. The tension does not dissolve; it shifts.</p>
+            <p style="font-size: 16px; color: #1a2340; line-height: 1.75; margin: 0 0 20px;">Before Ponyboy can fully register what the rumble means, he learns something far more significant. What happens at the hospital in Chapter 10 is the moment that reorders everything. It is not a fight or a victory. It is a loss, and it changes the direction of the story permanently.</p>
+
+            <!-- Reading Journal Prompt Box -->
+            <div style="border-left: 4px solid #C7922C; background: #FFFDF5; border-radius: 4px; padding: 14px 18px; margin-top: 4px;">
+                <div style="font-size: 11px; color: #A07020; letter-spacing: 0.4px; margin-bottom: 7px; text-transform: uppercase;">&#128221; Reading Journal</div>
+                <p style="font-size: 16px; color: #1a2340; line-height: 1.7; margin: 0;">Open the Week 5 section of your Reading Journal. Write 3-4 sentences: Describe the two main events of Chapters 9-10 in your own words, and say which one feels like the bigger turning point to you.</p>
+            </div>
+        </div>
+
+        <!-- PART 3: CHECK YOUR READING (Coral) -->
+        <div style="border-top: 3px solid #E2725B; border: 1px solid #F0D0CA; border-top: 3px solid #E2725B; border-radius: 6px; padding: 20px 24px 22px; margin-bottom: 24px; background: #FDF8F7;">
+            <div style="font-size: 11px; color: #B04030; letter-spacing: 0.5px; margin-bottom: 14px; text-transform: uppercase; font-weight: 600;">&#128214; PART 3 &middot; CHECK YOUR READING</div>
+
+            <div class="optima-widget ow-select">
+                <div class="widget-kicker">&#9889; TRY IT &middot; CLIMAX CHECK</div>
+                <div class="widget-question">For each item, choose the best answer. You will get feedback right away.</div>
+
+                <!-- Row 1: correct index 1 -->
+                <div class="widget-row" data-correct="1" data-fb="Right. The climax is not simply the noisiest or most physical moment. It is the point where the main conflict reaches its turning point for the main character." data-hint="Think about what 'climax' means for the main character's inner life, not just the external action.">
+                    <div class="widget-row-prompt">In a story, a fight breaks out between two rival groups. Both sides have been building toward this moment for chapters. The fight ends, one group wins. A reader says, "That fight was the climax." Another reader says, "The real climax comes right after, when the main character learns something that changes everything for him." Which reader is applying the term "climax" more precisely?</div>
+                    <div class="widget-options">
+                        <button data-choice="0">The first reader, because the fight is the most action-packed moment.</button>
+                        <button data-choice="1">The second reader, because the climax is where the main character's inner situation changes permanently.</button>
+                        <button data-choice="2">Both readers are equally right, because climax just means the most exciting part.</button>
+                    </div>
+                </div>
+
+                <!-- Row 2: correct index 2 -->
+                <div class="widget-row" data-correct="2" data-fb="Correct. After the climax, the falling action is not quiet: it is where the main character starts to feel the full weight of what happened." data-hint="Ask yourself: has the main conflict already been decided at this point, or is it still building?">
+                    <div class="widget-row-prompt">A character has been part of a group his whole life. He fights alongside them because loyalty matters to him. After a major event in Chapter 10, he has to reconsider what that loyalty actually cost him. Which term best describes this moment of forced reconsideration?</div>
+                    <div class="widget-options">
+                        <button data-choice="0">Exposition, because it gives the reader background on the character.</button>
+                        <button data-choice="1">Rising action, because the character's conflict is still building.</button>
+                        <button data-choice="2">A turning point in the falling action, because the main conflict has already been decided and the character is now processing the consequences.</button>
+                    </div>
+                </div>
+
+                <!-- Row 3: correct index 0 -->
+                <div class="widget-row" data-correct="0" data-fb="Exactly. The structural climax is the moment of irreversible change, the point where the character cannot go back to how things were." data-hint="Which event leaves the character in a fundamentally different situation that he cannot undo?">
+                    <div class="widget-row-prompt">Two events happen near the end of a novel: (A) the main character wins the fight he has been preparing for all story. (B) Something irreversible happens that he did not expect, and it rewrites his understanding of everything. Which event is more likely to be the structural climax?</div>
+                    <div class="widget-options">
+                        <button data-choice="0">Event B, because it is the moment that permanently changes the character's world and understanding.</button>
+                        <button data-choice="1">Event A, because the fight was the central conflict the story was building toward.</button>
+                        <button data-choice="2">Neither; the climax always comes at exactly the midpoint of a story.</button>
+                    </div>
+                </div>
+
+                <button class="widget-reset">Reset</button>
+            </div>
+        </div>
+
+        <!-- PART 4: MAKE AND APPLY (Teal) -->
+        <div style="border-top: 3px solid #2A9D8F; border: 1px solid #B0D8D4; border-top: 3px solid #2A9D8F; border-radius: 6px; padding: 20px 24px 22px; margin-bottom: 24px; background: #F4FAFA;">
+            <div style="font-size: 11px; color: #1A6B63; letter-spacing: 0.5px; margin-bottom: 14px; text-transform: uppercase; font-weight: 600;">&#128221; PART 4 &middot; MAKE AND APPLY</div>
+
+            <p style="font-size: 16px; color: #1a2340; line-height: 1.75; margin: 0 0 20px;">A climax is not just the most exciting action in a story. It is the point of highest tension where the central conflict is decided, and after which nothing can return to how it was. The most intense physical action and the true structural climax can be two different moments. A story's climax often turns on a character's internal realization, a loss, or a revelation rather than an external event.</p>
+
+            <!-- Commit-then-reveal -->
+            <div style="background: #EEF1F8; border-left: 4px solid #0E1C42; border-radius: 4px; padding: 14px 18px; margin-bottom: 16px; font-size: 16px; color: #0E1C42; line-height: 1.7;">
+                In your notebook, write one sentence: which moment in Chapters 9-10 is the true structural climax, and why? Write it down before you open the explanation below.
+            </div>
+
+            <div style="border: 1px solid #D0D9E8; border-radius: 6px; padding: 0; margin: 14px 0; overflow: hidden;">
+                <div style="background: #EEF1F8; padding: 12px 16px; font-size: 16px; color: #0E1C42; font-weight: 600;">The structural climax of Chapters 9 and 10</div>
+                <div style="padding: 14px 16px; font-size: 16px; color: #1a2340; line-height: 1.65;">Both events in Chapters 9 and 10 compete for the label. The rumble ends the external conflict between the groups, which makes it feel like a climax. But the event at the hospital in Chapter 10 is the moment that permanently changes Ponyboy's inner world. His understanding of his situation, his relationships, and his sense of what he has lost all shift because of what happens there. For a story like this one, where the central conflict is about belonging and identity, the moment that breaks the main character's internal assumptions is the structural climax. The rumble could have ended differently and the story could have continued on a similar track. What happens at the hospital cannot be undone.</div>
+            </div>
+        </div>
+
+        <!-- WHAT YOU'LL DO NEXT CARD -->
+        <div style="border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-top: 3px solid #0E1C42; border-radius: 6px; padding: 18px 24px; margin-bottom: 22px; background: #F9FBFD;">
+            <div style="font-size: 11px; color: #556688; letter-spacing: 0.5px; margin-bottom: 10px; text-transform: uppercase;">What You'll Do Next</div>
+            <p style="font-size: 16px; color: #1a2340; line-height: 1.7; margin: 0;">Reading Journal Week 5 entry. Add your response to the journal prompt from Part 2 if you have not already. Keep reading Chapters 9-10 if you have not finished.</p>
+        </div>
+
+        <!-- REQUIRED NOTICE -->
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#9432; REQUIRED NOTICE</div>
+            <div style="font-size: 15px; color: #0E1C42; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+        </div>
+
+        <!-- BEFORE YOU GO CARD -->
+        <div style="border-top: 3px solid #C7922C; border: 1px solid #E8D8B0; border-top: 3px solid #C7922C; border-radius: 6px; padding: 18px 24px; margin-top: 22px; background: #FFFDF5;">
+            <div style="font-size: 11px; color: #A07020; letter-spacing: 0.5px; margin-bottom: 10px; text-transform: uppercase; font-weight: 600;">&#128170; BEFORE YOU GO</div>
+            <p style="font-size: 16px; color: #1a2340; line-height: 1.75; margin: 0;">Chapters 9 and 10 answer one of this module's central questions directly. The novel is not quiet about what divides the greasers and the Socs on the surface, but it is equally direct about what does not change when you cross that line.</p>
+        </div>
+
+    </div><!-- end padding wrapper -->
+
+    <!-- FOOTER -->
+    <div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 16px 34px; text-align: center; color: #8AAED4; font-size: 12px; line-height: 1.7;">
+        Q3 &middot; Module 4 &middot; The Outsiders | Lesson 5.01 &middot; The Climax: The Rumble and the Hospital | &copy; Optima Academy Online &middot; An Education Experience Company
+    </div>
+
+</div><!-- end canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+</body>
+</html>

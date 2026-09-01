@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 5.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">The Scarlet Pimpernel</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.01</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Scarlet Pimpernel, Ch. 17&ndash;19</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 15px; color: #0e1c42; line-height: 1.45;">Heroism in disguise: what kind of courage does the novel celebrate, and when is it right to risk everything for strangers?</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Title card -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">When the Mask Falls: Theme and the Moment of Discovery</div>
+        <div style="font-size: 16px; color: #666;">Lesson <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">&#8776;14 min</span></div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY&rsquo;S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">In Ch. 18, Marguerite finds a gold ring in Percy&rsquo;s locked study. It has a small flower engraved on it, a flower she has seen twice before. What does a ring tell us about a person&rsquo;s secret life?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you will trace how Orczy builds the revelation that Percy Blakeney, the foolish English dandy, is actually the Scarlet Pimpernel, the most daring rescuer in Europe. The discovery does not come from a confession. It comes from three small objects in a locked room. That is how theme works in a novel: meaning hides inside the details until a reader, like Marguerite, finally sees it.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what a theme is and how objects and details in a novel can carry it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> identify the exact moment Marguerite discovers Percy is the Scarlet Pimpernel and describe how Orczy builds to it across Ch. 17&ndash;19.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write about what the discovery reveals about the novel&rsquo;s central theme of heroism.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>The Scarlet Pimpernel</em>, Ch. 17&ndash;19. <a href="#" style="color: #2196D0;">[Teacher: link Ch. 17&ndash;19 PDF in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Scarlet Pimpernel Reading Journal</strong> (the Word document saved to your OneDrive course folder).</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: How a Theme Hides in Plain Sight -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE ONE IDEA TO HOLD ONTO</div>
+        <div style="font-size: 20px; color: #0e1c42; font-weight: bold; margin-bottom: 16px; text-align: center; letter-spacing: 0.3px;">How a Theme Hides in Plain Sight</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0; align-items: stretch; margin-bottom: 16px;">
+
+            <!-- Panel 1 -->
+            <div style="flex: 1; min-width: 180px; background: #EEF1F8; border: 2px solid #0E1C42; border-radius: 10px 0 0 10px; padding: 20px 16px; text-align: center; position: relative;">
+                <div style="font-size: 11px; color: #6b7a99; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">Step 1</div>
+                <div style="font-size: 32px; margin-bottom: 10px;">&#128141;</div>
+                <div style="font-size: 15px; font-weight: bold; color: #0e1c42; margin-bottom: 8px;">OBJECT</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.6;">A gold ring with a small star-shaped flower engraved on it. Percy&rsquo;s locked study: orderly, severe, two maps of France.</div>
+                <div style="font-size: 12px; color: #2A9D8F; font-style: italic; margin-top: 10px;">Ch. 18: Marguerite holds it in her hand.</div>
+            </div>
+
+            <!-- Arrow 1 -->
+            <div style="display: flex; align-items: center; justify-content: center; padding: 0 6px; background: #fff; z-index: 1;">
+                <div style="font-size: 28px; color: #C7922C;">&#10142;</div>
+            </div>
+
+            <!-- Panel 2 -->
+            <div style="flex: 1; min-width: 180px; background: #FDF3E3; border: 2px solid #C7922C; border-radius: 0; padding: 20px 16px; text-align: center;">
+                <div style="font-size: 11px; color: #6b7a99; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">Step 2</div>
+                <div style="font-size: 32px; margin-bottom: 10px;">&#128064;</div>
+                <div style="font-size: 15px; font-weight: bold; color: #0e1c42; margin-bottom: 8px;">RECOGNITION</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.6;">She has seen that device before. The notes that warned French refugees at the opera. The note at Lord Grenville&rsquo;s ball. The same flower.</div>
+                <div style="font-size: 12px; color: #C7922C; font-style: italic; margin-top: 10px;">Ch. 19: The pieces fall together.</div>
+            </div>
+
+            <!-- Arrow 2 -->
+            <div style="display: flex; align-items: center; justify-content: center; padding: 0 6px; background: #fff; z-index: 1;">
+                <div style="font-size: 28px; color: #C7922C;">&#10142;</div>
+            </div>
+
+            <!-- Panel 3 -->
+            <div style="flex: 1; min-width: 180px; background: #E6F7F5; border: 2px solid #2A9D8F; border-radius: 0 10px 10px 0; padding: 20px 16px; text-align: center;">
+                <div style="font-size: 11px; color: #6b7a99; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">Step 3</div>
+                <div style="font-size: 32px; margin-bottom: 10px;">&#127856;</div>
+                <div style="font-size: 15px; font-weight: bold; color: #0e1c42; margin-bottom: 8px;">THEME</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.6;">Real heroism hides itself. Courage does not announce itself. The mask is not deception for its own sake; it is the price of the mission.</div>
+                <div style="font-size: 12px; color: #2A9D8F; font-style: italic; margin-top: 10px;">Orczy shows, not tells.</div>
+            </div>
+
+        </div>
+        <div style="font-size: 15px; color: #666; font-style: italic; text-align: center;">Orczy never has Percy confess. The ring does the work.</div>
+    </div>
+
+    <!-- PART 1: Before You Begin -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: BEFORE YOU BEGIN</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">Think about a time someone you know turned out to be braver or more capable than you expected. What surprised you? (No wrong answer.)</div>
+            <div class="widget-options">
+                <button data-response="That sense of quiet competence is exactly what Marguerite discovers. Percy was capable all along; she just never had the evidence in front of her.">&#129300; I always had a feeling they were stronger than they let on.</button>
+                <button data-response="That gap between how someone seems and what they actually do is at the heart of this novel. Orczy builds the whole plot on it.">&#128563; I had absolutely no idea until something happened that revealed it.</button>
+                <button data-response="That tension between not wanting to know and needing to know mirrors Marguerite exactly. She hesitates in Percy&rsquo;s study for the same reason.">&#128172; Part of me did not want to know, because it changed how I saw them.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2: The Locked Study -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: THE LOCKED STUDY</div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 4px 0 8px 0;">Three details. One revelation.</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">In Ch. 18, Marguerite wanders into Percy&rsquo;s private study. She expected a comfortable, idle room that matched the lazy fop she thought she married. Instead she finds the opposite: the room is severe and orderly. On the desk there are two detailed maps of France. And then she picks up a gold ring. The device engraved on it is a small star-shaped flower.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">She has seen that flower before. The notes passed to the French refugees at the opera to warn them of danger: that flower. The mysterious note delivered at Lord Grenville&rsquo;s ball: that flower. Orczy uses this moment to build the revelation entirely through evidence. Percy never admits anything. The novelist shows us three details and then steps back. That technique, letting objects carry meaning instead of having characters explain it, is how a novelist shows rather than tells.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9889; TRY IT &middot; EVIDENCE IN THE STUDY</div>
+            <div class="widget-question">For each item below, decide whether it is evidence about Percy&rsquo;s real identity. Think it through first, then choose.</div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. Two maps of France in the desk of a man who claims to have no serious interests tell Marguerite that Percy has a very serious connection to France." data-hint="Think about what two maps of France would mean in the study of someone who claims to be a lazy socialite.">
+                <div class="widget-row-prompt">1. Two detailed maps of France, folded carefully in the desk.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Not evidence about his identity</button>
+                    <button data-choice="1">Evidence about his real identity</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. The comfortable armchair is what Marguerite expected to find everywhere in the room. Its ordinariness actually stands out against the surprising items around it." data-hint="Marguerite was looking for evidence of the lazy man she expected. What in the room fits that image?">
+                <div class="widget-row-prompt">2. An ordinary comfortable armchair, the kind any gentleman might have.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Not evidence about his identity</button>
+                    <button data-choice="1">Evidence about his real identity</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. The ring carries the Scarlet Pimpernel&rsquo;s device. Marguerite has seen that exact flower on the warning notes. Holding it in her hand is the moment the identity is confirmed." data-hint="Think about where Marguerite has seen that same small flower engraved before this scene.">
+                <div class="widget-row-prompt">3. A gold ring with a small star-shaped flower engraved on it.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Not evidence about his identity</button>
+                    <button data-choice="1">Evidence about his real identity</button>
+                </div>
+            </div>
+
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3: Now Read -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 3 &middot; READ &amp; NOTICE: NOW READ CHAPTERS 17&ndash;19</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Read Ch. 17&ndash;19 now. Ch. 17: Percy leaves at dawn without explanation; a brief, formal farewell at his horse. Ch. 18: Marguerite enters the locked study and finds the ring. Ch. 19: Sitting alone under a sycamore tree, Marguerite is interrupted by Suzanne de Tournay, who mentions brightly that the Scarlet Pimpernel has gone to save her father today. Notice the moment that sentence lands. That is the blow that opens everything.</p>
+
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px;">&#9999;&#65039; READING JOURNAL &middot; WEEK 5</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.6; margin: 0 0 12px 0;">Open the Week 5 section of your Reading Journal and answer these questions. Write 2&ndash;4 sentences per question.</p>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.8; margin: 0; padding-left: 22px;">
+                <li style="margin-bottom: 10px;">In Ch. 18, what three things does Marguerite notice in Percy&rsquo;s study that do not fit the lazy fop she thought he was?</li>
+                <li style="margin-bottom: 10px;">In Ch. 19, Suzanne mentions that the Scarlet Pimpernel has gone today to save her father. Why does that one sentence break Marguerite&rsquo;s world open?</li>
+                <li style="margin-bottom: 10px;">At the end of Ch. 19, Marguerite says she has sinned through her blindness. Do you agree? Explain in 2&ndash;3 sentences.</li>
+                <li style="margin-bottom: 0; color: #888; font-style: italic;">Stretch: What does the locked study reveal about how Percy thinks of his marriage? (Optional.)</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- PART 4: Theme -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 4 &middot; READ &amp; NOTICE: THE THEME</div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 4px 0 8px 0;">What the ring carries</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A theme is not a plot event. It is an idea the novel keeps returning to: a claim about human life. One of Orczy&rsquo;s central themes is that genuine heroism does not call attention to itself. Percy Blakeney built his disguise so completely that the person he loved most could not see him. That is not cowardice or deception for its own sake. It is a particular kind of courage: the kind that is willing to be misunderstood, mocked, and underestimated, in order to protect the mission.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">The ring Marguerite holds in Ch. 18 carries all of that weight. It is the physical proof that the man she dismissed and even betrayed has been quietly saving lives all along.</p>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; WHERE DO YOU STAND?</div>
+            <div class="widget-question">Percy chose to hide his identity completely, even from Marguerite. Where on this scale would you place that decision? (No wrong answer.)</div>
+            <div class="widget-options">
+                <button data-response="That is a serious position. Marguerite&rsquo;s pain in Ch. 19 supports it. Secrecy has real costs, even when it is motivated by love and duty.">Completely wrong: she deserved to know.</button>
+                <button data-response="Most readers feel this tension. Percy&rsquo;s deception causes real harm, and Orczy does not pretend otherwise. Keep watching whether the novel comes down on one side.">Mostly wrong, but understandable given the danger.</button>
+                <button data-response="Holding the tension is a careful reader&rsquo;s instinct. Orczy gives you real evidence for both positions. Keep asking as you read the final chapters.">Hard to say. Both sides have real weight.</button>
+                <button data-response="The danger argument is strong. One slip and Percy and his whole league are arrested or executed. Orczy puts that reality in the foreground from the first chapter.">Mostly right given the danger to him and his league.</button>
+                <button data-response="That is the heroic-duty reading, and it is textually defensible. Percy chose the mission. The question is whether that choice can excuse what it cost Marguerite.">Completely right: secrecy was necessary for the mission.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- AI awareness -->
+    <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 0 0 20px 0;">
+        <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; WORTH KNOWING &middot; AI AND THEME</div>
+        <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">When you want a quick definition of "theme," an AI chatbot is a fine place to start. It cannot, however, find the theme of this novel for you. Theme is built from specific details: the ring, the maps, the locked room, the moment Suzanne&rsquo;s words land. Those details are in <em>your</em> reading of this specific text. The interpretation you build from them is yours, and it is the work that prepares you for everything more demanding ahead.</div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 5 entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">In the Week 5 section of your Reading Journal, answer the three prompts in Part 3 above. Add any notes from the theme section. The Journal is reviewed at the Reading Journal Check, not turned in today.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Tomorrow: Grammar + Word Study</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Day 2 covers pronoun-antecedent agreement and the Word Study for Ch. 17&ndash;22.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Before You Go -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Percy built a mask so complete that his own wife believed it. Keep asking all week: what kind of courage does that take, and what does it cost?</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.01 &middot; When the Mask Falls</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.ow-flip.flipped').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar 2 &ndash; Punctuation for Pacing | 7th Grade ELA</title>
+<style>
+    /* NOTE: This lesson teaches the em dash as its subject. &mdash; entities appear in teaching prose
+       and examples only. No em dashes in widget data-fb, data-hint, or data-response attributes. */
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* Header */
+    .site-header { background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 24px 32px; display: flex; align-items: center; gap: 18px; }
+    .logo-circle { width: 52px; height: 52px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .logo-circle img { width: 44px; height: 40px; object-fit: contain; }
+    .header-text { flex: 1; }
+    .header-school { font-size: 28px; color: #ffffff; font-weight: 700; line-height: 1.1; }
+    .header-tagline { font-size: 12px; color: #55C8E8; letter-spacing: 0.5px; margin-top: 2px; }
+    .header-course { font-size: 36px; color: #ffffff; font-weight: 800; margin-top: 6px; line-height: 1.1; }
+
+    /* Meta strip */
+    .meta-strip { background: #EEF1F8; border-bottom: 1px solid #D0D9E8; padding: 10px 32px; font-size: 13px; color: #4a5568; letter-spacing: 0.3px; }
+
+    /* Content */
+    .content-area { padding: 28px 32px 40px; }
+
+    /* Title card */
+    .title-card { background: #EDECF7; border-radius: 10px; padding: 22px 26px; margin-bottom: 22px; }
+    .title-card .kicker { font-size: 12px; color: #6B63A0; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+    .title-card h1 { font-size: 30px; color: #0E1C42; font-weight: 800; margin: 0 0 6px 0; line-height: 1.2; }
+    .title-card .subtitle { font-size: 16px; color: #4a5568; margin: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+
+    /* Time pill */
+    .time-pill { background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; display: inline-block; }
+
+    /* Section cards */
+    .section-card { border-radius: 10px; overflow: hidden; margin-bottom: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .section-card-head { padding: 12px 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; }
+    .section-card-head.gold { background: #C7922C; }
+    .section-card-head.coral { background: #E2725B; }
+    .section-card-head.teal { background: #2A9D8F; }
+    .section-card-body { padding: 18px 20px; background: #ffffff; }
+
+    /* Three marks visual */
+    .marks-grid { display: flex; gap: 0; border-radius: 8px; overflow: hidden; border: 1px solid #D0D9E8; }
+    .mark-panel { flex: 1; padding: 20px 18px; }
+    .mark-panel.coral-bg { background: #FDF3E3; }
+    .mark-panel.teal-bg { background: #E8F6F4; }
+    .mark-panel.lav-bg { background: #EEF1F8; }
+    .mark-panel + .mark-panel { border-left: 1px solid #D0D9E8; }
+    .mark-label { font-size: 20px; font-weight: 800; color: #0E1C42; margin-bottom: 4px; }
+    .mark-sub { font-size: 11px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; margin-bottom: 10px; color: #888; }
+    .mark-desc { font-size: 15px; color: #1a2340; line-height: 1.6; margin-bottom: 8px; }
+    .mark-example { font-size: 14px; color: #1a2340; font-style: italic; background: rgba(255,255,255,0.8); border-radius: 4px; padding: 8px 10px; border-left: 3px solid #C7922C; line-height: 1.55; }
+    .mark-effect { font-size: 13px; color: #555; margin-top: 8px; line-height: 1.5; }
+
+    /* Teaching section */
+    .teach-block { border-bottom: 1px solid #EEF1F8; padding-bottom: 18px; margin-bottom: 18px; }
+    .teach-block:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+    .teach-head { font-size: 14px; font-weight: 800; color: #0E1C42; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .teach-body { font-size: 16px; color: #1a2340; line-height: 1.7; }
+    .teach-quote { font-size: 15px; color: #1a2340; font-style: italic; background: #F4F6FA; border-left: 3px solid #C7922C; border-radius: 0 4px 4px 0; padding: 10px 14px; margin: 10px 0; line-height: 1.6; }
+
+    /* Classified sentence visual */
+    .classified-wrap { background: #EEF1F8; border-radius: 8px; padding: 16px 20px; margin: 14px 0; }
+    .classified-label { font-size: 11px; color: #0E1C42; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 10px; }
+    .classified-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; }
+    .word-chip { text-align: center; min-width: 52px; }
+    .word-chip .word { font-size: 17px; color: #0E1C42; font-weight: 700; display: block; padding: 6px 10px; background: #fff; border: 1px solid #D0D9E8; border-radius: 6px; }
+    .word-chip .pos { font-size: 10px; color: #888; margin-top: 3px; display: block; letter-spacing: 0.3px; }
+    .punct-chip { text-align: center; min-width: 28px; }
+    .punct-chip .word { font-size: 17px; color: #E2725B; font-weight: 800; display: block; padding: 6px 8px; background: #FDF0ED; border: 1px solid #F0C4BA; border-radius: 6px; }
+    .punct-chip .pos { font-size: 10px; color: #E2725B; margin-top: 3px; display: block; }
+
+    /* Widgets */
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; text-transform: uppercase; font-weight: 600; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 10px; display: block; }
+    .widget-reset:hover { background: #FDF3E3; }
+
+    /* Footer */
+    .site-footer { background: #0E1C42; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .footer-left { font-size: 13px; color: #9ECFDF; }
+    .footer-right { font-size: 13px; color: #9ECFDF; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo-circle">
+      <img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" />
+    </div>
+    <div class="header-text">
+      <div class="header-school">Optima Academy Online</div>
+      <div class="header-tagline">An Education Experience Company</div>
+      <div class="header-course">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+  </header>
+
+  <!-- Metadata strip -->
+  <div class="meta-strip">
+    Q3 &nbsp;&middot;&nbsp; Module 5 / Short Story Unit &nbsp;&middot;&nbsp; Grammar 2 &nbsp;&middot;&nbsp; Topic: Punctuation for Pacing
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+
+    <!-- Title card -->
+    <div class="title-card">
+      <div class="kicker">Grammar 2</div>
+      <h1>Punctuation for Pacing: Commas, Dashes, and Ellipses</h1>
+      <div class="subtitle">
+        Grammar Lesson
+        <span class="time-pill">~12 min</span>
+      </div>
+    </div>
+
+    <!-- TODAY'S FOCUS -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#128161; TODAY&#8217;S FOCUS</div>
+      <div class="section-card-body">
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">Punctuation is not just about following rules. In suspense writing, it controls how fast you read. A comma forces a pause. A dash &mdash; like this one &mdash; interrupts. An ellipsis trails off into silence... Today you will see how Richard Connell uses each one to speed up, slow down, or hold you in place at exactly the right moment.</p>
+      </div>
+    </div>
+
+    <!-- CORE VISUAL: Three Marks, Three Effects -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#9889; THREE MARKS, THREE EFFECTS</div>
+      <div class="section-card-body" style="padding: 16px;">
+        <div class="marks-grid">
+          <div class="mark-panel coral-bg">
+            <div class="mark-label">, &nbsp; COMMA</div>
+            <div class="mark-sub">Slows the reader</div>
+            <div class="mark-desc">Creates micro-pauses inside a sentence. The reader stops, holds, moves forward. Multiple commas in a row slow the sentence down to almost nothing.</div>
+            <div class="mark-example">&#8220;He waited, listening, hardly breathing.&#8221;</div>
+            <div class="mark-effect">The sentence imitates the stillness of waiting. Each comma is a held breath.</div>
+          </div>
+          <div class="mark-panel teal-bg">
+            <div class="mark-label">&mdash; &nbsp; DASH</div>
+            <div class="mark-sub">Interrupts or inserts</div>
+            <div class="mark-desc">The em dash creates a sharp break in the sentence. It can interrupt a thought, insert a sudden detail, or snap the reader&#8217;s attention sideways, the way a noise interrupts thinking.</div>
+            <div class="mark-example">&#8220;He had not entirely forgotten the trap &mdash; the Malay man-catcher &mdash; when he lurched savagely downward.&#8221;</div>
+            <div class="mark-effect">The dashes interrupt the sentence with extra detail. The syntax mirrors what happens in a crisis: one thought cuts in on another.</div>
+          </div>
+          <div class="mark-panel lav-bg">
+            <div class="mark-label">... &nbsp; ELLIPSIS</div>
+            <div class="mark-sub">Trails off</div>
+            <div class="mark-desc">An ellipsis suggests something unfinished, unsaid, or uncertain. The sentence does not end: it fades. The reader is left in the gap, which is exactly where a suspense writer wants them.</div>
+            <div class="mark-example">&#8220;He heard something... and then nothing.&#8221;</div>
+            <div class="mark-effect">The gap after the ellipsis is where imagination takes over. The writer stops. The reader keeps going.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORAL: HOW IT WORKS (teaching prose) -->
+    <div class="section-card">
+      <div class="section-card-head coral">&#128214; HOW IT WORKS</div>
+      <div class="section-card-body">
+
+        <div class="teach-block">
+          <div class="teach-head">The Comma for Pacing</div>
+          <div class="teach-body">
+            <p>Read this sentence aloud: <em>&#8220;He waited, listening, hardly breathing.&#8221;</em></p>
+            <p>The commas break the sentence into three separate beats. Each one is a pause, a moment of stillness. Read it again and notice: you stop three times, just as a person holding their breath stops. Each comma extends the silence. Connell is not just describing waiting. He is making the reader wait.</p>
+          </div>
+
+          <!-- Classified sentence visual -->
+          <div class="classified-wrap">
+            <div class="classified-label">&#128203; SENTENCE: &#8220;He waited, listening, hardly breathing.&#8221;</div>
+            <div class="classified-row">
+              <div class="word-chip">
+                <span class="word">He</span>
+                <span class="pos">Subject pronoun</span>
+              </div>
+              <div class="word-chip">
+                <span class="word">waited</span>
+                <span class="pos">Verb (action)</span>
+              </div>
+              <div class="punct-chip">
+                <span class="word">,</span>
+                <span class="pos">Pause</span>
+              </div>
+              <div class="word-chip">
+                <span class="word">listening</span>
+                <span class="pos">Adverb (How?)</span>
+              </div>
+              <div class="punct-chip">
+                <span class="word">,</span>
+                <span class="pos">Pause</span>
+              </div>
+              <div class="word-chip">
+                <span class="word">hardly</span>
+                <span class="pos">Adverb (To what extent?)</span>
+              </div>
+              <div class="word-chip">
+                <span class="word">breathing</span>
+                <span class="pos">Verb (action)</span>
+              </div>
+            </div>
+            <div style="font-size: 13px; color: #555; margin-top: 10px; line-height: 1.5;">Three beats. Three pauses. The sentence imitates the act of holding your breath.</div>
+          </div>
+        </div>
+
+        <div class="teach-block">
+          <div class="teach-head">The Dash for Interruption</div>
+          <div class="teach-body">
+            <p>The em dash (&mdash;) can do two things: insert a sudden thought into the middle of a sentence, or create a sharp break that stops the reader cold.</p>
+            <p>In Connell&#8217;s sentence, the dashes work like a memory snapping forward:</p>
+            <div class="teach-quote">&#8220;He had not entirely forgotten the trap &mdash; the Malay man-catcher &mdash; when he lurched savagely downward.&#8221;</div>
+            <p>The sentence is moving forward, then the dashes cut in with the name of the trap. That interruption mirrors what happens in Rainsford&#8217;s mind: the crisis is happening, and the name of the thing surfaces in the middle of it. The syntax and the experience match each other.</p>
+          </div>
+        </div>
+
+        <div class="teach-block">
+          <div class="teach-head">The Ellipsis for Trailing Off</div>
+          <div class="teach-body">
+            <p>An ellipsis (...) tells the reader: the sentence could have continued, but it did not. Something was left out. Something is unresolved.</p>
+            <p>In a suspense story, the ellipsis creates a gap. The writer stops the sentence. The reader&#8217;s imagination fills in what comes next. Consider:</p>
+            <div class="teach-quote">&#8220;He heard something... and then nothing.&#8221;</div>
+            <p>The ellipsis stretches the silence. The reader hangs in that pause, wondering what was heard and why it stopped. That is exactly where a suspense writer wants you: in the gap between knowing and not knowing.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Warm-up widget (ow-reflect) -->
+    <div class="optima-widget ow-reflect">
+      <div class="widget-kicker">&#128161; WARM-UP: CHECK IN</div>
+      <div class="widget-question">Which of these feels most suspenseful to you when you read? Pick the sentence that makes you stop.</div>
+      <div class="widget-options">
+        <button data-response="The commas do the work: they slow the sentence to a near stop. Each pause extends the stillness. Connell makes you breathe with the character, or rather, not breathe.">He waited, listening, hardly breathing.</button>
+        <button data-response="The dashes cut in like a sudden thought. They interrupt the sentence the way a sharp memory or a sudden sound interrupts a person in the middle of a crisis. The syntax mirrors the experience.">He had not entirely forgotten the trap &mdash; the Malay man-catcher &mdash; when he lurched downward.</button>
+        <button data-response="The ellipsis leaves you in the gap. The sentence stops before it should. Your imagination keeps going, which is exactly where a suspense writer wants your mind to be.">He heard something... and then nothing.</button>
+      </div>
+      <div class="widget-feedback"></div>
+      <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- Evaluative widget (ow-select) -->
+    <div class="optima-widget ow-select">
+      <div class="widget-kicker">&#9889; CHECK YOUR THINKING</div>
+      <div class="widget-question">Which punctuation mark is doing the work in each sentence? Select the best answer for each row.</div>
+
+      <div class="widget-row" data-correct="Ellipsis">
+        <div class="widget-row-prompt">&#8220;He opened the door slowly...&#8221;</div>
+        <div class="widget-options">
+          <button data-choice="Comma">Comma</button>
+          <button data-choice="Dash">Dash</button>
+          <button data-choice="Ellipsis" data-fb="The ellipsis trails off. What is behind the door? The reader is left in the gap, waiting. That is exactly what the writer wanted.">Ellipsis</button>
+        </div>
+      </div>
+
+      <div class="widget-row" data-correct="Dash">
+        <div class="widget-row-prompt">&#8220;He heard it clearly now &mdash; the snap of a branch &mdash; too close.&#8221;</div>
+        <div class="widget-options">
+          <button data-choice="Comma">Comma</button>
+          <button data-choice="Dash" data-fb="The dashes interrupt the sentence with a sudden sharp detail, the way a sound breaks through fear. The syntax snaps forward just like the branch did.">Dash</button>
+          <button data-choice="Ellipsis">Ellipsis</button>
+        </div>
+      </div>
+
+      <div class="widget-row" data-correct="Comma">
+        <div class="widget-row-prompt">&#8220;The island, they said, was dangerous.&#8221;</div>
+        <div class="widget-options">
+          <button data-choice="Comma" data-fb="The commas set off a qualifier and slow the sentence down. The extra pause weights the warning. You have to stop twice before you get to the word that matters.">Comma</button>
+          <button data-choice="Dash">Dash</button>
+          <button data-choice="Ellipsis">Ellipsis</button>
+        </div>
+      </div>
+
+      <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- TEAL: Apply It -->
+    <div class="section-card">
+      <div class="section-card-head teal">&#128221; APPLY IT: READING JOURNAL</div>
+      <div class="section-card-body">
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.65; margin: 0 0 10px;">In your Reading Journal, find one sentence from &#8220;The Most Dangerous Game&#8221; that uses a comma, a dash, or an ellipsis in a way that affects the pacing. Write out the full sentence. Then write one sentence of your own that explains what the punctuation does to the speed or feel of the writing.</p>
+        <div style="background: #E8F6F4; border-left: 4px solid #2A9D8F; border-radius: 0 6px 6px 0; padding: 12px 16px; font-size: 15px; color: #1a2340; line-height: 1.6;">You are not looking for a perfect answer. You are looking for a moment in the story where you notice the punctuation doing something on purpose. Trust what you feel when you read it.</div>
+      </div>
+    </div>
+
+    <!-- TEAL: What You'll Do Next -->
+    <div class="section-card">
+      <div class="section-card-head teal">&#9989; WHAT YOU WILL DO NEXT</div>
+      <div class="section-card-body">
+        <ol style="font-size: 16px; color: #1a2340; line-height: 1.7; margin: 0; padding-left: 22px;">
+          <li style="margin-bottom: 10px;">Complete the Reading Journal sentence analysis above: write out your chosen sentence and explain what the punctuation does.</li>
+          <li>Then complete the <strong>Grammar POP! quiz</strong>. It covers both this lesson and the Sentence Variety lesson from earlier this week. The quiz is the next item in your Module 5 Week 1 sequence.</li>
+        </ol>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-left">Optima Academy Online &nbsp;&middot;&nbsp; 7TH GRADE ENGLISH LANGUAGE ARTS &nbsp;&middot;&nbsp; Quarter 3 &nbsp;&middot;&nbsp; Short Story Unit</div>
+    <div class="footer-right">Grammar 2 &nbsp;&middot;&nbsp; Punctuation for Pacing</div>
+  </footer>
+
+</div><!-- /canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    // Reset button
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    // ow-reflect
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    // ow-select
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right
+        ? (sBtn.dataset.fb || row.dataset.fb || 'Correct.')
+        : (row.dataset.hint || 'Not quite. Look at the sentence again and try another option.');
+      var rf = row.querySelector('.row-feedback');
+      if (!rf) { rf = document.createElement('div'); row.appendChild(rf); }
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+</body>
+</html>

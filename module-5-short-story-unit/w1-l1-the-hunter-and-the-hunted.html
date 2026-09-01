@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1.01 — The Hunter and the Hunted | 7th Grade ELA</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+
+    /* Header */
+    .site-header { background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 24px 32px; display: flex; align-items: center; gap: 18px; }
+    .logo-circle { width: 52px; height: 52px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-owl { font-size: 28px; line-height: 1; }
+    .header-text { flex: 1; }
+    .header-school { font-size: 28px; color: #ffffff; font-weight: 700; line-height: 1.1; }
+    .header-tagline { font-size: 12px; color: #55C8E8; letter-spacing: 0.5px; margin-top: 2px; }
+    .header-course { font-size: 36px; color: #ffffff; font-weight: 800; margin-top: 6px; line-height: 1.1; }
+
+    /* Metadata strip */
+    .meta-strip { background: #EEF1F8; border-bottom: 1px solid #D0D9E8; padding: 10px 32px; font-size: 13px; color: #4a5568; letter-spacing: 0.3px; }
+
+    /* Content area */
+    .content-area { padding: 28px 32px 40px; }
+
+    /* Title card */
+    .title-card { background: #EDECF7; border-radius: 10px; padding: 22px 26px; margin-bottom: 22px; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .title-card .kicker { font-size: 12px; color: #6B63A0; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+    .title-card h1 { font-size: 30px; color: #0E1C42; font-weight: 800; margin: 0; }
+    .time-pill { background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; white-space: nowrap; align-self: flex-start; }
+
+    /* Section cards */
+    .section-card { border-radius: 10px; overflow: hidden; margin-bottom: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .section-card-head { padding: 12px 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; }
+    .section-card-head.gold { background: #C7922C; }
+    .section-card-head.coral { background: #E2725B; }
+    .section-card-head.teal { background: #2A9D8F; }
+    .section-card-body { padding: 18px 20px; background: #ffffff; }
+
+    /* Objectives */
+    .obj-list { list-style: none; padding: 0; margin: 0; }
+    .obj-list li { display: flex; align-items: flex-start; gap: 12px; padding: 9px 0; border-bottom: 1px solid #EEF1F8; font-size: 15px; color: #1a2340; line-height: 1.55; }
+    .obj-list li:last-child { border-bottom: none; }
+    .obj-num { background: #C7922C; color: #fff; font-weight: 700; font-size: 13px; min-width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+    /* Irony visual */
+    .irony-split { display: flex; gap: 16px; flex-wrap: wrap; margin: 10px 0; }
+    .irony-panel { flex: 1; min-width: 260px; border-radius: 8px; overflow: hidden; }
+    .irony-panel-head { padding: 10px 16px; font-size: 14px; font-weight: 700; letter-spacing: 0.4px; color: #ffffff; text-transform: uppercase; }
+    .irony-panel-head.coral { background: #E2725B; }
+    .irony-panel-head.teal { background: #2A9D8F; }
+    .irony-panel-body { background: #EEF1F8; padding: 16px; font-size: 14px; color: #1a2340; line-height: 1.6; }
+    .irony-panel-body strong { display: block; font-size: 16px; margin-bottom: 8px; color: #0E1C42; }
+
+    /* Read & Notice moments */
+    .moment-block { background: #FFF8F7; border-left: 4px solid #E2725B; border-radius: 0 6px 6px 0; padding: 14px 18px; margin-bottom: 14px; }
+    .moment-num { font-size: 11px; font-weight: 700; color: #E2725B; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+    .moment-quote { font-style: italic; color: #3a3a5a; background: #EEF1F8; border-radius: 4px; padding: 8px 14px; margin: 8px 0; font-size: 14px; line-height: 1.6; }
+    .moment-prompt { font-size: 14px; color: #0E1C42; margin-top: 8px; }
+
+    /* Journal prompts */
+    .journal-prompt { background: #EEF1F8; border-radius: 6px; padding: 13px 16px; margin-bottom: 10px; font-size: 15px; color: #1a2340; line-height: 1.6; }
+
+    /* Materials */
+    .materials-list { list-style: none; padding: 0; margin: 0; }
+    .materials-list li { padding: 8px 0; border-bottom: 1px solid #EEF1F8; font-size: 15px; color: #1a2340; line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
+    .materials-list li:last-child { border-bottom: none; }
+
+    /* What next */
+    .next-step { background: #EEF1F8; border-radius: 6px; padding: 13px 16px; font-size: 15px; color: #1a2340; line-height: 1.55; }
+
+    /* Footer */
+    .site-footer { background: #0E1C42; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .footer-left { font-size: 13px; color: #9ECFDF; }
+    .footer-right { font-size: 13px; color: #9ECFDF; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo-circle">
+      <span class="logo-owl">&#127944;</span>
+    </div>
+    <div class="header-text">
+      <div class="header-school">Optima Academy Online</div>
+      <div class="header-tagline">An Education Experience Company</div>
+      <div class="header-course">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+    </div>
+  </header>
+
+  <!-- Metadata strip -->
+  <div class="meta-strip">
+    Q3 &nbsp;&middot;&nbsp; Module 5 / Short Story Unit &nbsp;&middot;&nbsp; Lesson 1.01 &nbsp;&middot;&nbsp; Module Question: What makes a suspense story work: what we are told, or what we are not told?
+  </div>
+
+  <!-- Content -->
+  <div class="content-area">
+
+    <!-- Title card -->
+    <div class="title-card">
+      <div>
+        <div class="kicker">Lesson 1.01</div>
+        <h1>The Hunter and the Hunted</h1>
+      </div>
+      <span class="time-pill">~14 min</span>
+    </div>
+
+    <!-- Today's Focus -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#127919; TODAY&#8217;S FOCUS</div>
+      <div class="section-card-body" style="font-size: 16px; color: #1a2340; line-height: 1.7;">
+        A hunter falls from a boat into the sea and swims toward an island with a dark reputation. What he finds there will turn his whole view of the world upside down. Today you read the opening of &#8220;The Most Dangerous Game&#8221; and discover how Richard Connell sets up the central irony of the story.
+      </div>
+    </div>
+
+    <!-- Objectives -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#128203; BY THE END OF THIS LESSON, YOU WILL BE ABLE TO</div>
+      <div class="section-card-body">
+        <ol class="obj-list">
+          <li>
+            <span class="obj-num">1</span>
+            <span>Describe the story&#8217;s opening situation: what Rainsford knows and what he does not know.</span>
+          </li>
+          <li>
+            <span class="obj-num">2</span>
+            <span>Explain what situational irony means and identify it in the setup of &#8220;The Most Dangerous Game.&#8221;</span>
+          </li>
+          <li>
+            <span class="obj-num">3</span>
+            <span>Explain what dramatic irony means and describe how it works differently from situational irony.</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Materials -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#128302; WHAT YOU NEED</div>
+      <div class="section-card-body">
+        <ul class="materials-list">
+          <li>
+            &#128214; &nbsp;<span>&#8220;The Most Dangerous Game&#8221; (PDF): <em>[Teacher: link the MDG PDF in Canvas Files here]</em></span>
+          </li>
+          <li>
+            &#128221; &nbsp;<span>Short Story Reading Journal (your Word doc on OneDrive)</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Core Visual: Two Types of Irony -->
+    <div class="section-card">
+      <div class="section-card-head gold">&#128161; ONE BIG IDEA: TWO TYPES OF IRONY</div>
+      <div class="section-card-body">
+        <div class="irony-split">
+          <div class="irony-panel">
+            <div class="irony-panel-head coral">Situational Irony</div>
+            <div class="irony-panel-body">
+              <strong>What happens is the OPPOSITE of what seems right or expected.</strong>
+              In &#8220;The Most Dangerous Game&#8221;: Rainsford is an expert hunter. He has spent his whole career pursuing animals. Then he becomes the hunted animal himself. The very logic he believed in is turned against him.
+            </div>
+          </div>
+          <div class="irony-panel">
+            <div class="irony-panel-head teal">Dramatic Irony</div>
+            <div class="irony-panel-body">
+              <strong>The READER knows something the character does not (yet).</strong>
+              In &#8220;The Most Dangerous Game&#8221;: we sense that Zaroff hunts people before Rainsford fully admits it to himself. That gap between what we know and what Rainsford knows creates dread.
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 14px; color: #4a5568; margin: 10px 0 0; line-height: 1.55;">Both types of irony are at work in this story from the very first pages. Watch for them as you read.</p>
+      </div>
+    </div>
+
+    <!-- Warm-up widget -->
+    <div class="optima-widget ow-reflect" style="border-left-color: #E2725B;">
+      <div class="widget-kicker">&#9744; CHECK-IN: BEFORE YOU READ</div>
+      <div class="widget-question">A great hunter says that animals do not feel fear the way people do. Only the hunter feels the thrill. Do you agree? Pick the response that fits your thinking.</div>
+      <div class="widget-options">
+        <button data-response="That is a reasonable position. Rainsford holds it at the start of the story. Watch how the story tests it.">Yes, I think the hunter feels something the animal does not.</button>
+        <button data-response="That is worth thinking about. Connell seems to agree with you. The story puts Rainsford in a position where he finds out firsthand what prey feels.">No, I think prey animals absolutely feel fear.</button>
+        <button data-response="Good instinct. This is exactly the kind of question the story refuses to answer simply. By the end, you may have a clearer view.">I am not sure. It depends on the animal, maybe.</button>
+      </div>
+      <div class="widget-feedback"></div>
+      <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- Read & Notice -->
+    <div class="section-card">
+      <div class="section-card-head coral">&#128214; READ &amp; NOTICE: THREE MOMENTS TO WATCH FOR</div>
+      <div class="section-card-body">
+        <p style="font-size: 15px; color: #1a2340; line-height: 1.6; margin-top: 0;">Open the PDF now. Work through these three moments as you read. After each one, jot a brief note in your Reading Journal.</p>
+
+        <div class="moment-block">
+          <div class="moment-num">Moment 1 &nbsp;&middot;&nbsp; Whitney&#8217;s Warning</div>
+          <p style="font-size: 14px; color: #1a2340; line-height: 1.6; margin: 6px 0;">Near the very beginning, Rainsford&#8217;s companion Whitney mentions Ship-Trap Island with unease. Rainsford is not troubled. Notice who senses danger and who dismisses it.</p>
+          <div class="moment-quote">&#8220;The old charts call it Ship-Trap Island... It has a reputation, a bad one.&#8221;</div>
+          <div class="moment-prompt">&#128221; Jot in your Reading Journal: What does Whitney notice that Rainsford brushes aside? What does that tell you about Rainsford at this point in the story?</div>
+        </div>
+
+        <div class="moment-block">
+          <div class="moment-num">Moment 2 &nbsp;&middot;&nbsp; Rainsford in the Water</div>
+          <p style="font-size: 14px; color: #1a2340; line-height: 1.6; margin: 6px 0;">Rainsford falls overboard. He hears screams from the direction of the island and swims toward it. He is now alone, in the dark, moving toward something he does not understand. The reader and the character are both in the dark, but watch what details Connell gives us.</p>
+          <div class="moment-quote">&#8220;He struggled up to the surface and tried to cry out, but the wash from the speeding yacht slapped him in the face.&#8221;</div>
+          <div class="moment-prompt">&#128221; Jot in your Reading Journal: What is Rainsford thinking as he swims? What is the reader beginning to suspect?</div>
+        </div>
+
+        <div class="moment-block">
+          <div class="moment-num">Moment 3 &nbsp;&middot;&nbsp; Meeting Zaroff</div>
+          <p style="font-size: 14px; color: #1a2340; line-height: 1.6; margin: 6px 0;">Rainsford reaches the island and eventually meets General Zaroff, a Cossack aristocrat who hunts. Zaroff describes his passion for the hunt and mentions needing &#8220;a new animal.&#8221; The reader grasps the meaning before Rainsford admits it to himself.</p>
+          <div class="moment-quote">&#8220;I have no thrill left in tigers, no real danger.&#8221; / &#8220;I have invented a new sensation.&#8221;</div>
+          <div class="moment-prompt">&#128221; Jot in your Reading Journal: What do you understand about Zaroff&#8217;s &#8220;new sensation&#8221; before Rainsford does? This is the dramatic irony at work. What clues give it away?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evaluative widget -->
+    <div class="optima-widget ow-select" style="border-left-color: #E2725B;">
+      <div class="widget-kicker">&#9744; CHECK YOUR THINKING: WHICH TYPE OF IRONY?</div>
+      <div class="widget-question">Decide which type of irony fits each moment. Pick before you read the feedback.</div>
+
+      <!-- Row 1 -->
+      <div class="widget-row" data-correct="situational">
+        <div class="widget-row-prompt">Rainsford the expert hunter becomes Zaroff&#8217;s prey.</div>
+        <div class="widget-options">
+          <button data-choice="situational" data-fb="Situational irony: the outcome is the opposite of what Rainsford's whole career assumed. He built his identity on hunting; now he is the animal being hunted.">Situational irony</button>
+          <button data-choice="dramatic" data-fb="Not quite. With dramatic irony, the gap is between what the reader knows and what a character knows. Here the event itself is the reversal: the hunter becomes the hunted.">Dramatic irony</button>
+          <button data-choice="both" data-fb="Close, but the stronger fit is situational irony. The event itself is the reversal. Dramatic irony would require a knowledge gap between reader and character, which is not the main point of this moment.">Both</button>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="widget-row" data-correct="dramatic">
+        <div class="widget-row-prompt">The reader suspects Zaroff hunts people while Rainsford still thinks he is just a remarkable collector.</div>
+        <div class="widget-options">
+          <button data-choice="situational" data-fb="Not quite. Situational irony is about an outcome that reverses expectations. Here the focus is on the gap between what we know and what Rainsford has not yet admitted.">Situational irony</button>
+          <button data-choice="dramatic" data-fb="Dramatic irony: we know (or strongly suspect) something Rainsford has not admitted yet. That gap between reader knowledge and character knowledge is the definition of dramatic irony.">Dramatic irony</button>
+          <button data-choice="both" data-fb="The primary type here is dramatic irony. The story is not showing us an outcome reversal yet; it is creating a knowledge gap between the reader and Rainsford.">Both</button>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="widget-row" data-correct="both">
+        <div class="widget-row-prompt">Whitney warns that the island feels like &#8220;evil&#8221; and Rainsford dismisses it entirely.</div>
+        <div class="widget-options">
+          <button data-choice="situational" data-fb="Partially right. The dismissal sets up a situational reversal: Rainsford&#8217;s confidence is exactly wrong. But there is also a dramatic element: the reader senses the danger Rainsford misses.">Situational irony</button>
+          <button data-choice="dramatic" data-fb="Partially right. The reader does sense the danger Rainsford misses. But the scene also sets up a situational reversal: Rainsford&#8217;s dismissal will prove to be exactly wrong.">Dramatic irony</button>
+          <button data-choice="both" data-fb="Both: we see the setup for a situational reversal (Rainsford&#8217;s confidence is exactly wrong) and we sense a danger he is missing (dramatic irony). The two types of irony are layered here.">Both</button>
+        </div>
+      </div>
+
+      <button class="widget-reset">Reset</button>
+    </div>
+
+    <!-- Reading Journal -->
+    <div class="section-card">
+      <div class="section-card-head teal">&#128221; READING JOURNAL</div>
+      <div class="section-card-body">
+        <p style="font-size: 15px; color: #1a2340; margin-top: 0; line-height: 1.6;">Add this to the Week 1 section of your Reading Journal:</p>
+        <div class="journal-prompt">
+          <strong>1.</strong> In your own words: how does Connell make the reader feel uneasy before Rainsford ever meets Zaroff? Point to one specific detail from the text.
+        </div>
+        <div class="journal-prompt">
+          <strong>2.</strong> Rainsford believes that &#8220;the world is made up of two classes, the hunters and the huntees.&#8221; By the end of Part 1, what has changed for him?
+        </div>
+      </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div class="section-card">
+      <div class="section-card-head teal">&#9989; WHAT YOU&#8217;LL DO NEXT</div>
+      <div class="section-card-body">
+        <div class="next-step">
+          Add your reading notes and the two response prompts above to the Week 1 section of your Reading Journal (Section 3, Week 1). Keep your journal open: the Grammar lesson is next, and it connects directly to the story you just read.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-left">Optima Academy Online &nbsp;&middot;&nbsp; 7TH GRADE ENGLISH LANGUAGE ARTS &nbsp;&middot;&nbsp; Quarter 3 &nbsp;&middot;&nbsp; Short Story Unit</div>
+    <div class="footer-right">Lesson 1.01 &nbsp;&middot;&nbsp; The Hunter and the Hunted</div>
+  </footer>
+
+</div><!-- /canvas-frame -->
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 6.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 4B</div>
+        <div style="font-size: 12px; color: #666;">A Midsummer Night&rsquo;s Dream</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.02</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Acts 1 to 5 &middot; the narration spine</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 15px; color: #0e1c42;">Everyone in this play tells a story about what happened in the wood. Whose account can we trust, and how would we know?</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.02</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Why Does Everyone Tell a Story?</div>
+                <div style="font-size: 16px; color: #666;">Lesson &middot; the module&rsquo;s synthesis</div>
+            </div>
+            <span style="background: #C7922C; color: #ffffff; font-size: 13px; padding: 4px 12px; border-radius: 12px; white-space: nowrap;">&#9201; ~18 min</span>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY&rsquo;S FOCUS</div>
+        <div style="font-size: 11px; color: #C7922C; background:#FDF3E3; display:inline-block; padding:4px 10px; border-radius:10px; margin-bottom:12px;"><span style="background:#C7922C; color:#fff; padding:3px 9px; border-radius:10px;">&#8986; ~18 min</span></div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">All module, you have watched people inside this play tell stories: to a duke, to each other, to themselves. Today you look at all of them side by side. Then you return to the question that has run under the whole module: whose account can we trust, and how would we know?</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name several characters who narrate an account of events inside the play.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> compare what each narrator wants a listener to believe with what the audience actually saw happen.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> begin to form my own answer to the module question, using evidence from more than one narrator.</div>
+        </div>
+    </div>
+
+    <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 20px 24px; margin-bottom: 22px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#10067; THE MODULE QUESTION</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; line-height: 1.6;">Everyone in this play tells a story about what happened in the wood. Whose account can we trust, and how would we know?</div>
+        <div style="font-size: 14px; color: #6b7a99; margin-top: 10px;">This lesson will not answer that question for you. Keep it in mind as you read each account below.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 12px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">&#128218; THE STORYTELLERS, ACT BY ACT</div>
+        <div style="font-size: 15px; color: #6b7a99;">Seven moments where a character inside the play tells someone a story about what happened.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 18px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128220; EGEUS TO THESEUS &middot; ACT 1</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 10px 0;">At the very start of the play, Egeus stands in front of the Duke and accuses Lysander of stealing his daughter&rsquo;s love.</p>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 1, SCENE 1</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">This man hath bewitch’d the bosom of my child.<br>
+              Thou, thou, Lysander, thou hast given her rhymes,<br>
+              And interchang’d love-tokens with my child.<br>
+              Thou hast by moonlight at her window sung,<br>
+              With feigning voice, verses of feigning love;</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Egeus, in Act 1, Scene 1, telling Theseus his version of Lysander&rsquo;s courtship.</div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 15px; color: #1a2340; line-height: 1.55; font-style: italic;">Notice: Egeus calls the courtship bewitching and theft. What might Lysander call the very same events?</div>
+    </div>
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 18px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128220; TITANIA ON THE BOY&rsquo;S MOTHER &middot; ACT 2</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 10px 0;">When Oberon demands the changeling boy, Titania answers with a memory of the boy&rsquo;s mother, a friend of hers who has died.</p>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 2, SCENE 1</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">His mother was a vot’ress of my order,<br>
+              And in the spicèd Indian air, by night,<br>
+              Full often hath she gossip’d by my side;</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Titania, in Act 2, Scene 1, remembering the boy&rsquo;s mother.</div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 15px; color: #1a2340; line-height: 1.55; font-style: italic;">Notice: This memory makes keeping the boy sound like loyalty, not stubbornness. Does the play show you enough of the mother to check the account?</div>
+    </div>
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 18px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128220; TITANIA ON THE SEASONS &middot; ACT 2</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 10px 0;">In the same argument, Titania claims that her quarrel with Oberon has broken the weather itself.</p>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 2, SCENE 1</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">And this same progeny of evils comes<br>
+              From our debate, from our dissension;<br>
+              We are their parents and original.</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Titania, in the same argument, naming the cause of the broken seasons.</div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 15px; color: #1a2340; line-height: 1.55; font-style: italic;">Notice: Titania states this as plain fact. Is there any way for the audience to test whether a fairy quarrel really controls the seasons?</div>
+    </div>
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 18px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128220; HELENA&rsquo;S CHILDHOOD &middot; ACT 3</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 10px 0;">When Hermia turns on her, Helena reaches for the one thing she has always trusted: their shared past.</p>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 3, SCENE 2</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">Like to a double cherry, seeming parted,<br>
+              But yet a union in partition,<br>
+              Two lovely berries moulded on one stem;</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Helena, in Act 3, Scene 2, reminding Hermia of their childhood.</div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 15px; color: #1a2340; line-height: 1.55; font-style: italic;">Notice: Helena is not just remembering. She is using the memory to win an argument happening right now. Does that change how you read it?</div>
+    </div>
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 18px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128220; BOTTOM&rsquo;S DREAM &middot; ACT 4</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 10px 0;">Bottom wakes from his night as a donkey loved by a fairy queen and tries, and fails, to describe it.</p>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 4, SCENE 1</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">I have had a most rare vision. I have had a dream, past the wit<br>
+              of man to say what dream it was. Man is but an ass if he go about to<br>
+              expound this dream.</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Bottom, in Act 4, Scene 1, waking from his night with Titania.</div>
+        </div>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 4, SCENE 1</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">The eye of man hath not<br>
+              heard, the ear of man hath not seen, man’s hand is not able to taste,<br>
+              his tongue to conceive, nor his heart to report, what my dream was.</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Bottom, moments later, still trying and failing to report it.</div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 15px; color: #1a2340; line-height: 1.55; font-style: italic;">Notice: Bottom says no one can report what he saw, then plans to turn it into a ballad anyway. What does that tell you about how stories get told, even when the teller admits they cannot really tell them?</div>
+    </div>
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 18px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128220; THESEUS AND HIPPOLYTA DISAGREE &middot; ACT 5</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 10px 0;">The morning after, the lovers describe a night in the wood that Theseus was not there to see. He and Hippolyta argue about whether to believe it.</p>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 5, SCENE 1</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">The lunatic, the lover, and the poet<br>
+              Are of imagination all compact:</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Theseus, in Act 5, Scene 1, dismissing the lovers&rsquo; account before he hears the details.</div>
+        </div>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 5, SCENE 1</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">But all the story of the night told over,<br>
+              And all their minds transfigur’d so together,<br>
+              More witnesseth than fancy’s images,<br>
+              And grows to something of great constancy;</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Hippolyta, answering him. Four people telling the same strange story is itself a kind of evidence.</div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 15px; color: #1a2340; line-height: 1.55; font-style: italic;">Notice: Theseus and Hippolyta heard the exact same story. Why might two reasonable people disagree about whether to believe it?</div>
+    </div>
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 18px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128220; THE MECHANICALS TELL IT BADLY &middot; ACT 5</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 10px 0;">That evening, a group of workmen perform the story of Pyramus and Thisbe for the court, and the performance falls apart.</p>
+        <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 20px 26px; margin: 16px 0;">
+            <div style="font-size: 11px; color: #0e1c42; margin-bottom: 10px;">&#128220; FROM THE PLAY &middot; ACT 5, SCENE 1</div>
+            <div style="font-size: 16px; color: #0e1c42; line-height: 1.9;">This is the silliest stuff that ever I heard.<br>
+              <br>
+              THESEUS.<br>
+              The best in this kind are but shadows; and the worst are no worse, if<br>
+              imagination amend them.</div>
+            <div style="font-size: 13px; color: #6b7a99; border-top: 1px solid #D0D9E8; padding-top: 10px; margin-top: 12px;">Hippolyta and Theseus, watching the mechanicals&rsquo; performance of Pyramus and Thisbe fall apart.</div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 15px; color: #1a2340; line-height: 1.55; font-style: italic;">Notice: The mechanicals are trying to tell a true, tragic love story. Why does the telling turn it into a comedy instead?</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128220; ONE STORYTELLER LEFT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">In the last lesson, you met an eighth storyteller: Puck, who stepped fully outside the play to speak to you, the audience, directly. Seven characters, and a play itself, all telling a story about the same strange night in seven very different ways.</p>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; WHAT DID EACH ONE WANT YOU TO BELIEVE?</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="1" data-fb="Right. Egeus wants Theseus to rule against Lysander, so he describes ordinary courtship as bewitchment and theft." data-hint="Reread his exact words: bewitch&rsquo;d, stol&rsquo;n. Is that a neutral description?">
+                <div class="widget-row-prompt">1. Egeus describes Lysander&rsquo;s courtship of Hermia as&hellip;</div>
+                <div class="widget-options">
+                    <button data-choice="0">a fair and equal courtship</button>
+                    <button data-choice="1">bewitching and theft</button>
+                    <button data-choice="2">a plan he approved of</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="0" data-fb="Right. Hippolyta argues that four people telling matching, transformed stories is itself real evidence, even if strange." data-hint="Reread her line about the story growing &lsquo;to something of great constancy.&rsquo;">
+                <div class="widget-row-prompt">2. Hippolyta argues that the lovers&rsquo; matching stories are&hellip;</div>
+                <div class="widget-options">
+                    <button data-choice="0">a kind of evidence, worth taking seriously</button>
+                    <button data-choice="1">obviously invented</button>
+                    <button data-choice="2">impossible to judge either way</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="2" data-fb="Right. Bottom insists that no human sense or word could report what he saw, and then tries to turn it into a ballad anyway." data-hint="Reread his line about the eye, ear, hand, and tongue of man.">
+                <div class="widget-row-prompt">3. Bottom claims that his dream is&hellip;</div>
+                <div class="widget-options">
+                    <button data-choice="0">easy to explain in a few words</button>
+                    <button data-choice="1">not worth telling anyone</button>
+                    <button data-choice="2">impossible for any person to fully report</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="0" data-fb="Right. Nervous, unpracticed actors, clumsy verse, and unintentionally funny stage tricks turn a planned tragedy into the evening&rsquo;s comedy." data-hint="Theseus and Hippolyta are laughing. Was that the mechanicals&rsquo; plan?">
+                <div class="widget-row-prompt">4. The mechanicals&rsquo; performance turns their planned tragedy into&hellip;</div>
+                <div class="widget-options">
+                    <button data-choice="0">a comedy</button>
+                    <button data-choice="1">a mystery</button>
+                    <button data-choice="2">a tragedy exactly as they intended</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#9999;&#65039; APPLY IT: READING JOURNAL, SECTION 1</div>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; SECTION 1, WEEK 6</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Pick two of the seven narrators from the gallery above. For each one, write one sentence on what they wanted their listener to believe, and one sentence on whether you find their account trustworthy, and why.</p>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">Then write two or three sentences: what is your current, evolving answer to the module question? You do not need a final answer. You need a reasoned one, built on evidence from the play.</p>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Section 1</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete the prompt above.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: The Frame Around the Story</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Build the boundary between the story and the audience that you studied in the last lesson.</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A play cannot tell you which account to believe. It can only show you people telling accounts, carefully, one after another, and let you watch how each one is built.</p>
+    </div>
+
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.02 &middot; Why Does Everyone Tell a Story?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Work Session 1</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;"><div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8; "><div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div><div style="font-size: 17px; color: #0e1c42; ">Q3 &middot; Module 4B</div><div style="font-size: 12px; color: #666;">A Midsummer Night&rsquo;s Dream</div></div><div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8; "><div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Project Work Session</div><div style="font-size: 17px; color: #0e1c42; ">Session 1</div></div><div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8; "><div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div><div style="font-size: 17px; color: #0e1c42; font-style: italic; ">The literary analysis essay</div></div><div style="flex: 1; min-width: 140px; padding: 12px 16px; "><div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Builds toward</div><div style="font-size: 17px; color: #0e1c42; ">MND Final Project - Essay (assignment)</div></div></div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Figurative Language and Voice</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 15px; color: #0e1c42;">Everyone in this play tells a story about what happened in the wood. Whose account can we trust, and how would we know?</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Work Session 1 &middot; Project Week</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Building Your Literary Analysis Essay</div>
+                <div style="font-size: 16px; color: #666;">Guided work session (ungraded)</div>
+            </div>
+            <span style="background: #C7922C; color: #FFFFFF; font-size: 13px; padding: 5px 14px; border-radius: 12px; white-space: nowrap;">~15 min</span>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; WHAT THIS SESSION IS FOR</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You already wrote the hard parts. Your job now is to connect them.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will take Quick Writes 3, 4, 5, and 6 and shape them into one literary-analysis essay answering the module question: <strong>by the end of the play, whose account of the night in the wood should we believe, and what does the play suggest about why people tell the stories they tell?</strong> By the end of this session you will have a plan you can type straight into the <strong>MND Final Project - Essay (assignment)</strong> page. This session is practice. It is not graded. The project is.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED OPEN</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Quick Writes 3, 4, 5, and 6</strong> on OneDrive: your evidence paragraph, your evidence and explanation, your counterclaim, and your essay outline plus intro.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your Reading Journal, especially your notes on who narrates what: Egeus to Theseus, Titania on the changeling boy and the seasons, Helena on her friendship with Hermia, Bottom&rsquo;s waking vision, Theseus and Hippolyta&rsquo;s argument, and Puck&rsquo;s epilogue.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">The <strong>MND Final Project - Essay (assignment)</strong> page (open it in Canvas in the Module Wrappers and Project area). You will type your essay there.</div>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE SHAPE OF A LITERARY ANALYSIS ESSAY</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 18px;">A literary analysis essay is not a summary of what happened. It is a claim about what the play shows, backed up with evidence from the text and your own explanation of what that evidence means. Here is the shape your essay takes, and which Quick Write each part grows from.</div>
+
+        <div style="display: flex; flex-direction: column; gap: 0;">
+            <div style="background: #0E1C42; color: #fff; border-radius: 8px 8px 0 0; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #55c8e8; margin-bottom: 4px;">PART 1 &middot; THESIS (from Quick Write 6)</div>
+                <div style="font-size: 17px; line-height: 1.55;">Name whose account of the night in the wood you find most believable, or explain why no single account fully earns your trust. State what the play suggests about why people tell the stories they tell. One clear claim you will defend through the whole essay.</div>
+            </div>
+            <div style="background: #FDF3E3; border-left: 4px solid #C7922C; border-right: 1px solid #D0D9E8; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #c7922c; margin-bottom: 4px;">PART 2 &middot; EVIDENCE + EXPLANATION, FIRST PIECE (from Quick Writes 3 and 4)</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55;">Point to a specific moment where a character narrates an event to someone else. Cite it in MLA format: Shakespeare&rsquo;s name plus act.scene. Then explain in your own words what that moment shows about whose story deserves belief. The explanation is the part that does the real work.</div>
+            </div>
+            <div style="background: #EEF1F8; border-left: 4px solid #2A9D8F; border-right: 1px solid #D0D9E8; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #2A9D8F; margin-bottom: 4px;">PART 3 &middot; EVIDENCE + EXPLANATION, SECOND PIECE (from Quick Writes 4 and 5)</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55;">Give a second moment, cited the same way. Explain how it adds to your case, and address one counterclaim: a reason someone might trust a different character&rsquo;s account instead, and why your case still holds.</div>
+            </div>
+            <div style="background: #F4F6FA; border: 1px solid #D0D9E8; border-top: 4px solid #0E1C42; border-radius: 0 0 8px 8px; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #0E1C42; margin-bottom: 4px;">PART 4 &middot; CONCLUSION (from Quick Write 6)</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55;">Restate your point in fresh words and say what the play suggests, overall, about why people tell the stories they tell. Do not just repeat the thesis sentence.</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128220; CITING THE PLAY: AUTHOR, ACT.SCENE FORMAT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">In an essay about a play, you cite Shakespeare&rsquo;s name plus act and scene, separated by a period, instead of a page number. This works the same way no matter which printed edition you use, because act and scene divisions stay the same across editions while page numbers do not.</p>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 16px 20px; font-size: 16px; color: #1a2340; line-height: 1.7;">
+            <strong>How to read a citation:</strong> (Shakespeare, 1.1) means Shakespeare, Act 1, Scene 1. If you already name Shakespeare in your sentence, just give the act and scene: (1.1). If you quote a short phrase directly, put the citation right after the closing quotation mark, before the period that ends your sentence. If you describe a moment in your own words instead of quoting it, the citation still goes at the end of the sentence.<br /><br />
+            <strong>Example:</strong> Egeus asks Theseus for &ldquo;the ancient privilege of Athens&rdquo; to decide his daughter&rsquo;s fate (Shakespeare, 1.1).
+        </div>
+        <p style="font-size: 16px; color: #6b7a99; line-height: 1.6; margin: 12px 0 0 0;">Use exactly this format for every piece of evidence in your essay, whether you quote directly or describe a moment in your own words. At the end of your essay, add one Works Cited entry: <em>Shakespeare, William. A Midsummer Night&rsquo;s Dream.</em></p>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: A WORKED EXAMPLE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Here is a short literary analysis of a different question about the play: whether the mechanicals&rsquo; performance of Pyramus and Thisbe succeeds or fails as storytelling. Notice how each labeled part matches the shape above. You will not copy these details; this is a model of the moves, not an answer to borrow.</p>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 16px 20px; margin: 0 0 12px 0; font-size: 16px; color: #1a2340; line-height: 1.7;">
+            <span style="background:#0E1C42;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">THESIS</span> The mechanicals&rsquo; telling of Pyramus and Thisbe fails as the story they intended, but it succeeds as a lesson in how badly a story can be told when the teller does not trust the audience to imagine anything on their own.<br /><br />
+            <span style="background:#C7922C;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">EVIDENCE 1</span> Snout, playing Wall, explains at length that he represents a wall and describes the chink in the wall rather than simply standing in as one (Shakespeare, 5.1). <span style="color:#6b7a99;font-style:italic;">(Then the explanation:)</span> This shows the mechanicals do not trust their audience to accept a simple symbol. Every detail is over-explained, which drains the story of the tension it needs.<br /><br />
+            <span style="background:#2A9D8F;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">EVIDENCE 2</span> Theseus and his court laugh and interrupt throughout the performance, at one point noting that &ldquo;the best in this kind are but shadows&rdquo; (Shakespeare, 5.1). <span style="color:#6b7a99;font-style:italic;">(Then the explanation:)</span> This shows that the audience&rsquo;s own imagination has to complete a story; a poorly told tale asks too much of its listeners and gives them too little to work with.<br /><br />
+            <span style="background:#0E1C42;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">CONCLUSION</span> By making the mechanicals&rsquo; play fail so completely, the scene argues that a story only works when the teller trusts the listener to meet it partway.
+        </div>
+        <p style="font-size: 16px; color: #6b7a99; line-height: 1.6; margin: 0;">Notice that every piece of evidence is followed immediately by an explanation, and every citation uses author plus act.scene format. That combination is what earns credit, not the detail alone.</p>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; CHECK YOUR OWN THINKING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Read this student sentence, which is meant to be the explanation after a piece of evidence:</p>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 14px 18px; margin: 0 0 4px 0;">
+            <div style="font-size: 17px; color: #0e1c42; font-style: italic; line-height: 1.6;">&ldquo;This shows that Titania made up a story about the changeling boy&rsquo;s mother because she loves the boy.&rdquo;</div>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 14px;">&#9889; TRY IT &middot; NAME EACH PART OF THE ESSAY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Below are sentences from a literary analysis essay, out of order. For each one, decide which part it is: thesis, evidence, explanation, or conclusion. Decide first, then choose.</p>
+
+        <div class="optima-widget ow-scale">
+            <div class="widget-row" data-correct="2" data-fb="Right. This is the explanation. It says what the cited moment reveals about whose account to trust, not just what happened." data-hint="Does this sentence give a fact from the play, or does it say what that fact reveals about who should be believed?">
+                <div class="widget-row-prompt">1. &ldquo;This reveals that Helena&rsquo;s account of her friendship with Hermia is shaped by what she needs to argue in the moment, not by a neutral memory of the past.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Conclusion</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. This is the thesis. It names a position on whose account to believe and makes the claim the whole essay will defend." data-hint="Does this sentence open the argument with a claim, give a specific detail, explain what a detail means, or close the argument?">
+                <div class="widget-row-prompt">2. &ldquo;Among all the accounts given at the end of the play, Bottom&rsquo;s honest admission that he cannot explain his own vision is the most trustworthy, because he never pretends to understand more than he does.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Conclusion</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="3" data-fb="Right. This is the conclusion. It restates the point in new words and says what the play argues overall, without just repeating the thesis sentence." data-hint="Does this sentence open the argument, give a fact, explain a fact, or close by drawing the whole argument together?">
+                <div class="widget-row-prompt">3. &ldquo;In the end, the play suggests that people tell stories to make sense of what frightens or confuses them, and that a story&rsquo;s honesty often shows in what it admits it cannot explain.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Conclusion</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. This is evidence: a specific, citable moment from the play. It does not yet explain what the moment means for whose account we should trust." data-hint="Is this a fact you could point to and cite, or is it your interpretation of that fact?">
+                <div class="widget-row-prompt">4. &ldquo;Egeus tells Theseus that Lysander has &lsquo;bewitch&rsquo;d the bosom&rsquo; of his daughter (Shakespeare, 1.1).&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Conclusion</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#129504; NOW BUILD YOUR PLAN</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Open your Quick Writes and your Reading Journal. In your notebook or in a new doc, fill in the four parts using your own position and your own citations:</p>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Thesis:</strong> pull your claim from Quick Write 6. Make sure it names whose account you find most believable, or explains why no account is fully trustworthy, and says something about why people tell stories.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Evidence 1 and its explanation:</strong> take your strongest moment from Quick Writes 3 or 4. Cite it in MLA format (Shakespeare&rsquo;s name plus act.scene) and write one sentence that says what it shows about whose story to trust.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Evidence 2, its explanation, and a counterclaim:</strong> add a second cited moment from Quick Writes 4 or 5. Explain it, then name one reason someone might disagree with your case and say why your case still holds.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Conclusion:</strong> use your Quick Write 6 intro to restate the point in fresh words, then add one sentence about what the play suggests about storytelling as a whole.</div></div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Write the essay</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Type your full essay into the <strong>MND Final Project - Essay (assignment)</strong> page in Canvas. Use the four-part shape and your plan above, with every citation in MLA format (Shakespeare&rsquo;s name plus act.scene), and add your Works Cited entry at the end.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Move on to Work Session 2</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Next you will build the creative component and the VR scene. Keep your essay draft saved on OneDrive.</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You did the thinking in four Quick Writes. Now you are putting that thinking into one clear shape: a thesis about whose story deserves belief, two cited pieces of evidence with real explanation, and a conclusion that lands your point about why people tell stories. Get that on the page and the hardest part of the project is done.</p>
+    </div>
+
+</div>
+
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Work Session 1 &middot; Building Your Literary Analysis Essay</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

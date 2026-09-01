@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Work Session 1</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-scale .widget-options { justify-content: space-between; }
+    .ow-scale .widget-options button { flex: 1; text-align: center; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">The Scarlet Pimpernel</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Project Work Session</div>
+        <div style="font-size: 17px; color: #0e1c42;">Session 1</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The argumentative essay</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Builds toward</div>
+        <div style="font-size: 16px; color: #0e1c42;">Scarlet Pimpernel Final Project - Essay (assignment)</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Lavender title strip with gold time pill -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Work Session 1 &middot; Project Week</div>
+                <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Finalizing Your Argumentative Essay</div>
+                <div style="font-size: 16px; color: #666;">Guided work session (ungraded)</div>
+            </div>
+            <span style="background: #C7922C; color: #FFFFFF; font-size: 13px; padding: 5px 14px; border-radius: 12px; white-space: nowrap;">~15 min</span>
+        </div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; WHAT THIS SESSION IS FOR</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You have already done the thinking. Now you put it in order.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You will take your Week 8 outline and your Quick Writes 3 through 7 and shape them into one finished argumentative essay. The essay answers this question: What kind of courage does the novel celebrate, and is the Pimpernel&rsquo;s disguise heroic or deceptive? By the end of this session you will have a solid draft ready to type into the <strong>Scarlet Pimpernel Final Project - Essay (assignment)</strong> page. This session is practice. It is not graded. The project page is where you submit the actual essay.</div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED OPEN</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Week 8 completed outline</strong> (the one you submitted in the outline workshop last week).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Quick Writes 3, 4, 5, 6, and 7 from your OneDrive course folder. These are the raw material your essay grows from.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">The <strong>Scarlet Pimpernel Final Project - Essay (assignment)</strong> page open in Canvas. You will type your finished essay there.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: the five-part argument structure -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE SHAPE OF YOUR ESSAY</div>
+        <div style="font-size: 16px; color: #1a2340; line-height: 1.6; margin-bottom: 18px;">An argumentative essay makes a claim, backs it up with evidence, addresses the other side, and closes with a conclusion that says what it all means. Your Quick Writes built each part. Here is how they connect.</div>
+
+        <!-- five-block ladder visual -->
+        <div style="display: flex; flex-direction: column; gap: 0;">
+            <div style="background: #0E1C42; color: #fff; border-radius: 8px 8px 0 0; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #55c8e8; margin-bottom: 4px;">PART 1 &middot; THESIS (from Quick Write 3, refined in your Week 8 outline)</div>
+                <div style="font-size: 17px; line-height: 1.55;">State your claim about what kind of courage the novel celebrates. Name whether the Pimpernel&rsquo;s disguise is heroic, deceptive, or both. One clear sentence that tells the reader exactly what you will argue.</div>
+            </div>
+            <div style="background: #FDF3E3; border-left: 4px solid #C7922C; border-right: 1px solid #D0D9E8; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #c7922c; margin-bottom: 4px;">PART 2 &middot; EVIDENCE + EXPLANATION, FIRST PIECE (from Quick Write 4)</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55;">Give one specific detail from the novel. Then write a sentence that says what that detail shows about courage or disguise. The explanation is the part that does the work.</div>
+            </div>
+            <div style="background: #EEF1F8; border-left: 4px solid #E2725B; border-right: 1px solid #D0D9E8; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #E2725B; margin-bottom: 4px;">PART 3 &middot; EVIDENCE + EXPLANATION, SECOND PIECE (from your Week 8 outline)</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55;">Add a second detail that adds to or deepens your first point. Explain how it extends your argument. Two pieces of evidence are stronger than one.</div>
+            </div>
+            <div style="background: #F0FBF8; border-left: 4px solid #2A9D8F; border-right: 1px solid #D0D9E8; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #2A9D8F; margin-bottom: 4px;">PART 4 &middot; COUNTERARGUMENT (from Quick Write 5)</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55;">Acknowledge the strongest argument against your claim. Name what someone might say who disagrees. Then explain why your argument still holds. This is what makes a reader trust you.</div>
+            </div>
+            <div style="background: #F4F6FA; border: 1px solid #D0D9E8; border-top: 4px solid #0E1C42; border-radius: 0 0 8px 8px; padding: 14px 18px;">
+                <div style="font-size: 12px; color: #0E1C42; margin-bottom: 4px;">PART 5 &middot; CONCLUSION (from Quick Write 7)</div>
+                <div style="font-size: 17px; color: #1a2340; line-height: 1.55;">Restate your point in fresh words. Say what the novel&rsquo;s answer to the question means beyond the story. Do not simply repeat the thesis. End with something the reader can carry away.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WORKED EXAMPLE: shown openly, not hidden -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: A WORKED EXAMPLE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Here is a short argument that uses the same five-part shape. Study the labeled moves. You will not copy this thesis or these details. It is a model for how the parts connect, not an answer to borrow.</p>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 16px 20px; margin: 0 0 12px 0; font-size: 16px; color: #1a2340; line-height: 1.7;">
+            <span style="background:#0E1C42;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">THESIS</span> The novel argues that the most courageous acts are the ones that cost the hero something invisible: not blood, but reputation, since the Pimpernel must let people think him a fool while he risks his life for strangers.<br /><br />
+            <span style="background:#C7922C;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">EVIDENCE 1</span> Marguerite laughs at her husband Percy&rsquo;s ridiculous posturing at the dinner table, never guessing he is the Pimpernel. <span style="color:#6b7a99;font-style:italic;">(Explanation:)</span> Orczy shows that the disguise requires Percy to sacrifice his wife&rsquo;s respect, which turns ordinary bravery into a deeper kind of courage: one that cannot be seen or praised.<br /><br />
+            <span style="background:#E2725B;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">EVIDENCE 2</span> The Pimpernel&rsquo;s plans succeed precisely because no one believes he is capable of them. <span style="color:#6b7a99;font-style:italic;">(Explanation:)</span> This means his heroism depends on others underestimating him, which is a kind of courage that looks like cowardice from the outside.<br /><br />
+            <span style="background:#2A9D8F;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">COUNTERARGUMENT</span> Some readers might argue that disguise is a form of deception and that true heroism should be open and honest. That is a reasonable objection. But Orczy answers it through the novel&rsquo;s outcome: the disguise saves lives precisely because honesty would cost them. The moral weight lands on the lives saved, not on the method used to save them.<br /><br />
+            <span style="background:#0E1C42;color:#fff;font-size:11px;padding:2px 8px;border-radius:8px;">CONCLUSION</span> The novel asks us to consider a courage that cannot announce itself, and in doing so it argues that some of the most heroic acts in history are the ones that looked, at the time, like nothing at all.
+        </div>
+        <p style="font-size: 16px; color: #6b7a99; line-height: 1.6; margin: 0;">Notice that every piece of evidence is followed by an explanation sentence that says what it means about courage. The counterargument does not simply name the opposing view. It gives it a fair hearing and then explains why the argument holds anyway. Those two moves are what separate a strong essay from a weak one.</p>
+    </div>
+
+    <!-- CHECK YOUR THINKING: open self-check, no hidden model -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; CHECK YOUR OWN THINKING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read this sentence, which is meant to be a counterargument in a student essay:</p>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 14px 18px; margin: 0 0 12px 0;">
+            <div style="font-size: 17px; color: #0e1c42; font-style: italic; line-height: 1.6;">&ldquo;Some people might disagree with my claim.&rdquo;</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">In your notebook, write down two things this sentence is missing, and then rewrite it so it actually does the work of a counterargument.</p>
+        <p style="font-size: 16px; color: #6b7a99; line-height: 1.6; margin: 0;">A counterargument needs to do three things: name the opposing view specifically, give it a fair hearing, and then explain why your claim still holds. &ldquo;Some people might disagree&rdquo; does none of these. It does not say what people would argue, it does not take that view seriously, and it gives no reason why the original claim survives the objection. Your rewrite should start with the actual objection someone could make about heroism, disguise, or courage in <em>The Scarlet Pimpernel</em>.</p>
+    </div>
+
+    <!-- TRY IT: sort sentences into the five parts -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 14px;">&#9889; TRY IT &middot; NAME EACH PART OF THE ARGUMENT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Below are five sentences from a short essay on courage in <em>The Scarlet Pimpernel</em>, out of order. For each one, decide which part of the shape it is: thesis, evidence, explanation, counterargument, or conclusion. Decide in your head first, then choose.</p>
+
+        <div class="optima-widget ow-scale">
+            <div class="widget-row" data-correct="3" data-fb="Right. This is the counterargument. It names a specific opposing view, takes it seriously, and then explains why the original claim still holds. That is exactly what a counterargument does." data-hint="Does this sentence introduce an opposing view and then respond to it, or does it make the main claim, give a detail, explain a detail, or close the essay?">
+                <div class="widget-row-prompt">1. &ldquo;It is fair to say that deception, even for good ends, raises hard moral questions. But in this novel, the deception saves lives that honesty would have ended, and Orczy keeps the moral weight on the outcome, not the method.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Counterargument</button>
+                    <button data-choice="4">Conclusion</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. This is the thesis. It names the claim up front and tells the reader exactly what the essay will argue about the kind of courage the novel celebrates." data-hint="Is this the main point the whole essay will defend, or is it a detail, an explanation, a response to an objection, or a wrap-up?">
+                <div class="widget-row-prompt">2. &ldquo;The Scarlet Pimpernel argues that the deepest courage is the kind that no one can see: it requires the hero to let others think the worst of him while he risks everything in secret.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Counterargument</button>
+                    <button data-choice="4">Conclusion</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="2" data-fb="Right. This is an explanation. It takes the detail and says what it means about courage. It does not just describe what happened. It answers the question: what does this show?" data-hint="Does this sentence give a fact from the book, or does it say what that fact means about courage?">
+                <div class="widget-row-prompt">3. &ldquo;This means that Percy&rsquo;s disguise is not cowardice but a different kind of bravery: one that requires him to absorb contempt instead of admiration.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Counterargument</button>
+                    <button data-choice="4">Conclusion</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="4" data-fb="Right. This is the conclusion. It restates the point in new words and says what the novel&rsquo;s answer means beyond the plot, which is exactly what a conclusion should do." data-hint="Does this sentence open the essay, give a detail, explain a detail, address an objection, or close by pulling the whole argument together?">
+                <div class="widget-row-prompt">4. &ldquo;Orczy leaves us with a question the novel cannot fully answer: how much of what we call heroism depends on other people knowing about it? The Pimpernel is heroic precisely because he never lets them find out.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Counterargument</button>
+                    <button data-choice="4">Conclusion</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. This is evidence: a specific, pointable detail from the novel. On its own it does not yet explain anything about courage. It needs an explanation sentence after it." data-hint="Is this a fact you could find in the text, or is it your interpretation of that fact?">
+                <div class="widget-row-prompt">5. &ldquo;When Chauvelin watches Percy pretend to fuss over a floral pattern on his sleeve while men&rsquo;s lives hang in the balance, Percy never breaks character.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="0">Thesis</button>
+                    <button data-choice="1">Evidence</button>
+                    <button data-choice="2">Explanation</button>
+                    <button data-choice="3">Counterargument</button>
+                    <button data-choice="4">Conclusion</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- BUILD YOUR OWN: plan box -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#129504; NOW BUILD YOUR ESSAY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Open your outline, your Quick Writes, and the <strong>Scarlet Pimpernel Final Project - Essay (assignment)</strong> page. Work through the five parts in order:</p>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Thesis:</strong> take your refined thesis from your Week 8 outline (8.01). Make sure it names the kind of courage the novel celebrates and takes a clear position on whether the Pimpernel&rsquo;s disguise is heroic or deceptive.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Evidence 1 and its explanation:</strong> pull your strongest detail from Quick Write 4. Write the sentence that says what it shows about courage. The explanation sentence is the most important sentence in that paragraph.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Evidence 2 and its explanation:</strong> add the second evidence point from your Week 8 outline (8.02) and explain how it extends your argument, not just repeats it.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Counterargument:</strong> use Quick Write 5. Name the opposing view specifically, give it a fair hearing, and then explain why your claim holds anyway.</div></div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #2A9D8F; padding-left: 14px;"><div style="font-size: 17px; color: #1a2340; line-height: 1.6;"><strong>Conclusion:</strong> use Quick Write 7. Restate the point in new words and say what it means about courage, heroism, or disguise beyond the novel&rsquo;s plot.</div></div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D8F; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Type and revise the essay</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Write your full essay into the <strong>Scarlet Pimpernel Final Project - Essay (assignment)</strong> page in Canvas. Then read it once from start to finish and revise any spot where the explanation does not reach the idea. Save it to OneDrive.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Move on to Work Session 2</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Next you will plan and build the creative component and VR thematic scene. Keep your essay draft saved on OneDrive while you work on the creative side.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Your outline and Quick Writes did the planning. All you are doing now is writing it out in full and making sure every explanation sentence reaches past the detail and names the idea. Thesis, two pieces of evidence with real explanation, a counterargument that takes the other side seriously, and a conclusion that says what it all means. Get that on the page and the essay is done.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Work Session 1 &middot; Finalizing Your Argumentative Essay</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

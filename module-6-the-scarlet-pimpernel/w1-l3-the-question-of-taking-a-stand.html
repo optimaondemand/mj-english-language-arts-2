@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 1.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">The Scarlet Pimpernel</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.03</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Weekly Workshop: The Question of Taking a Stand</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">When is it right to risk everything for strangers?</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <!-- Title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.03 &middot; Weekly Workshop</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Question of Taking a Stand: What Chapters 1 and 2 Are Really Asking</div>
+        <div style="font-size: 16px; color: #666;">Lesson <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">&#8776;12 min</span></div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">By the end of Chapter 1, a mysterious Englishman has risked everything for a countess and her children. Nobody asked him to. Nobody could make him stop. This lesson asks: what does the novel seem to believe about that kind of courage?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you pull back from the plot and look at what Chapters 1 and 2 set up thematically. Then you prepare your Quick Write: your first attempt at answering the module question in your own words.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what theme means and identify the theme Orczy is building in Chapters 1 and 2.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> begin forming my own position on the module question, supported by evidence from the first two chapters.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: Theme vs plot -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THEME VS. PLOT</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px;">
+            <div style="flex: 1; min-width: 200px; background: #EEF1F8; border-radius: 8px; padding: 16px; border-left: 4px solid #C7922C;">
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin-bottom: 6px;">Plot</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.6;">What happens. In Ch. 1: Bibot guards the barricade; he tells the story of Grospierre; a cart gets through and the Comtesse de Tourney escapes.</div>
+            </div>
+            <div style="flex: 1; min-width: 200px; background: #EEF1F8; border-radius: 8px; padding: 16px; border-left: 4px solid #2A9D8F;">
+                <div style="font-size: 16px; color: #0e1c42; font-weight: bold; margin-bottom: 6px;">Theme</div>
+                <div style="font-size: 14px; color: #1a2340; line-height: 1.6;">The idea the story is exploring. In Chs. 1 and 2: what does it mean to take a stand for others at personal risk? When is that courage, and when is it something else?</div>
+            </div>
+        </div>
+        <div style="font-size: 15px; color: #666; font-style: italic;">A theme is a question the novel keeps returning to, not a one-sentence moral. Orczy does not tell you what to think. She shows you what is at stake and lets the question build.</div>
+    </div>
+
+    <!-- PART 1: Check-in -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: WHAT ORCZY SHOWS US</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">After Chapters 1 and 2, where do you stand on the module question: when is it right to risk everything for strangers?</div>
+            <div class="widget-options">
+                <button data-response="That is a strong starting position. Hold on to the evidence from Ch. 1 that supports it: what happens to the Comtesse without the rescue? That is your anchor.">&#128170; It is almost always right</button>
+                <button data-response="A careful thinker. The novel takes the risks seriously too. Bibot could have caught the Pimpernel; Grospierre died for a failure he did not fully understand. Use that tension in your writing.">&#9878;&#65039; It depends on the situation</button>
+                <button data-response="A real position worth developing. The strongest arguments usually take the side that seems hardest to defend. What would it cost the rescuer to stop? What would it cost the rescued if no one acted?">&#128683; It is rarely or never justified</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 10px 0;">Now look at what the two chapters actually give you as evidence. Both sides of the argument are already there in the text.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9889; TRY IT &middot; WHICH SIDE DOES EACH DETAIL SUPPORT?</div>
+            <div class="widget-question">For each detail from Chapters 1 and 2, decide whether it supports the idea that risking for strangers is justified, or the idea that it is not justified (or extremely dangerous). Think about it before you choose.</div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. The cart scene shows what the Pimpernel accomplishes: a condemned family escapes certain death. That outcome is the argument for taking the risk." data-hint="What does the successful escape of the Comtesse and her children prove about what was at stake?">
+                <div class="widget-row-prompt">1. The Comtesse de Tourney and her children escape through the West Gate disguised in the old hag's cart (Ch. 1).</div>
+                <div class="widget-options">
+                    <button data-choice="0">Suggests the risk is NOT justified</button>
+                    <button data-choice="1">Supports the risk being justified</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="0" data-fb="Right. Grospierre was sent to the guillotine for the failure. The rescuer's helpers and allies face the same fate if caught. The cost is real and lethal." data-hint="What happened to the sergeant who let the aristos through? What does that tell you about the cost of involvement?">
+                <div class="widget-row-prompt">2. Sergeant Grospierre was sent to the guillotine for allowing aristos to escape (Ch. 1).</div>
+                <div class="widget-options">
+                    <button data-choice="0">Suggests the risk is NOT justified</button>
+                    <button data-choice="1">Supports the risk being justified</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="1" data-fb="Right. Mr. Hempseed says let them murder. Jellyband disagrees. Lord Tony and Sir Andrew are already helping. Orczy shows that people who do nothing have made a choice too. That contrast is part of the novel's moral argument." data-hint="What does the debate at the Fisherman's Rest reveal about the choice the Pimpernel and his friends are making?">
+                <div class="widget-row-prompt">3. At the Fisherman's Rest, some English people think France's crisis is none of their business, while Lord Tony and Sir Andrew are already helping (Ch. 2).</div>
+                <div class="widget-options">
+                    <button data-choice="0">Suggests the risk is NOT justified</button>
+                    <button data-choice="1">Supports the risk being justified</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reading Journal prompt -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px;">&#9999;&#65039; READING JOURNAL &middot; WEEK 1</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In the Week 1 section of your Reading Journal, add a note under "Section 1: Module Question." Write one or two sentences: what is your current position on the module question, and what is one detail from Chs. 1 or 2 that supports it? You will return to this and revise it as the module unfolds.</div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Quick Write 1</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Open the Quick Write 1 assignment in Canvas. You will write your first open response to the module question in a Microsoft Word document.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Check-up</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete the Check-up quiz in Canvas to confirm this week&rsquo;s reading and grammar landed.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You have read two chapters, met the setting, and started forming a position on the central question. Next week, the novel begins to give you the Pimpernel and the people around him in more detail. Your position will get more complicated. That is a good sign.</p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.03 &middot; The Question of Taking a Stand</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

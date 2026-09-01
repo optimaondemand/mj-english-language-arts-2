@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 2.03: Sonnet and Villanelle</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .poem-line { display: flex; align-items: baseline; gap: 10px; padding: 3px 0; }
+    .poem-line .rhyme-tag { min-width: 22px; height: 22px; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">The Scarlet Pimpernel</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.03</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Two Poem Forms: the Sonnet and the Villanelle</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Reading Skill</div>
+        <div style="font-size: 16px; color: #0e1c42;">How a poem&rsquo;s shape carries its meaning</div>
+    </div>
+</div>
+
+<!-- ===== BODY WRAPPER ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Sonnet and Villanelle: Naming the Forms</div>
+        <div style="font-size: 16px; color: #666;">Lesson <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">&#8776;16 min</span></div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">In Chapters 3 and 4, Orczy builds Sir Percy&rsquo;s character out of appearance, speech, action, and how other people react to him. A poet builds meaning a different way: out of the shape of the poem itself, how many lines it has, where the rhymes fall, and whether any line comes back.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you will read Chapters 3 and 4, then meet two named poem forms: the <strong>sonnet</strong> and the <strong>villanelle</strong>. You will see exactly how each one is built and notice how that structure shapes what the poem means.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the sonnet and the villanelle and describe how each one is built.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> locate a sonnet&rsquo;s rhyme pattern and a villanelle&rsquo;s two repeating lines.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how each form&rsquo;s structure shapes what the poem means.</div>
+        </div>
+    </div>
+
+    <!-- What you need -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED FOR THIS LESSON</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>The Scarlet Pimpernel</em>, Chapters 3 and 4. <a href="#" style="color: #2196D0;">[Teacher: link Chapter 3 in Canvas Files here]</a> &nbsp; <a href="#" style="color: #2196D0;">[Teacher: link Chapter 4 in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Scarlet Pimpernel Reading Journal</strong> on OneDrive.</div>
+        </div>
+    </div>
+
+    <!-- Bridge paragraph: Ch 3-4 reading, condensed characterization bridge -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: CHAPTERS 3 AND 4</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Read Chapters 3 and 4 now. French refugees arrive at the Fisherman&rsquo;s Rest, escorted by Lord Antony Dewhurst and Sir Andrew Ffoulkes, and the League of the Scarlet Pimpernel is named for the first time. Watch how Orczy builds Sir Percy Blakeney&rsquo;s public reputation in these chapters: through his appearance, his speech, his actions, and how other characters react to him. That is one way a writer builds meaning, piece by piece, through what a person says and does.</p>
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px;">&#9999;&#65039; READING JOURNAL &middot; WEEK 2</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Add this to the Week 2 section of your Reading Journal: name one detail from Chapter 3 or 4 that builds Percy&rsquo;s reputation as a lightweight, and say whether it comes from his appearance, his speech, his actions, or another character&rsquo;s reaction to him.</div>
+        </div>
+    </div>
+
+    <!-- Pivot -->
+    <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px; margin-bottom: 20px;">
+        <div style="font-size: 17px; color: #0E1C42; line-height: 1.65;">A novelist builds a person out of detail after detail. A poet has a different set of tools. Two of the oldest and most exact are the <strong>sonnet</strong> and the <strong>villanelle</strong>. Both are named, fixed forms: a sonnet is always 14 lines, and a villanelle always repeats two of its own lines on a strict schedule. Once you can see the shape, you can see how the shape is doing work.</div>
+    </div>
+
+    <!-- CORE VISUAL 1: Sonnet diagram -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE SONNET: 14 LINES, THREE QUATRAINS AND A COUPLET</div>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px; background: #EEF1F8; border-left: 6px solid #0E1C42; border-radius: 6px; padding: 10px 16px;">
+                <div style="font-size: 13px; color: #0E1C42; font-weight: bold; min-width: 130px;">Quatrain 1</div>
+                <div style="font-size: 13px; color: #1a2340;">lines 1&ndash;4, rhymes A B A B</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #EEF1F8; border-left: 6px solid #0E1C42; border-radius: 6px; padding: 10px 16px;">
+                <div style="font-size: 13px; color: #0E1C42; font-weight: bold; min-width: 130px;">Quatrain 2</div>
+                <div style="font-size: 13px; color: #1a2340;">lines 5&ndash;8, rhymes C D C D</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #EEF1F8; border-left: 6px solid #0E1C42; border-radius: 6px; padding: 10px 16px;">
+                <div style="font-size: 13px; color: #0E1C42; font-weight: bold; min-width: 130px;">Quatrain 3</div>
+                <div style="font-size: 13px; color: #1a2340;">lines 9&ndash;12, rhymes E F E F</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 6px; padding: 10px 16px;">
+                <div style="font-size: 13px; color: #C7922C; font-weight: bold; min-width: 130px;">Closing couplet</div>
+                <div style="font-size: 13px; color: #1a2340;">lines 13&ndash;14, rhymes G G</div>
+            </div>
+        </div>
+        <div style="font-size: 15px; color: #666; font-style: italic;">Three quatrains build an idea, one step at a time. The couplet at the end is only two lines, but it lands with the most weight: it is where the poem turns or concludes.</div>
+    </div>
+
+    <!-- Sonnet 18 text with rhyme tags -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #C7922C; margin-bottom: 4px;">&#128221; SONNET 18</div>
+        <div style="font-size: 13px; color: #6b7a99; margin-bottom: 16px;">William Shakespeare, first published 1609. Public domain.</div>
+
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 14px 18px; margin-bottom: 10px;">
+            <div class="poem-line"><div class="rhyme-tag" style="background:#EEF1F8;color:#0E1C42;">A</div><div style="font-size: 16px; color: #1a2340;">Shall I compare thee to a summer&rsquo;s day?</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#FDF3E3;color:#C7922C;">B</div><div style="font-size: 16px; color: #1a2340;">Thou art more lovely and more temperate:</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#EEF1F8;color:#0E1C42;">A</div><div style="font-size: 16px; color: #1a2340;">Rough winds do shake the darling buds of May,</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#FDF3E3;color:#C7922C;">B</div><div style="font-size: 16px; color: #1a2340;">And summer&rsquo;s lease hath all too short a date:</div></div>
+        </div>
+        <div style="background: #F4F6FA; border-radius: 6px; padding: 14px 18px; margin-bottom: 10px;">
+            <div class="poem-line"><div class="rhyme-tag" style="background:#E2725B;color:#fff;">C</div><div style="font-size: 16px; color: #1a2340;">Sometime too hot the eye of heaven shines,</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#2A9D8F;color:#fff;">D</div><div style="font-size: 16px; color: #1a2340;">And often is his gold complexion dimm&rsquo;d,</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#E2725B;color:#fff;">C</div><div style="font-size: 16px; color: #1a2340;">And every fair from fair sometime declines,</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#2A9D8F;color:#fff;">D</div><div style="font-size: 16px; color: #1a2340;">By chance, or nature&rsquo;s changing course untrimm&rsquo;d:</div></div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 14px 18px; margin-bottom: 10px;">
+            <div class="poem-line"><div class="rhyme-tag" style="background:#D0D9E8;color:#0E1C42;">E</div><div style="font-size: 16px; color: #1a2340;">But thy eternal summer shall not fade,</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#55C8E8;color:#0E1C42;">F</div><div style="font-size: 16px; color: #1a2340;">Nor lose possession of that fair thou ow&rsquo;st,</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#D0D9E8;color:#0E1C42;">E</div><div style="font-size: 16px; color: #1a2340;">Nor shall death brag thou wander&rsquo;st in his shade,</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#55C8E8;color:#0E1C42;">F</div><div style="font-size: 16px; color: #1a2340;">When in eternal lines to time thou grow&rsquo;st,</div></div>
+        </div>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 18px;">
+            <div class="poem-line"><div class="rhyme-tag" style="background:#C7922C;color:#fff;">G</div><div style="font-size: 16px; color: #0E1C42; font-weight: bold;">So long as men can breathe, or eyes can see,</div></div>
+            <div class="poem-line"><div class="rhyme-tag" style="background:#C7922C;color:#fff;">G</div><div style="font-size: 16px; color: #0E1C42; font-weight: bold;">So long lives this, and this gives life to thee.</div></div>
+        </div>
+    </div>
+
+    <!-- Check-in sonnet -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; READ &amp; NOTICE: THE TURN IN THE COUPLET</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Across the three quatrains, the speaker admits that summer fades, the sun dims, and beauty always declines eventually. Then the couplet changes direction: the poem itself, the speaker claims, will keep &ldquo;thy eternal summer&rdquo; alive as long as anyone reads it. The whole argument was built to arrive at those final two lines.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">Read the sonnet aloud once more. What does the couplet do that the three quatrains alone could not? (No wrong answer.)</div>
+            <div class="widget-options">
+                <button data-response="That is exactly the sonnet's move: build a worry across twelve lines, then answer it in the final two. The couplet is where the argument resolves.">&#128172; It answers the problem the poem raised</button>
+                <button data-response="Good ear. G G is the only rhyme pair that lands twice in a row, right at the end, which is part of why it feels final and confident.">&#128279; It rhymes differently than anything before it</button>
+                <button data-response="Right. Fourteen lines build toward two. That is the sonnet's whole shape: patient development, then a decisive close.">&#9203; It feels like the poem has been building toward this moment</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL 2: Villanelle diagram -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE VILLANELLE: 19 LINES THAT KEEP CIRCLING BACK</div>
+        <p style="font-size: 16px; color: #1a2340; line-height: 1.6; margin: 0 0 14px 0;">A villanelle is 19 lines: five three-line stanzas (tercets), then one four-line stanza (a quatrain) at the end. Two lines from the very first stanza return again and again on a fixed schedule, refrain A1 and refrain A2, until they finally stand side by side in the last two lines.</p>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: center; gap: 12px; background: #EEF1F8; border-radius: 6px; padding: 8px 16px;"><div style="font-size: 13px; color: #0E1C42; font-weight: bold; min-width: 110px;">Tercet 1</div><div style="font-size: 13px; color: #1a2340;">lines 1&ndash;3: line 1 is <strong style="color:#E2725B;">refrain A1</strong>, line 3 is <strong style="color:#2A9D8F;">refrain A2</strong></div></div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #F4F6FA; border-radius: 6px; padding: 8px 16px;"><div style="font-size: 13px; color: #0E1C42; font-weight: bold; min-width: 110px;">Tercet 2</div><div style="font-size: 13px; color: #1a2340;">lines 4&ndash;6: line 6 repeats <strong style="color:#E2725B;">refrain A1</strong></div></div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #EEF1F8; border-radius: 6px; padding: 8px 16px;"><div style="font-size: 13px; color: #0E1C42; font-weight: bold; min-width: 110px;">Tercet 3</div><div style="font-size: 13px; color: #1a2340;">lines 7&ndash;9: line 9 repeats <strong style="color:#2A9D8F;">refrain A2</strong></div></div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #F4F6FA; border-radius: 6px; padding: 8px 16px;"><div style="font-size: 13px; color: #0E1C42; font-weight: bold; min-width: 110px;">Tercet 4</div><div style="font-size: 13px; color: #1a2340;">lines 10&ndash;12: line 12 repeats <strong style="color:#E2725B;">refrain A1</strong></div></div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #EEF1F8; border-radius: 6px; padding: 8px 16px;"><div style="font-size: 13px; color: #0E1C42; font-weight: bold; min-width: 110px;">Tercet 5</div><div style="font-size: 13px; color: #1a2340;">lines 13&ndash;15: line 15 repeats <strong style="color:#2A9D8F;">refrain A2</strong></div></div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #FDF3E3; border-left: 6px solid #C7922C; border-radius: 6px; padding: 8px 16px;"><div style="font-size: 13px; color: #C7922C; font-weight: bold; min-width: 110px;">Closing quatrain</div><div style="font-size: 13px; color: #1a2340;">lines 16&ndash;19: line 18 repeats <strong style="color:#E2725B;">refrain A1</strong>, line 19 repeats <strong style="color:#2A9D8F;">refrain A2</strong></div></div>
+        </div>
+        <div style="font-size: 15px; color: #666; font-style: italic; margin-top: 10px;">By the last two lines, both refrains stand side by side. The poem does not move forward so much as it keeps returning to the same two thoughts.</div>
+    </div>
+
+    <!-- Villanelle text with refrain highlighting -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #C7922C; margin-bottom: 4px;">&#128221; THE HOUSE ON THE HILL</div>
+        <div style="font-size: 13px; color: #6b7a99; margin-bottom: 16px;">Edwin Arlington Robinson, first published 1894. Public domain.</div>
+        <div style="font-size: 13px; color: #6b7a99; margin-bottom: 14px;">Refrain A1 is marked <span style="background:#FDECEC; color:#8A1F16; padding: 1px 8px; border-radius: 10px;">coral</span>. Refrain A2 is marked <span style="background:#E3F3F1; color:#1A6B5F; padding: 1px 8px; border-radius: 10px;">teal</span>.</div>
+
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 14px 18px; margin-bottom: 8px;">
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.9;"><span style="background:#FDECEC; color:#8A1F16; border-radius: 4px; padding: 1px 6px;">They are all gone away,</span><br>
+            The House is shut and still,<br>
+            <span style="background:#E3F3F1; color:#1A6B5F; border-radius: 4px; padding: 1px 6px;">There is nothing more to say.</span></div>
+        </div>
+        <div style="background: #F4F6FA; border-radius: 6px; padding: 14px 18px; margin-bottom: 8px;">
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.9;">Through broken walls and gray<br>
+            The winds blow bleak and shrill:<br>
+            <span style="background:#FDECEC; color:#8A1F16; border-radius: 4px; padding: 1px 6px;">They are all gone away.</span></div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 14px 18px; margin-bottom: 8px;">
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.9;">Nor is there one to-day<br>
+            To speak them good or ill:<br>
+            <span style="background:#E3F3F1; color:#1A6B5F; border-radius: 4px; padding: 1px 6px;">There is nothing more to say.</span></div>
+        </div>
+        <div style="background: #F4F6FA; border-radius: 6px; padding: 14px 18px; margin-bottom: 8px;">
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.9;">Why is it then we stray<br>
+            Around that sunken sill?<br>
+            <span style="background:#FDECEC; color:#8A1F16; border-radius: 4px; padding: 1px 6px;">They are all gone away,</span></div>
+        </div>
+        <div style="background: #EEF1F8; border-radius: 6px; padding: 14px 18px; margin-bottom: 8px;">
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.9;">And our poor fancy-play<br>
+            For them is wasted skill:<br>
+            <span style="background:#E3F3F1; color:#1A6B5F; border-radius: 4px; padding: 1px 6px;">There is nothing more to say.</span></div>
+        </div>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 6px; padding: 14px 18px;">
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.9;">There is ruin and decay<br>
+            In the House on the Hill:<br>
+            <span style="background:#FDECEC; color:#8A1F16; border-radius: 4px; padding: 1px 6px;">They are all gone away,</span><br>
+            <span style="background:#E3F3F1; color:#1A6B5F; border-radius: 4px; padding: 1px 6px;">There is nothing more to say.</span></div>
+        </div>
+    </div>
+
+    <!-- Teaching: why the form fits the subject -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: WHY THIS FORM, FOR THIS SUBJECT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">The poem is about a house that everyone has left. Nothing happens in it: no plot, no new event, just the same two facts stated again and again, they are gone, and there is nothing more to say. A villanelle is the right form for exactly this situation. Its refrains do not let the poem move forward. Every time you expect new information, the poem circles back to what you already know. That refusal to advance is the whole feeling of standing outside a house that will never be lived in again.</p>
+        <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px;">
+            <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; COMPARE THE TWO FORMS</div>
+            <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">The sonnet builds forward across fourteen lines to a couplet that resolves the argument. The villanelle circles the same two lines for nineteen lines and never fully resolves anything. Shakespeare needed a form that could argue and conclude. Robinson needed a form that could not move on. Each poet chose the shape that matched what the poem needed to do.</div>
+        </div>
+    </div>
+
+    <!-- Try it: which form -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; TRY IT &middot; SONNET OR VILLANELLE?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">Each statement describes a feature of one of the two forms you studied today. Decide which form it describes before you click.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-row" data-correct="1" data-fb="Right. Fourteen lines, three quatrains and a closing couplet, is the sonnet's fixed shape." data-hint="Which form is exactly fourteen lines?">
+                <div class="widget-row-prompt">1. This form is fourteen lines long and ends with a rhyming couplet.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Villanelle</button>
+                    <button data-choice="1">Sonnet</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="0" data-fb="Right. Only the villanelle repeats two whole lines on a fixed schedule throughout the poem." data-hint="Which form brings back two entire lines again and again?">
+                <div class="widget-row-prompt">2. This form repeats two full lines throughout the poem on a fixed schedule.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Villanelle</button>
+                    <button data-choice="1">Sonnet</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="1" data-fb="Right. The sonnet's argument develops across three quatrains and lands its point in the final two lines." data-hint="Which form is built to develop an idea and conclude it?">
+                <div class="widget-row-prompt">3. This form is built to develop an idea in stages and conclude it in its final two lines.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Villanelle</button>
+                    <button data-choice="1">Sonnet</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="0" data-fb="Right. Nineteen lines, five tercets and a closing quatrain, is the villanelle's fixed shape." data-hint="Which form is nineteen lines and ends with a four-line stanza?">
+                <div class="widget-row-prompt">4. This form is nineteen lines long: five three-line stanzas and one four-line stanza at the end.</div>
+                <div class="widget-options">
+                    <button data-choice="0">Villanelle</button>
+                    <button data-choice="1">Sonnet</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Reading Journal -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; READ &amp; NOTICE: YOUR READING JOURNAL</div>
+        <div style="background: #FDF3E3; border-left: 5px solid #C7922C; border-radius: 7px; padding: 16px 20px;">
+            <div style="font-size: 11px; color: #c7922c; margin-bottom: 10px;">&#9999;&#65039; READING JOURNAL &middot; ADD THIS TO THE WEEK 2 SECTION</div>
+            <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Answer each question in a few sentences.</p>
+            <ol style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0;">
+                <li>Name the two forms you studied today and give one structural fact about each (line count, stanza pattern, or refrain).</li>
+                <li>Sonnet 18 spends twelve lines admitting that beauty fades, then reverses course in the couplet. Explain what the couplet claims and why saving it for the very end makes it land harder.</li>
+                <li>The House on the Hill never tells a new event; it circles the same two refrains for nineteen lines. Explain why that repeating structure fits a poem about a house everyone has left.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 2 entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Answer the questions above in the Week 2 section of your Reading Journal. Your teacher reviews the Journal at the module checkpoints, not every week.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A sonnet and a villanelle are both fixed shapes, built the same way every time they are used. That fixed shape is not a limit on the poet. It is a tool, chosen because it does one job better than any other form could. Later this week, you will choose one of these two forms yourself and build a poem inside it.</p>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.03 &middot; Sonnet and Villanelle: Naming the Forms</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

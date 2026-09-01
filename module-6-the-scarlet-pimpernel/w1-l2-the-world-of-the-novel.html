@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade English Language Arts &mdash; Lesson 1.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .ow-flip { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 18px 20px; cursor: pointer; text-align: center; }
+    .ow-flip .ow-flip-back { display: none; color: #1a2340; }
+    .ow-flip.flipped .ow-flip-front { display: none; }
+    .ow-flip.flipped .ow-flip-back { display: block; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q4 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">The Scarlet Pimpernel</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.02</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Chapter 2: Dover, the Fisherman&rsquo;s Rest</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Question</div>
+        <div style="font-size: 16px; color: #0e1c42;">When is it right to risk everything for strangers?</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <!-- Title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The World of the Novel: The Guillotine, the Escapes, and the Other Side of the Channel</div>
+        <div style="font-size: 16px; color: #666;">Lesson <span style="background: #C7922C; color: #fff; font-size: 13px; padding: 3px 12px; border-radius: 10px; margin-left: 6px;">&#8776;12 min</span></div>
+    </div>
+
+    <!-- Today's Focus -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Chapter 1 shows you revolutionary Paris. Chapter 2 cuts to England, to a warm inn at Dover, where ordinary English people discuss the chaos across the water. Two worlds, one novel: what holds them together?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you will map the novel&rsquo;s two-world structure and explore how Orczy uses setting to build contrast, tension, and the stakes of the Pimpernel&rsquo;s mission.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe how Orczy contrasts Paris and Dover in Chapters 1 and 2.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what the Day Dream (the Pimpernel&rsquo;s yacht) represents in the novel&rsquo;s escape machinery.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> identify how Orczy uses setting to create mood and contrast.</div>
+        </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; WHAT YOU NEED</div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;"><em>The Scarlet Pimpernel</em>, Chapter 2. <a href="#" style="color: #2196D0;">[Teacher: link the Chapter 2 file in Canvas Files here]</a></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; border-left: 3px solid #D0D9E8; padding-left: 14px;"><span style="color: #c7922c; font-size: 18px; flex-shrink: 0;">&#9654;</span>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.6;">Your <strong>Scarlet Pimpernel Reading Journal</strong>.</div>
+        </div>
+    </div>
+
+    <!-- CORE VISUAL: Two Worlds -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE NOVEL'S TWO WORLDS</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0; border: 1px solid #D0D9E8; border-radius: 8px; overflow: hidden; margin-bottom: 12px;">
+            <div style="flex: 1; min-width: 220px; background: #1a2340; padding: 18px; color: #fff;">
+                <div style="font-size: 13px; color: #E2725B; font-weight: bold; margin-bottom: 8px; letter-spacing: 0.5px;">PARIS (Ch. 1)</div>
+                <div style="font-size: 14px; line-height: 1.7; color: #f0f0f0;">The guillotine runs all day.<br />Barricades with armed guards.<br />Crowds watching executions.<br />Nobles fleeing in disguise.<br />Fear, violence, suspicion.</div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; background: #C7922C; padding: 16px; min-width: 50px;">
+                <div style="font-size: 26px; color: #fff;">&#8596;</div>
+            </div>
+            <div style="flex: 1; min-width: 220px; background: #EEF1F8; padding: 18px;">
+                <div style="font-size: 13px; color: #2A9D8F; font-weight: bold; margin-bottom: 8px; letter-spacing: 0.5px;">DOVER (Ch. 2)</div>
+                <div style="font-size: 14px; line-height: 1.7; color: #1a2340;">A warm inn, the Fisherman&rsquo;s Rest.<br />Pewter mugs, firelight, laughter.<br />English farmers debating politics.<br />Sally serving beer, a stranger toasting.<br />Safety, comfort, good humor.</div>
+            </div>
+        </div>
+        <div style="font-size: 15px; color: #666; font-style: italic;">The contrast is the point: Orczy wants you to feel what safety looks like, so the danger across the Channel feels real.</div>
+    </div>
+
+    <!-- PART 1: Check-in -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: CHAPTER 2</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#9889; QUICK CHECK-IN</div>
+            <div class="widget-question">Chapter 2 opens in a busy English inn, completely different from the barricade of Chapter 1. What effect does that shift have on you as a reader?</div>
+            <div class="widget-options">
+                <button data-response="That relief is deliberate. Orczy gives you Chapter 2 so you have something to protect: the safety the Pimpernel is trying to reach.">&#128522; Relief after Chapter 1</button>
+                <button data-response="Smart reading. The contrast sharpens the danger. We feel the gap between the two worlds, which is exactly the gap the Pimpernel crosses every time.">&#129300; It makes the danger in Ch. 1 feel bigger</button>
+                <button data-response="That confusion is worth tracking. Orczy holds the connection just out of reach on purpose. By the chapter's end a hint appears: notice the mysterious stranger at the inn.">&#128203; Confused about how they connect</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 10px 0;">Read Chapter 2 now. You enter the Fisherman&rsquo;s Rest in Dover, where landlord Mr. Jellyband, his daughter Sally, and regulars like Mr. Hempseed discuss the wet September weather and the chaos in France. A well-dressed stranger and his companion are also at the inn, listening quietly and, it seems, finding Mr. Jellyband&rsquo;s bluster quietly amusing. Keep an eye on that stranger.</p>
+
+        <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin: 14px 0;">
+            <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px;">&#9999;&#65039; READING JOURNAL &middot; WEEK 1</div>
+            <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In the Week 1 section of your Reading Journal, answer in 3 to 4 sentences: How does the Fisherman&rsquo;s Rest in Chapter 2 feel different from the barricade in Chapter 1? Name two specific details from each chapter that show the contrast. What does the contrast tell you about the stakes of the Pimpernel&rsquo;s work?</div>
+        </div>
+    </div>
+
+    <!-- PART 2: Notice the stranger + flip cards -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 2 &middot; READ &amp; NOTICE: SETTING DETAILS THAT DO WORK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Orczy uses specific, concrete details to build each setting. Below are four details from Chapter 2. For each one, think about what the detail shows before you click to see what a careful reader might notice. The cards flip: read the front, make your own observation, then click.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 12px; margin-bottom: 8px;">
+            <div class="ow-flip">
+                <div class="ow-flip-front">
+                    <div style="font-size: 13px; color: #c7922c; margin-bottom: 8px;">Detail from Ch. 2</div>
+                    <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">&ldquo;Pewter on the fine old dressers shone like silver and gold.&rdquo;</div>
+                    <div style="font-size: 12px; color: #888; margin-top: 10px;">What does this show? Click to check.</div>
+                </div>
+                <div class="ow-flip-back">
+                    <div style="font-size: 14px; color: #0e1c42; line-height: 1.6;">The inn is well-kept and prosperous. Jellyband takes pride in it. This is a place of order and comfort, the opposite of the barricade.</div>
+                </div>
+                <button class="widget-reset" style="margin-top: 10px;">Reset</button>
+            </div>
+            <div class="ow-flip">
+                <div class="ow-flip-front">
+                    <div style="font-size: 13px; color: #c7922c; margin-bottom: 8px;">Detail from Ch. 2</div>
+                    <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">A stranger with &ldquo;a quiet, sarcastic smile&rdquo; listens to Jellyband&rsquo;s opinions.</div>
+                    <div style="font-size: 12px; color: #888; margin-top: 10px;">What might this hint at? Click to check.</div>
+                </div>
+                <div class="ow-flip-back">
+                    <div style="font-size: 14px; color: #0e1c42; line-height: 1.6;">The stranger knows more than he is letting on. His quiet smile suggests he sees something Jellyband does not. This is the kind of hint Orczy plants before a big reveal.</div>
+                </div>
+                <button class="widget-reset" style="margin-top: 10px;">Reset</button>
+            </div>
+            <div class="ow-flip">
+                <div class="ow-flip-front">
+                    <div style="font-size: 13px; color: #c7922c; margin-bottom: 8px;">Detail from Ch. 2</div>
+                    <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">Jellyband mentions that Lord Tony and Sir Andrew Ffoulkes are expected with &ldquo;friends from over the water.&rdquo;</div>
+                    <div style="font-size: 12px; color: #888; margin-top: 10px;">Who are these friends? Click to check.</div>
+                </div>
+                <div class="ow-flip-back">
+                    <div style="font-size: 14px; color: #0e1c42; line-height: 1.6;">These are nobles who have already been rescued and smuggled to England. The inn is the safe landing point. The rescue route runs from Paris, across the Channel, and ends here at Dover.</div>
+                </div>
+                <button class="widget-reset" style="margin-top: 10px;">Reset</button>
+            </div>
+            <div class="ow-flip">
+                <div class="ow-flip-front">
+                    <div style="font-size: 13px; color: #c7922c; margin-bottom: 8px;">Detail from Ch. 2</div>
+                    <div style="font-size: 15px; color: #0e1c42; line-height: 1.5;">Jellyband boasts he could never be tricked by a Frenchman, since he would spot a foreign accent immediately.</div>
+                    <div style="font-size: 12px; color: #888; margin-top: 10px;">Why might Orczy include this boast? Click to check.</div>
+                </div>
+                <div class="ow-flip-back">
+                    <div style="font-size: 14px; color: #0e1c42; line-height: 1.6;">Orczy is setting up dramatic irony: the reader will eventually know more than Jellyband about who is really in the room. His confidence makes the joke on him all the richer.</div>
+                </div>
+                <button class="widget-reset" style="margin-top: 10px;">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI awareness -->
+    <div style="background: #FDECEC; border-left: 5px solid #C0392B; border-top: 3px solid #E74C3C; border-radius: 6px; padding: 14px 20px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #8A1F16; margin-bottom: 8px;">&#9888;&#65039; WORTH KNOWING &middot; AI AND LITERARY DETAILS</div>
+        <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">An AI tool can instantly summarize what happens in Chapter 2, but it cannot feel the shift in mood between Paris and Dover the way you do when you read both chapters in order. That feeling, and what you make of it, is your reading. Summaries skip the experience that builds your judgment.</div>
+    </div>
+
+    <!-- WHAT YOU'LL DO NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 1 entry</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete the contrast-response prompt above in the Week 1 section of your Reading Journal.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: The Estate System</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete VR Activity 1 (available in Canvas). It builds the historical context that feeds your argumentative essay project.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; BEFORE YOU GO</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">The novel&rsquo;s world now has two poles: the violence of Paris and the warmth of Dover. The Pimpernel crosses between them, again and again, for strangers. Keep asking: why? What does that cost, and what does it mean?</p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 4 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.02 &middot; The World of the Novel</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget') || reset.closest('.ow-flip');
+      if (w && w.classList.contains('ow-flip')) { w.classList.remove('flipped'); return; }
+      if (w) {
+        w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+        w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+        w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      }
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip && !e.target.closest('.widget-reset')) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>

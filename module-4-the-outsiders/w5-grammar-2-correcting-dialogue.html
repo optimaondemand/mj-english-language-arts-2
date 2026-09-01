@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>7th Grade ELA &mdash; Grammar 2: Correcting Dialogue</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">7TH GRADE ENGLISH LANGUAGE ARTS</div>
+</div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q3 &middot; Module 4</div>
+        <div style="font-size: 12px; color: #666;">The Outsiders</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Grammar 2</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Correcting Dialogue</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Focus</div>
+        <div style="font-size: 16px; color: #0e1c42;">Fixing errors in written dialogue</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <!-- Title strip -->
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Grammar 2 &middot; Week 5 &middot; Day 4</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Correcting Dialogue: Catching the Mistakes Writers Make</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; approx. 12 min</div>
+    </div>
+
+    <!-- Focus Card -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 12px;">&#128214; TODAY'S FOCUS &middot; READ &amp; NOTICE</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Now that you know the three dialogue patterns, can you catch when something has gone wrong?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Now that you know the three dialogue patterns, you can catch when a writer has missed a comma, lost a quotation mark, or put the period in the wrong place. Correcting dialogue takes the same knowledge as writing it.</div>
+    </div>
+
+    <!-- Reading line -->
+    <div style="background: #FFF8F6; border-left: 5px solid #E2725B; border-radius: 6px; padding: 14px 20px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 8px;">&#128214; READING ASSIGNMENT</div>
+        <div style="font-size: 17px; color: #0e1c42; line-height: 1.6;">Read Chapters 9-10 in your copy of <em>The Outsiders</em>.</div>
+        <div style="font-size: 14px; color: #888; margin-top: 8px; font-style: italic;">[Teacher: link the approved student copy / purchase or library access here]</div>
+    </div>
+
+    <!-- Required Notice -->
+    <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+        <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#9432; REQUIRED NOTICE</div>
+        <div style="font-size: 15px; color: #0E1C42; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+    </div>
+
+    <!-- Warm-Up Widget (Coral / ow-reflect) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128214; PART 1 &middot; WARM-UP CHECK-IN</div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128337; REFLECTIVE CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">What kind of dialogue mistake do you find most confusing: a missing comma, a missing quotation mark, or a period in the wrong place?</div>
+            <div class="widget-options">
+                <button data-response="Missing commas trip a lot of writers up because they come just before the closing quotation mark, not after it. You will get a good look at exactly where they go in today's lesson.">Missing comma</button>
+                <button data-response="Quotation marks are easy to lose, especially at the start of a spoken line. Seeing a few examples of where they belong will help lock in the habit.">Missing quotation mark</button>
+                <button data-response="The period-inside-or-outside question catches many writers off guard. Today's lesson zeroes in on exactly that rule.">Period in the wrong place</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Core Concept Visual + Teaching -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128214; PART 2 &middot; THE THREE COMMON ERRORS</div>
+
+        <!-- Core concept: Before / After visual -->
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 14px 0;">See the Difference: Before and After</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 16px 0;">When dialogue has an error, one small piece is out of place. The sentence below has a mistake. Compare the two versions and find what changed.</p>
+
+        <!-- Before / After Card -->
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
+            <div style="flex: 1; min-width: 240px; background: #FFF0EE; border: 2px solid #E2725B; border-radius: 10px; padding: 18px 20px;">
+                <div style="font-size: 11px; color: #E2725B; margin-bottom: 10px; letter-spacing: 0.5px;">&#10007; BEFORE (ERROR)</div>
+                <div style="font-size: 18px; color: #0e1c42; font-family: 'Courier New', monospace; line-height: 1.7;">"I left the door open." she said quietly.</div>
+                <div style="font-size: 14px; color: #C0392B; margin-top: 12px; line-height: 1.5;">Problem: The period after <em>open</em> should be a comma. When the dialogue tag follows the spoken words, you need a comma inside the quotation marks, not a period.</div>
+            </div>
+            <div style="flex: 1; min-width: 240px; background: #F0FFF4; border: 2px solid #2A9D8F; border-radius: 10px; padding: 18px 20px;">
+                <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 10px; letter-spacing: 0.5px;">&#10003; AFTER (CORRECTED)</div>
+                <div style="font-size: 18px; color: #0e1c42; font-family: 'Courier New', monospace; line-height: 1.7;">"I left the door open," she said quietly.</div>
+                <div style="font-size: 14px; color: #1A6B3D; margin-top: 12px; line-height: 1.5;">Fixed: Comma inside the closing quotation mark. The dialogue tag <em>she said quietly</em> becomes part of the same sentence.</div>
+            </div>
+        </div>
+
+        <!-- Error Type 1 -->
+        <div style="border-left: 4px solid #E2725B; background: #FFF8F6; border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 18px;">
+            <div style="font-size: 13px; color: #E2725B; margin-bottom: 8px; font-weight: bold;">ERROR TYPE 1: Missing Quotation Marks</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.65; margin-bottom: 10px;">
+                <strong>Wrong:</strong> <span style="font-family: 'Courier New', monospace; background: #fde; padding: 2px 6px; border-radius: 4px;">Marcus said, The train already left.</span>
+            </div>
+            <div style="font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 10px;">The spoken words need quotation marks around them. Without them, the reader cannot tell where Marcus's voice begins and ends.</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.65;">
+                <strong>Corrected:</strong> <span style="font-family: 'Courier New', monospace; background: #dfd; padding: 2px 6px; border-radius: 4px;">Marcus said, "The train already left."</span>
+            </div>
+        </div>
+
+        <!-- Error Type 2 -->
+        <div style="border-left: 4px solid #E2725B; background: #FFF8F6; border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 18px;">
+            <div style="font-size: 13px; color: #E2725B; margin-bottom: 8px; font-weight: bold;">ERROR TYPE 2: Period Before a Dialogue Tag (Should Be a Comma)</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.65; margin-bottom: 10px;">
+                <strong>Wrong:</strong> <span style="font-family: 'Courier New', monospace; background: #fde; padding: 2px 6px; border-radius: 4px;">"I'm ready." she said.</span>
+            </div>
+            <div style="font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 10px;">A period ends a sentence completely. But <em>she said</em> is a dialogue tag that is still part of the same sentence. Use a comma instead of a period before the closing quotation mark.</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.65; margin-bottom: 14px;">
+                <strong>Corrected:</strong> <span style="font-family: 'Courier New', monospace; background: #dfd; padding: 2px 6px; border-radius: 4px;">"I'm ready," she said.</span>
+            </div>
+            <!-- Mini classified-sentence visual -->
+            <div style="background: #0E1C42; border-radius: 8px; padding: 16px 20px; margin-top: 10px;">
+                <div style="font-size: 11px; color: #55c8e8; margin-bottom: 12px; letter-spacing: 0.5px;">LABELED SENTENCE</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 17px; color: #ffffff; font-family: 'Courier New', monospace; padding: 4px 8px; background: rgba(255,255,255,0.08); border-radius: 4px;">"I'm ready,"</div>
+                        <div style="font-size: 10px; color: #55C8E8; margin-top: 4px;">spoken words<br>+ comma inside</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 17px; color: #ffffff; font-family: 'Courier New', monospace; padding: 4px 8px; background: rgba(255,255,255,0.08); border-radius: 4px;">she</div>
+                        <div style="font-size: 10px; color: #55C8E8; margin-top: 4px;">subject<br>pronoun</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 17px; color: #ffffff; font-family: 'Courier New', monospace; padding: 4px 8px; background: rgba(255,255,255,0.08); border-radius: 4px;">said</div>
+                        <div style="font-size: 10px; color: #55C8E8; margin-top: 4px;">action<br>verb</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 17px; color: #ffffff; font-family: 'Courier New', monospace; padding: 4px 8px; background: rgba(255,255,255,0.08); border-radius: 4px;">.</div>
+                        <div style="font-size: 10px; color: #55C8E8; margin-top: 4px;">period ends<br>full sentence</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Type 3 -->
+        <div style="border-left: 4px solid #E2725B; background: #FFF8F6; border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 8px;">
+            <div style="font-size: 13px; color: #E2725B; margin-bottom: 8px; font-weight: bold;">ERROR TYPE 3: Period Outside the Closing Quotation Mark</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.65; margin-bottom: 10px;">
+                <strong>Wrong:</strong> <span style="font-family: 'Courier New', monospace; background: #fde; padding: 2px 6px; border-radius: 4px;">She answered, "No one is waiting for us".</span>
+            </div>
+            <div style="font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 10px;">In American English, the period always goes <em>inside</em> the closing quotation mark, not outside it.</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.65;">
+                <strong>Corrected:</strong> <span style="font-family: 'Courier New', monospace; background: #dfd; padding: 2px 6px; border-radius: 4px;">She answered, "No one is waiting for us."</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practice Widget (Coral / ow-select) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128214; PART 3 &middot; PRACTICE</div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 12px 0;">Which Version Is Correct?</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Each row shows two versions of the same dialogue sentence. Select the one that is correctly punctuated.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9998; CHOOSE THE CORRECTLY PUNCTUATED VERSION</div>
+
+            <!-- Row 1: correct = 1 (second option) -->
+            <div class="widget-row" data-correct="1" data-hint="A period before a dialogue tag cuts the sentence in two. The tag she whispered is still part of the same sentence.">
+                <div class="widget-row-prompt">Row 1: Which version is correctly punctuated?</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Not quite. A period before a dialogue tag cuts the sentence in two. The spoken line needs a comma inside the quotation marks, not a period.">(A) &nbsp; "The window is cracked." she whispered.</button>
+                    <button data-choice="1" data-fb="Correct. The comma sits inside the closing quotation mark, and the dialogue tag finishes the sentence with a period.">(B) &nbsp; "The window is cracked," she whispered.</button>
+                </div>
+            </div>
+
+            <!-- Row 2: correct = 0 (first option) -->
+            <div class="widget-row" data-correct="0" data-hint="The period belongs inside the closing quotation mark in American English. Review Error Type 3.">
+                <div class="widget-row-prompt">Row 2: Which version is correctly punctuated?</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Correct. The period lands inside the closing quotation mark, which is the American English rule.">(A) &nbsp; He called out, "Dinner is on the table."</button>
+                    <button data-choice="1" data-fb="Not quite. The period belongs inside the closing quotation mark, not outside it.">(B) &nbsp; He called out, "Dinner is on the table".</button>
+                </div>
+            </div>
+
+            <!-- Row 3: correct = 1 (second option) -->
+            <div class="widget-row" data-correct="1" data-hint="Spoken words need quotation marks so the reader knows what was said aloud.">
+                <div class="widget-row-prompt">Row 3: Which version is correctly punctuated?</div>
+                <div class="widget-options">
+                    <button data-choice="0" data-fb="Not quite. The spoken words need quotation marks around them so the reader can tell what was actually said.">(A) &nbsp; Priya announced, I found the missing key.</button>
+                    <button data-choice="1" data-fb="Correct. Quotation marks surround the spoken words, the comma follows the tag, and the period sits inside the closing quotation mark.">(B) &nbsp; Priya announced, "I found the missing key."</button>
+                </div>
+            </div>
+
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Apply (Teal) -->
+    <div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 14px;">&#127381; PART 4 &middot; MAKE &amp; APPLY</div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 0 0 10px 0;">Check Your Own Sentences</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">In your Reading Journal, take the two sentences you wrote in Grammar 1 and check them against the three patterns. Fix any errors you find. If they were already correct, note which pattern each one follows.</p>
+        <div style="background: #F0FAFA; border-left: 4px solid #2A9D8F; border-radius: 0 6px 6px 0; padding: 12px 16px;">
+            <div style="font-size: 14px; color: #1a2340; line-height: 1.6;">Write your corrections or your pattern notes in your Reading Journal before moving on.</div>
+        </div>
+    </div>
+
+    <!-- What You'll Do Next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Grammar POP! Quiz (Week 5) in Canvas</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Today's combined Grammar POP! quiz (in Canvas) covers both dialogue punctuation lessons from this week: Dialogue Punctuation and Correcting Dialogue.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Required Notice (bottom) -->
+    <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
+        <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#9432; REQUIRED NOTICE</div>
+        <div style="font-size: 15px; color: #0E1C42; line-height: 1.6;">Students must obtain lawful access to the assigned literary work separately. Optima course materials are original instructional materials designed to support analysis, discussion, and assessment of the work. Copyrighted text, images, audio, or other protected materials are not reproduced here except where expressly licensed, in the public domain, or used as a limited fair-use excerpt for instructional analysis.</div>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ELA &middot; Q3 &middot; Module 4 &middot; Grammar Lesson</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Grammar 2 &middot; Correcting Dialogue: Catching the Mistakes Writers Make</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<!-- ===== WIDGET RUNTIME ===== -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button, .ow-scale .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      var correct = row.dataset.correct;
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || row.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite. Try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+    var flip = e.target.closest('.ow-flip');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+  });
+})();
+</script>
+
+</body>
+</html>
