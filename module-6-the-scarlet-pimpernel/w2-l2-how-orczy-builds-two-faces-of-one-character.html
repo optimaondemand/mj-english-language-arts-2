@@ -63,6 +63,336 @@
 
 <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 5 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER V &middot; Marguerite &middot; 1,734 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">In a moment the pleasant oak-raftered coffee-room of the inn became the scene of hopeless confusion and discomfort. At the first announcement made by the stable boy, Lord Antony, with a fashionable oath, had jumped up from his seat and was now giving many and confused directions to poor bewildered Jellyband, who seemed at his wits&rsquo; end what to do.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;For goodness&rsquo; sake, man,&rdquo; admonished his lordship, &ldquo;try to keep Lady Blakeney talking outside for a moment while the ladies withdraw. Zounds!&rdquo; he added, with another more emphatic oath, &ldquo;this is most unfortunate.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Quick, Sally! the candles!&rdquo; shouted Jellyband, as hopping about from one leg to another, he ran hither and thither, adding to the general discomfort of everybody.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The Comtesse, too, had risen to her feet: rigid and erect, trying to hide her excitement beneath more becoming sangfroid, she repeated mechanically⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I will not see her!⁠&mdash;I will not see her!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Outside, the excitement attendant upon the arrival of very important guests grew apace.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Good day, Sir Percy!⁠&mdash;Good day to your ladyship! Your servant, Sir Percy!&rdquo;⁠&mdash;was heard in one long, continued chorus, with alternate more feeble tones of⁠&mdash;&ldquo;Remember the poor blind man! of your charity, lady and gentleman!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then suddenly a singularly sweet voice was heard through all the din.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Let the poor man be⁠&mdash;and give him some supper at my expense.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The voice was low and musical, with a slight singsong in it, and a faint soupçon of foreign intonation in the pronunciation of the consonants.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Everyone in the coffee-room heard it and paused instinctively, listening to it for a moment. Sally was holding the candles by the opposite door, which led to the bedrooms upstairs, and the Comtesse was in the act of beating a hasty retreat before that enemy who owned such a sweet musical voice; Suzanne reluctantly was preparing to follow her mother, while casting regretful glances towards the door, where she hoped still to see her dearly-beloved, erstwhile schoolfellow.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then Jellyband threw open the door, still stupidly and blindly hoping to avert the catastrophe, which he felt was in the air, and the same low, musical voice said, with a merry laugh and mock consternation⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;B-r-r-r-r! I am as wet as a herring!<em>Dieu!</em>has anyone ever seen such a contemptible climate?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Suzanne, come with me at once⁠&mdash;I wish it,&rdquo; said the Comtesse, peremptorily.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh! Mama!&rdquo; pleaded Suzanne.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;My lady⁠ ⁠&hellip; er⁠ ⁠&hellip; h&rsquo;m!⁠ ⁠&hellip; my lady!⁠ ⁠&hellip;&rdquo; came in feeble accents from Jellyband, who stood clumsily trying to bar the way.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;<em>Pardieu</em>, my good man,&rdquo; said Lady Blakeney, with some impatience, &ldquo;what are you standing in my way for, dancing about like a turkey with a sore foot? Let me get to the fire, I am perished with the cold.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And the next moment Lady Blakeney, gently pushing mine host on one side, had swept into the coffee-room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There are many portraits and miniatures extant of Marguerite St. Just⁠&mdash;Lady Blakeney as she was then⁠&mdash;but it is doubtful if any of these really do her singular beauty justice. Tall, above the average, with magnificent presence and regal figure, it is small wonder that even the Comtesse paused for a moment in involuntary admiration before turning her back on so fascinating an apparition.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite Blakeney was then scarcely five-and-twenty, and her beauty was at its most dazzling stage. The large hat, with its undulating and waving plumes, threw a soft shadow across the classic brow with the aureole of auburn hair⁠&mdash;free at the moment from any powder; the sweet, almost childlike mouth, the straight chiselled nose, round chin, and delicate throat, all seemed set off by the picturesque costume of the period. The rich blue velvet robe moulded in its every line the graceful contour of the figure, whilst one tiny hand held, with a dignity all its own, the tall stick adorned with a large bunch of ribbons which fashionable ladies of the period had taken to carrying recently.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">With a quick glance all around the room, Marguerite Blakeney had taken stock of everyone there. She nodded pleasantly to Sir Andrew Ffoulkes, whilst extending a hand to Lord Antony.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hello! my Lord Tony, why⁠&mdash;what are<em>you</em>doing here in Dover?&rdquo; she said merrily.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then, without waiting for a reply, she turned and faced the Comtesse and Suzanne. Her whole face lighted up with additional brightness, as she stretched out both arms towards the young girl.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Why! if that isn&rsquo;t my little Suzanne over there.<em>Pardieu</em>, little citizeness, how came you to be in England? And Madame too?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She went up effusive to them both, with not a single touch of embarrassment in her manner or in her smile. Lord Tony and Sir Andrew watched the little scene with eager apprehension. English though they were, they had often been in France, and had mixed sufficiently with the French to realise the unbending hauteur, the bitter hatred with which the old noblesse of France viewed all those who had helped to contribute to their downfall. Armand St. Just, the brother of beautiful Lady Blakeney⁠&mdash;though known to hold moderate and conciliatory views⁠&mdash;was an ardent republican; his feud with the ancient family of St. Cyr⁠&mdash;the rights and wrongs of which no outsider ever knew⁠&mdash;had culminated in the downfall, the almost total extinction of the latter. In France, St. Just and his party had triumphed, and here in England, face to face with these three refugees driven from their country, flying for their lives, bereft of all which centuries of luxury had given them, there stood a fair scion of those same republican families which had hurled down a throne, and uprooted an aristocracy whose origin was lost in the dim and distant vista of bygone centuries.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She stood there before them, in all the unconscious insolence of beauty, and stretched out her dainty hand to them, as if she would, by that one act, bridge over the conflict and bloodshed of the past decade.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Suzanne, I forbid you to speak to that woman,&rdquo; said the Comtesse, sternly, as she placed a restraining hand upon her daughter&rsquo;s arm.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She had spoken in English, so that all might hear and understand; the two young English gentlemen, as well as the common innkeeper and his daughter. The latter literally gasped with horror at this foreign insolence, this impudence before her ladyship⁠&mdash;who was English, now that she was Sir Percy&rsquo;s wife, and a friend of the Princess of Wales to boot.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">As for Lord Antony and Sir Andrew Ffoulkes, their very hearts seemed to stand still with horror at this gratuitous insult. One of them uttered an exclamation of appeal, the other one of warning, and instinctively both glanced hurriedly towards the door, whence a slow, drawly, not unpleasant voice had already been heard.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Alone among those present Marguerite Blakeney and the Comtesse de Tournay had remained seemingly unmoved. The latter, rigid, erect and defiant, with one hand still upon her daughter&rsquo;s arm, seemed the very personification of unbending pride. For the moment Marguerite&rsquo;s sweet face had become as white as the soft fichu which swathed her throat, and a very keen observer might have noted that the hand which held the tall, beribboned stick was clenched, and trembled somewhat.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But this was only momentary; the next instant the delicate eyebrows were raised slightly, the lips curved sarcastically upwards, the clear blue eyes looked straight at the rigid Comtesse, and with a slight shrug of the shoulders⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hoity-toity, citizeness,&rdquo; she said gaily, &ldquo;what fly stings you, pray?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;We are in England now, Madame,&rdquo; rejoined the Comtesse, coldly, &ldquo;and I am at liberty to forbid my daughter to touch your hand in friendship. Come, Suzanne.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She beckoned to her daughter, and without another look at Marguerite Blakeney, but with a deep, old-fashioned curtsey to the two young men, she sailed majestically out of the room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There was silence in the old inn parlour for a moment, as the rustle of the Comtesse&rsquo;s skirts died away down the passage. Marguerite, rigid as a statue followed with hard, set eyes the upright figure, as it disappeared through the doorway⁠&mdash;but as little Suzanne, humble and obedient, was about to follow her mother, the hard, set expression suddenly vanished, and a wistful, almost pathetic and childlike look stole into Lady Blakeney&rsquo;s eyes.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Little Suzanne caught that look; the child&rsquo;s sweet nature went out to the beautiful woman, scarcely older than herself; filial obedience vanished before girlish sympathy; at the door she turned, ran back to Marguerite, and putting her arms round her, kissed her effusively; then only did she follow her mother, Sally bringing up the rear, with a final curtsey to my lady.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Suzanne&rsquo;s sweet and dainty impulse had relieved the unpleasant tension. Sir Andrew&rsquo;s eyes followed the pretty little figure, until it had quite disappeared, then they met Lady Blakeney&rsquo;s with unassumed merriment.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite, with dainty affectation, had kissed her hand to the ladies, as they disappeared through the door, then a humorous smile began hovering round the corners of her mouth.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;So that&rsquo;s it, is it?&rdquo; she said gaily. &ldquo;La! Sir Andrew, did you ever see such an unpleasant person? I hope when I grow old I shan&rsquo;t look like that.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She gathered up her skirts and assuming a majestic gait, stalked towards the fireplace.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Suzanne,&rdquo; she said, mimicking the Comtesse&rsquo;s voice, &ldquo;I forbid you to speak to that woman!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The laugh which accompanied this sally sounded perhaps a trifled forced and hard, but neither Sir Andrew nor Lord Tony were very keen observers. The mimicry was so perfect, the tone of the voice so accurately reproduced, that both the young men joined in a hearty cheerful &ldquo;Bravo!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah! Lady Blakeney!&rdquo; added Lord Tony, &ldquo;how they must miss you at the Comédie Française, and how the Parisians must hate Sir Percy for having taken you away.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud, man,&rdquo; rejoined Marguerite, with a shrug of her graceful shoulders, &ldquo; &rsquo;tis impossible to hate Sir Percy for anything; his witty sallies would disarm even Madame la Comtesse herself.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The young Vicomte, who had not elected to follow his mother in her dignified exit, now made a step forward, ready to champion the Comtesse should Lady Blakeney aim any further shafts at her. But before he could utter a preliminary word of protest, a pleasant though distinctly inane laugh, was heard from outside, and the next moment an unusually tall and very richly dressed figure appeared in the doorway.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 5).</div>
+                </div>
+            </details>
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 6 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER VI &middot; An Exquisite of &rsquo;92 &middot; 3,270 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sir Percy Blakeney, as the chronicles of the time inform us, was in this year of grace 1792, still a year or two on the right side of thirty. Tall, above the average, even for an Englishman, broad-shouldered and massively built, he would have been called unusually good-looking, but for a certain lazy expression in his deep-set blue eyes, and that perpetual inane laugh which seemed to disfigure his strong, clearly-cut mouth.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was nearly a year ago now that Sir Percy Blakeney, Bart., one of the richest men in England, leader of all the fashions, and intimate friend of the Prince of Wales, had astonished fashionable society in London and Bath by bringing home, from one of his journeys abroad, a beautiful, fascinating, clever, French wife. He, the sleepiest, dullest, most British Britisher that had ever set a pretty woman yawning, had secured a brilliant matrimonial prize for which, as all chroniclers aver, there had been many competitors.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite St. Just had first made her debut in artistic Parisian circles, at the very moment when the greatest social upheaval the world has ever known was taking place within its very walls. Scarcely eighteen, lavishly gifted with beauty and talent, chaperoned only by a young and devoted brother, she had soon gathered round her, in her charming apartment in the Rue Richelieu, a coterie which was as brilliant as it was exclusive⁠&mdash;exclusive, that is to say, only from one point of view. Marguerite St. Just was from principle and by conviction a republican⁠&mdash;equality of birth was her motto⁠&mdash;inequality of fortune was in her eyes a mere untoward accident, but the only inequality she admitted was that of talent. &ldquo;Money and titles may be hereditary,&rdquo; she would say, &ldquo;but brains are not,&rdquo; and thus her charming salon was reserved for originality and intellect, for brilliance and wit, for clever men and talented women, and the entrance into it was soon looked upon in the world of intellect⁠&mdash;which even in those days and in those troublous times found its pivot in Paris⁠&mdash;as the seal to an artistic career.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Clever men, distinguished men, and even men of exalted station formed a perpetual and brilliant court round the fascinating young actress of the Comédie Française, and she glided through republican, revolutionary, bloodthirsty Paris like a shining comet with a trail behind her of all that was most distinguished, most interesting, in intellectual Europe.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then the climax came. Some smiled indulgently and called it an artistic eccentricity, others looked upon it as a wise provision, in view of the many events which were crowding thick and fast in Paris just then, but to all, the real motive of that climax remained a puzzle and a mystery. Anyway, Marguerite St. Just married Sir Percy Blakeney one fine day, just like that, without any warning to her friends, without a<em>soirée de contrat</em>or<em>dîner de fiançailles</em>or other appurtenances of a fashionable French wedding.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">How that stupid, dull Englishman ever came to be admitted within the intellectual circle which revolved round &ldquo;the cleverest woman in Europe,&rdquo; as her friends unanimously called her, no one ventured to guess⁠&mdash;a golden key is said to open every door, asserted the more malignantly inclined.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Enough, she married him, and &ldquo;the cleverest woman in Europe&rdquo; had linked her fate to that &ldquo;demmed idiot&rdquo; Blakeney, and not even her most intimate friends could assign to this strange step any other motive than that of supreme eccentricity. Those friends who knew, laughed to scorn the idea that Marguerite St. Just had married a fool for the sake of the worldly advantages with which he might endow her. They knew, as a matter of fact, that Marguerite St. Just cared nothing about money, and still less about a title; moreover, there were at least half a dozen other men in the cosmopolitan world equally wellborn, if not so wealthy as Blakeney, who would have been only too happy to give Marguerite St. Just any position she might choose to covet.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">As for Sir Percy himself, he was universally voted to be totally unqualified for the onerous post he had taken upon himself. His chief qualifications for it seemed to consist in his blind adoration for her, his great wealth and the high favour in which he stood at the English court; but London society thought that, taking into consideration his own intellectual limitations, it would have been wiser on his part had he bestowed those worldly advantages upon a less brilliant and witty wife.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Although lately he had been so prominent a figure in fashionable English society, he had spent most of his early life abroad. His father, the late Sir Algernon Blakeney, had had the terrible misfortune of seeing an idolized young wife become hopelessly insane after two years of happy married life. Percy had just been born when the late Lady Blakeney fell prey to the terrible malady which in those days was looked upon as hopelessly incurable and nothing short of a curse of God upon the entire family. Sir Algernon took his afflicted young wife abroad, and there presumably Percy was educated, and grew up between an imbecile mother and a distracted father, until he attained his majority. The death of his parents following close upon one another left him a free man, and as Sir Algernon had led a forcibly simple and retired life, the large Blakeney fortune had increased tenfold.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sir Percy Blakeney had travelled a great deal abroad, before he brought home his beautiful, young, French wife. The fashionable circles of the time were ready to receive them both with open arms; Sir Percy was rich, his wife was accomplished, the Prince of Wales took a very great liking to them both. Within six months they were the acknowledged leaders of fashion and of style. Sir Percy&rsquo;s coats were the talk of the town, his inanities were quoted, his foolish laugh copied by the gilded youth at Almack&rsquo;s or the Mall. Everyone knew that he was hopelessly stupid, but then that was scarcely to be wondered at, seeing that all the Blakeneys for generations had been notoriously dull, and that his mother died an imbecile.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Thus society accepted him, petted him, made much of him, since his horses were the finest in the country, his fêtes and wines the most sought after. As for his marriage with &ldquo;the cleverest woman in Europe,&rdquo; well! the inevitable came with sure and rapid footsteps. No one pitied him, since his fate was of his own making. There were plenty of young ladies in England, of high birth and good looks, who would have been quite willing to help him to spend the Blakeney fortune, whilst smiling indulgently at his inanities and his good-humoured foolishness. Moreover, Sir Percy got no pity, because he seemed to require none⁠&mdash;he seemed very proud of his clever wife, and to care little that she took no pains to disguise that good-natured contempt which she evidently felt for him, and that she even amused herself by sharpening her ready wits at his expense.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But then Blakeney was really too stupid to notice the ridicule with which his wife covered him, and if his matrimonial relations with the fascinating Parisienne had not turned out all that his hopes and his doglike devotion for her had pictured, society could never do more than vaguely guess at it.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">In his beautiful house at Richmond, he played second fiddle to his clever wife with imperturbable bonhomie; he lavished jewels and luxuries of all kinds upon her, which she took with inimitable grace, dispensing the hospitality of his superb mansion with the same graciousness with which she had welcomed the intellectual coterie of Paris.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Physically, Sir Percy Blakeney was undeniably handsome⁠&mdash;always excepting the lazy, bored look which was habitual to him. He was always irreproachably dressed, and wore the exaggerated &ldquo;Incroyable&rdquo; fashions, which had just crept across from Paris to England, with the perfect good taste innate in an English gentleman. On this special afternoon in September, in spite of the long journey by coach, in spite of rain and mud, his coat set irreproachably across his fine shoulders, his hands looked almost femininely white, as they emerged through billowy frills of finest Mechlin lace: the extravagantly short-waisted satin coat, wide-lapelled waistcoat, and tight-fitting striped breeches, set off his massive figure to perfection, and in repose one might have admired so fine a specimen of English manhood, until the foppish ways, the affected movements, the perpetual inane laugh, brought one&rsquo;s admiration of Sir Percy Blakeney to an abrupt close.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He had lolled into the old-fashioned inn parlour, shaking the wet off his fine overcoat; then putting up a gold-rimmed eyeglass to his lazy blue eye, he surveyed the company, upon whom an embarrassed silence had suddenly fallen.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How do, Tony? How do, Ffoulkes?&rdquo; he said, recognizing the two young men and shaking them by the hand. &ldquo;Zounds, my dear fellow,&rdquo; he added, smothering a slight yawn, &ldquo;did you ever see such a beastly day? Demmed climate this.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">With a quaint little laugh, half of embarrassment and half of sarcasm, Marguerite had turned towards her husband, and was surveying him from head to foot, with an amused little twinkle in her merry blue eyes.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;La!&rdquo; said Sir Percy, after a moment or two&rsquo;s silence, as no one offered any comment, &ldquo;how sheepish you all look⁠ ⁠&hellip; What&rsquo;s up?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh, nothing, Sir Percy,&rdquo; replied Marguerite, with a certain amount of gaiety, which, however, sounded somewhat forced, &ldquo;nothing to disturb your equanimity⁠&mdash;only an insult to your wife.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The laugh which accompanied this remark was evidently intended to reassure Sir Percy as to the gravity of the incident. It apparently succeeded in that, for echoing the laugh, he rejoined placidly⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;La, m&rsquo;dear! you don&rsquo;t say so. Begad! who was the bold man who dared to tackle you⁠&mdash;eh?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Lord Tony tried to interpose, but had no time to do so, for the young Vicomte had already quickly stepped forward.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Monsieur,&rdquo; he said, prefixing his little speech with an elaborate bow, and speaking in broken English, &ldquo;my mother, the Comtesse de Tournay de Basserive, has offenced Madame, who, I see, is your wife. I cannot ask your pardon for my mother; what she does is right in my eyes. But I am ready to offer you the usual reparation between men of honour.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The young man drew up his slim stature to its full height and looked very enthusiastic, very proud, and very hot as he gazed at six foot odd of gorgeousness, as represented by Sir Percy Blakeney, Bart.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud, Sir Andrew,&rdquo; said Marguerite, with one of her merry infectious laughs, &ldquo;look on that pretty picture⁠&mdash;the English turkey and the French bantam.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The simile was quite perfect, and the English turkey looked down with complete bewilderment upon the dainty little French bantam, which hovered quite threateningly around him.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;La! sir,&rdquo; said Sir Percy at last, putting up his eye glass and surveying the young Frenchman with undisguised wonderment, &ldquo;where, in the cuckoo&rsquo;s name, did you learn to speak English?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Monsieur!&rdquo; protested the Vicomte, somewhat abashed at the way his warlike attitude had been taken by the ponderous-looking Englishman.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I protest &rsquo;tis marvellous!&rdquo; continued Sir Percy, imperturbably, &ldquo;demmed marvellous! Don&rsquo;t you think so, Tony⁠&mdash;eh? I vow I can&rsquo;t speak the French lingo like that. What?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay, I&rsquo;ll vouch for that!&rdquo; rejoined Marguerite, &ldquo;Sir Percy has a British accent you could cut with a knife.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Monsieur,&rdquo; interposed the Vicomte earnestly, and in still more broken English, &ldquo;I fear you have not understand. I offer you the only posseeble reparation among gentlemen.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What the devil is that?&rdquo; asked Sir Percy, blandly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;My sword, Monsieur,&rdquo; replied the Vicomte, who, though still bewildered, was beginning to lose his temper.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You are a sportsman, Lord Tony,&rdquo; said Marguerite, merrily; &ldquo;ten to one on the little bantam.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But Sir Percy was staring sleepily at the Vicomte for a moment or two, through his partly closed heavy lids, then he smothered another yawn, stretched his long limbs, and turned leisurely away.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud love you, sir,&rdquo; he muttered good-humouredly, &ldquo;demmit, young man, what&rsquo;s the good of your sword to me?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">What the Vicomte thought and felt at that moment, when that long-limbed Englishman treated him with such marked insolence, might fill volumes of sound reflections.⁠ ⁠&hellip; What he said resolved itself into a single articulate word, for all the others were choked in his throat by his surging wrath⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A duel, Monsieur,&rdquo; he stammered.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Once more Blakeney turned, and from his high altitude looked down on the choleric little man before him; but not even for a second did he seem to lose his own imperturbable good-humour. He laughed his own pleasant and inane laugh, and burying his slender, long hands into the capacious pockets of his overcoat, he said leisurely⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A duel? La! is that what he meant? Odd&rsquo;s fish! you are a bloodthirsty young ruffian. Do you want to make a hole in a law-abiding man?⁠ ⁠&hellip; As for me, sir, I never fight duels,&rdquo; he added, as he placidly sat down and stretched his long, lazy legs out before him. &ldquo;Demmed uncomfortable things, duels, ain&rsquo;t they, Tony?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Now the Vicomte had no doubt vaguely heard that in England the fashion of duelling amongst gentlemen had been surpressed by the law with a very stern hand; still to him, a Frenchman, whose notions of bravery and honour were based upon a code that had centuries of tradition to back it, the spectacle of a gentleman actually refusing to fight a duel was a little short of an enormity. In his mind he vaguely pondered whether he should strike that long-legged Englishman in the face and call him a coward, or whether such conduct in a lady&rsquo;s presence might be deemed ungentlemanly, when Marguerite happily interposed.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I pray you, Lord Tony,&rdquo; she said in that gentle, sweet, musical voice of hers, &ldquo;I pray you play the peacemaker. The child is bursting with rage, and,&rdquo; she added with a soupçon of dry sarcasm, &ldquo;might do Sir Percy an injury.&rdquo; She laughed a mocking little laugh, which, however, did not in the least disturb her husband&rsquo;s placid equanimity. &ldquo;The British turkey has had the day,&rdquo; she said. &ldquo;Sir Percy would provoke all the saints in the calendar and keep his temper the while.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But already Blakeney, good-humoured as ever, had joined in the laugh against himself.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Demmed smart that now, wasn&rsquo;t it?&rdquo; he said, turning pleasantly to the Vicomte. &ldquo;Clever woman my wife, sir.⁠ ⁠&hellip; You will find<em>that</em>out if you live long enough in England.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Sir Percy is right, Vicomte,&rdquo; here interposed Lord Antony, laying a friendly hand on the young Frenchman&rsquo;s shoulder. &ldquo;It would hardly be fitting that you should commence your career in England by provoking him to a duel.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">For a moment longer the Vicomte hesitated, then with a slight shrug of the shoulders directed against the extraordinary code of honour prevailing in this fog-ridden island, he said with becoming dignity⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, well! if Monsieur is satisfied, I have no griefs. You mi&rsquo;lor&rsquo;, are our protector. If I have done wrong, I withdraw myself.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye, do!&rdquo; rejoined Blakeney, with a long sigh of satisfaction, &ldquo;withdraw yourself over there. Demmed excitable little puppy,&rdquo; he added under his breath, &ldquo;Faith, Ffoulkes, if that&rsquo;s a specimen of the goods you and your friends bring over from France, my advice to you is, drop &rsquo;em &rsquo;mid Channel, my friend, or I shall have to see old Pitt about it, get him to clap on a prohibitive tariff, and put you in the stocks an you smuggle.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;La, Sir Percy, your chivalry misguides you,&rdquo; said Marguerite, coquettishly, &ldquo;you forget that you yourself have imported one bundle of goods from France.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Blakeney slowly rose to his feet, and, making a deep and elaborate bow before his wife, he said with consummate gallantry⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I had the pick of the market, Madame, and my taste is unerring.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;More so than your chivalry, I fear,&rdquo; she retorted sarcastically.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Odd&rsquo;s life, m&rsquo;dear! be reasonable! Do you think I am going to allow my body to be made a pincushion of, by every little frog-eater who don&rsquo;t like the shape of your nose?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud, Sir Percy!&rdquo; laughed Lady Blakeney as she bobbed him a quaint and pretty curtsey, &ldquo;you need not be afraid! &rsquo;Tis not the<em>men</em>who dislike the shape of my nose.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Afraid be demmed! Do you impugn my bravery, Madame? I don&rsquo;t patronise the ring for nothing, do I, Tony? I&rsquo;ve put up the fists with Red Sam before now, and⁠&mdash;and he didn&rsquo;t get it all his own way either⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;S&rsquo;faith, Sir Percy,&rdquo; said Marguerite, with a long and merry laugh, that went echoing along the old oak rafters of the parlour, &ldquo;I would I had seen you then⁠ ⁠&hellip; ha! ha! ha! ha!⁠&mdash;you must have looked a pretty picture⁠ ⁠&hellip; and⁠ ⁠&hellip; and to be afraid of a little French boy⁠ ⁠&hellip; ha! ha!⁠ ⁠&hellip; ha! ha!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ha! ha! ha! he! he! he!&rdquo; echoed Sir Percy, good-humouredly. &ldquo;La, Madame, you honour me! Zooks! Ffoulkes, mark ye that! I have made my wife laugh!⁠&mdash;The cleverest woman in Europe!⁠ ⁠&hellip; Odd&rsquo;s fish, we must have a bowl on that!&rdquo; and he tapped vigorously on the table near him. &ldquo;Hey! Jelly! Quick, man! Here, Jelly!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Harmony was once more restored. Mr. Jellyband, with a mighty effort, recovered himself from the many emotions he had experienced within the last half hour.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A bowl of punch, Jelly, hot and strong, eh?&rdquo; said Sir Percy. &ldquo;The wits that have just made a clever woman laugh must be whetted! Ha! ha! ha! Hasten, my good Jelly!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay, there is no time, Sir Percy,&rdquo; interposed Marguerite. &ldquo;The skipper will be here directly and my brother must get on board, or the<em>Daydream</em>will miss the tide.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Time, m&rsquo;dear? There is plenty of time for any gentleman to get drunk and get on board before the turn of the tide.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I think, your ladyship,&rdquo; said Jellyband, respectfully, &ldquo;that the young gentleman is coming along now with Sir Percy&rsquo;s skipper.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;That&rsquo;s right,&rdquo; said Blakeney, &ldquo;then Armand can join us in the merry bowl. Think you, Tony,&rdquo; he added, turning towards the Vicomte, &ldquo;that the jackanapes of yours will join us in a glass? Tell him that we drink in token of reconciliation.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;In fact you are all such merry company,&rdquo; said Marguerite, &ldquo;that I trust you will forgive me if I bid my brother goodbye in another room.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It would have been bad form to protest. Both Lord Antony and Sir Andrew felt that Lady Blakeney could not altogether be in tune with them at the moment. Her love for her brother, Armand St. Just, was deep and touching in the extreme. He had just spent a few weeks with her in her English home, and was going back to serve his country, at the moment when death was the usual reward for the most enduring devotion.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sir Percy also made no attempt to detain his wife. With that perfect, somewhat affected gallantry which characterised his every movement, he opened the coffee-room door for her, and made her the most approved and elaborate bow, which the fashion of the time dictated, as she sailed out of the room without bestowing on him more than a passing, slightly contemptuous glance. Only Sir Andrew Ffoulkes, whose every thought since he had met Suzanne de Tournay seemed keener, more gentle, more innately sympathetic, noted the curious look of intense longing, of deep and hopeless passion, with which the inane and flippant Sir Percy followed the retreating figure of his brilliant wife.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 6).</div>
+                </div>
+            </details>
+
+
+
+
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
         <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.02</div>
         <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">How Orczy Builds Two Faces of One Character</div>
@@ -189,17 +519,6 @@
                 <li>Chapter 6 is written from London society&rsquo;s point of view. Find one place where the narrator seems to step slightly outside that point of view and let you see something society misses. Quote the phrase and explain what it suggests.</li>
                 <li>By the end of Chapter 6, do you think the &ldquo;inane laugh&rdquo; is real or performed? Use at least one detail from the text to support your answer. There is no single right answer here.</li>
             </ol>
-        </div>
-    </div>
-
-    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
-        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
-        <div style="display: flex; align-items: flex-start; gap: 14px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Add to your Reading Journal</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Record the two faces of Sir Percy in your Week 2 entry: one detail that shows the man society sees, and one that shows something underneath. Bring both to the Weekly Workshop, where you will turn them into a claim.</div>
-            </div>
         </div>
     </div>
 

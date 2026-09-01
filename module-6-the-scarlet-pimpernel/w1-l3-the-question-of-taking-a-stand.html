@@ -66,6 +66,367 @@
 <!-- BODY -->
 <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 1 ===== -->
+            <details style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER I &middot; Paris: September, 1792 &middot; 2,741 words &middot; already read; open it if you want to look back</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A surging, seething, murmuring crowd, of beings that are human only in name, for to the eye and ear they seem naught but savage creatures, animated by vile passions and by the lust of vengeance and of hate. The hour, some little time before sunset, and the place, the West Barricade, at the very spot where, a decade later, a proud tyrant raised an undying monument to the nation&rsquo;s glory and his own vanity.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">During the greater part of the day the guillotine had been kept busy at its ghastly work: all that France had boasted of in the past centuries, of ancient names, and blue blood, had paid toll to her desire for liberty and for fraternity. The carnage had only ceased at this late hour of the day because there were other more interesting sights for the people to witness, a little while before the final closing of the barricades for the night.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And so the crowd rushed away from the Place de la Grève and made for the various barricades in order to watch this interesting and amusing sight.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was to be seen every day, for those aristos were such fools! They were traitors to the people of course, all of them, men, women, and children, who happened to be descendants of the great men who since the Crusades had made the glory of France: her old noblesse. Their ancestors had oppressed the people, had crushed them under the scarlet heels of their dainty buckled shoes, and now the people had become the rulers of France and crushed their former masters⁠&mdash;not beneath their heel, for they went shoeless mostly in these days⁠&mdash;but beneath a more effectual weight, the knife of the guillotine.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And daily, hourly, the hideous instrument of torture claimed its many victims⁠&mdash;old men, young women, tiny children, even until the day when it would finally demand the head of a King and of a beautiful young Queen.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But this was as it should be: were not the people now the rulers of France? Every aristocrat was a traitor, as his ancestors had been before him: for two hundred years now the people had sweated, and toiled, and starved, to keep a lustful court in lavish extravagance; now the descendants of those who had helped to make those courts brilliant had to hide for their lives⁠&mdash;to fly, if they wished to avoid the tardy vengeance of the people.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And they did try to hide, and tried to fly: that was just the fun of the whole thing. Every afternoon before the gates closed and the market carts went out in procession by the various barricades, some fool of an aristo endeavoured to evade the clutches of the Committee of Public Safety. In various disguises, under various pretexts, they tried to slip through the barriers, which were so well guarded by citizen soldiers of the Republic. Men in women&rsquo;s clothes, women in male attire, children disguised in beggars&rsquo; rags: there were some of all sorts: ci-devant counts, marquises, even dukes, who wanted to fly from France, reach England or some other equally accursed country, and there try to rouse foreign feelings against the glorious Revolution, or to raise an army in order to liberate the wretched prisoners in the Temple, who had once called themselves sovereigns of France.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But they were nearly always caught at the barricades. Sergeant Bibot especially at the West Gate had a wonderful nose for scenting an aristo in the most perfect disguise. Then, of course, the fun began. Bibot would look at his prey as a cat looks upon the mouse, play with him, sometimes for quite a quarter of an hour, pretend to be hoodwinked by the disguise, by the wigs and other bits of theatrical makeup which hid the identity of a ci-devant noble marquise or count.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Oh! Bibot had a keen sense of humour, and it was well worth hanging round that West Barricade, in order to see him catch an aristo in the very act of trying to flee from the vengeance of the people.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sometimes Bibot would let his prey actually out by the gates, allowing him to think for the space of two minutes at least that he really had escaped out of Paris, and might even manage to reach the coast of England in safety, but Bibot would let the unfortunate wretch walk about ten metres towards the open country, then he would send two men after him and bring him back, stripped of his disguise.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Oh! that was extremely funny, for as often as not the fugitive would prove to be a woman, some proud marchioness, who looked terribly comical when she found herself in Bibot&rsquo;s clutches after all, and knew that a summary trial would await her the next day and after that, the fond embrace of Madame la Guillotine.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">No wonder that on this fine afternoon in September the crowd round Bibot&rsquo;s gate was eager and excited. The lust of blood grows with its satisfaction, there is no satiety: the crowd had seen a hundred noble heads fall beneath the guillotine today, it wanted to make sure that it would see another hundred fall on the morrow.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Bibot was sitting on an overturned and empty cask close by the gate of the barricade; a small detachment of<em>citoyen</em>soldiers was under his command. The work had been very hot lately. Those cursed aristos were becoming terrified and tried their hardest to slip out of Paris: men, women and children, whose ancestors, even in remote ages, had served those traitorous Bourbons, were all traitors themselves and right food for the guillotine. Every day Bibot had had the satisfaction of unmasking some fugitive royalists and sending them back to be tried by the Committee of Public Safety, presided over by that good patriot, Citoyen Foucquier-Tinville.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Robespierre and Danton both had commended Bibot for his zeal and Bibot was proud of the fact that he on his own initiative had sent at least fifty aristos to the guillotine.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But today all the sergeants in command at the various barricades had had special orders. Recently a very great number of aristos had succeeded in escaping out of France and in reaching England safely. There were curious rumours about these escapes; they had become very frequent and singularly daring; the people&rsquo;s minds were becoming strangely excited about it all. Sergeant Grospierre had been sent to the guillotine for allowing a whole family of aristos to slip out of the North Gate under his very nose.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was asserted that these escapes were organised by a band of Englishmen, whose daring seemed to be unparalleled, and who, from sheer desire to meddle in what did not concern them, spent their spare time in snatching away lawful victims destined for Madame la Guillotine. These rumours soon grew in extravagance; there was no doubt that this band of meddlesome Englishmen did exist; moreover, they seemed to be under the leadership of a man whose pluck and audacity were almost fabulous. Strange stories were afloat of how he and those aristos whom he rescued became suddenly invisible as they reached the barricades and escaped out of the gates by sheer supernatural agency.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">No one had seen these mysterious Englishmen; as for their leader, he was never spoken of, save with a superstitious shudder. Citoyen Foucquier-Tinville would in the course of the day receive a scrap of paper from some mysterious source; sometimes he would find it in the pocket of his coat, at others it would be handed to him by someone in the crowd, whilst he was on his way to the sitting of the Committee of Public Safety. The paper always contained a brief notice that the band of meddlesome Englishmen were at work, and it was always signed with a device drawn in red⁠&mdash;a little star-shaped flower, which we in England call the Scarlet Pimpernel. Within a few hours of the receipt of this impudent notice, the citoyens of the Committee of Public Safety would hear that so many royalists and aristocrats had succeeded in reaching the coast, and were on their way to England and safety.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The guards at the gates had been doubled, the sergeants in command had been threatened with death, whilst liberal rewards were offered for the capture of these daring and impudent Englishmen. There was a sum of five thousand francs promised to the man who laid hands on the mysterious and elusive Scarlet Pimpernel.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Everyone felt that Bibot would be that man, and Bibot allowed that belief to take firm root in everybody&rsquo;s mind; and so, day after day, people came to watch him at the West Gate, so as to be present when he laid hands on any fugitive aristo who perhaps might be accompanied by that mysterious Englishman.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Bah!&rdquo; he said to his trusted corporal, &ldquo;Citoyen Grospierre was a fool! Had it been me now, at that North Gate last week⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Citoyen Bibot spat on the ground to express his contempt for his comrade&rsquo;s stupidity.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How did it happen, citoyen?&rdquo; asked the corporal.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Grospierre was at the gate, keeping good watch,&rdquo; began Bibot, pompously, as the crowd closed in round him, listening eagerly to his narrative. &ldquo;We&rsquo;ve all heard of this meddlesome Englishman, this accursed Scarlet Pimpernel. He won&rsquo;t get through<em>my</em>gate,<em>morbleu!</em>unless he be the devil himself. But Grospierre was a fool. The market carts were going through the gates; there was one laden with casks, and driven by an old man, with a boy beside him. Grospierre was a bit drunk, but he thought himself very clever; he looked into the casks⁠&mdash;most of them, at least⁠&mdash;and saw they were empty, and let the cart go through.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A murmur of wrath and contempt went round the group of ill-clad wretches, who crowded round Citoyen Bibot.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Half an hour later,&rdquo; continued the sergeant, &ldquo;up comes a captain of the guard with a squad of some dozen soldiers with him. &lsquo;Has a cart gone through?&rsquo; he asks of Grospierre, breathlessly. &lsquo;Yes,&rsquo; says Grospierre, &lsquo;not half an hour ago.&rsquo; &lsquo;And you have let them escape,&rsquo; shouts the captain furiously. &lsquo;You&rsquo;ll go to the guillotine for this, citoyen sergeant! that cart held concealed the ci-devant Duc de Chalis and all his family!&rsquo; &lsquo;What!&rsquo; thunders Grospierre, aghast. &lsquo;Aye! and the driver was none other than that cursed Englishman, the Scarlet Pimpernel.&rsquo; &rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A howl of execration greeted this tale. Citoyen Grospierre had paid for his blunder on the guillotine, but what a fool! oh! what a fool!</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Bibot was laughing so much at his own tale that it was some time before he could continue.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo; &lsquo;After them, my men,&rsquo; shouts the captain,&rdquo; he said after a while, &ldquo; &rsquo;remember the reward; after them, they cannot have gone far!&rsquo; And with that he rushes through the gate followed by his dozen soldiers.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But it was too late!&rdquo; shouted the crowd, excitedly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;They never got them!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Curse that Grospierre for his folly!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He deserved his fate!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Fancy not examining those casks properly!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But these sallies seemed to amuse Citoyen Bibot exceedingly; he laughed until his sides ached, and the tears streamed down his cheeks.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay, nay!&rdquo; he said at last, &ldquo;those aristos weren&rsquo;t in the cart; the driver was not the Scarlet Pimpernel!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No! The captain of the guard was that damned Englishman in disguise, and every one of his soldiers aristos!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The crowd this time said nothing: the story certainly savoured of the supernatural, and though the Republic had abolished God, it had not quite succeeded in killing the fear of the supernatural in the hearts of the people. Truly that Englishman must be the devil himself.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The sun was sinking low down in the west. Bibot prepared himself to close the gates.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;En avant the carts,&rdquo; he said.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Some dozen covered carts were drawn up in a row, ready to leave town, in order to fetch the produce from the country close by, for market the next morning. They were mostly well known to Bibot, as they went through his gate twice every day on their way to and from the town. He spoke to one or two of their drivers⁠&mdash;mostly women⁠&mdash;and was at great pains to examine the inside of the carts.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You never know,&rdquo; he would say, &ldquo;and I&rsquo;m not going to be caught like that fool Grospierre.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The women who drove the carts usually spent their day on the Place de la Grève, beneath the platform of the guillotine, knitting and gossiping, whilst they watched the rows of tumbrils arriving with the victims the Reign of Terror claimed every day. It was great fun to see the aristos arriving for the reception of Madame la Guillotine, and the places close by the platform were very much sought after. Bibot, during the day, had been on duty on the Place. He recognized most of the old hats,<em>tricoteuses</em>, as they were called, who sat there and knitted, whilst head after head fell beneath the knife, and they themselves got quite bespattered with the blood of those cursed aristos.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;<em>Hé! la mère!</em>&rdquo; said Bibot to one of these horrible hags, &ldquo;what have you got there?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He had seen her earlier in the day, with her knitting and the whip of her cart close beside her. Now she had fastened a row of curly locks to the whip handle, all colours, from gold to silver, fair to dark, and she stroked them with her huge, bony fingers as she laughed at Bibot.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I made friends with Madame Guillotine&rsquo;s lover,&rdquo; she said with a coarse laugh, &ldquo;he cut these off for me from the heads as they rolled down. He has promised me some more tomorrow, but I don&rsquo;t know if I shall be at my usual place.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah! how is that,<em>la mère</em>?&rdquo; asked Bibot, who, hardened soldier that he was, could not help shuddering at the awful loathsomeness of this semblance of a woman, with her ghastly trophy on the handle of her whip.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;My grandson has got the smallpox,&rdquo; she said with a jerk of her thumb towards the inside of her cart, &ldquo;some say it&rsquo;s the plague! If it is, I shan&rsquo;t be allowed to come into Paris tomorrow.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">At the first mention of the word smallpox, Bibot had stepped hastily backwards, and when the old hag spoke of the plague, he retreated from her as fast as he could.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Curse you!&rdquo; he muttered, whilst the whole crowd hastily avoided the cart, leaving it standing all alone in the midst of the place.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The old hag laughed.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Curse you, citoyen, for being a coward,&rdquo; she said. &ldquo;Bah! what a man to be afraid of sickness.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;<em>Morbleu!</em>the plague!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Everyone was awestruck and silent, filled with horror for the loathsome malady, the one thing which still had the power to arouse terror and disgust in these savage, brutalised creatures.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Get out with you and with your plague-stricken brood!&rdquo; shouted Bibot, hoarsely.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And with another rough laugh and coarse jest, the old hag whipped up her lean nag and drove her cart out of the gate.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">This incident had spoilt the afternoon. The people were terrified of these two horrible curses, the two maladies which nothing could cure, and which were the precursors of an awful and lonely death. They hung about the barricades, silent and sullen for a while, eyeing one another suspiciously, avoiding each other as if by instinct, lest the plague lurked already in their midst. Presently, as in the case of Grospierre, a captain of the guard appeared suddenly. But he was known to Bibot, and there was no fear of his turning out to be a sly Englishman in disguise.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A cart⁠ ⁠&hellip;&rdquo; he shouted breathlessly, even before he had reached the gates.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What cart?&rdquo; asked Bibot, roughly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Driven by an old hag.⁠ ⁠&hellip; A covered cart⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;There were a dozen⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;An old hag who said her son had the plague?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You have not let them go?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;<em>Morbleu!</em>&rdquo; said Bibot, whose purple cheeks had suddenly become white with fear.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The cart contained the ci-devant Comtesse de Tourney and her two children, all of them traitors and condemned to death.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And their driver?&rdquo; muttered Bibot, as a superstitious shudder ran down his spine.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;<em>Sacré tonnerre</em>,&rdquo; said the captain, &ldquo;but it is feared that it was that accursed Englishman himself⁠&mdash;the Scarlet Pimpernel.&rdquo;</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 1).</div>
+                </div>
+            </details>
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 2 ===== -->
+            <details style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER II &middot; Dover: The Fisherman&rsquo;s Rest &middot; 3,100 words &middot; already read; open it if you want to look back</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">In the kitchen Sally was extremely busy⁠&mdash;saucepans and frying-pans were standing in rows on the gigantic hearth, the huge stockpot stood in a corner, and the jack turned with slow deliberation, and presented alternately to the glow every side of a noble sirloin of beef. The two little kitchen-maids bustled around, eager to help, hot and panting, with cotton sleeves well tucked up above the dimpled elbows, and giggling over some private jokes of their own, whenever Miss Sally&rsquo;s back was turned for a moment. And old Jemima, stolid in temper and solid in bulk, kept up a long and subdued grumble, while she stirred the stockpot methodically over the fire.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What ho! Sally!&rdquo; came in cheerful if none too melodious accents from the coffee-room close by.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud bless my soul!&rdquo; exclaimed Sally, with a good-humoured laugh, &ldquo;what be they all wanting now, I wonder!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Beer, of course,&rdquo; grumbled Jemima, &ldquo;you don&rsquo;t &rsquo;xpect Jimmy Pitkin to &rsquo;ave done with one tankard, do ye?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Mr. &rsquo;Arry, &rsquo;e looked uncommon thirsty too,&rdquo; simpered Martha, one of the little kitchen-maids; and her beady black eyes twinkled as they met those of her companion, whereupon both started on a round of short and suppressed giggles.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sally looked cross for a moment, and thoughtfully rubbed her hands against her shapely hips; her palms were itching, evidently, to come in contact with Martha&rsquo;s rosy cheeks⁠&mdash;but inherent good-humour prevailed, and with a pout and a shrug of the shoulders, she turned her attention to the fried potatoes.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What ho, Sally! hey, Sally!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And a chorus of pewter mugs, tapped with impatient hands against the oak tables of the coffee-room, accompanied the shouts for mine host&rsquo;s buxom daughter.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Sally!&rdquo; shouted a more persistent voice, &ldquo;are ye goin&rsquo; to be all night with that there beer?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I do think father might get the beer for them,&rdquo; muttered Sally, as Jemima, stolidly and without further comment, took a couple of foam-crowned jugs from the shelf, and began filling a number of pewter tankards with some of that home-brewed ale for which the Fisherman&rsquo;s Rest had been famous since the days of King Charles. &ldquo; &rsquo;E knows &rsquo;ow busy we are in &rsquo;ere.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Your father is too busy discussing politics with Mr. &rsquo;Empseed to worry &rsquo;isself about you and the kitchen,&rdquo; grumbled Jemima under her breath.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sally had gone to the small mirror which hung in a corner of the kitchen, and was hastily smoothing her hair and setting her frilled cap at its most becoming angle over her dark curls; then she took up the tankards by their handles, three in each strong, brown hand, and laughing, grumbling, blushing, carried them through into the coffee-room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There, there was certainly no sign of that bustle and activity which kept four women busy and hot in the glowing kitchen beyond.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The coffee-room of the Fisherman&rsquo;s Rest is a show place now at the beginning of the twentieth century. At the end of the eighteenth, in the year of grace 1792, it had not yet gained the notoriety and importance which a hundred additional years and the craze of the age have since bestowed upon it. Yet it was an old place, even then, for the oak rafters and beams were already black with age⁠&mdash;as were the panelled seats, with their tall backs, and the long polished tables between, on which innumerable pewter tankards had left fantastic patterns of many-sized rings. In the leaded window, high up, a row of pots of scarlet geraniums and blue larkspur gave the bright note of colour against the dull background of the oak.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">That Mr. Jellyband, landlord of the Fisherman&rsquo;s Rest at Dover, was a prosperous man, was of course clear to the most casual observer. The pewter on the fine old dressers, the brass above the gigantic hearth, shone like silver and gold⁠&mdash;the red-tiled floor was as brilliant as the scarlet geranium on the window sill⁠&mdash;this meant that his servants were good and plentiful, that the custom was constant, and of that order which necessitated the keeping up of the coffee-room to a high standard of elegance and order.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">As Sally came in, laughing through her frowns, and displaying a row of dazzling white teeth, she was greeted with shouts and chorus of applause.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Why, here&rsquo;s Sally! What ho, Sally! Hurrah for pretty Sally!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I thought you&rsquo;d grown deaf in that kitchen of yours,&rdquo; muttered Jimmy Pitkin, as he passed the back of his hand across his very dry lips.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;All ri&rsquo;! all ri&rsquo;!&rdquo; laughed Sally, as she deposited the freshly-filled tankards upon the tables, &ldquo;why, what a &rsquo;urry to be sure! And is your gran&rsquo;mother a-dyin&rsquo; an&rsquo; you wantin&rsquo; to see the pore soul afore she&rsquo;m gone! I never see&rsquo;d such a mighty rushin&rsquo;!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A chorus of good-humoured laughter greeted this witticism, which gave the company there present food for many jokes, for some considerable time. Sally now seemed in less of a hurry to get back to her pots and pans. A young man with fair curly hair, and eager, bright blue eyes, was engaging most of her attention and the whole of her time, whilst broad witticisms anent Jimmy Pitkin&rsquo;s fictitious grandmother flew from mouth to mouth, mixed with heavy puffs of pungent tobacco smoke.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Facing the hearth, his legs wide apart, a long clay pipe in his mouth, stood mine host himself, worthy Mr. Jellyband, landlord of the Fisherman&rsquo;s Rest, as his father had before him, aye, and his grandfather and great-grandfather too, for that matter. Portly in build, jovial in countenance and somewhat bald of pate, Mr. Jellyband was indeed a typical rural John Bull of those days⁠&mdash;the days when our prejudiced insularity was at its height, when to an Englishman, be he lord, yeoman, or peasant, the whole of the continent of Europe was a den of immorality and the rest of the world an unexploited land of savages and cannibals.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There he stood, mine worthy host, firm and well set up on his limbs, smoking his long churchwarden and caring nothing for nobody at home, and despising everybody abroad. He wore the typical scarlet waistcoat, with shiny brass buttons, the corduroy breeches, and grey worsted stockings and smart buckled shoes, that characterised every self-respecting innkeeper in Great Britain in these days⁠&mdash;and while pretty, motherless Sally had need of four pairs of brown hands to do all the work that fell on her shapely shoulders, worthy Jellyband discussed the affairs of nations with his most privileged guests.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The coffee-room indeed, lighted by two well-polished lamps, which hung from the raftered ceiling, looked cheerful and cosy in the extreme. Through the dense clouds of tobacco smoke that hung about in every corner, the faces of Mr. Jellyband&rsquo;s customers appeared red and pleasant to look at, and on good terms with themselves, their host and all the world; from every side of the room loud guffaws accompanied pleasant, if not highly intellectual, conversation⁠&mdash;while Sally&rsquo;s repeated giggles testified to the good use Mr. Harry Waite was making of the short time she seemed inclined to spare him.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">They were mostly fisher-folk who patronised Mr. Jellyband&rsquo;s coffee-room, but fishermen are known to be very thirsty people; the salt which they breathe in, when they are on the sea, accounts for their parched throats when on shore, but the Fisherman&rsquo;s Rest was something more than a rendezvous for these humble folk. The London and Dover coach started from the hostel daily, and passengers who had come across the Channel, and those who started for the &ldquo;grand tour,&rdquo; all became acquainted with Mr. Jellyband, his French wines and his home-brewed ales.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was towards the close of September, 1792, and the weather which had been brilliant and hot throughout the month had suddenly broken up; for two days torrents of rain had deluged the south of England, doing its level best to ruin what chances the apples and pears and late plums had of becoming really fine, self-respecting fruit. Even now it was beating against the leaded windows, and tumbling down the chimney, making the cheerful wood fire sizzle in the hearth.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud! did you ever see such a wet September, Mr. Jellyband?&rdquo; asked Mr. Hempseed.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He sat in one of the seats inside the hearth, did Mr. Hempseed, for he was an authority and important personage not only at the Fisherman&rsquo;s Rest, where Mr. Jellyband always made a special selection of him as a foil for political arguments, but throughout the neighborhood, where his learning and notably his knowledge of the Scriptures was held in the most profound awe and respect. With one hand buried in the capacious pockets of his corduroys underneath his elaborately-worked, well-worn smock, the other holding his long clay pipe, Mr. Hempseed sat there looking dejectedly across the room at the rivulets of moisture which trickled down the window panes.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No,&rdquo; replied Mr. Jellyband, sententiously, &ldquo;I dunno, Mr. &rsquo;Empseed, as I ever did. An&rsquo; I&rsquo;ve been in these parts nigh on sixty years.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye! you wouldn&rsquo;t rec&rsquo;llect the first three years of them sixty, Mr. Jellyband,&rdquo; quietly interposed Mr. Hempseed. &ldquo;I dunno as I ever see&rsquo;d an infant take much note of the weather, leastways not in these parts, an&rsquo;<em>I</em>&rsquo;ve lived &rsquo;ere nigh on seventy-five years, Mr. Jellyband.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The superiority of this wisdom was so incontestable that for the moment Mr. Jellyband was not ready with his usual flow of argument.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;It do seem more like April than September, don&rsquo;t it?&rdquo; continued Mr. Hempseed, dolefully, as a shower of raindrops fell with a sizzle upon the fire.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye! that it do,&rdquo; assented the worthy host, &ldquo;but then what can you &rsquo;xpect, Mr. &rsquo;Empseed, I says, with sich a government as we&rsquo;ve got?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Mr. Hempseed shook his head with an infinity of wisdom, tempered by deeply-rooted mistrust of the British climate and the British Government.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I don&rsquo;t &rsquo;xpect nothing, Mr. Jellyband,&rdquo; he said. &ldquo;Pore folks like us is of no account up there in Lunnon, I knows that, and it&rsquo;s not often as I do complain. But when it comes to sich wet weather in September, and all me fruit a-rottin&rsquo; and a-dying&rsquo; like the &rsquo;Guptian mother&rsquo;s first born, and doin&rsquo; no more good than they did, pore dears, save to a lot more Jews, pedlars and sich, with their oranges and sich like foreign ungodly fruit, which nobody&rsquo;d buy if English apples and pears was nicely swelled. As the Scriptures say⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;That&rsquo;s quite right, Mr. &rsquo;Empseed,&rdquo; retorted Jellyband, &ldquo;and as I says, what can you &rsquo;xpect? There&rsquo;s all them Frenchy devils over the Channel yonder a-murderin&rsquo; their king and nobility, and Mr. Pitt and Mr. Fox and Mr. Burke a-fightin&rsquo; and a-wranglin&rsquo; between them, if we Englishmen should &rsquo;low them to go on in their ungodly way. &lsquo;Let &rsquo;em murder!&rsquo; says Mr. Pitt. &lsquo;Stop &rsquo;em!&rsquo; says Mr. Burke.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And let &rsquo;em murder, says I, and be demmed to &rsquo;em,&rdquo; said Mr. Hempseed, emphatically, for he had but little liking for his friend Jellyband&rsquo;s political arguments, wherein he always got out of his depth, and had but little chance for displaying those pearls of wisdom which had earned for him so high a reputation in the neighbourhood and so many free tankards of ale at the Fisherman&rsquo;s Rest.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Let &rsquo;em murder,&rdquo; he repeated again, &ldquo;but don&rsquo;t lets &rsquo;ave sich rain in September, for that is agin the law and the Scriptures which says⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud! Mr. &rsquo;Arry, &rsquo;ow you made me jump!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was unfortunate for Sally and her flirtation that this remark of hers should have occurred at the precise moment when Mr. Hempseed was collecting his breath, in order to deliver himself one of those Scriptural utterances which made him famous, for it brought down upon her pretty head the full flood of her father&rsquo;s wrath.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Now then, Sally, me girl, now then!&rdquo; he said, trying to force a frown upon his good-humoured face, &ldquo;stop that fooling with them young jackanapes and get on with the work.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The work&rsquo;s gettin&rsquo; on all ri&rsquo;, father.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But Mr. Jellyband was peremptory. He had other views for his buxom daughter, his only child, who would in God&rsquo;s good time become the owner of the Fisherman&rsquo;s Rest, than to see her married to one of these young fellows who earned but a precarious livelihood with their net.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Did ye hear me speak, me girl?&rdquo; he said in that quiet tone, which no one inside the inn dared to disobey. &ldquo;Get on with my Lord Tony&rsquo;s supper, for, if it ain&rsquo;t the best we can do, and &rsquo;e not satisfied, see what you&rsquo;ll get, that&rsquo;s all.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Reluctantly Sally obeyed.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Is you &rsquo;xpecting special guests then tonight, Mr. Jellyband?&rdquo; asked Jimmy Pitkin, in a loyal attempt to divert his host&rsquo;s attention from the circumstances connected with Sally&rsquo;s exit from the room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye! that I be,&rdquo; replied Jellyband, &ldquo;friends of my Lord Tony hisself. Dukes and duchesses from over the water yonder, whom the young lord and his friend, Sir Andrew Ffoulkes, and other young noblemen have helped out of the clutches of them murderin&rsquo; devils.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But this was too much for Mr. Hempseed&rsquo;s querulous philosophy.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud!&rdquo; he said, &ldquo;what do they do that for, I wonder? I don&rsquo;t &rsquo;old not with interferin&rsquo; in other folks&rsquo; ways. As the Scriptures say⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Maybe, Mr. &rsquo;Empseed,&rdquo; interrupted Jellyband, with biting sarcasm, &ldquo;as you&rsquo;re a personal friend of Mr. Pitt, and as you says along with Mr. Fox: &lsquo;Let &rsquo;em murder!&rsquo; says you.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Pardon me, Mr. Jellyband,&rdquo; feebly protested Mr. Hempseed, &ldquo;I dunno as I ever did.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But Mr. Jellyband had at last succeeded in getting upon his favourite hobbyhorse, and had no intention of dismounting in any hurry.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Or maybe you&rsquo;ve made friends with some of them French chaps &rsquo;oo they do say have come over here o&rsquo; purpose to make us Englishmen agree with their murderin&rsquo; ways.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I dunno what you mean, Mr. Jellyband,&rdquo; suggested Mr. Hempseed, &ldquo;all I know is⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;All<em>I</em>know is,&rdquo; loudly asserted mine host, &ldquo;that there was my friend Peppercorn, &rsquo;oo owns the Blue-Faced Boar, an&rsquo; as true and loyal an Englishman as you&rsquo;d see in the land. And now look at &rsquo;im!⁠&mdash;&rsquo;E made friends with some o&rsquo; them frog-eaters, &rsquo;obnobbed with them just as if they was Englishmen, and not just a lot of immoral, Godforsaking furrin&rsquo; spies. Well! and what happened? Peppercorn &rsquo;e now ups and talks of revolutions, and liberty, and down with the aristocrats, just like Mr. &rsquo;Empseed over &rsquo;ere!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Pardon me, Mr. Jellyband,&rdquo; again interposed Mr. Hempseed feebly, &ldquo;I dunno as I ever did⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Mr. Jellyband had appealed to the company in general, who were listening awestruck and open-mouthed at the recital of Mr. Peppercorn&rsquo;s defalcations. At one table two customers⁠&mdash;gentlemen apparently by their clothes⁠&mdash;had pushed aside their half-finished game of dominoes, and had been listening for some time, and evidently with much amusement at Mr. Jellyband&rsquo;s international opinions. One of them now, with a quiet, sarcastic smile still lurking round the corners of his mobile mouth, turned towards the centre of the room where Mr. Jellyband was standing.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You seem to think, mine honest friend,&rdquo; he said quietly, &ldquo;that these Frenchmen⁠&mdash;spies I think you called them⁠&mdash;are mighty clever fellows to have made mincemeat so to speak of your friend Mr. Peppercorn&rsquo;s opinions. How did they accomplish that now, think you?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud! sir, I suppose they talked &rsquo;im over. Those Frenchies, I&rsquo;ve &rsquo;eard it said, &rsquo;ave got the gift of the gab⁠&mdash;and Mr. &rsquo;Empseed &rsquo;ere will tell you &rsquo;ow it is that they just twist some people round their little finger like.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Indeed, and is that so, Mr. Hempseed?&rdquo; inquired the stranger politely.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay, sir!&rdquo; replied Mr. Hempseed, much irritated, &ldquo;I dunno as I can give you the information you require.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Faith, then,&rdquo; said the stranger, &ldquo;let us hope, my worthy host, that these clever spies will not succeed in upsetting your extremely loyal opinions.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But this was too much for Mr. Jellyband&rsquo;s pleasant equanimity. He burst into an uproarious fit of laughter, which was soon echoed by those who happened to be in his debt.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hahaha! hohoho! hehehe!&rdquo; He laughed in every key, did my worthy host, and laughed until his sides ached, and his eyes streamed. &ldquo;At me! hark at that! Did ye &rsquo;ear &rsquo;im say that they&rsquo;d be upsettin&rsquo; my opinions?⁠&mdash;Eh?⁠&mdash;Lud love you, sir, but you do say some queer things.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Well, Mr. Jellyband,&rdquo; said Mr. Hempseed, sententiously, &ldquo;you know what the Scriptures say: &lsquo;Let &rsquo;im &rsquo;oo stands take &rsquo;eed lest &rsquo;e fall.&rsquo; &rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But then hark&rsquo;ee Mr. &rsquo;Empseed,&rdquo; retorted Jellyband, still holding his sides with laughter, &ldquo;the Scriptures didn&rsquo;t know me. Why, I wouldn&rsquo;t so much as drink a glass of ale with one o&rsquo; them murderin&rsquo; Frenchmen, and nothin&rsquo; &rsquo;d make me change my opinions. Why! I&rsquo;ve &rsquo;eard it said that them frog-eaters can&rsquo;t even speak the King&rsquo;s English, so, of course, if any of &rsquo;em tried to speak their Godforsaken lingo to me, why, I should spot them directly, see!⁠&mdash;and forewarned is forearmed, as the saying goes.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye! my honest friend,&rdquo; assented the stranger cheerfully, &ldquo;I see that you are much too sharp, and a match for any twenty Frenchmen, and here&rsquo;s to your very good health, my worthy host, if you&rsquo;ll do me the honour to finish this bottle of mine with me.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I am sure you&rsquo;re very polite, sir,&rdquo; said Mr. Jellyband, wiping his eyes which were still streaming with the abundance of his laughter, &ldquo;and I don&rsquo;t mind if I do.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The stranger poured out a couple of tankards full of wine, and having offered one to mine host, he took the other himself.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Loyal Englishmen as we all are,&rdquo; he said, whilst the same humorous smile played round the corners of his thin lips⁠&mdash;&ldquo;loyal as we are, we must admit that this at least is one good thing which comes to us from France.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye! we&rsquo;ll none of us deny that, sir,&rdquo; assented mine host.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And here&rsquo;s to the best landlord in England, our worthy host, Mr. Jellyband,&rdquo; said the stranger in a loud tone of voice.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hip, hip, hurrah!&rdquo; retorted the whole company present. Then there was a loud clapping of hands, and mugs and tankards made a rattling music upon the tables to the accompaniment of loud laughter at nothing in particular, and of Mr. Jellyband&rsquo;s muttered exclamations:</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Just fancy<em>me</em>bein&rsquo; talked over by any Godforsaken furriner!⁠&mdash;What?⁠&mdash;Lud love you, sir, but you do say some queer things.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">To which obvious fact the stranger heartily assented. It was certainly a preposterous suggestion that anyone could ever upset Mr. Jellyband&rsquo;s firmly-rooted opinions anent the utter worthlessness of the inhabitants of the whole continent of Europe.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 2).</div>
+                </div>
+            </details>
+
+
+
+
     <!-- Title strip -->
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
         <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.03 &middot; Weekly Workshop</div>
@@ -163,24 +524,6 @@
         <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In the Week 1 section of your Reading Journal, add a note under "Section 1: Module Question." Write one or two sentences: what is your current position on the module question, and what is one detail from Chs. 1 or 2 that supports it? You will return to this and revise it as the module unfolds.</div>
     </div>
 
-    <!-- WHAT YOU'LL DO NEXT -->
-    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
-        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
-        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Quick Write 1</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Open the Quick Write 1 assignment in Canvas. You will write your first open response to the module question in a Microsoft Word document.</div>
-            </div>
-        </div>
-        <div style="display: flex; align-items: flex-start; gap: 14px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Check-up</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete the Check-up quiz in Canvas to confirm this week&rsquo;s reading and grammar landed.</div>
-            </div>
-        </div>
-    </div>
 
     <!-- Wrap-up -->
     <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">

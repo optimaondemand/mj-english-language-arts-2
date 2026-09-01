@@ -62,6 +62,418 @@
   <!-- BODY WRAPPER -->
   <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+            <!-- ===== EMBEDDED READING: The Most Dangerous Game 1 ===== -->
+            <details style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; THE STORY &middot; 7,972 words &middot; already read; open it if you want to look back</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">OFF there to the right&mdash;somewhere&mdash;is a large island,&rdquo; said Whitney. &ldquo;It&rsquo;s rather a mystery&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What island is it?&rdquo; Rainsford asked.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The old charts call it &lsquo;Ship-Trap Island,&rsquo;&rdquo; Whitney replied. &ldquo;A suggestive name, isn&rsquo;t it? Sailors have a curious dread of the place. I don&rsquo;t know why. Some superstition&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Can&rsquo;t see it,&rdquo; remarked Rainsford, trying to peer through the dank tropical night that was palpable as it pressed its thick warm blackness in upon the yacht.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You&rsquo;ve good eyes,&rdquo; said Whitney, with a laugh, &ldquo;and I&rsquo;ve seen you pick off a moose moving in the brown fall bush at four hundred yards, but even you can&rsquo;t see four miles or so through a moonless Caribbean night.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nor four yards,&rdquo; admitted Rainsford. &ldquo;Ugh! It&rsquo;s like moist black velvet.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;It will be light enough in Rio,&rdquo; promised Whitney. &ldquo;We should make it in a few days. I hope the jaguar guns have come from Purdey&rsquo;s. We should have some good hunting up the Amazon. Great sport, hunting.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The best sport in the world,&rdquo; agreed Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;For the hunter,&rdquo; amended Whitney. &ldquo;Not for the jaguar.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Don&rsquo;t talk rot, Whitney,&rdquo; said Rainsford. &ldquo;You&rsquo;re a big-game hunter, not a philosopher. Who cares how a jaguar feels?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Perhaps the jaguar does,&rdquo; observed Whitney.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Bah! They&rsquo;ve no understanding.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Even so, I rather think they understand one thing&mdash;fear. The fear of pain and the fear of death.&rdquo; &ldquo;Nonsense,&rdquo; laughed Rainsford. &ldquo;This hot weather is making you soft, Whitney. Be a realist. The world is made up of two classes&mdash;the hunters and the huntees. Luckily, you and I are hunters. Do you think we&rsquo;ve passed that island yet?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I can&rsquo;t tell in the dark. I hope so.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Why?&rdquo; asked Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The place has a reputation&mdash;a bad one.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Cannibals?&rdquo; suggested Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hardly. Even cannibals wouldn&rsquo;t live in such a God-forsaken place. But it&rsquo;s gotten into sailor lore, somehow. Didn&rsquo;t you notice that the crew&rsquo;s nerves seemed a bit jumpy to-day?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;They were a bit strange, now you mention it. Even Captain Nielsen&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, even that tough-minded old Swede, who&rsquo;d go up to the devil himself and ask him for a light. Those fishy blue eyes held a look I never saw there before. All I could get out of him was: &lsquo;This place has an evil name among sea-faring men, sir.&rsquo; Then he said to me, very gravely: &lsquo;Don&rsquo;t you feel anything?&rsquo;&mdash;as if the air about us was actually poisonous. Now, you mustn&rsquo;t laugh when I tell you this&mdash;I did feel something like a sudden chill.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;There was no breeze. The sea was as flat as a plate-glass window. We were drawing near the island then. What I felt was a&mdash;a mental chill; a sort of sudden dread.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Pure imagination,&rdquo; said Rainsford. &ldquo;One superstitious sailor can taint the whole ship&rsquo;s company with his fear.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Maybe. But sometimes I think sailors have an extra sense that tells them when they are in danger. Sometimes I think evil is a tangible thing&mdash;with wave lengths, just as sound and light have. An evil place can, so to speak, broadcast vibrations of evil. Anyhow, I&rsquo;m glad we&rsquo;re getting out of this zone. Well, I think I&rsquo;ll turn in now, Rainsford.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I&rsquo;m not sleepy,&rdquo; said Rainsford. &ldquo;I&rsquo;m going to smoke another pipe up on the after deck.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Good-night, then, Rainsford. See you at breakfast.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Right. Good-night, Whitney.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There was no sound in the night as Rainsford sat there but the muffled throb of the engine that drove the yacht swiftly through the darkness, and the swish and ripple of the wash of the propeller.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford, reclining in a steamer chair, indolently puffed on his favourite brier. The sensuous drowsiness of the night was on him. &ldquo;It&rsquo;s so dark,&rdquo; he thought, &ldquo;that I could sleep without closing my eyes; the night would be my eyelids&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">An abrupt sound startled him. Off to the right he heard it, and his ears, expert in such matters, could not be mistaken. Again he heard the sound, and again. Somewhere, off in the blackness, someone had fired a gun three times.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford sprang up and moved quickly to the rail, mystified. He strained his eyes in the direction from which the reports had come, but it was like trying to see through a blanket. He leaped upon the rail and balanced himself there, to get greater elevation; his pipe, striking a rope, was knocked from his mouth. He lunged for it; a short, hoarse cry came from his lips as he realized he had reached too far and had lost his balance. The cry was pinched off short as the blood-warm waters of the Caribbean Sea closed over his head.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He struggled up to the surface and tried to cry out, but the wash from the speeding yacht slapped him in the face and the salt water in his open mouth made him gag and strangle. Desperately he struck out with strong strokes after the receding lights of the yacht, but he stopped before he had swum fifty feet. A certain cool-headedness had come to him; it was not the first time he had been in a tight place. There was a chance that his cries could be heard by someone aboard the yacht, but that chance was slender, and grew more slender as the yacht raced on. He wrestled himself out of his clothes, and shouted with all his power. The lights of the yacht became faint and ever-vanishing fireflies; then they were blotted out entirely by the night.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford remembered the shots. They had come from the right, and doggedly he swam in that direction, swimming with slow, deliberate strokes, conserving his strength. For a seemingly endless time he fought the sea. He began to count his strokes; he could do possibly a hundred more and then&mdash;&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford heard a sound. It came out of the darkness, a high, screaming sound, the sound of an animal in an extremity of anguish and terror. He did not recognize the animal that made the sound; he did not try to; with fresh vitality he swam toward the sound. He heard it again; then it was cut short by another noise, crisp, staccato.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Pistol shot,&rdquo; muttered Rainsford, swimming on.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Ten minutes of determined effort brought another sound to his ears&mdash;the most welcome he had ever heard&mdash;the muttering and growling of the sea breaking on a rocky shore. He was almost on the rocks before he saw them; on a night less calm he would have been shattered against them. With his remaining strength he dragged himself from the swirling waters. Jagged crags appeared to jut up into the opaqueness; he forced himself upward, hand over hand. Gasping, his hands raw, he reached a flat place at the top. Dense jungle came down to the very edge of the cliffs. What perils that tangle of trees and underbrush might hold for him did not concern Rainsford just then. All he knew was that he was safe from his enemy, the sea, and that utter weariness was on him. He flung himself down at the jungle edge and tumbled headlong into the deepest sleep of his life.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">When he opened his eyes he knew from the position of the sun that it was late in the afternoon. Sleep had given him new vigour; a sharp hunger was picking at him. He looked about him, almost cheerfully.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Where there are pistol shots, there are men. Where there are men, there is food,&rdquo; he thought. But what kind of men, he wondered, in so forbidding a place? An unbroken front of snarled and ragged jungle fringed the shore.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He saw no sign of a trail through the closely knit web of weeds and trees; it was easier to go along the shore, and Rainsford floundered along by the water. Not far from where he landed, he stopped.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Some wounded thing, by the evidence, a large animal, had thrashed about in the underbrush; the jungle weeds were crushed down and the moss was lacerated; one patch of weeds was stained crimson. A small, glittering object not far away caught Rainsford&rsquo;s eye and he picked it up. It was an empty cartridge.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A twenty-two,&rdquo; he remarked. &ldquo;That&rsquo;s odd. It must have been a fairly large animal too. The hunter had his nerve with him to tackle it with a light gun. It&rsquo;s clear that the brute put up a fight. I suppose the first three shots I heard was when the hunter flushed his quarry and wounded it. The last shot was when he trailed it here and finished it.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He examined the ground closely and found what he had hoped to find&mdash;the print of hunting boots. They pointed along the cliff in the direction he had been going. Eagerly he hurried along, now slipping on a rotten log or a loose stone, but making headway; night was beginning to settle down on the island.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Bleak darkness was blacking out the sea and jungle when Rainsford sighted the lights. He came upon them as he turned a crook in the coast line; and his first thought was that he had come upon a village, for there were many lights. But as he forged along he saw to his great astonishment that all the lights were in one enormous building&mdash;a lofty structure with pointed towers plunging upward into the gloom. His eyes made out the shadowy outlines of a palatial château; it was set on a high bluff, and on three sides of it cliffs dived down to where the sea licked greedy lips in the shadows.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Mirage,&rdquo; thought Rainsford. But it was no mirage, he found, when he opened the tall spiked iron gate. The stone steps were real enough; the massive door with a leering gargoyle for a knocker was real enough; yet above it all hung an air of unreality.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He lifted the knocker, and it creaked up stiffly, as if it had never before been used. He let it fall, and it startled him with its booming loudness. He thought he heard steps within; the door remained closed. Again Rainsford lifted the heavy knocker, and let it fall. The door opened then, opened as suddenly as if it were on a spring, and Rainsford stood blinking in the river of glaring gold light that poured out. The first thing Rainsford&rsquo;s eyes discerned was the largest man Rainsford had ever seen&mdash;a gigantic creature, solidly made and black bearded to the waist. In his hand the man held a long-barrelled revolver, and he was pointing it straight at Rainsford&rsquo;s heart.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Out of the snarl of beard two small eyes regarded Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Don&rsquo;t be alarmed,&rdquo; said Rainsford, with a smile which he hoped was disarming. &ldquo;I&rsquo;m no robber. I fell off a yacht. My name is Sanger Rainsford of New York City.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The menacing look in the eyes did not change. The revolver pointed as rigidly as if the giant were a statue. He gave no sign that he understood Rainsford&rsquo;s words, or that he had even heard them. He was dressed in uniform, a black uniform trimmed with gray astrakhan.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I&rsquo;m Sanger Rainsford of New York,&rdquo; Rainsford began again. &ldquo;I fell off a yacht. I am hungry.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The man&rsquo;s only answer was to raise with his thumb the hammer of his revolver. Then Rainsford saw the man&rsquo;s free hand go to his forehead in a military salute, and he saw him click his heels together and stand at attention. Another man was coming down the broad marble steps, an erect, slender man in evening clothes. He advanced to Rainsford and held out his hand.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">In a cultivated voice marked by a slight accent that gave it added precision and deliberateness, he said: &ldquo;It is a very great pleasure and honour to welcome Mr. Sanger Rainsford, the celebrated hunter, to my home.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Automatically Rainsford shook the man&rsquo;s hand.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I&rsquo;ve read your book about hunting snow leopards in Tibet, you see,&rdquo; explained the man. &ldquo;I am General Zaroff.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford&rsquo;s first impression was that the man was singularly handsome; his second was that there was an original, almost bizarre quality about the general&rsquo;s face. He was a tall man past middle age, for his hair was a vivid white; but his thick eyebrows and pointed military moustache were as black as the night from which Rainsford had come. His eyes, too, were black and very bright. He had high cheek bones, a sharp-cut nose, a spare, dark face, the face of a man used to giving orders, the face of an aristocrat. Turning to the giant in uniform, the general made a sign. The giant put away his pistol, saluted, withdrew.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ivan is an incredibly strong fellow,&rdquo; remarked the general, &ldquo;but he has the misfortune to be deaf and dumb. A simple fellow, but, I&rsquo;m afraid, like all his race, a bit of a savage.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Is he Russian?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He is a Cossack,&rdquo; said the general, and his smile showed red lips and pointed teeth. &ldquo;So am I.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Come,&rdquo; he said, &ldquo;we shouldn&rsquo;t be chatting here. We can talk later. Now you want clothes, food, rest. You shall have them. This is a most restful spot.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Ivan had reappeared, and the general spoke to him with lips that moved but gave forth no sound. &ldquo;Follow Ivan, if you please, Mr. Rainsford,&rdquo; said the general. &ldquo;I was about to have my dinner when you came. I&rsquo;ll wait for you. You&rsquo;ll find that my clothes will fit you, I think.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was to a huge, beam-ceilinged bedroom with a canopied bed big enough for six men that Rainsford followed the silent giant. Ivan laid out an evening suit, and Rainsford, as he put it on, noticed that it came from a London tailor who ordinarily cut and sewed for none below the rank of duke.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The dining room to which Ivan conducted him was in many ways remarkable. There was a medieval magnificence about it; it suggested a baronial hall of feudal times with its oaken panels, its high ceiling, its vast refectory table where two score men could sit down to eat. About the hall were the mounted heads of many animals&mdash;lions, tigers, elephants, moose, bears; larger or more perfect specimens Rainsford had never seen. At the great table the general was sitting, alone.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You&rsquo;ll have a cocktail, Mr. Rainsford,&rdquo; he suggested. The cocktail was surpassingly good; and, Rainsford noted, the table appointments were of the finest&mdash;the linen, the crystal, the silver, the china.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">They were eating <em>borsch</em>, the rich red soup with whipped cream so dear to Russian palates. Half apologetically General Zaroff said: &ldquo;We do our best to preserve the amenities of civilization here. Please forgive any lapses. We are well off the beaten track, you know. Do you think the champagne has suffered from its long ocean trip?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Not in the least,&rdquo; declared Rainsford. He was finding the general a most thoughtful and affable host, a true cosmopolite. But there was one small trait of the general&rsquo;s that made Rainsford uncomfortable. Whenever he looked up from his plate he found the general studying him, appraising him narrowly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Perhaps,&rdquo; said General Zaroff, &ldquo;you were surprised that I recognized your name. You see, I read all books on hunting published in English, French, and Russian. I have but one passion in my life, Mr. Rainsford, and it is the hunt.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You have some wonderful heads here,&rdquo; said Rainsford as he ate a particularly well-cooked filet mignon. &ldquo;That Cape buffalo is the largest I ever saw.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh, that fellow. Yes, he was a monster.&rdquo; &ldquo;Did he charge you?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hurled me against a tree,&rdquo; said the general. &ldquo;Fractured my skull. But I got the brute.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I&rsquo;ve always thought,&rdquo; said Rainsford, &ldquo;that the Cape buffalo is the most dangerous of all big game.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">For a moment the general did not reply; he was smiling his curious red-lipped smile. Then he said slowly: &ldquo;No. You are wrong, sir. The Cape buffalo is not the most dangerous big game.&rdquo; He sipped his wine. &ldquo;Here in my preserve on this island,&rdquo; he said, in the same slow tone, &ldquo;I hunt more dangerous game.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford expressed his surprise. &ldquo;Is there big game on this island?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general nodded. &ldquo;The biggest.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Really?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh, it isn&rsquo;t here naturally, of course. I have to stock the island.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What have you imported, General?&rdquo; Rainsford asked. &ldquo;Tigers?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general smiled. &ldquo;No,&rdquo; he said. &ldquo;Hunting tigers ceased to interest me some years ago. I exhausted their possibilities, you see. No thrill left in tigers, no real danger. I live for danger, Mr. Rainsford.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general took from his pocket a gold cigarette case and offered his guest a long black cigarette with a silver tip; it was perfumed and gave off a smell like incense.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;We will have some capital hunting, you and I,&rdquo; said the general. &ldquo;I shall be most glad to have your society.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But what game&mdash;&mdash;&rdquo; began Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I&rsquo;ll tell you,&rdquo; said the general. &ldquo;You will be amused, I know. I think I may say, in all modesty, that I have done a rare thing. I have invented a new sensation. May I pour you another glass of port, Mr. Rainsford?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Thank you, General.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general filled both glasses, and said: &ldquo;God makes some men poets. Some He makes kings, some beggars. Me He made a hunter. My hand was made for the trigger, my father said. He was a very rich man with a quarter of a million acres in the Crimea, and he was an ardent sportsman. When I was only five years old he gave me a little gun, specially made in Moscow for me, to shoot sparrows with. When I shot some of his prize turkeys with it, he did not punish me; he complimented me on my marksmanship. I killed my first bear in the Caucasus when I was ten. My whole life has been one prolonged hunt. I went into the army&mdash;it was expected of noblemen&rsquo;s sons&mdash;and for a time commanded a division of Cossack cavalry, but my real interest was always the hunt. I have hunted every kind of game in every land. It would be impossible for me to tell you how many animals I have killed.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general puffed at his cigarette.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;After the débâcle in Russia I left the country, for it was imprudent for an officer of the Tsar to stay there. Many noble Russians lost everything. I, luckily, had invested heavily in American securities, so I shall never have to open a tea room in Monte Carlo or drive a taxi in Paris. Naturally, I continued to hunt&mdash;grizzlies in your Rockies, crocodiles in the Ganges, rhinoceroses in East Africa. It was in Africa that the Cape buffalo hit me and laid me up for six months. As soon as I recovered I started for the Amazon to hunt jaguars, for I had heard they were unusually cunning. They weren&rsquo;t.&rdquo; The Cossack sighed. &ldquo;They were no match at all for a hunter with his wits about him, and a high-powered rifle. I was bitterly disappointed. I was lying in my tent with a splitting headache one night when a terrible thought pushed its way into my mind. Hunting was beginning to bore me! And hunting, remember, had been my life. I have heard that in America business men often go to pieces when they give up the business that has been their life.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, that&rsquo;s so,&rdquo; said Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general smiled. &ldquo;I had no wish to go to pieces,&rdquo; he said. &ldquo;I must do something. Now, mine is an analytical mind, Mr. Rainsford. Doubtless that is why I enjoy the problems of the chase.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No doubt, General Zaroff.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;So,&rdquo; continued the general, &ldquo;I asked myself why the hunt no longer fascinated me. You are much younger than I am, Mr. Rainsford, and have not hunted as much, but you perhaps can guess the answer.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What was it?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Simply this: hunting had ceased to be what you call &lsquo;a sporting proposition.&rsquo; It had become too easy. I always got my quarry. Always. There is no greater bore than perfection.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general lit a fresh cigarette.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No animal had a chance with me any more. That is no boast; it is a mathematical certainty. The animal had nothing but his legs and his instinct. Instinct is no match for reason. When I thought of this it was a tragic moment for me, I can tell you.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford leaned across the table, absorbed in what his host was saying.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;It came to me as an inspiration what I must do,&rdquo; the general went on.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And that was?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general smiled the quiet smile of one who has faced an obstacle and surmounted it with success. &ldquo;I had to invent a new animal to hunt,&rdquo; he said.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A new animal? You&rsquo;re joking.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Not at all,&rdquo; said the general. &ldquo;I never joke about hunting. I needed a new animal. I found one. So I bought this island, built this house, and here I do my hunting. The island is perfect for my purposes&mdash;there are jungles with a maze of trails in them, hills, swamps&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But the animal, General Zaroff?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh,&rdquo; said the general, &ldquo;it supplies me with the most exciting hunting in the world. No other hunting compares with it for an instant. Every day I hunt, and I never grow bored now, for I have a quarry with which I can match my wits.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford&rsquo;s bewilderment showed in his face.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I wanted the ideal animal to hunt,&rdquo; explained the general. &ldquo;So I said, &lsquo;What are the attributes of an ideal quarry?&rsquo; And the answer was, of course, &lsquo;It must have courage, cunning, and, above all, it must be able to reason.&rsquo;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But no animal can reason,&rdquo; objected Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;My dear fellow,&rdquo; said the general, &ldquo;there is one that can.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But you can&rsquo;t mean&mdash;&mdash;&rdquo; gasped Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And why not?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I can&rsquo;t believe you are serious, General Zaroff. This is a grisly joke.&rdquo; &ldquo;Why should I not be serious? I am speaking of hunting.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hunting? Great Guns, General Zaroff, what you speak of is murder.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general laughed with entire good nature. He regarded Rainsford quizzically. &ldquo;I refuse to believe that so modern and civilized a young man as you seem to be harbours romantic ideas about the value of human life. Surely your experiences in the war&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Did not make me condone cold-blooded murder,&rdquo; finished Rainsford stiffly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Laughter shook the general. &ldquo;How extraordinarily droll you are!&rdquo; he said. &ldquo;One does not expect nowadays to find a young man of the educated class, even in America, with such a naïve, and, if I may say so, mid-Victorian point of view. It&rsquo;s like finding a snuffbox in a limousine. Ah, well, doubtless you had Puritan ancestors. So many Americans appear to have had. I&rsquo;ll wager you&rsquo;ll forget your notions when you go hunting with me. You&rsquo;ve a genuine new thrill in store for you, Mr. Rainsford.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Thank you, I&rsquo;m a hunter, not a murderer.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Dear me,&rdquo; said the general, quite unruffled, &ldquo;again that unpleasant word. But I think I can show you that your scruples are quite ill founded.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Life is for the strong, to be lived by the strong, and, if needs be, taken by the strong. The weak of the world were put here to give the strong pleasure. I am strong. Why should I not use my gift? If I wish to hunt, why should I not? I hunt the scum of the earth: sailors from tramp ships&mdash;lassars, blacks, Chinese, whites, mongrels&mdash;a thoroughbred horse or hound is worth more than a score of them.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But they are men,&rdquo; said Rainsford hotly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Precisely,&rdquo; said the general. &ldquo;That is why I use them. It gives me pleasure. They can reason, after a fashion. So they are dangerous.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But where do you get them?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general&rsquo;s left eyelid fluttered down in a wink. &ldquo;This island is called Ship Trap,&rdquo; he answered. &ldquo;Sometimes an angry god of the high seas sends them to me. Sometimes, when Providence is not so kind, I help Providence a bit. Come to the window with me.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford went to the window and looked out toward the sea.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Watch! Out there!&rdquo; exclaimed the general, pointing into the night. Rainsford&rsquo;s eyes saw only blackness, and then, as the general pressed a button, far out to sea Rainsford saw the flash of lights.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general chuckled. &ldquo;They indicate a channel,&rdquo; he said, &ldquo;where there&rsquo;s none; giant rocks with razor edges crouch like a sea monster with wide-open jaws. They can crush a ship as easily as I crush this nut.&rdquo; He dropped a walnut on the hardwood floor and brought his heel grinding down on it. &ldquo;Oh, yes,&rdquo; he said, casually, as if in answer to a question, &ldquo;I have electricity. We try to be civilized here.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Civilized? And you shoot down men?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A trace of anger was in the general&rsquo;s black eyes, but it was there for but a second; and he said, in his most pleasant manner, &ldquo;Dear me, what a righteous young man you are! I assure you I do not do the thing you suggest. That would be barbarous. I treat these visitors with every consideration. They get plenty of good food and exercise. They get into splendid physical condition. You shall see for yourself tomorrow.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What do you mean?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;We&rsquo;ll visit my training school,&rdquo; smiled the general. &ldquo;It&rsquo;s in the cellar. I have about a dozen pupils down there now. They&rsquo;re from the Spanish bark <em>Sanlûcar</em> that had the bad luck to go on the rocks out there. A very inferior lot, I regret to say. Poor specimens and more accustomed to the deck than to the jungle.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He raised his hand, and Ivan, who served as waiter, brought thick Turkish coffee. Rainsford, with an effort, held his tongue in check.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;It&rsquo;s a game, you see,&rdquo; pursued the general blandly. &ldquo;I suggest to one of them that we go hunting. I give him a supply of food and an excellent hunting knife. I give him three hours&rsquo; start. I am to follow, armed only with a pistol of the smallest caliber and range. If my quarry eludes me for three whole days, he wins the game. If I find him&rdquo;&mdash;the general smiled&mdash;&ldquo;he loses.&rdquo; &ldquo;Suppose he refuses to be hunted?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh,&rdquo; said the general, &ldquo;I give him his option, of course. He need not play that game if he doesn&rsquo;t wish to. If he does not wish to hunt, I turn him over to Ivan. Ivan once had the honour of serving as official knouter to the Great White Czar, and he has his own ideas of sport. Invariably, Mr. Rainsford, invariably they choose the hunt.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And if they win?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The smile on the general&rsquo;s face widened. &ldquo;To date I have not lost,&rdquo; he said.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then he added, hastily: &ldquo;I don&rsquo;t wish you to think me a braggart, Mr. Rainsford. Many of them afford only the most elementary sort of problem. Occasionally I strike a tartar. One almost did win. I eventually had to use the dogs.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The dogs?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;This way, please. I&rsquo;ll show you.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general steered Rainsford to a window. The lights from the windows sent a flickering illumination that made grotesque patterns on the courtyard below, and Rainsford could see moving about there a dozen or so huge black shapes; as they turned toward him, their eyes glittered greenly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A rather good lot, I think,&rdquo; observed the general. &ldquo;They are let out at seven every night. If anyone should try to get into my house&mdash;or out of it&mdash;something extremely regrettable would occur to him.&rdquo; He hummed a snatch of song from the Folies Bergère.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And now,&rdquo; said the general, &ldquo;I want to show you my new collection of heads. Will you come with me to the library?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I hope,&rdquo; said Rainsford, &ldquo;that you will excuse me tonight, General Zaroff. I&rsquo;m really not feeling well.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, indeed?&rdquo; the general inquired solicitously. &ldquo;Well, I suppose that&rsquo;s only natural, after your long swim. You need a good, restful night&rsquo;s sleep. Tomorrow you&rsquo;ll feel like a new man, I&rsquo;ll wager. Then we&rsquo;ll hunt, eh? I&rsquo;ve one rather promising prospect&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford was hurrying from the room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Sorry you can&rsquo;t go with me tonight,&rdquo; called the general. &ldquo;I expect rather fair sport&mdash;a big, strong, black. He looks resourceful&mdash;&mdash; Well, good night, Mr. Rainsford; I hope you have a good night&rsquo;s rest.&rdquo; The bed was good, and the pajamas of the softest silk, and he was tired in every fibre of his being, but nevertheless Rainsford could not quiet his brain with the opiate of sleep. He lay, eyes wide open. Once he thought he heard stealthy steps in the corridor outside his room. He sought to throw open the door; it would not open. He went to the window and looked out. His room was high up in one of the towers. The lights of the château were out now, and it was dark and silent; but there was a fragment of sallow moon, and by its wan light he could see, dimly, the courtyard. There, weaving in and out in the pattern of shadow, were black, noiseless forms; the hounds heard him at the window and looked up, expectantly, with their green eyes. Rainsford went back to the bed and lay down. By many methods he tried to put himself to sleep. He had achieved a doze when, just as morning began to come, he heard, far off in the jungle, the faint report of a pistol.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">General Zaroff did not appear until luncheon. He was dressed faultlessly in the tweeds of a country squire. He was solicitous about the state of Rainsford&rsquo;s health.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;As for me,&rdquo; sighed the general, &ldquo;I do not feel so well. I am worried, Mr. Rainsford. Last night I detected traces of my old complaint.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">To Rainsford&rsquo;s questioning glance the general said, &ldquo;Ennui. Boredom.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then, taking a second helping of Crêpes Suzette, the general explained: &ldquo;The hunting was not good last night. The fellow lost his head. He made a straight trail that offered no problems at all. That&rsquo;s the trouble with these sailors; they have dull brains to begin with, and they do not know how to get about in the woods. They do excessively stupid and obvious things. It&rsquo;s most annoying. Will you have another glass of Chablis, Mr. Rainsford?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;General,&rdquo; said Rainsford firmly, &ldquo;I wish to leave this island at once.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general raised his thickets of eyebrows; he seemed hurt. &ldquo;But, my dear fellow,&rdquo; the general protested, &ldquo;you&rsquo;ve only just come. You&rsquo;ve had no hunting&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I wish to go to-day,&rdquo; said Rainsford. He saw the dead black eyes of the general on him, studying him. General Zaroff&rsquo;s face suddenly brightened. He filled Rainsford&rsquo;s glass with venerable Chablis from a dusty bottle.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;To-night,&rdquo; said the general, &ldquo;we will hunt&mdash;you and I.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford shook his head. &ldquo;No, general,&rdquo; he said. &ldquo;I will not hunt.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general shrugged his shoulders and delicately ate a hothouse grape. &ldquo;As you wish, my friend,&rdquo; he said. &ldquo;The choice rests entirely with you. But may I not venture to suggest that you will find my idea of sport more diverting than Ivan&rsquo;s?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He nodded toward the corner to where the giant stood, scowling, his thick arms crossed on his hogshead of chest.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You don&rsquo;t mean&mdash;&mdash;&rdquo; cried Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;My dear fellow,&rdquo; said the general, &ldquo;have I not told you I always mean what I say about hunting? This is really an inspiration. I drink to a foeman worthy of my steel&mdash;at last.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general raised his glass, but Rainsford sat staring at him.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You&rsquo;ll find this game worth playing,&rdquo; the general said enthusiastically. &ldquo;Your brain against mine. Your wood-craft against mine. Your strength and stamina against mine. Outdoor chess! And the stake is not without value, eh?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And if I win&mdash;&mdash;&rdquo; began Rainsford huskily.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I&rsquo;ll cheerfully acknowledge myself defeated if I do not find you by midnight of the third day,&rdquo; said General Zaroff. &ldquo;My sloop will place you on the mainland near a town.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general read what Rainsford was thinking.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh, you can trust me,&rdquo; said the Cossack. &ldquo;I will give you my word as a gentleman and a sportsman. Of course you, in turn, must agree to say nothing of your visit here.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I&rsquo;ll agree to nothing of the kind,&rdquo; said Rainsford.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh,&rdquo; said the general, &ldquo;in that case&mdash;&mdash; But why discuss that now? Three days hence we can discuss it over a bottle of Veuve Cliquot, unless&mdash;&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general sipped his wine.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then a businesslike air animated him. &ldquo;Ivan,&rdquo; he said to Rainsford, &ldquo;will supply you with hunting clothes, food, a knife. I suggest you wear moccasins; they leave a poorer trail. I suggest, too, that you avoid the big swamp in the southeast corner of the island. We call it Death Swamp. There&rsquo;s quicksand there. One foolish fellow tried it. The deplorable part of it was that Lazarus followed him. You can imagine my feelings, Mr. Rainsford. I loved Lazarus; he was the finest hound in my pack. Well, I must beg you to excuse me now. I always take a siesta after lunch. You&rsquo;ll hardly have time for a nap, I fear. You&rsquo;ll want to start, no doubt. I shall not follow till dusk. Hunting at night is so much more exciting than by day, don&rsquo;t you think? Au revoir, Mr. Rainsford, au revoir.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">General Zaroff, with a deep, courtly bow, strolled from the room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">From another door came Ivan. Under one arm he carried khaki hunting clothes, a haversack of food, a leather sheath containing a long-bladed hunting knife; his right hand rested on a cocked revolver thrust in the crimson sash about his waist. . . .</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford had fought his way through the bush for two hours. &ldquo;I must keep my nerve. I must keep my nerve,&rdquo; he said through tight teeth.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He had not been entirely clear-headed when the château gates snapped shut behind him. His whole idea at first was to put distance between himself and General Zaroff; and, to this end, he had plunged along, spurred on by the sharp rowels of something very like panic. Now he had got a grip on himself, had stopped, and was taking stock of himself and the situation.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He saw that straight flight was futile; inevitably it would bring him face to face with the sea. He was in a picture with a frame of water, and his operations, clearly, must take place within that frame.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I&rsquo;ll give him a trail to follow,&rdquo; muttered Rainsford, and he struck off from the rude path he had been following into the trackless wilderness. He executed a series of intricate loops; he doubled on his trail again and again, recalling all the lore of the fox hunt, and all the dodges of the fox. Night found him leg-weary, with hands and face lashed by the branches, on a thickly wooded ridge. He knew it would be insane to blunder on through the dark, even if he had the strength. His need for rest was imperative and he thought, &ldquo;I have played the fox, now I must play the cat of the fable.&rdquo; A big tree with a thick trunk and outspread branches was near by, and, taking care to leave not the slightest mark, he climbed up into the crotch, and, stretching out on one of the broad limbs, after a fashion, rested. Rest brought him new confidence and almost a feeling of security. Even so zealous a hunter as General Zaroff could not trace him there, he told himself; only the devil himself could follow that complicated trail through the jungle after dark. But perhaps the general was a devil&mdash;&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">An apprehensive night crawled slowly by like a wounded snake and sleep did not visit Rainsford, although the silence of a dead world was on the jungle. Toward morning when a dingy gray was varnishing the sky, the cry of some startled bird focused Rainsford&rsquo;s attention in that direction. Something was coming through the bush, coming slowly, carefully, coming by the same winding way Rainsford had come. He flattened himself down on the limb and, through a screen of leaves almost as thick as tapestry, he watched. . . . That which was approaching was a man.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was General Zaroff. He made his way along with his eyes fixed in utmost concentration on the ground before him. He paused, almost beneath the tree, dropped to his knees and studied the ground. Rainsford&rsquo;s impulse was to hurl himself down like a panther, but he saw that the general&rsquo;s right hand held something metallic&mdash;a small automatic pistol.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The hunter shook his head several times, as if he were puzzled. Then he straightened up and took from his case one of his black cigarettes; its pungent incense-like smoke floated up to Rainsford&rsquo;s nostrils.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford held his breath. The general&rsquo;s eyes had left the ground and were traveling inch by inch up the tree. Rainsford froze there, every muscle tensed for a spring. But the sharp eyes of the hunter stopped before they reached the limb where Rainsford lay; a smile spread over his brown face. Very deliberately he blew a smoke ring into the air; then he turned his back on the tree and walked carelessly away, back along the trail he had come. The swish of the underbrush against his hunting boots grew fainter and fainter.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The pent-up air burst hotly from Rainsford&rsquo;s lungs. His first thought made him feel sick and numb. The general could follow a trail through the woods at night; he could follow an extremely difficult trail; he must have uncanny powers; only by the merest chance had the Cossack failed to see his quarry.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford&rsquo;s second thought was even more terrible. It sent a shudder of cold horror through his whole being. Why had the general smiled? Why had he turned back?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford did not want to believe what his reason told him was true, but the truth was as evident as the sun that had by now pushed through the morning mists. The general was playing with him! The general was saving him for another day&rsquo;s sport! The Cossack was the cat; he was the mouse. Then it was that Rainsford knew the full meaning of terror.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I will not lose my nerve. I will not.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He slid down from the tree, and struck off again into the woods. His face was set and he forced the machinery of his mind to function. Three hundred yards from his hiding place he stopped where a huge dead tree leaned precariously on a smaller, living one. Throwing off his sack of food, Rainsford took his knife from its sheath and began to work with all his energy.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The job was finished at last, and he threw himself down behind a fallen log a hundred feet away. He did not have to wait long. The cat was coming again to play with the mouse.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Following the trail with the sureness of a bloodhound came General Zaroff. Nothing escaped those searching black eyes, no crushed blade of grass, no bent twig, no mark, no matter how faint, in the moss. So intent was the Cossack on his stalking that he was upon the thing Rainsford had made before he saw it. His foot touched the protruding bough that was the trigger. Even as he touched it, the general sensed his danger and leaped back with the agility of an ape. But he was not quite quick enough; the dead tree, delicately adjusted to rest on the cut living one, crashed down and struck the general a glancing blow on the shoulder as it fell; but for his alertness, he must have been smashed beneath it. He staggered, but he did not fall; nor did he drop his revolver. He stood there, rubbing his injured shoulder, and Rainsford, with fear again gripping his heart, heard the general&rsquo;s mocking laugh ring through the jungle. &ldquo;Rainsford,&rdquo; called the general, &ldquo;if you are within sound of my voice, as I suppose you are, let me congratulate you. Not many men know how to make a Malay man-catcher. Luckily for me I, too, have hunted in Malacca. You are proving interesting, Mr. Rainsford. I am going now to have my wound dressed; it&rsquo;s only a slight one. But I shall be back. I shall be back.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">When the general, nursing his bruised shoulder, had gone, Rainsford took up his flight again. It was flight now, a desperate, hopeless flight, that carried him on for some hours. Dusk came, then darkness, and still he pressed on. The ground grew softer under his moccasins; the vegetation grew ranker, denser; insects bit him savagely. Then, as he stepped forward, his foot sank into the ooze. He tried to wrench it back, but the muck sucked viciously at his foot as if it were a giant leech. With a violent effort, he tore his feet loose. He knew where he was now. Death Swamp and its quicksand.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">His hands were tight closed as if his nerve were something tangible that someone in the darkness was trying to tear from his grip. The softness of the earth had given him an idea. He stepped back from the quicksand a dozen feet or so and, like some huge prehistoric beaver, he began to dig.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford had dug himself in in France when a second&rsquo;s delay meant death. That had been a placid pastime compared to his digging now. The pit grew deeper; when it was above his shoulders, he climbed out and from some hard saplings cut stakes and sharpened them to a fine point. These stakes he planted in the bottom of the pit with the points sticking up. With flying fingers he wove a rough carpet of weeds and branches and with it he covered the mouth of the pit. Then, wet with sweat and aching with tiredness, he crouched behind the stump of a lightning-charred tree.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He knew his pursuer was coming; he heard the padding sound of feet on the soft earth, and the night breeze brought him the perfume of the general&rsquo;s cigarette. It seemed to Rainsford that the general was coming with unusual swiftness; he was not feeling his way along, foot by foot. Rainsford, crouching there, could not see the general, nor could he see the pit. He lived a year in a minute. Then he felt an impulse to cry aloud with joy, for he heard the sharp crackle of the breaking branches as the cover of the pit gave way; he heard the sharp scream of pain as the pointed stakes found their mark. He leaped up from his place of concealment. Then he cowered back. Three feet from the pit a man was standing, with an electric torch in his hand.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You&rsquo;ve done well, Rainsford,&rdquo; the voice of the general called. &ldquo;Your Burmese tiger pit has claimed one of my best dogs. Again you score. I think, Mr. Rainsford, I&rsquo;ll see what you can do against my whole pack. I&rsquo;m going home for a rest now. Thank you for a most amusing evening.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">At daybreak Rainsford, lying near the swamp, was awakened by a sound that made him know that he had new things to learn about fear. It was a distant sound, faint and wavering, but he knew it. It was the baying of a pack of hounds.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford knew he could do one of two things. He could stay where he was and wait. That was suicide. He could flee. That was postponing the inevitable. For a moment he stood there, thinking. An idea that held a wild chance came to him, and, tightening his belt, he headed away from the swamp.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The baying of the hounds drew nearer, then still nearer, nearer, ever nearer. On a ridge Rainsford climbed a tree. Down a watercourse, not a quarter of a mile away, he could see the bush moving. Straining his eyes, he saw the lean figure of General Zaroff; just ahead of him Rainsford made out another figure whose wide shoulders surged through the tall jungle weeds; it was the giant Ivan, and he seemed pulled forward by some unseen force; Rainsford knew that Ivan must be holding the pack in leash.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">They would be on him any minute now. His mind worked frantically. He thought of a native trick he had learned in Uganda. He slid down the tree. He caught hold of a springy young sapling and to it he fastened his hunting knife, with the blade pointing down the trail; with a bit of wild grapevine he tied back the sapling. Then he ran for his life. The hounds raised their voices as they hit the fresh scent. Rainsford knew now how an animal at bay feels. He had to stop to get his breath. The baying of the hounds stopped abruptly, and Rainsford&rsquo;s heart stopped too. They must have reached the knife.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He shinned excitedly up a tree and looked back. His pursuers had stopped. But the hope that was in Rainsford&rsquo;s brain when he climbed died, for he saw in the shallow valley that General Zaroff was still on his feet. But Ivan was not. The knife, driven by the recoil of the springing tree, had not wholly failed.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford had hardly tumbled to the ground when the pack took up the cry again.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nerve, nerve, nerve!&rdquo; he panted, as he dashed along. A blue gap showed between the trees dead ahead. Ever nearer drew the hounds. Rainsford forced himself on toward that gap. He reached it. It was the shore of the sea. Across a cove he could see the gloomy gray stone of the château. Twenty feet below him the sea rumbled and hissed. Rainsford hesitated. He heard the hounds. Then he leaped far out into the sea. . . .</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">When the general and his pack reached the place by the sea, the Cossack stopped. For some minutes he stood regarding the blue-green expanse of water. He shrugged his shoulders. Then he sat down, took a drink of brandy from a silver flask, lit a cigarette, and hummed a bit from &ldquo;Madama Butterfly.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">General Zaroff had an exceedingly good dinner in his great panelled dining hall that evening. With it he had a bottle of Pol Roger and half a bottle of Chambertin. Two slight annoyances kept him from perfect enjoyment. One was the thought that it would be difficult to replace Ivan; the other was that his quarry had escaped him; of course, the American hadn&rsquo;t played the game&mdash;so thought the general as he tasted his after-dinner liqueur. In his library he read, to soothe himself, from the works of Marcus Aurelius. At ten he went up to his bedroom. He was deliciously tired, he said to himself, as he locked himself in. There was a little moonlight, so, before turning on his light, he went to the window and looked down at the courtyard. He could see the great hounds, and he called, &ldquo;Better luck another time,&rdquo; to them. Then he switched on the light. A man, who had been hiding in the curtains of the bed, was standing there.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Rainsford!&rdquo; screamed the general. &ldquo;How in God&rsquo;s name did you get here?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Swam,&rdquo; said Rainsford. &ldquo;I found it quicker than walking through the jungle.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general sucked in his breath and smiled. &ldquo;I congratulate you,&rdquo; he said. &ldquo;You have won the game.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Rainsford did not smile. &ldquo;I am still a beast at bay,&rdquo; he said, in a low, hoarse voice. &ldquo;Get ready, General Zaroff.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The general made one of his deepest bows. &ldquo;I see,&rdquo; he said. &ldquo;Splendid! One of us is to furnish a repast for the hounds. The other will sleep in this very excellent bed. On guard, Rainsford. . . .&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He had never slept in a better bed, Rainsford decided.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Richard Connell, <em>The Most Dangerous Game</em> (1924). Public domain. Cite this text as (Connell).</div>
+                </div>
+            </details>
+
+
+
+
     <!-- 1. TITLE STRIP -->
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 6px; padding: 18px 22px; margin-bottom: 20px;">
       <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Lesson 1.03</div>
@@ -320,22 +732,6 @@
       </div>
     </div>
 
-    <!-- 10. WHAT'S NEXT -->
-    <div style="border-top: 3px solid #0E1C42; padding-top: 14px; margin-bottom: 20px;">
-      <div style="font-size: 11px; color: #0E1C42; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 14px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
-
-      <!-- Item 1 -->
-      <div style="display: flex; align-items: flex-start; gap: 0; margin-bottom: 12px;">
-        <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">1</div>
-        <div style="font-size: 15px; color: #0E1C42; line-height: 1.5; margin-left: 10px;"><span style="font-weight: 700;">Quick Write 1: Write a Short Suspense Scene</span> Write a 150-200 word suspense scene with a knowledge gap. Use at least one technique from this week. Submit your Word document.</div>
-      </div>
-
-      <!-- Item 2 -->
-      <div style="display: flex; align-items: flex-start; gap: 0; margin-bottom: 12px;">
-        <div style="background: #C7922C; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">2</div>
-        <div style="font-size: 15px; color: #0E1C42; line-height: 1.5; margin-left: 10px;"><span style="font-weight: 700;">Check-up</span> Complete the Week 1 Check-up to confirm your reading and concept work.</div>
-      </div>
-    </div>
 
   </div><!-- end body wrapper -->
 

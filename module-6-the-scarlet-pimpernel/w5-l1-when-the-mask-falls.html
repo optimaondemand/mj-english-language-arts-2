@@ -70,6 +70,209 @@
 <!-- ===== BODY WRAPPER ===== -->
 <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+
+
     <!-- Title card -->
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
         <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.01</div>
@@ -221,6 +424,205 @@
         <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 3 &middot; READ &amp; NOTICE: NOW READ CHAPTERS 17&ndash;19</div>
         <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Read Ch. 17&ndash;19 now. Ch. 17: Percy leaves at dawn without explanation; a brief, formal farewell at his horse. Ch. 18: Marguerite enters the locked study and finds the ring. Ch. 19: Sitting alone under a sycamore tree, Marguerite is interrupted by Suzanne de Tournay, who mentions brightly that the Scarlet Pimpernel has gone to save her father today. Notice the moment that sentence lands. That is the blow that opens everything.</p>
 
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 17 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER XVII &middot; Farewell &middot; 2,396 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">When Marguerite reached her room, she found her maid terribly anxious about her.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Your ladyship will be so tired,&rdquo; said the poor woman, whose own eyes were half closed with sleep. &ldquo;It is past five o&rsquo;clock.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, yes, Louise, I daresay I shall be tired presently,&rdquo; said Marguerite, kindly; &ldquo;but you are very tired now, so go to bed at once. I&rsquo;ll get into bed alone.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But, my lady⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Now, don&rsquo;t argue, Louise, but go to bed. Give me a wrap, and leave me alone.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Louise was only too glad to obey. She took off her mistress&rsquo;s gorgeous ball-dress, and wrapped her up in a soft billowy gown.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Does your ladyship wish for anything else?&rdquo; she asked, when that was done.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No, nothing more. Put out the lights as you go out.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, my lady. Good night, my lady.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Good night, Louise.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">When the maid was gone, Marguerite drew aside the curtains and threw open the windows. The garden and the river beyond were flooded with rosy light. Far away to the east, the rays of the rising sun had changed the rose into vivid gold. The lawn was deserted now, and Marguerite looked down upon the terrace where she had stood a few moments ago trying in vain to win back a man&rsquo;s love, which once had been so wholly hers.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was strange that through all her troubles, all her anxiety for Armand, she was mostly conscious at the present moment of a keen and bitter heartache.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Her very limbs seemed to ache with longing for the love of a man who had spurned her, who had resisted her tenderness, remained cold to her appeals, and had not responded to the glow of passion, which had caused her to feel and hope that those happy olden days in Paris were not all dead and forgotten.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">How strange it all was! She loved him still. And now that she looked back upon the last few months of misunderstandings and of loneliness, she realised that she had never ceased to love him; that deep down in her heart she had always vaguely felt that his foolish inanities, his empty laugh, his lazy nonchalance were nothing but a mask; that the real man, strong, passionate, wilful, was there still⁠&mdash;the man she had loved, whose intensity had fascinated her, whose personality attracted her, since she always felt that behind his apparently slow wits there was a certain something, which he kept hidden from all the world, and most especially from her.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A woman&rsquo;s heart is such a complex problem⁠&mdash;the owner thereof is often most incompetent to find the solution of this puzzle.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Did Marguerite Blakeney, &ldquo;the cleverest woman in Europe,&rdquo; really love a fool? Was it love that she had felt for him a year ago when she married him? Was it love she felt for him now that she realised that he still loved her, but that he would not become her slave, her passionate, ardent lover once again? Nay! Marguerite herself could not have told that. Not at this moment at any rate; perhaps her pride had sealed her mind against a better understanding of her own heart. But this she did know⁠&mdash;that she meant to capture that obstinate heart back again. That she would conquer once more⁠ ⁠&hellip; and then, that she would never lose him.⁠ ⁠&hellip; She would keep him, keep his love, deserve it, and cherish it; for this much was certain, that there was no longer any happiness possible for her without that one man&rsquo;s love.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Thus the most contradictory thoughts and emotions rushed madly through her mind. Absorbed in them, she had allowed time to slip by; perhaps, tired out with long excitement, she had actually closed her eyes and sunk into a troubled sleep, wherein quickly fleeting dreams seemed but the continuation of her anxious thoughts⁠&mdash;when suddenly she was roused, from dream or meditation, by the noise of footsteps outside her door.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Nervously she jumped up and listened; the house itself was as still as ever; the footsteps had retreated. Through her wide-open window the brilliant rays of the morning sun were flooding her room with light. She looked up at the clock; it was half-past six⁠&mdash;too early for any of the household to be already astir.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She certainly must have dropped asleep, quite unconsciously. The noise of the footsteps, also of hushed subdued voices had awakened her⁠&mdash;what could they be?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Gently, on tiptoe, she crossed the room and opened the door to listen; not a sound⁠&mdash;that peculiar stillness of the early morning when sleep with all mankind is at its heaviest. But the noise had made her nervous, and when, suddenly, at her feet, on the very doorstep, she saw something white lying there⁠&mdash;a letter evidently⁠&mdash;she hardly dared touch it. It seemed so ghostlike. It certainly was not there when she came upstairs; had Louise dropped it? or was some tantalising spook at play, showing her fairy letters where none existed?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">At last she stooped to pick it up, and, amazed, puzzled beyond measure, she saw that the letter was addressed to herself in her husband&rsquo;s large, businesslike-looking hand. What could he have to say to her, in the middle of the night, which could not be put off until the morning?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She tore open the envelope and read:⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A most unforeseen circumstance forces me to leave for the North immediately, so I beg your ladyship&rsquo;s pardon if I do not avail myself of the honour of bidding you goodbye. My business may keep me employed for about a week, so I shall not have the privilege of being present at your ladyship&rsquo;s water-party on Wednesday. I remain your ladyship&rsquo;s most humble and most obedient servant,</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Percy Blakeney.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite must suddenly have been imbued with her husband&rsquo;s slowness of intellect, for she had perforce to read the few simple lines over and over again, before she could fully grasp their meaning.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She stood on the landing, turning over and over in her hand this curt and mysterious epistle, her mind a blank, her nerves strained with agitation and a presentiment she could not very well have explained.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sir Percy owned considerable property in the North, certainly, and he had often before gone there alone and stayed away a week at a time; but it seemed so very strange that circumstances should have arisen between five and six o&rsquo;clock in the morning that compelled him to start in this extreme hurry.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Vainly she tried to shake off an unaccustomed feeling of nervousness: she was trembling from head to foot. A wild, unconquerable desire seized her to see her husband again, at once, if only he had not already started.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Forgetting the fact that she was only very lightly clad in a morning wrap, and that her hair lay loosely about her shoulders, she flew down the stairs, right through the hall towards the front door.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was as usual barred and bolted, for the indoor servants were not yet up; but her keen ears had detected the sound of voices and the pawing of a horse&rsquo;s hoof against the flagstones.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">With nervous, trembling fingers Marguerite undid the bolts one by one, bruising her hands, hurting her nails, for the locks were heavy and stiff. But she did not care; her whole frame shook with anxiety at the very thought that she might be too late; that he might have gone without her seeing him and bidding him &ldquo;Godspeed!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">At last, she had turned the key and thrown open the door. Her ears had not deceived her. A groom was standing close by holding a couple of horses; one of these was Sultan, Sir Percy&rsquo;s favourite and swiftest horse, saddled ready for a journey.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The next moment Sir Percy himself appeared round the further corner of the house and came quickly towards the horses. He had changed his gorgeous ball costume, but was as usual irreproachably and richly apparelled in a suit of fine cloth, with lace jabot and ruffles, high top-boots, and riding breeches.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite went forward a few steps. He looked up and saw her. A slight frown appeared between his eyes.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You are going?&rdquo; she said quickly and feverishly. &ldquo;Whither?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;As I have had the honour of informing your ladyship, urgent, most unexpected business calls me to the North this morning,&rdquo; he said, in his usual cold, drawly manner.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But⁠ ⁠&hellip; your guests tomorrow⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I have prayed your ladyship to offer my humble excuses to His Royal Highness. You are such a perfect hostess, I do not think I shall be missed.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But surely you might have waited for your journey⁠ ⁠&hellip; until after our water-party⁠ ⁠&hellip;&rdquo; she said, still speaking quickly and nervously. &ldquo;Surely this business is not so urgent⁠ ⁠&hellip; and you said nothing about it⁠&mdash;just now.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;My business, as I had the honour to tell you, Madame, is as unexpected as it is urgent.⁠ ⁠&hellip; May I therefore crave your permission to go.⁠ ⁠&hellip; Can I do aught for you in town?⁠ ⁠&hellip; on my way back?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No⁠ ⁠&hellip; no⁠ ⁠&hellip; thanks⁠ ⁠&hellip; nothing⁠ ⁠&hellip; But you will be back soon?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Very soon.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Before the end of the week?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I cannot say.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He was evidently trying to get away, whilst she was straining every nerve to keep him back for a moment or two.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Percy,&rdquo; she said, &ldquo;will you not tell me why you go today? Surely I, as your wife, have the right to know. You have<em>not</em>been called away to the North. I know it. There were no letters, no couriers from there before we left for the opera last night, and nothing was waiting for you when we returned from the ball.⁠ ⁠&hellip; You are<em>not</em>going to the North, I feel convinced.⁠ ⁠&hellip; There is some mystery⁠ ⁠&hellip; and⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay, there is no mystery, Madame,&rdquo; he replied, with a slight tone of impatience. &ldquo;My business has to do with Armand⁠ ⁠&hellip; there! Now, have I your leave to depart?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;With Armand?⁠ ⁠&hellip; But you will run no danger?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Danger? I?⁠ ⁠&hellip; Nay, Madame, your solicitude does me honour. As you say, I have some influence; my intention is to exert it before it be too late.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Will you allow me to thank you at least?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay, Madame,&rdquo; he said coldly, &ldquo;there is no need for that. My life is at your service, and I am already more than repaid.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And mine will be at yours, Sir Percy, if you will but accept it, in exchange for what you do for Armand,&rdquo; she said, as, impulsively, she stretched out both her hands to him. &ldquo;There! I will not detain you⁠ ⁠&hellip; my thoughts go with you⁠ ⁠&hellip; Farewell!⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">How lovely she looked in this morning sunlight, with her ardent hair streaming around her shoulders. He bowed very low and kissed her hand; she felt the burning kiss and her heart thrilled with joy and hope.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You will come back?&rdquo; she said tenderly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Very soon!&rdquo; he replied, looking longingly into her blue eyes.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And⁠ ⁠&hellip; you will remember?⁠ ⁠&hellip;&rdquo; she asked as her eyes, in response to his look, gave him an infinity of promise.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I will always remember, Madame, that you have honoured me by commanding my services.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The words were cold and formal, but they did not chill her this time. Her woman&rsquo;s heart had read his, beneath the impassive mask his pride still forced him to wear.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He bowed to her again, then begged her leave to depart. She stood on one side whilst he jumped on to Sultan&rsquo;s back, then, as he galloped out of the gates, she waved him a final &ldquo;Adieu.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A bend in the road soon hid him from view; his confidential groom had some difficulty in keeping pace with him, for Sultan flew along in response to his master&rsquo;s excited mood. Marguerite, with a sigh that was almost a happy one, turned and went within. She went back to her room, for suddenly, like a tired child, she felt quite sleepy.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Her heart seemed all at once to be in complete peace, and, though it still ached with undefined longing, a vague and delicious hope soothed it as with a balm.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She felt no longer anxious about Armand. The man who had just ridden away, bent on helping her brother, inspired her with complete confidence in his strength and in his power. She marvelled at herself for having ever looked upon him as an inane fool; of course,<em>that</em>was a mask worn to hide the bitter wound she had dealt to his faith and to his love. His passion would have overmastered him, and he would not let her see how much he still cared and how deeply he suffered.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But now all would be well: she would crush her own pride, humble it before him, tell him everything, trust him in everything; and those happy days would come back, when they used to wander off together in the forests of Fontainebleau, when they spoke little⁠&mdash;for he was always a silent man⁠&mdash;but when she felt that against that strong heart she would always find rest and happiness.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The more she thought of the events of the past night, the less fear had she of Chauvelin and his schemes. He had failed to discover the identity of the Scarlet Pimpernel, of that she felt sure. Both Lord Fancourt and Chauvelin himself had assured her that no one had been in the dining-room at one o&rsquo;clock except the Frenchman himself and Percy⁠&mdash;Yes!⁠&mdash;Percy! she might have asked him, had she thought of it! Anyway, she had no fears that the unknown and brave hero would fall in Chauvelin&rsquo;s trap; his death at any rate would not be at her door.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Armand certainly was still in danger, but Percy had pledged his word that Armand would be safe, and somehow, as Marguerite had seen him riding away, the possibility that he could fail in whatever he undertook never even remotely crossed her mind. When Armand was safely over in England she would not allow him to go back to France.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She felt almost happy now, and, drawing the curtains closely together again to shut out the piercing sun, she went to bed at last, laid her head upon the pillow, and, like a wearied child, soon fell into a peaceful and dreamless sleep.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 17).</div>
+                </div>
+            </details>
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 18 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER XVIII &middot; The Mysterious Device &middot; 1,549 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The day was well advanced when Marguerite woke, refreshed by her long sleep. Louise had brought her some fresh milk and a dish of fruit, and she partook of this frugal breakfast with hearty appetite.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Thoughts crowded thick and fast in her mind as she munched her grapes; most of them went galloping away after the tall, erect figure of her husband, whom she had watched riding out of sight more than five hours ago.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">In answer to her eager inquiries, Louise brought back the news that the groom had come home with Sultan, having left Sir Percy in London. The groom thought that his master was about to get on board his schooner, which was lying off just below London Bridge. Sir Percy had ridden thus far, had then met Briggs, the skipper of the<em>Daydream</em>, and had sent the groom back to Richmond with Sultan and the empty saddle.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">This news puzzled Marguerite more than ever. Where could Sir Percy be going just now in the<em>Daydream</em>? On Armand&rsquo;s behalf, he had said. Well! Sir Percy had influential friends everywhere. Perhaps he was going to Greenwich, or⁠ ⁠&hellip; but Marguerite ceased to conjecture; all would be explained anon: he said that he would come back, and that he would remember.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A long, idle day lay before Marguerite. She was expecting a visit of her old schoolfellow, little Suzanne de Tournay. With all the merry mischief at her command, she had tendered her request for Suzanne&rsquo;s company to the Comtesse in the presence of the Prince of Wales last night. His Royal Highness had loudly applauded the notion, and declared that he would give himself the pleasure of calling on the two ladies in the course of the afternoon. The Comtesse had not dared to refuse, and then and there was entrapped into a promise to send little Suzanne to spend a long and happy day at Richmond with her friend.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite expected her eagerly; she longed for a chat about old schooldays with the child; she felt that she would prefer Suzanne&rsquo;s company to that of anyone else, and together they would roam through the fine old garden and rich deer park, or stroll along the river.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But Suzanne had not come yet, and Marguerite being dressed, prepared to go downstairs. She looked quite a girl this morning in her simple muslin frock, with a broad blue sash round her slim waist, and the dainty crossover fichu into which, at her bosom, she had fastened a few late crimson roses.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She crossed the landing outside her own suite of apartments, and stood still for a moment at the head of the fine oak staircase, which led to the lower floor. On her left were her husband&rsquo;s apartments, a suite of rooms which she practically never entered.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">They consisted of bedroom, dressing and reception room, and at the extreme end of the landing, of a small study, which, when Sir Percy did not use it, was always kept locked. His own special and confidential valet, Frank, had charge of this room. No one was ever allowed to go inside. My lady had never cared to do so, and the other servants, had, of course, not dared to break this hard-and-fast rule.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite had often, with that good-natured contempt which she had recently adopted towards her husband, chaffed him about this secrecy which surrounded his private study. Laughingly she had always declared that he strictly excluded all prying eyes from his sanctum for fear they should detect how very little &ldquo;study&rdquo; went on within its four walls: a comfortable armchair for Sir Percy&rsquo;s sweet slumbers was, no doubt, its most conspicuous piece of furniture.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite thought of all this on this bright October morning as she glanced along the corridor. Frank was evidently busy with his master&rsquo;s rooms, for most of the doors stood open, that of the study amongst the others.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A sudden burning, childish curiosity seized her to have a peep at Sir Percy&rsquo;s sanctum. This restriction, of course, did not apply to her, and Frank would, of course, not dare to oppose her. Still, she hoped that the valet would be busy in one of the other rooms, that she might have that one quick peep in secret, and unmolested.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Gently, on tiptoe, she crossed the landing and, like Blue Beard&rsquo;s wife, trembling half with excitement and wonder, she paused a moment on the threshold, strangely perturbed and irresolute.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The door was ajar, and she could not see anything within. She pushed it open tentatively: there was no sound: Frank was evidently not there, and she walked boldly in.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">At once she was struck by the severe simplicity of everything around her: the dark and heavy hangings, the massive oak furniture, the one or two maps on the wall, in no way recalled to her mind the lazy man about town, the lover of racecourses, the dandified leader of fashion, that was the outward representation of Sir Percy Blakeney.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There was no sign here, at any rate, of hurried departure. Everything was in its place, not a scrap of paper littered the floor, not a cupboard or drawer was left open. The curtains were drawn aside, and through the open window the fresh morning air was streaming in.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Facing the window, and well into the centre of the room, stood a ponderous businesslike desk, which looked as if it had seen much service. On the wall to the left of the desk, reaching almost from floor to ceiling, was a large full-length portrait of a woman, magnificently framed, exquisitely painted, and signed with the name of Boucher. It was Percy&rsquo;s mother.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite knew very little about her, except that she had died abroad, ailing in body as well as in mind, while Percy was still a lad. She must have been a very beautiful woman once, when Boucher painted her, and as Marguerite looked at the portrait, she could not but be struck by the extraordinary resemblance which must have existed between mother and son. There was the same low, square forehead, crowned with thick, fair hair, smooth and heavy; the same deep-set, somewhat lazy blue eyes beneath firmly marked, straight brows; and in those eyes there was the same intensity behind that apparent laziness, the same latent passion which used to light up Percy&rsquo;s face in the olden days before his marriage, and which Marguerite had again noted, last night at dawn, when she had come quite close to him, and had allowed a note of tenderness to creep into her voice.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite studied the portrait, for it interested her: after that she turned and looked again at the ponderous desk. It was covered with a mass of papers, all neatly tied and docketed, which looked like accounts and receipts arrayed with perfect method. It had never before struck Marguerite⁠&mdash;nor had she, alas! found it worth while to inquire⁠&mdash;as to how Sir Percy, whom all the world had credited with a total lack of brains, administered the vast fortune which his father had left him.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Since she had entered this neat, orderly room, she had been taken so much by surprise, that this obvious proof of her husband&rsquo;s strong business capacities did not cause her more than a passing thought of wonder. But it also strengthened her in the now certain knowledge that, with his worldly inanities, his foppish ways, and foolish talk, he was not only wearing a mask, but was playing a deliberate and studied part.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite wondered again. Why should he take all this trouble? Why should he⁠&mdash;who was obviously a serious, earnest man⁠&mdash;wish to appear before his fellow-men as an empty-headed nincompoop?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He may have wished to hide his love for a wife who held him in contempt⁠ ⁠&hellip; but surely such an object could have been gained at less sacrifice, and with far less trouble than constant incessant acting of an unnatural part.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She looked round her quite aimlessly now: she was horribly puzzled, and a nameless dread, before all this strange, unaccountable mystery, had begun to seize upon her. She felt cold and uncomfortable suddenly in this severe and dark room. There were no pictures on the wall, save the fine Boucher portrait, only a couple of maps, both of parts of France, one of the North coast and the other of the environs of Paris. What did Sir Percy want with those, she wondered.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Her head began to ache, she turned away from this strange Blue Beard&rsquo;s chamber, which she had entered, and which she did not understand. She did not wish Frank to find her here, and with a fast look round, she once more turned to the door. As she did so, her foot knocked against a small object, which had apparently been lying close to the desk, on the carpet, and which now went rolling, right across the room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She stooped to pick it up. It was a solid gold ring, with a flat shield, on which was engraved a small device.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite turned it over in her fingers, and then studied the engraving on the shield. It represented a small star-shaped flower, of a shape she had seen so distinctly twice before: once at the opera, and once at Lord Grenville&rsquo;s ball.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 18).</div>
+                </div>
+            </details>
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 19 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER XIX &middot; The Scarlet Pimpernel &middot; 3,127 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">At what particular moment the strange doubt first crept into Marguerite&rsquo;s mind, she could not herself have said. With the ring tightly clutched in her hand, she had run out of the room, down the stairs, and out into the garden, where, in complete seclusion, alone with the flowers, and the river and the birds, she could look again at the ring, and study that device more closely.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Stupidly, senselessly, now, sitting beneath the shade of an overhanging sycamore, she was looking at the plain gold shield, with the star-shaped little flower engraved upon it.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Bah! It was ridiculous! she was dreaming! her nerves were overwrought, and she saw signs and mysteries in the most trivial coincidences. Had not everybody about town recently made a point of affecting the device of that mysterious and heroic Scarlet Pimpernel?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Did not she herself wear it embroidered on her gowns? set in gems and enamel in her hair? What was there strange in the fact that Sir Percy should have chosen to use the device as a seal-ring? He might easily have done that⁠ ⁠&hellip; yes⁠ ⁠&hellip; quite easily⁠ ⁠&hellip; and⁠ ⁠&hellip; besides⁠ ⁠&hellip; what connection could there be between her exquisite dandy of a husband, with his fine clothes and refined, lazy ways, and the daring plotter who rescued French victims from beneath the very eyes of the leaders of a bloodthirsty revolution?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Her thoughts were in a whirl⁠&mdash;her mind a blank⁠ ⁠&hellip; She did not see anything that was going on around her, and was quite startled when a fresh young voice called to her across the garden.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;<em>Chérie!</em>⁠&mdash;<em>chérie!</em>where are you?&rdquo; and little Suzanne, fresh as a rosebud, with eyes dancing with glee, and brown curls fluttering in the soft morning breeze, came running across the lawn.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;They told me you were in the garden,&rdquo; she went on prattling merrily, and throwing herself with a pretty, girlish impulse into Marguerite&rsquo;s arms, &ldquo;so I ran out to give you a surprise. You did not expect me quite so soon, did you, my darling little Margot<em>chérie?</em>&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite, who had hastily concealed the ring in the folds of her kerchief, tried to respond gaily and unconcernedly to the young girl&rsquo;s impulsiveness.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Indeed, sweet one,&rdquo; she said with a smile, &ldquo;it is delightful to have you all to myself, and for a nice whole long day.⁠ ⁠&hellip; You won&rsquo;t be bored?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh! bored! Margot, how<em>can</em>you say such a wicked thing. Why! when we were in the dear old convent together, we were always happy when we were allowed to be alone together.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And to talk secrets.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The two young girls had linked their arms in one another&rsquo;s and began wandering round the garden.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh! how lovely your home is, Margot, darling,&rdquo; said little Suzanne, enthusiastically, &ldquo;and how happy you must be!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye, indeed! I ought to be happy⁠&mdash;oughtn&rsquo;t I, sweet one?&rdquo; said Marguerite, with a wistful little sigh.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How sadly you say it,<em>chérie</em>.⁠ ⁠&hellip; Ah, well, I suppose now that you are a married woman you won&rsquo;t care to talk secrets with me any longer. Oh! what lots and lots of secrets we used to have at school! Do you remember?⁠&mdash;some we did not even confide to Sister Theresa of the Holy Angels⁠&mdash;though she was such a dear.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And now you have one all-important secret, eh, little one?&rdquo; said Marguerite, merrily, &ldquo;which you are forthwith going to confide in me. Nay, you need not blush,<em>chérie</em>,&rdquo; she added, as she saw Suzanne&rsquo;s pretty little face crimson with blushes. &ldquo;Faith, there&rsquo;s naught to be ashamed of! He is a noble and true man, and one to be proud of as a lover, and⁠ ⁠&hellip; as a husband.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Indeed,<em>chérie</em>, I am not ashamed,&rdquo; rejoined Suzanne, softly; &ldquo;and it makes me very, very proud to hear you speak so well of him. I think<em>maman</em>will consent,&rdquo; she added thoughtfully, &ldquo;and I shall be⁠&mdash;oh! so happy⁠&mdash;but, of course, nothing is to be thought of until papa is safe.⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite started. Suzanne&rsquo;s father! the Comte de Tournay!⁠&mdash;one of those whose life would be jeopardised if Chauvelin succeeded in establishing the identity of the Scarlet Pimpernel.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She had understood all along from the Comtesse, and also from one or two of the members of the league, that their mysterious leader had pledged his honour to bring the fugitive Comte de Tournay safely out of France. Whilst little Suzanne⁠&mdash;unconscious of all⁠&mdash;save her own all-important little secret, went prattling on, Marguerite&rsquo;s thoughts went back to the events of the past night.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Armand&rsquo;s peril, Chauvelin&rsquo;s threat, his cruel &ldquo;Either⁠&mdash;or⁠&mdash;&rdquo; which she had accepted.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And then her own work in the matter, which should have culminated at one o&rsquo;clock in Lord Grenville&rsquo;s dining-room, when the relentless agent of the French Government would finally learn who was this mysterious Scarlet Pimpernel, who so openly defied an army of spies and placed himself so boldly, and for mere sport, on the side of the enemies of France.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Since then she had heard nothing from Chauvelin. She had concluded that he had failed, and yet, she had not felt anxious about Armand, because her husband had promised her that Armand would be safe.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But now, suddenly, as Suzanne prattled merrily along, an awful horror came upon her for what she had done. Chauvelin had told her nothing, it was true; but she remembered how sarcastic and evil he looked when she took final leave of him after the ball. Had he discovered something then? Had he already laid his plans for catching the daring plotter, red-handed, in France, and sending him to the guillotine without compunction or delay?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite turned sick with horror, and her hand convulsively clutched the ring in her dress.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You are not listening,<em>chérie</em>,&rdquo; said Suzanne, reproachfully, as she paused in her long, highly interesting narrative.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, yes, darling⁠&mdash;indeed I am,&rdquo; said Marguerite with an effort, forcing herself to smile. &ldquo;I love to hear you talking⁠ ⁠&hellip; and your happiness makes me so very glad.⁠ ⁠&hellip; Have no fear, we will manage to propitiate<em>maman</em>. Sir Andrew Ffoulkes is a noble English gentleman; he has money and position, the Comtesse will not refuse her consent.⁠ ⁠&hellip; But⁠ ⁠&hellip; now, little one⁠ ⁠&hellip; tell me⁠ ⁠&hellip; what is the latest news about your father?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh!&rdquo; said Suzanne with mad glee, &ldquo;the best we could possibly hear. My Lord Hastings came to see<em>maman</em>early this morning. He said that all is now well with dear papa, and we may safely expect him here in England in less than four days.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes,&rdquo; said Marguerite, whose glowing eyes were fastened on Suzanne&rsquo;s lips, as she continued merrily:</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh, we have no fear now! You don&rsquo;t know,<em>chérie</em>, that that great and noble Scarlet Pimpernel himself has gone to save papa. He has gone,<em>chérie</em>⁠ ⁠&hellip; actually gone⁠ ⁠&hellip;&rdquo; added Suzanne excitedly, &ldquo;he was in London this morning; he will be in Calais, perhaps, tomorrow⁠ ⁠&hellip; where he will meet papa⁠ ⁠&hellip; and then⁠ ⁠&hellip; and then⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The blow had fallen. She had expected it all along, though she had tried for the last half-hour to delude herself and to cheat her fears. He had gone to Calais, had been in London this morning⁠ ⁠&hellip; he⁠ ⁠&hellip; the Scarlet Pimpernel⁠ ⁠&hellip; Percy Blakeney⁠ ⁠&hellip; her husband⁠ ⁠&hellip; whom she had betrayed last night to Chauvelin.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Percy⁠ ⁠&hellip; Percy⁠ ⁠&hellip; her husband⁠ ⁠&hellip; the Scarlet Pimpernel⁠ ⁠&hellip; Oh! how could she have been so blind? She understood it all now⁠&mdash;all at once⁠ ⁠&hellip; that part he played⁠&mdash;the mask he wore⁠ ⁠&hellip; in order to throw dust in everybody&rsquo;s eyes.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And all for the sheer sport and devilry of course!⁠&mdash;saving men, women and children from death, as other men destroy and kill animals for the excitement, the love of the thing. The idle, rich man wanted some aim in life⁠&mdash;he, and the few young bucks he enrolled under his banner, had amused themselves for months in risking their lives for the sake of an innocent few.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Perhaps he had meant to tell her when they were first married; and then the story of the Marquis de St. Cyr had come to his ears, and he had suddenly turned from her, thinking, no doubt, that she might someday betray him and his comrades, who had sworn to follow him; and so he had tricked her, as he tricked all others, whilst hundreds now owed their lives to him, and many families owed him both life and happiness.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The mask of an inane fop had been a good one, and the part consummately well played. No wonder that Chauvelin&rsquo;s spies had failed to detect, in the apparently brainless nincompoop, the man whose reckless daring and resourceful ingenuity had baffled the keenest French spies, both in France and in England. Even last night when Chauvelin went to Lord Grenville&rsquo;s dining-room to seek that daring Scarlet Pimpernel, he only saw that inane Sir Percy Blakeney fast asleep in a corner of the sofa.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Had his astute mind guessed the secret, then? Here lay the whole awful, horrible, amazing puzzle. In betraying a nameless stranger to his fate in order to save her brother, had Marguerite Blakeney sent her husband to his death?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">No! no! no! a thousand times no! Surely Fate could not deal a blow like that: Nature itself would rise in revolt: her hand, when it held that tiny scrap of paper last night, would surely have been struck numb ere it committed a deed so appalling and so terrible.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But what is it,<em>chérie</em>?&rdquo; said little Suzanne, now genuinely alarmed, for Marguerite&rsquo;s colour had become dull and ashen. &ldquo;Are you ill, Marguerite? What is it?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nothing, nothing, child,&rdquo; she murmured, as in a dream. &ldquo;Wait a moment⁠ ⁠&hellip; let me think⁠ ⁠&hellip; think!⁠ ⁠&hellip; You said⁠ ⁠&hellip; the Scarlet Pimpernel had gone today⁠ ⁠&hellip; ?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Marguerite,<em>chérie</em>, what is it? You frighten me.⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;It is nothing, child, I tell you⁠ ⁠&hellip; nothing⁠ ⁠&hellip; I must be alone a minute⁠&mdash;and⁠&mdash;dear one⁠ ⁠&hellip; I may have to curtail our time together today.⁠ ⁠&hellip; I may have to go away⁠&mdash;you&rsquo;ll understand?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I understand that something has happened,<em>chérie</em>, and that you want to be alone. I won&rsquo;t be a hindrance to you. Don&rsquo;t think of me. My maid, Lucile, has not yet gone⁠ ⁠&hellip; we will go back together⁠ ⁠&hellip; don&rsquo;t think of me.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She threw her arms impulsively round Marguerite. Child as she was, she felt the poignancy of her friend&rsquo;s grief, and with the infinite tact of her girlish tenderness, she did not try to pry into it, but was ready to efface herself.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She kissed Marguerite again and again, then walked sadly back across the lawn. Marguerite did not move, she remained there, thinking⁠ ⁠&hellip; wondering what was to be done.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Just as little Suzanne was about to mount the terrace steps, a groom came running round the house towards his mistress. He carried a sealed letter in his hand. Suzanne instinctively turned back; her heart told her that here perhaps was further ill news for her friend, and she felt that poor Margot was not in a fit state to bear any more.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The groom stood respectfully beside his mistress, then he handed her the sealed letter.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What is that?&rdquo; asked Marguerite.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Just come by runner, my lady.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite took the letter mechanically, and turned it over in her trembling fingers.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Who sent it?&rdquo; she said.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The runner said, my lady,&rdquo; replied the groom, &ldquo;that his orders were to deliver this, and that your ladyship would understand from whom it came.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite tore open the envelope. Already her instinct told her what it contained, and her eyes only glanced at it mechanically.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was a letter by Armand St. Just to Sir Andrew Ffoulkes⁠&mdash;the letter which Chauvelin&rsquo;s spies had stolen at the Fisherman&rsquo;s Rest, and which Chauvelin had held as a rod over her to enforce her obedience.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Now he had kept his word⁠&mdash;he had sent her back St. Just&rsquo;s compromising letter⁠ ⁠&hellip; for he was on the track of the Scarlet Pimpernel.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite&rsquo;s senses reeled, her very soul seemed to be leaving her body; she tottered, and would have fallen but for Suzanne&rsquo;s arm round her waist. With superhuman effort she regained control over herself⁠&mdash;there was yet much to be done.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Bring that runner here to me,&rdquo; she said to the servant, with much calm. &ldquo;He has not gone?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No, my lady.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The groom went, and Marguerite turned to Suzanne.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And you, child, run within. Tell Lucile to get ready. I fear that I must send you home, child. And⁠&mdash;stay, tell one of the maids to prepare a travelling dress and cloak for me.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Suzanne made no reply. She kissed Marguerite tenderly and obeyed without a word; the child was overawed by the terrible, nameless misery in her friend&rsquo;s face.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">A minute later the groom returned, followed by the runner who had brought the letter.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Who gave you this packet?&rdquo; asked Marguerite.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A gentleman, my lady,&rdquo; replied the man, &ldquo;at the Rose and Thistle inn opposite Charing Cross. He said you would understand.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;At the Rose and Thistle? What was he doing?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He was waiting for the coach, your ladyship, which he had ordered.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The coach?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, my lady. A special coach he had ordered. I understood from his man that he was posting straight to Dover.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;That&rsquo;s enough. You may go.&rdquo; Then she turned to the groom: &ldquo;My coach and the four swiftest horses in the stables, to be ready at once.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The groom and runner both went quickly off to obey. Marguerite remained standing for a moment on the lawn quite alone. Her graceful figure was as rigid as a statue, her eyes were fixed, her hands were tightly clasped across her breast; her lips moved as they murmured with pathetic heartbreaking persistence⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What&rsquo;s to be done? What&rsquo;s to be done? Where to find him?⁠&mdash;Oh, God! grant me light.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But this was not the moment for remorse and despair.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She had done⁠&mdash;unwittingly⁠&mdash;an awful and terrible thing⁠&mdash;the very worst crime, in her eyes, that woman ever committed⁠&mdash;she saw it in all its horror. Her very blindness in not having guessed her husband&rsquo;s secret seemed now to her another deadly sin. She ought to have known! she ought to have known!</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">How could she imagine that a man who could love with so much intensity as Percy Blakeney had loved her from the first⁠&mdash;how could such a man be the brainless idiot he chose to appear? She, at least, ought to have known that he was wearing a mask, and having found that out, she should have torn it from his face, whenever they were alone together.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Her love for him had been paltry and weak, easily crushed by her own pride; and she, too, had worn a mask in assuming a contempt for him, whilst, as a matter of fact, she completely misunderstood him.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But there was no time now to go over the past. By her own blindness she had sinned; now she must repay, not by empty remorse, but by prompt and useful action.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Percy had started for Calais, utterly unconscious of the fact that his most relentless enemy was on his heels. He had set sail early that morning from London Bridge. Provided he had a favourable wind, he would no doubt be in France within twenty-four hours; no doubt he had reckoned on the wind and chosen this route.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin, on the other hand, would post to Dover, charter a vessel there, and undoubtedly reach Calais much about the same time. Once in Calais, Percy would meet all those who were eagerly waiting for the noble and brave Scarlet Pimpernel, who had come to rescue them from horrible and unmerited death. With Chauvelin&rsquo;s eyes now fixed upon his every movement, Percy would thus not only be endangering his own life, but that of Suzanne&rsquo;s father, the old Comte de Tournay, and of those other fugitives who were waiting for him and trusting in him. There was also Armand, who had gone to meet de Tournay, secure in the knowledge that the Scarlet Pimpernel was watching over his safety.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">All these lives and that of her husband, lay in Marguerite&rsquo;s hands; these she must save, if human pluck and ingenuity were equal to the task.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Unfortunately, she could not do all this quite alone. Once in Calais she would not know where to find her husband, whilst Chauvelin, in stealing the papers at Dover, had obtained the whole itinerary. Above everything, she wished to warn Percy.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She knew enough about him by now to understand that he would never abandon those who trusted in him, that he would not turn his back from danger, and leave the Comte de Tournay to fall into the bloodthirsty hands that knew of no mercy. But if he were warned, he might form new plans, be more wary, more prudent. Unconsciously, he might fall into a cunning trap, but⁠&mdash;once warned⁠&mdash;he might yet succeed.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And if he failed⁠&mdash;if indeed Fate, and Chauvelin, with all the resources at his command, proved too strong for the daring plotter after all⁠&mdash;then at least she would be there by his side, to comfort, love and cherish, to cheat death perhaps at the last by making it seem sweet, if they died both together, locked in each other&rsquo;s arms, with the supreme happiness of knowing that passion had responded to passion, and that all misunderstandings were at an end.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Her whole body stiffened as with a great and firm resolution. This she meant to do, if God gave her wits and strength. Her eyes lost their fixed look; they glowed with inward fire at the thought of meeting him again so soon, in the very midst of most deadly perils; they sparkled with the joy of sharing these dangers with him⁠&mdash;of helping him perhaps⁠&mdash;of being with him at the last⁠&mdash;if she failed.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The childlike sweet face had become hard and set, the curved mouth was closed tightly over her clenched teeth. She meant to do or die, with him and for his sake. A frown, which spoke of an iron will and unbending resolution, appeared between the two straight brows; already her plans were formed. She would go and find Sir Andrew Ffoulkes first; he was Percy&rsquo;s best friend, and Marguerite remembered, with a thrill, with what blind enthusiasm the young man always spoke of his mysterious leader.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He would help her where she needed help; her coach was ready. A change of raiment, and a farewell to little Suzanne, and she could be on her way.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Without haste, but without hesitation, she walked quietly into the house.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 19).</div>
+                </div>
+            </details>
+
+
         <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #2A9D8F; border-radius: 6px; padding: 14px 18px; margin: 14px 0;">
             <div style="font-size: 11px; color: #2A9D8F; margin-bottom: 8px;">&#9999;&#65039; READING JOURNAL &middot; WEEK 5</div>
             <p style="font-size: 17px; color: #1a2340; line-height: 1.6; margin: 0 0 12px 0;">Open the Week 5 section of your Reading Journal and answer these questions. Write 2&ndash;4 sentences per question.</p>
@@ -262,24 +664,6 @@
         <div style="font-size: 17px; color: #0E1C42; line-height: 1.6;">When you want a quick definition of "theme," an AI chatbot is a fine place to start. It cannot, however, find the theme of this novel for you. Theme is built from specific details: the ring, the maps, the locked room, the moment Suzanne&rsquo;s words land. Those details are in <em>your</em> reading of this specific text. The interpretation you build from them is yours, and it is the work that prepares you for everything more demanding ahead.</div>
     </div>
 
-    <!-- What You'll Do Next -->
-    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
-        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
-        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 5 entry</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">In the Week 5 section of your Reading Journal, answer the three prompts in Part 3 above. Add any notes from the theme section. The Journal is reviewed at the Reading Journal Check, not turned in today.</div>
-            </div>
-        </div>
-        <div style="display: flex; align-items: flex-start; gap: 14px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Tomorrow: Grammar + Word Study</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Day 2 covers pronoun-antecedent agreement and the Word Study for Ch. 17&ndash;22.</div>
-            </div>
-        </div>
-    </div>
 
     <!-- Before You Go -->
     <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">

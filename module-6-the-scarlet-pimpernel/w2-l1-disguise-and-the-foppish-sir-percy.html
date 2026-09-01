@@ -63,6 +63,209 @@
 
 <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+
+
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
         <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.01</div>
         <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Disguise and the Foppish Sir Percy</div>
@@ -166,6 +369,160 @@
     <div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
         <div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; PART 1 &middot; READ &amp; NOTICE: READ CHAPTERS 3 AND 4</div>
         <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Read Chapters 3 and 4 now. In Chapter 3, French refugees arrive at the Fisherman's Rest, escorted by Lord Antony Dewhurst and Sir Andrew Ffoulkes. The League of the Scarlet Pimpernel is named for the first time. The Comtesse reveals that Marguerite, now Lady Blakeney, once denounced the Marquis de St. Cyr to the revolutionary tribunal. In Chapter 4, the chaotic arrival of Lord Antony&rsquo;s guests creates an awkward collision between the Comtesse and Lady Blakeney. The Comtesse&rsquo;s cold rebuff and Marguerite&rsquo;s sharp composure are both on full display.</p>
+
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 3 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER III &middot; The Refugees &middot; 2,533 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Feeling in every part of England certainly ran very high at this time against the French and their doings. Smugglers and legitimate traders between the French and the English coasts brought snatches of news from over the water, which made every honest Englishman&rsquo;s blood boil, and made him long to have &ldquo;a good go&rdquo; at those murderers, who had imprisoned their king and all his family, subjected the queen and the royal children to every species of indignity, and were even now loudly demanding the blood of the whole Bourbon family and of every one of its adherents.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The execution of the Princesse de Lamballe, Marie Antoinette&rsquo;s young and charming friend, had filled everyone in England with unspeakable horror, the daily execution of scores of royalists of good family, whose only sin was their aristocratic name, seemed to cry for vengeance to the whole of civilised Europe.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Yet, with all that, no one dared to interfere. Burke had exhausted all his eloquence in trying to induce the British Government to fight the revolutionary government of France, but Mr. Pitt, with characteristic prudence, did not feel that this country was fit yet to embark on another arduous and costly war. It was for Austria to take the initiative; Austria, whose fairest daughter was even now a dethroned queen, imprisoned and insulted by a howling mob; surely &rsquo;twas not⁠&mdash;so argued Mr. Fox⁠&mdash;for the whole of England to take up arms, because one set of Frenchmen chose to murder another.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">As for Mr. Jellyband and his fellow John Bulls, though they looked upon all foreigners with withering contempt, they were royalist and anti-revolutionists to a man, and at this present moment were furious with Pitt for his caution and moderation, although they naturally understood nothing of the diplomatic reasons which guided that great man&rsquo;s policy.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But now Sally came running back, very excited and very eager. The joyous company in the coffee-room had heard nothing of the noise outside, but she had spied a dripping horse and rider who had stopped at the door of the Fisherman&rsquo;s Rest, and while the stable boy ran forward to take charge of the horse, pretty Miss Sally went to the front door to greet the welcome visitor.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I think I see&rsquo;d my Lord Antony&rsquo;s horse out in the yard, father,&rdquo; she said, as she ran across the coffee-room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But already the door had been thrown open from outside, and the next moment an arm, covered in drab cloth and dripping with the heavy rain, was round pretty Sally&rsquo;s waist, while a hearty voice echoed along the polished rafters of the coffee-room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye, and bless your brown eyes for being so sharp, my pretty Sally,&rdquo; said the man who had just entered, whilst worthy Mr. Jellyband came bustling forward, eager, alert and fussy, as became the advent of one of the most favoured guests of his hostel.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud, I protest, Sally,&rdquo; added Lord Antony, as he deposited a kiss on Miss Sally&rsquo;s blooming cheeks, &ldquo;but you are growing prettier and prettier every time I see you⁠&mdash;and my honest friend, Jellyband here, must have hard work to keep the fellows off that slim waist of yours. What say you, Mr. Waite?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Mr. Waite⁠&mdash;torn between his respect for my lord and his dislike of that particular type of joke⁠&mdash;only replied with a doubtful grunt.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Lord Antony Dewhurst, one of the sons of the Duke of Exeter, was in those days a very perfect type of a young English gentlemen⁠&mdash;tall, well setup, broad of shoulders and merry of face, his laughter rang loudly wherever he went. A good sportsman, a lively companion, a courteous, well-bred man of the world, with not too much brains to spoil his temper, he was a universal favourite in London drawing-rooms or in the coffee-rooms of village inns. At the Fisherman&rsquo;s Rest everyone knew him⁠&mdash;for he was fond of a trip across to France, and always spent a night under worthy Mr. Jellyband&rsquo;s roof on his way there or back.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He nodded to Waite, Pitkin and the others as he at last released Sally&rsquo;s waist, and crossed over to the hearth to warm and dry himself: as he did so, he cast a quick, somewhat suspicious glance at the two strangers, who had quietly resumed their game of dominoes, and for a moment a look of deep earnestness, even of anxiety, clouded his jovial young face.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But only for a moment; the next he turned to Mr. Hempseed, who was respectfully touching his forelock.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Well, Mr. Hempseed, and how is the fruit?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Badly, my lord, badly,&rdquo; replied Mr. Hempseed, dolefully, &ldquo;but what can you &rsquo;xpect with this &rsquo;ere government favourin&rsquo; them rascals over in France, who would murder their king and all their nobility.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Odd&rsquo;s life!&rdquo; retorted Lord Antony; &ldquo;so they would, honest Hempseed⁠&mdash;at least those they can get hold of, worse luck! But we have got some friends coming here tonight, who at any rate have evaded their clutches.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It almost seemed, when the young man said these words, as if he threw a defiant look towards the quiet strangers in the corner.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Thanks to you, my lord, and to your friends, so I&rsquo;ve heard it said,&rdquo; said Mr. Jellyband.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But in a moment Lord Antony&rsquo;s hand fell warningly on mine host&rsquo;s arm.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hush!&rdquo; he said peremptorily, and instinctively once again looked towards the strangers.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh! Lud love you, they are all right, my lord,&rdquo; retorted Jellyband; &ldquo;don&rsquo;t you be afraid. I wouldn&rsquo;t have spoken, only I knew we were among friends. That gentleman over there is as true and loyal a subject of King George as you are yourself, my lord saving your presence. He is but lately arrived in Dover, and is settling down in business in these parts.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;In business? Faith, then, it must be as an undertaker, for I vow I never beheld a more rueful countenance.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay, my lord, I believe that the gentleman is a widower, which no doubt would account for the melancholy of his bearing⁠&mdash;but he is a friend, nevertheless, I&rsquo;ll vouch for that⁠&mdash;and you will own, my lord, that who should judge of a face better than the landlord of a popular inn⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh, that&rsquo;s all right, then, if we are among friends,&rdquo; said Lord Antony, who evidently did not care to discuss the subject with his host. &ldquo;But, tell me, you have no one else staying here, have you?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No one, my lord, and no one coming, either, leastways⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Leastways?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No one your lordship would object to, I know.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Who is it?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Well, my lord, Sir Percy Blakeney and his lady will be here presently, but they ain&rsquo;t a-goin&rsquo; to stay⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lady Blakeney?&rdquo; queried Lord Antony, in some astonishment.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye, my lord. Sir Percy&rsquo;s skipper was here just now. He says that my lady&rsquo;s brother is crossing over to France today in the<em>Daydream</em>, which is Sir Percy&rsquo;s yacht, and Sir Percy and my lady will come with him as far as here to see the last of him. It don&rsquo;t put you out, do it, my lord?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No, no, it doesn&rsquo;t put me out, friend; nothing will put me out, unless that supper is not the very best which Miss Sally can cook, and which has ever been served in the Fisherman&rsquo;s Rest.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You need have no fear of that, my lord,&rdquo; said Sally, who all this while had been busy setting the table for supper. And very gay and inviting it looked, with a large bunch of brilliantly coloured dahlias in the centre, and the bright pewter goblets and blue china about.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How many shall I lay for, my lord?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Five places, pretty Sally, but let the supper be enough for ten at least⁠&mdash;our friends will be tired, and, I hope, hungry. As for me, I vow I could demolish a baron of beef tonight.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Here they are, I do believe,&rdquo; said Sally excitedly, as a distant clatter of horses and wheels could now be distinctly heard, drawing rapidly nearer.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There was a general commotion in the coffee-room. Everyone was curious to see my Lord Antony&rsquo;s swell friends from over the water. Miss Sally cast one or two quick glances at the little bit of mirror which hung on the wall, and worthy Mr. Jellyband bustled out in order to give the first welcome himself to his distinguished guests. Only the two strangers in the corner did not participate in the general excitement. They were calmly finishing their game of dominoes, and did not even look once towards the door.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Straight ahead, Comtesse, the door on your right,&rdquo; said a pleasant voice outside.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye! there they are, all right enough,&rdquo; said Lord Antony, joyfully; &ldquo;off with you, my pretty Sally, and see how quick you can dish up the soup.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The door was thrown wide open, and, preceded by Mr. Jellyband, who was profuse in his bows and welcomes, a party of four⁠&mdash;two ladies and two gentlemen⁠&mdash;entered the coffee-room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Welcome! Welcome to old England!&rdquo; said Lord Antony, effusively, as he came eagerly forward with both hands outstretched towards the newcomers.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, you are Lord Antony Dewhurst, I think,&rdquo; said one of the ladies, speaking with a strong foreign accent.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;At your service, Madame,&rdquo; he replied, as he ceremoniously kissed the hands of both the ladies, then turned to the men and shook them both warmly by the hand.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sally was already helping the ladies to take off their travelling cloaks, and both turned, with a shiver, towards the brightly-blazing hearth.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There was a general movement among the company in the coffee-room. Sally had bustled off to her kitchen whilst Jellyband, still profuse with his respectful salutations, arranged one or two chairs around the fire. Mr. Hempseed, touching his forelock, was quietly vacating the seat in the hearth. Everyone was staring curiously, yet deferentially, at the foreigners.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, Messieurs! what can I say?&rdquo; said the elder of the two ladies, as she stretched a pair of fine, aristocratic hands to the warmth of the blaze, and looked with unspeakable gratitude first at Lord Antony, then at one of the young men who had accompanied her party, and who was busy divesting himself of his heavy, caped coat.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Only that you are glad to be in England, Comtesse,&rdquo; replied Lord Antony, &ldquo;and that you have not suffered too much from your trying voyage.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Indeed, indeed, we are glad to be in England,&rdquo; she said, while her eyes filled with tears, &ldquo;and we have already forgotten all that we have suffered.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Her voice was musical and low, and there was a great deal of calm dignity and of many sufferings nobly endured marked in the handsome, aristocratic face, with its wealth of snowy-white hair dressed high above the forehead, after the fashion of the times.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I hope my friend, Sir Andrew Ffoulkes, proved an entertaining travelling companion, madame?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, indeed, Sir Andrew was kindness itself. How could my children and I ever show enough gratitude to you all, Messieurs?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Her companion, a dainty, girlish figure, childlike and pathetic in its look of fatigue and of sorrow, had said nothing as yet, but her eyes, large, brown, and full of tears, looked up from the fire and sought those of Sir Andrew Ffoulkes, who had drawn near to the hearth and to her; then, as they met his, which were fixed with unconcealed admiration upon the sweet face before him, a thought of warmer colour rushed up to her pale cheeks.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;So this is England,&rdquo; she said, as she looked round with childlike curiosity at the great hearth, the oak rafters, and the yokels with their elaborate smocks and jovial, rubicund, British countenances.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A bit of it, Mademoiselle,&rdquo; replied Sir Andrew, smiling, &ldquo;but all of it, at your service.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The young girl blushed again, but this time a bright smile, fleet and sweet, illumined her dainty face. She said nothing, and Sir Andrew too was silent, yet those two young people understood one another, as young people have a way of doing all the world over, and have done since the world began.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But, I say, supper!&rdquo; here broke in Lord Antony&rsquo;s jovial voice, &ldquo;supper, honest Jellyband. Where is that pretty wench of yours and the dish of soup? Zooks, man, while you stand there gaping at the ladies, they will faint with hunger.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;One moment! one moment, my lord,&rdquo; said Jellyband, as he threw open the door that led to the kitchen and shouted lustily: &ldquo;Sally! Hey, Sally there, are ye ready, my girl?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Sally was ready, and the next moment she appeared in the doorway carrying a gigantic tureen, from which rose a cloud of steam and an abundance of savoury odour.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Odd&rsquo;s my life, supper at last!&rdquo; ejaculated Lord Antony, merrily, as he gallantly offered his arm to the Comtesse.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;May I have the honour?&rdquo; he added ceremoniously, as he led her towards the supper table.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There was a general bustle in the coffee-room: Mr. Hempseed and most of the yokels and fisher-folk had gone to make way for &ldquo;the quality,&rdquo; and to finish smoking their pipes elsewhere. Only the two strangers stayed on, quietly and unconcernedly playing their game of dominoes and sipping their wine; whilst at another table Harry Waite, who was fast losing his temper, watched pretty Sally bustling round the table.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She looked a very dainty picture of English rural life, and no wonder that the susceptible young Frenchman could scarce take his eyes off her pretty face. The Vicomte de Tournay was scarce nineteen, a beardless boy, on whom terrible tragedies which were being enacted in his own country had made but little impression. He was elegantly and even foppishly dressed, and once safely landed in England he was evidently ready to forget the horrors of the Revolution in the delights of English life.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;<em>Pardi</em>, if zis is England,&rdquo; he said as he continued to ogle Sally with marked satisfaction, &ldquo;I am of it satisfied.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It would be impossible at this point to record the exact exclamation which escaped through Mr. Harry Waite&rsquo;s clenched teeth. Only respect for &ldquo;the quality,&rdquo; and notably for my Lord Antony, kept his marked disapproval of the young foreigner in check.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay, but this<em>is</em>England, you abandoned young reprobate,&rdquo; interposed Lord Antony with a laugh, &ldquo;and do not, I pray, bring your loose foreign ways into this most moral country.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Lord Antony had already sat down at the head of the table with the Comtesse on his right. Jellyband was bustling round, filling glasses and putting chairs straight. Sally waited, ready to hand round the soup. Mr. Harry Waite&rsquo;s friends had at last succeeded in taking him out of the room, for his temper was growing more and more violent under the Vicomte&rsquo;s obvious admiration for Sally.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Suzanne,&rdquo; came in stern, commanding accents from the rigid Comtesse.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Suzanne blushed again; she had lost count of time and of place whilst she had stood beside the fire, allowing the handsome young Englishman&rsquo;s eyes to dwell upon her sweet face, and his hand, as if unconsciously, to rest upon hers. Her mother&rsquo;s voice brought her back to reality once more, and with a submissive &ldquo;Yes, Mama,&rdquo; she took her place at the supper table.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 3).</div>
+                </div>
+            </details>
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 4 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER IV &middot; The League of the Scarlet Pimpernel &middot; 2,504 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">They all looked a merry, even a happy party, as they sat round the table; Sir Andrew Ffoulkes and Lord Antony Dewhurst, two typical good-looking, wellborn and well-bred Englishmen of that year of grace 1792, and the aristocratic French comtesse with her two children, who had just escaped from such dire perils, and found a safe retreat at last on the shores of protecting England.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">In the corner the two strangers had apparently finished their game; one of them arose, and standing with his back to the merry company at the table, he adjusted with much deliberation his large triple caped coat. As he did so, he gave one quick glance all around him. Everyone was busy laughing and chatting, and he murmured the words &ldquo;All safe!&rdquo;: his companion then, with the alertness borne of long practice, slipped on to his knees in a moment, and the next had crept noiselessly under the oak bench. The stranger then, with a loud &ldquo;Good night,&rdquo; quietly walked out of the coffee-room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Not one of those at the supper table had noticed this curious and silent manoeuvre, but when the stranger finally closed the door of the coffee-room behind him, they all instinctively sighed a sigh of relief.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Alone, at last!&rdquo; said Lord Antony, jovially.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then the young Vicomte de Tournay rose, glass in hand, and with the graceful affection peculiar to the times, he raised it aloft, and said in broken English⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;To His Majesty George Three of England. God bless him for his hospitality to us all, poor exiles from France.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;His Majesty the King!&rdquo; echoed Lord Antony and Sir Andrew as they drank loyally to the toast.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;To His Majesty King Louis of France,&rdquo; added Sir Andrew, with solemnity. &ldquo;May God protect him, and give him victory over his enemies.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Everyone rose and drank this toast in silence. The fate of the unfortunate King of France, then a prisoner of his own people, seemed to cast a gloom even over Mr. Jellyband&rsquo;s pleasant countenance.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And to M. le Comte de Tournay de Basserive,&rdquo; said Lord Antony, merrily. &ldquo;May we welcome him in England before many days are over.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, Monsieur,&rdquo; said the Comtesse, as with a slightly trembling hand she conveyed her glass to her lips, &ldquo;I scarcely dare to hope.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But already Lord Antony had served out the soup, and for the next few moments all conversation ceased, while Jellyband and Sally handed round the plates and everyone began to eat.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Faith, Madame!&rdquo; said Lord Antony, after a while, &ldquo;mine was no idle toast; seeing yourself, Mademoiselle Suzanne and my friend the Vicomte safely in England now, surely you must feel reasurred as to the fate of Monsieur le Comte.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, Monsieur,&rdquo; replied the Comtesse, with a heavy sigh, &ldquo;I trust in God⁠&mdash;I can but pray⁠&mdash;and hope⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye, Madame!&rdquo; here interposed Sir Andrew Ffoulkes, &ldquo;trust in God by all means, but believe also a little in your English friends, who have sworn to bring the Count safely across the Channel, even as they have brought you today.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Indeed, indeed, Monsieur,&rdquo; she replied, &ldquo;I have the fullest confidence in you and your friends. Your fame, I assure you, has spread throughout the whole of France. The way some of my own friends have escaped from the clutches of that awful revolutionary tribunal was nothing short of a miracle⁠&mdash;and all done by you and your friends⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;We were but the hands, Madame la Comtesse⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But my husband, Monsieur,&rdquo; said the Comtesse, whilst unshed tears seemed to veil her voice, &ldquo;he is in such deadly peril⁠&mdash;I would never have left him, only⁠ ⁠&hellip; there were my children⁠ ⁠&hellip; I was torn between my duty to him, and to them. They refused to go without me⁠ ⁠&hellip; and you and your friends assured me so solemnly that my husband would be safe. But, oh! now that I am here⁠&mdash;amongst you all⁠&mdash;in this beautiful, free England⁠&mdash;I think of him, flying for his life, hunted like a poor beast⁠ ⁠&hellip; in such peril⁠ ⁠&hellip; Ah! I should not have left him⁠ ⁠&hellip; I should not have left him!⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The poor woman had completely broken down; fatigue, sorrow and emotion had overmastered her rigid, aristocratic bearing. She was crying gently to herself, whilst Suzanne ran up to her and tried to kiss away her tears.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Lord Antony and Sir Andrew had said nothing to interrupt the Comtesse whilst she was speaking. There was no doubt that they felt deeply for her; their very silence testified to that⁠&mdash;but in every century, and ever since England has been what it is, an Englishman has always felt somewhat ashamed of his own emotion and of his own sympathy. And so the two young men said nothing, and busied themselves in trying to hide their feelings, only succeeding in looking immeasurably sheepish.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;As for me, Monsieur,&rdquo; said Suzanne, suddenly, as she looked through a wealth of brown curls across at Sir Andrew, &ldquo;I trust you absolutely, and I<em>know</em>that you will bring my dear father safely to England, just as you brought us today.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">This was said with so much confidence, such unuttered hope and belief, that it seemed as if by magic to dry the mother&rsquo;s eyes, and to bring a smile upon everybody&rsquo;s lips.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Nay! You shame me, Mademoiselle,&rdquo; replied Sir Andrew; &ldquo;though my life is at your service, I have been but a humble tool in the hands of our great leader, who organised and effected your escape.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He had spoken with so much warmth and vehemence that Suzanne&rsquo;s eyes fastened upon him in undisguised wonder.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Your leader, Monsieur?&rdquo; said the Comtesse, eagerly. &ldquo;Ah! of course, you must have a leader. And I did not think of that before! But tell me where is he? I must go to him at once, and I and my children must throw ourselves at his feet, and thank him for all that he has done for us.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Alas, Madame!&rdquo; said Lord Antony, &ldquo;that is impossible.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Impossible?⁠&mdash;Why?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Because the Scarlet Pimpernel works in the dark, and his identity is only known under the solemn oath of secrecy to his immediate followers.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The Scarlet Pimpernel?&rdquo; said Suzanne, with a merry laugh. &ldquo;Why! what a droll name! What is the Scarlet Pimpernel, Monsieur?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She looked at Sir Andrew with eager curiosity. The young man&rsquo;s face had become almost transfigured. His eyes shone with enthusiasm; hero-worship, love, admiration for his leader seemed literally to glow upon his face.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The Scarlet Pimpernel, Mademoiselle,&rdquo; he said at last &ldquo;is the name of a humble English wayside flower; but it is also the name chosen to hide the identity of the best and bravest man in all the world, so that he may better succeed in accomplishing the noble task he has set himself to do.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, yes,&rdquo; here interposed the young Vicomte, &ldquo;I have heard speak of this Scarlet Pimpernel. A little flower⁠&mdash;red?⁠&mdash;yes! They say in Paris that every time a royalist escapes to England that devil, Foucquier-Tinville, the Public Prosecutor, receives a paper with that little flower designated in red upon it.⁠ ⁠&hellip; Yes?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, that is so,&rdquo; assented Lord Antony.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Then he will have received one such paper today?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Undoubtedly.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Oh! I wonder what he will say!&rdquo; said Suzanne, merrily. &ldquo;I have heard that the picture of that little red flower is the only thing that frightens him.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Faith, then,&rdquo; said Sir Andrew, &ldquo;he will have many more opportunities of studying the shape of that small scarlet flower.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, monsieur,&rdquo; sighed the Comtesse, &ldquo;it all sounds like a romance, and I cannot understand it all.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Why should you try, Madame?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But, tell me, why should your leader⁠&mdash;why should you all⁠&mdash;spend your money and risk your lives⁠&mdash;for it is your lives you risk, Messieurs, when you set foot in France⁠&mdash;and all for us French men and women, who are nothing to you?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Sport, Madame la Comtesse, sport,&rdquo; asserted Lord Antony, with his jovial, loud and pleasant voice; &ldquo;we are a nation of sportsmen, you know, and just now it is the fashion to pull the hare from between the teeth of the hound.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, no, no, not sport only, Monsieur⁠ ⁠&hellip; you have a more noble motive, I am sure for the good work you do.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Faith, Madame, I would like you to find it then⁠ ⁠&hellip; as for me, I vow, I love the game, for this is the finest sport I have yet encountered.⁠&mdash;Hair-breadth escapes⁠ ⁠&hellip; the devil&rsquo;s own risks!⁠&mdash;Tally ho!⁠&mdash;and away we go!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But the Comtesse shook her head, still incredulously. To her it seemed preposterous that these young men and their great leader, all of them rich, probably wellborn, and young, should for no other motive than sport, run the terrible risks, which she knew they were constantly doing. Their nationality, once they had set foot in France, would be no safeguard to them. Anyone found harbouring or assisting suspected royalists would be ruthlessly condemned and summarily executed, whatever his nationality might be. And this band of young Englishmen had, to her own knowledge, bearded the implacable and bloodthirsty tribunal of the Revolution, within the very walls of Paris itself, and had snatched away condemned victims, almost from the very foot of the guillotine. With a shudder, she recalled the events of the last few days, her escape from Paris with her two children, all three of them hidden beneath the hood of a rickety cart, and lying amidst a heap of turnips and cabbages, not daring to breathe, whilst the mob howled, &ldquo;<em>À la lanterne les aristos!</em>&rdquo; at that awful West Barricade.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It had all occurred in such a miraculous way: she and her husband had understood that they had been placed on the list of &ldquo;suspected persons,&rdquo; which meant that their trial and death were but a matter of days⁠&mdash;of hours, perhaps.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then came the hope of salvation; the mysterious epistle, signed with the enigmatical scarlet device; the clear, peremptory directions; the parting from the Comte de Tournay, which had torn the poor wife&rsquo;s heart in two; the hope of reunion; the flight with her two children; the covered cart; that awful hag driving it, who looked like some horrible evil demon, with the ghastly trophy on her whip handle!</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The Comtesse looked round at the quaint, old-fashioned English inn, the peace of this land of civil and religious liberty, and she closed her eyes to shut out the haunting vision of that West Barricade, and of the mob retreating panic-stricken when the old hag spoke of the plague.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Every moment under that cart she expected recognition, arrest, herself and her children tried and condemned, and these young Englishmen, under the guidance of their brave and mysterious leader, had risked their lives to save them all, as they had already saved scores of other innocent people.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And all only for sport? Impossible! Suzanne&rsquo;s eyes as she sought those of Sir Andrew plainly told him that she thought that<em>he</em>at any rate rescued his fellowmen from terrible and unmerited death, through a higher and nobler motive than his friend would have her believe.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How many are there in your brave league, Monsieur?&rdquo; she asked timidly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Twenty all told, Mademoiselle,&rdquo; he replied, &ldquo;one to command, and nineteen to obey. All of us Englishmen, and all pledged to the same cause⁠&mdash;to obey our leader and to rescue the innocent.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;May God protect you all, Messieurs,&rdquo; said the Comtesse, fervently.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He had done that so far, Madame.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;It is wonderful to me, wonderful!⁠&mdash;That you should all be so brave, so devoted to your fellowmen⁠&mdash;yet you are English!⁠&mdash;and in France treachery is rife⁠&mdash;all in the name of liberty and fraternity.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The women even, in France, have been more bitter against us aristocrats than the men,&rdquo; said the Vicomte, with a sigh.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah, yes,&rdquo; added the Comtesse, while a look of haughty disdain and intense bitterness shot through her melancholy eyes, &ldquo;There was that woman, Marguerite St. Just for instance. She denounced the Marquis de St. Cyr and all his family to the awful tribunal of the Terror.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Marguerite St. Just?&rdquo; said Lord Antony, as he shot a quick and apprehensive glance across at Sir Andrew. &ldquo;Marguerite St. Just?⁠&mdash;Surely⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes!&rdquo; replied the Comtesse, &ldquo;surely you know her. She was a leading actress of the Comédie Française, and she married an Englishman lately. You must know her⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Know her?&rdquo; said Lord Antony. &ldquo;Know Lady Blakeney⁠&mdash;the most fashionable woman in London⁠&mdash;the wife of the richest man in England? Of course, we all know Lady Blakeney.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;She was a schoolfellow of mine at the convent in Paris,&rdquo; interposed Suzanne, &ldquo;and we came over to England together to learn your language. I was very fond of Marguerite, and I cannot believe that she ever did anything so wicked.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;It certainly seems incredible,&rdquo; said Sir Andrew. &ldquo;You say that she actually denounced the Marquis de St. Cyr? Why should she have done such a thing? Surely there must be some mistake⁠&mdash;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No mistake is possible, Monsieur,&rdquo; rejoined the Comtesse, coldly. &ldquo;Marguerite St. Just&rsquo;s brother is a noted republican. There was some talk of a family feud between him and my cousin, the Marquis de St. Cyr. The St. Justs are quite plebeian, and the republican government employs many spies. I assure you there is no mistake.⁠ ⁠&hellip; You had not heard this story?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Faith, Madame, I did hear some vague rumours of it, but in England no one would credit it.⁠ ⁠&hellip; Sir Percy Blakeney, her husband, is a very wealthy man, of high social position, the intimate friend of the Prince of Wales⁠ ⁠&hellip; and Lady Blakeney leads both fashion and society in London.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;That may be, Monsieur, and we shall, of course, lead a very quiet life in England, but I pray God that while I remain in this beautiful country, I may never meet Marguerite St. Just.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The proverbial wet-blanket seemed to have fallen over the merry little company gathered round the table. Suzanne looked sad and silent; Sir Andrew fidgeted uneasily with his fork, whilst the Comtesse, encased in the plate-armour of her aristocratic prejudices, sat, rigid and unbending, in her straight-backed chair. As for Lord Antony, he looked extremely uncomfortable, and glanced once or twice apprehensively towards Jellyband, who looked just as uncomfortable as himself.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;At what time do you expect Sir Percy and Lady Blakeney?&rdquo; he contrived to whisper unobserved, to mine host.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Any moment, my lord,&rdquo; whispered Jellyband in reply.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Even as he spoke, a distant clatter was heard of an approaching coach; louder and louder it grew, one or two shouts became distinguishable, then the rattle of horses&rsquo; hoofs on the uneven cobble stones, and the next moment a stable boy had thrown open the coffee-room door and rushed in excitedly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Sir Percy Blakeney and my lady,&rdquo; he shouted at the top of his voice, &ldquo;they&rsquo;re just arriving.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And with more shouting, jingling of harness, and iron hoofs upon the stones, a magnificent coach, drawn by four superb bays, had halted outside the porch of the Fisherman&rsquo;s Rest.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 4).</div>
+                </div>
+            </details>
+
         <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">As you read, watch for how Orczy describes the French refugees and how she describes the English characters who help them. Notice the contrast between the gravity of what the League does and the lightness with which Lord Antony describes it as &ldquo;sport.&rdquo;</p>
         <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
             <div style="font-size: 11px; color: #1B6A94; margin-bottom: 8px;">&#128161; KEEP THIS IN MIND</div>
@@ -222,17 +579,6 @@
                 <li>Why does only Sir Andrew notice the look on Percy&rsquo;s face at the end? What does it mean that the narrator gives this observation to Sir Andrew rather than stating it directly?</li>
                 <li>The Comtesse calls what Marguerite did &ldquo;wicked.&rdquo; Lord Antony and Sir Andrew are uncertain. Whose account should we trust? Explain your thinking.</li>
             </ol>
-        </div>
-    </div>
-
-    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
-        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
-        <div style="display: flex; align-items: flex-start; gap: 14px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Reading Journal: Week 2 entry</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Answer the three questions above in the Week 2 section of your Reading Journal. Your teacher reviews the Journal at the module checkpoints, not every week.</div>
-            </div>
         </div>
     </div>
 

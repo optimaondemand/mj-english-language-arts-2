@@ -63,6 +63,530 @@
 
 <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+            <!-- ===== EMBEDDED READING: A Midsummer Night's Dream 1.1 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; ACT I, SCENE I &middot; 2,004 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Setting: Athens. A room in the Palace of Theseus</em></div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter Theseus, Hippolyta, Philostrate and Attendants.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Now, fair Hippolyta, our nuptial hour</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Draws on apace; four happy days bring in</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Another moon; but oh, methinks, how slow</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">This old moon wanes! She lingers my desires,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Like to a step-dame or a dowager,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Long withering out a young man&rsquo;s revenue.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HIPPOLYTA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Four days will quickly steep themselves in night;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Four nights will quickly dream away the time;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And then the moon, like to a silver bow</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">New bent in heaven, shall behold the night</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Of our solemnities.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Go, Philostrate,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Stir up the Athenian youth to merriments;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Awake the pert and nimble spirit of mirth;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Turn melancholy forth to funerals;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The pale companion is not for our pomp.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit Philostrate.</em></div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Hippolyta, I woo&rsquo;d thee with my sword,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And won thy love doing thee injuries;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But I will wed thee in another key,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">With pomp, with triumph, and with revelling.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter Egeus, Hermia, Lysander and Demetrius.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">EGEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Happy be Theseus, our renownèd Duke!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Thanks, good Egeus. What&rsquo;s the news with thee?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">EGEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Full of vexation come I, with complaint</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Against my child, my daughter Hermia.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Stand forth, Demetrius. My noble lord,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">This man hath my consent to marry her.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Stand forth, Lysander. And, my gracious Duke,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">This man hath bewitch&rsquo;d the bosom of my child.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Thou, thou, Lysander, thou hast given her rhymes,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And interchang&rsquo;d love-tokens with my child.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Thou hast by moonlight at her window sung,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">With feigning voice, verses of feigning love;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And stol&rsquo;n the impression of her fantasy</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">With bracelets of thy hair, rings, gauds, conceits,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Knacks, trifles, nosegays, sweetmeats (messengers</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Of strong prevailment in unharden&rsquo;d youth)</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">With cunning hast thou filch&rsquo;d my daughter&rsquo;s heart,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Turn&rsquo;d her obedience (which is due to me)</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To stubborn harshness. And, my gracious Duke,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Be it so she will not here before your grace</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Consent to marry with Demetrius,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I beg the ancient privilege of Athens:</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">As she is mine I may dispose of her;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Which shall be either to this gentleman</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Or to her death, according to our law</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Immediately provided in that case.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">What say you, Hermia? Be advis&rsquo;d, fair maid.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To you your father should be as a god;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">One that compos&rsquo;d your beauties, yea, and one</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To whom you are but as a form in wax</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">By him imprinted, and within his power</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To leave the figure, or disfigure it.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Demetrius is a worthy gentleman.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So is Lysander.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">In himself he is.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But in this kind, wanting your father&rsquo;s voice,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The other must be held the worthier.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I would my father look&rsquo;d but with my eyes.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Rather your eyes must with his judgment look.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I do entreat your Grace to pardon me.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I know not by what power I am made bold,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Nor how it may concern my modesty</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">In such a presence here to plead my thoughts:</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But I beseech your Grace that I may know</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The worst that may befall me in this case,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">If I refuse to wed Demetrius.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Either to die the death, or to abjure</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">For ever the society of men.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Therefore, fair Hermia, question your desires,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Know of your youth, examine well your blood,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Whether, if you yield not to your father&rsquo;s choice,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">You can endure the livery of a nun,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">For aye to be in shady cloister mew&rsquo;d,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To live a barren sister all your life,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Chanting faint hymns to the cold fruitless moon.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Thrice-blessèd they that master so their blood</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To undergo such maiden pilgrimage,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But earthlier happy is the rose distill&rsquo;d</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Than that which, withering on the virgin thorn,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Grows, lives, and dies, in single blessedness.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So will I grow, so live, so die, my lord,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Ere I will yield my virgin patent up</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Unto his lordship, whose unwishèd yoke</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">My soul consents not to give sovereignty.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Take time to pause; and by the next new moon</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The sealing-day betwixt my love and me</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">For everlasting bond of fellowship,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Upon that day either prepare to die</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">For disobedience to your father&rsquo;s will,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Or else to wed Demetrius, as he would,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Or on Diana&rsquo;s altar to protest</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">For aye austerity and single life.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">DEMETRIUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Relent, sweet Hermia; and, Lysander, yield</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Thy crazèd title to my certain right.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">You have her father&rsquo;s love, Demetrius.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Let me have Hermia&rsquo;s. Do you marry him.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">EGEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Scornful Lysander, true, he hath my love;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And what is mine my love shall render him;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And she is mine, and all my right of her</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I do estate unto Demetrius.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I am, my lord, as well deriv&rsquo;d as he,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">As well possess&rsquo;d; my love is more than his;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">My fortunes every way as fairly rank&rsquo;d,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">If not with vantage, as Demetrius&rsquo;;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And, which is more than all these boasts can be,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I am belov&rsquo;d of beauteous Hermia.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Why should not I then prosecute my right?</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Demetrius, I&rsquo;ll avouch it to his head,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Made love to Nedar&rsquo;s daughter, Helena,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And won her soul; and she, sweet lady, dotes,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Devoutly dotes, dotes in idolatry,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Upon this spotted and inconstant man.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THESEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I must confess that I have heard so much,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And with Demetrius thought to have spoke thereof;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But, being over-full of self-affairs,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">My mind did lose it.&mdash;But, Demetrius, come,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And come, Egeus; you shall go with me.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I have some private schooling for you both.&mdash;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">For you, fair Hermia, look you arm yourself</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To fit your fancies to your father&rsquo;s will,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Or else the law of Athens yields you up</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">(Which by no means we may extenuate)</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To death, or to a vow of single life.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Come, my Hippolyta. What cheer, my love?</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Demetrius and Egeus, go along;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I must employ you in some business</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Against our nuptial, and confer with you</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Of something nearly that concerns yourselves.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">EGEUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">With duty and desire we follow you.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exeunt all but Lysander and Hermia.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">How now, my love? Why is your cheek so pale?</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">How chance the roses there do fade so fast?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Belike for want of rain, which I could well</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Beteem them from the tempest of my eyes.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Ay me! For aught that I could ever read,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Could ever hear by tale or history,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The course of true love never did run smooth.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But either it was different in blood&mdash;</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O cross! Too high to be enthrall&rsquo;d to low.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Or else misgraffèd in respect of years&mdash;</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O spite! Too old to be engag&rsquo;d to young.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Or else it stood upon the choice of friends&mdash;</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O hell! to choose love by another&rsquo;s eyes!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Or, if there were a sympathy in choice,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">War, death, or sickness did lay siege to it,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Making it momentany as a sound,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Swift as a shadow, short as any dream,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Brief as the lightning in the collied night</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">That, in a spleen, unfolds both heaven and earth,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And, ere a man hath power to say, &lsquo;Behold!&rsquo;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The jaws of darkness do devour it up:</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So quick bright things come to confusion.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">If then true lovers have ever cross&rsquo;d,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">It stands as an edict in destiny.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Then let us teach our trial patience,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Because it is a customary cross,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">As due to love as thoughts and dreams and sighs,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Wishes and tears, poor fancy&rsquo;s followers.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">A good persuasion; therefore, hear me, Hermia.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I have a widow aunt, a dowager</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Of great revenue, and she hath no child.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">From Athens is her house remote seven leagues,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And she respects me as her only son.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">There, gentle Hermia, may I marry thee,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And to that place the sharp Athenian law</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Cannot pursue us. If thou lovest me then,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Steal forth thy father&rsquo;s house tomorrow night;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And in the wood, a league without the town</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">(Where I did meet thee once with Helena</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To do observance to a morn of May),</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">There will I stay for thee.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">My good Lysander!</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I swear to thee by Cupid&rsquo;s strongest bow,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">By his best arrow with the golden head,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">By the simplicity of Venus&rsquo; doves,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">By that which knitteth souls and prospers loves,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And by that fire which burn&rsquo;d the Carthage queen</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">When the false Trojan under sail was seen,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">By all the vows that ever men have broke</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">(In number more than ever women spoke),</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">In that same place thou hast appointed me,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Tomorrow truly will I meet with thee.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Keep promise, love. Look, here comes Helena.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter Helena.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">God speed fair Helena! Whither away?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HELENA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Call you me fair? That fair again unsay.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Demetrius loves your fair. O happy fair!</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Your eyes are lode-stars and your tongue&rsquo;s sweet air</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">More tuneable than lark to shepherd&rsquo;s ear,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">When wheat is green, when hawthorn buds appear.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Sickness is catching. O were favour so,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Yours would I catch, fair Hermia, ere I go.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">My ear should catch your voice, my eye your eye,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">My tongue should catch your tongue&rsquo;s sweet melody.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Were the world mine, Demetrius being bated,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The rest I&rsquo;d give to be to you translated.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O, teach me how you look, and with what art</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">You sway the motion of Demetrius&rsquo; heart!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I frown upon him, yet he loves me still.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HELENA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O that your frowns would teach my smiles such skill!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I give him curses, yet he gives me love.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HELENA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O that my prayers could such affection move!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The more I hate, the more he follows me.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HELENA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The more I love, the more he hateth me.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">His folly, Helena, is no fault of mine.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HELENA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">None but your beauty; would that fault were mine!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Take comfort: he no more shall see my face;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Lysander and myself will fly this place.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Before the time I did Lysander see,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Seem&rsquo;d Athens as a paradise to me.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O, then, what graces in my love do dwell,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">That he hath turn&rsquo;d a heaven into hell!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Helen, to you our minds we will unfold:</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Tomorrow night, when Phoebe doth behold</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Her silver visage in the watery glass,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Decking with liquid pearl the bladed grass</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">(A time that lovers&rsquo; flights doth still conceal),</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Through Athens&rsquo; gates have we devis&rsquo;d to steal.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HERMIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And in the wood where often you and I</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Upon faint primrose beds were wont to lie,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Emptying our bosoms of their counsel sweet,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">There my Lysander and myself shall meet,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And thence from Athens turn away our eyes,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To seek new friends and stranger companies.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Farewell, sweet playfellow. Pray thou for us,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And good luck grant thee thy Demetrius!</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Keep word, Lysander. We must starve our sight</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">From lovers&rsquo; food, till morrow deep midnight.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">LYSANDER</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I will, my Hermia.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit Hermia.</em></div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Helena, adieu.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">As you on him, Demetrius dote on you!</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit Lysander.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">HELENA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">How happy some o&rsquo;er other some can be!</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Through Athens I am thought as fair as she.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But what of that? Demetrius thinks not so;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">He will not know what all but he do know.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And as he errs, doting on Hermia&rsquo;s eyes,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So I, admiring of his qualities.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Things base and vile, holding no quantity,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Love can transpose to form and dignity.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Love looks not with the eyes, but with the mind;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And therefore is wing&rsquo;d Cupid painted blind.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Nor hath love&rsquo;s mind of any judgment taste.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Wings, and no eyes, figure unheedy haste.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And therefore is love said to be a child,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Because in choice he is so oft beguil&rsquo;d.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">As waggish boys in game themselves forswear,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So the boy Love is perjur&rsquo;d everywhere.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">For, ere Demetrius look&rsquo;d on Hermia&rsquo;s eyne,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">He hail&rsquo;d down oaths that he was only mine;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And when this hail some heat from Hermia felt,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So he dissolv&rsquo;d, and showers of oaths did melt.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I will go tell him of fair Hermia&rsquo;s flight.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Then to the wood will he tomorrow night</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Pursue her; and for this intelligence</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">If I have thanks, it is a dear expense.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But herein mean I to enrich my pain,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To have his sight thither and back again.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit Helena.</em></div>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">William Shakespeare, <em>A Midsummer Night's Dream</em> (c. 1595). Public domain. Cite this text as (Shakespeare, 1.1).</div>
+                </div>
+            </details>
+
+
+
 
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
@@ -211,24 +735,6 @@
         <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">In the Week 1 section of your Reading Journal, answer in 4 to 6 sentences: explain Lysander and Hermia&rsquo;s plan in your own words, then predict what might go wrong once Demetrius and Helena both head into the same wood that night. Use at least one detail from today&rsquo;s reading to support your prediction.</div>
     </div>
 
-    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
-        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div>
-        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Quick Write 1</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A 150 to 200 word Word document assignment, due today.</div>
-            </div>
-        </div>
-        <div style="display: flex; align-items: flex-start; gap: 14px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Check-up Quiz</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A short Canvas quiz to close the week. Confirm all your submissions before you leave.</div>
-            </div>
-        </div>
-    </div>
-
 <div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
     <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
     <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.03 &middot; Hermia and Lysander Decide to Run</div>
@@ -275,5 +781,6 @@
 })();
 </script>
 
+</div>
 </body>
 </html>

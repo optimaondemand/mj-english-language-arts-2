@@ -68,6 +68,397 @@
 <!-- ===== BODY WRAPPER ===== -->
 <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 25 ===== -->
+            <details style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER XXV &middot; The Eagle and the Fox &middot; 2,755 words &middot; already read; open it if you want to look back</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite&rsquo;s breath stopped short; she seemed to feel her very life standing still momentarily whilst she listened to that voice and to that song. In the singer she had recognised her husband. Chauvelin, too, had heard it, for he darted a quick glance towards the door, then hurriedly took up his broad-brimmed hat and clapped it over his head.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The voice drew nearer; for one brief second the wild desire seized Marguerite to rush down the steps and fly across the room, to stop that song at any cost, to beg the cheerful singer to fly⁠&mdash;fly for his life, before it be too late. She checked the impulse just in time. Chauvelin would stop her before she reached the door, and, moreover, she had no idea if he had any soldiers posted within his call. Her impetuous act might prove the death-signal of the man she would have died to save.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Long to reign over us,
+ 
+ God save the King!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite could not see the door; she held her breath, trying to imagine what was happening.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Percy Blakeney on entering had, of course, at once caught sight of the curé at the table; his hesitation lasted less than five seconds, the next moment, Marguerite saw his tall figure crossing the room, whilst he called in a loud, cheerful voice⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hello, there! no one about? Where&rsquo;s that fool Brogard?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He wore the magnificent coat and riding-suit which he had on when Marguerite last saw him at Richmond, so many hours ago. As usual, his getup was absolutely irreproachable, the fine Mechlin lace at his neck and wrists were immaculate and white, his fair hair was carefully brushed, and he carried his eyeglass with his usual affected gesture. In fact, at this moment, Sir Percy Blakeney, Bart., might have been on his way to a garden-party at the Prince of Wales&rsquo;, instead of deliberately, cold-bloodedly running his head in a trap, set for him by his deadliest enemy.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He stood for a moment in the middle of the room, whilst Marguerite, absolutely paralysed with horror, seemed unable even to breathe.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Every moment she expected that Chauvelin would give a signal, that the place would fill with soldiers, that she would rush down and help Percy to sell his life dearly. As he stood there, suavely unconscious, she very nearly screamed out to him⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Fly, Percy!⁠&mdash;&rsquo;tis your deadly enemy!⁠&mdash;fly before it be too late!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But she had not time even to do that, for the next moment Blakeney quietly walked to the table, and, jovially clapping the curé on the back, said in his own drawly, affected way⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Odds&rsquo;s fish!⁠ ⁠&hellip; er⁠ ⁠&hellip; M. Chauvelin.⁠ ⁠&hellip; I vow I never thought of meeting you here.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin, who had been in the very act of conveying soup to his mouth, fairly choked. His thin face became absolutely purple, and a violent fit of coughing saved this cunning representative of France from betraying the most boundless surprise he had ever experienced. There was no doubt that this bold move on the part of the enemy had been wholly unexpected, as far as he was concerned: and the daring impudence of it completely nonplussed him for the moment.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Obviously he had not taken the precaution of having the inn surrounded with soldiers. Blakeney had evidently guessed that much, and no doubt his resourceful brain had already formed some plan by which he could turn this unexpected interview to account.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite up in the loft had not moved. She had made a solemn promise to Sir Andrew not to speak to her husband before strangers, and she had sufficient self-control not to throw herself unreasoningly and impulsively across his plans. To sit still and watch these two men together was a terrible trial of fortitude. Marguerite had heard Chauvelin give the orders for the patrolling of all the roads. She knew that if Percy now left the Chat Gris⁠&mdash;in whatever direction he happened to go⁠&mdash;he could not go far without being sighted by some of Captain Jutley&rsquo;s men on patrol. On the other hand, if he stayed, then Desgas would have time to come back with the dozen men Chauvelin had specially ordered.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The trap was closing in, and Marguerite could do nothing but watch and wonder. The two men looked such a strange contrast, and of the two it was Chauvelin who exhibited a slight touch of fear. Marguerite knew him well enough to guess what was passing in his mind. He had no fear for his own person, although he certainly was alone in a lonely inn with a man who was powerfully built, and who was daring and reckless beyond the bounds of probability. She knew that Chauvelin would willingly have braved perilous encounters for the sake of the cause he had at heart, but what he did fear was that this impudent Englishman would, by knocking him down, double his own chances of escape; his underlings might not succeed so well in capturing the Scarlet Pimpernel, when not directed by the cunning hand and the shrewd brain, which had deadly hate for an incentive.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Evidently, however, the representative of the French Government had nothing to fear for the moment, at the hands of his powerful adversary. Blakeney, with his most inane laugh and pleasant good-nature, was solemnly patting him on the back.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I am so demmed sorry⁠ ⁠&hellip;&rdquo; he was saying cheerfully, &ldquo;so very sorry⁠ ⁠&hellip; I seem to have upset you⁠ ⁠&hellip; eating soup, too⁠ ⁠&hellip; nasty, awkward thing, soup⁠ ⁠&hellip; er⁠ ⁠&hellip; Begad!⁠&mdash;a friend of mine died once⁠ ⁠&hellip; er⁠ ⁠&hellip; choked⁠ ⁠&hellip; just like you⁠ ⁠&hellip; with a spoonful of soup.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">And he smiled shyly, good-humouredly, down at Chauvelin.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Odd&rsquo;s life!&rdquo; he continued, as soon as the latter had somewhat recovered himself, &ldquo;beastly hole this⁠ ⁠&hellip; ain&rsquo;t it now? La! you don&rsquo;t mind?&rdquo; he added, apologetically, as he sat down on a chair close to the table and drew the soup tureen towards him. &ldquo;That fool Brogard seems to be asleep or something.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There was a second plate on the table, and he calmly helped himself to soup, then poured himself out a glass of wine.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">For a moment Marguerite wondered what Chauvelin would do. His disguise was so good that perhaps he meant, on recovering himself, to deny his identity: but Chauvelin was too astute to make such an obviously false and childish move, and already he too had stretched out his hand and said pleasantly⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I am indeed charmed to see you Sir Percy. You must excuse me⁠&mdash;h&rsquo;m⁠&mdash;I thought you the other side of the Channel. Sudden surprise almost took my breath away.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;La!&rdquo; said Sir Percy, with a good-humoured grin, &ldquo;it did that quite, didn&rsquo;t it⁠&mdash;er⁠&mdash;M.⁠&mdash;er⁠&mdash;Chaubertin?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Pardon me⁠&mdash;Chauvelin.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I beg pardon⁠&mdash;a thousand times. Yes⁠&mdash;Chauvelin of course.⁠ ⁠&hellip; Er⁠ ⁠&hellip; I never could cotton to foreign names.⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He was calmly eating his soup, laughing with pleasant good-humour, as if he had come all the way to Calais for the express purpose of enjoying supper at this filthy inn, in the company of his arch-enemy.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">For the moment Marguerite wondered why Percy did not knock the little Frenchman down then and there⁠&mdash;and no doubt something of the sort must have darted through his mind, for every now and then his lazy eyes seemed to flash ominously, as they rested on the slight figure of Chauvelin, who had now quite recovered himself and was also calmly eating his soup.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But the keen brain, which had planned and carried through so many daring plots, was too farseeing to take unnecessary risks. This place, after all, might be infested with spies; the innkeeper might be in Chauvelin&rsquo;s pay. One call on Chauvelin&rsquo;s part might bring twenty men about Blakeney&rsquo;s ears for aught he knew, and he might be caught and trapped before he could help or, at least, warn the fugitives. This he would not risk; he meant to help the others, to get<em>them</em>safely away; for he had pledged his word to them, and his word he<em>would</em>keep. And whilst he ate and chatted, he thought and planned, whilst, up in the loft, the poor, anxious woman racked her brain as to what she should do, and endured agonies of longing to rush down to him, yet not daring to move for fear of upsetting his plans.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I didn&rsquo;t know,&rdquo; Blakeney was saying jovially, &ldquo;that you⁠ ⁠&hellip; er⁠ ⁠&hellip; were in holy orders.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I⁠ ⁠&hellip; er⁠ ⁠&hellip; hem⁠ ⁠&hellip;&rdquo; stammered Chauvelin. The calm impudence of his antagonist had evidently thrown him off his usual balance.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But, la! I should have known you anywhere,&rdquo; continued Sir Percy, placidly, as he poured himself out another glass of wine, &ldquo;although the wig and hat have changed you a bit.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Do you think so?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Lud! they alter a man so⁠ ⁠&hellip; but⁠ ⁠&hellip; begad! I hope you don&rsquo;t mind my having made the remark?⁠ ⁠&hellip; Demmed bad form making remarks.⁠ ⁠&hellip; I hope you don&rsquo;t mind?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No, no, not at all⁠&mdash;hem! I hope Lady Blakeney is well,&rdquo; said Chauvelin, hurriedly changing the topic of conversation.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Blakeney, with much deliberation, finished his plate of soup, drank his glass of wine, and, momentarily, it seemed to Marguerite as if he glanced all round the room.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Quite well, thank you,&rdquo; he said at last, drily. There was a pause, during which Marguerite could watch these two antagonists who, evidently in their minds, were measuring themselves against one another. She could see Percy almost full face where he sat at the table not ten yards from where she herself was crouching, puzzled, not knowing what to do, or what she should think. She had quite controlled her impulse now of rushing down and disclosing herself to her husband. A man capable of acting a part, in the way he was doing at the present moment, did not need a woman&rsquo;s word to warn him to be cautious.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Marguerite indulged in the luxury, dear to every tender woman&rsquo;s heart, of looking at the man she loved. She looked through the tattered curtain, across at the handsome face of her husband, in whose lazy blue eyes, and behind whose inane smile, she could now so plainly see the strength, energy, and resourcefulness which had caused the Scarlet Pimpernel to be reverenced and trusted by his followers. &ldquo;There are nineteen of us ready to lay down our lives for your husband, Lady Blakeney,&rdquo; Sir Andrew had said to her; and as she looked at the forehead, low, but square and broad, the eyes, blue, yet deep-set and intense, the whole aspect of the man, of indomitable energy, hiding, behind a perfectly acted comedy, his almost superhuman strength of will and marvellous ingenuity, she understood the fascination which he exercised over his followers, for had he not also cast his spells over her heart and her imagination?</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin, who was trying to conceal his impatience beneath his usual urbane manner, took a quick look at his watch. Desgas should not be long: another two or three minutes, and this impudent Englishman would be secure in the keeping of half a dozen of Captain Jutley&rsquo;s most trusted men.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You are on your way to Paris, Sir Percy?&rdquo; he asked carelessly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Odd&rsquo;s life, no,&rdquo; replied Blakeney, with a laugh. &ldquo;Only as far as Lille⁠&mdash;not Paris for me⁠ ⁠&hellip; beastly uncomfortable place Paris, just now⁠ ⁠&hellip; eh, Monsieur Chaubertin⁠ ⁠&hellip; beg pardon⁠ ⁠&hellip; Chauvelin!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Not for an English gentleman like yourself, Sir Percy,&rdquo; rejoined Chauvelin, sarcastically, &ldquo;who takes no interest in the conflict that is raging there.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;La! you see it&rsquo;s no business of mine, and our demmed government is all on your side of the business. Old Pitt daren&rsquo;t say &lsquo;Bo&rsquo; to a goose. You are in a hurry, sir,&rdquo; he added, as Chauvelin once again took out his watch; &ldquo;an appointment, perhaps.⁠ ⁠&hellip; I pray you take no heed of me.⁠ ⁠&hellip; My time&rsquo;s my own.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He rose from the table and dragged a chair to the hearth. Once more Marguerite was terribly tempted to go to him, for time was getting on; Desgas might be back at any moment with his men. Percy did not know that and⁠ ⁠&hellip; oh! how horrible it all was⁠&mdash;and how helpless she felt.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I am in no hurry,&rdquo; continued Percy, pleasantly, &ldquo;but, la! I don&rsquo;t want to spend any more time than I can help in this Godforsaken hole! But, begad! sir,&rdquo; he added, as Chauvelin had surreptitiously looked at his watch for the third time, &ldquo;that watch of yours won&rsquo;t go any faster for all the looking you give it. You are expecting a friend, maybe?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye⁠&mdash;a friend!&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Not a lady⁠&mdash;I trust, Monsieur l&rsquo;Abbé,&rdquo; laughed Blakeney; &ldquo;surely the holy church does not allow?⁠ ⁠&hellip; eh?⁠ ⁠&hellip; what! But, I say, come by the fire⁠ ⁠&hellip; it&rsquo;s getting demmed cold.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He kicked the fire with the heel of his boot, making the logs blaze in the old hearth. He seemed in no hurry to go, and apparently was quite unconscious of his immediate danger. He dragged another chair to the fire, and Chauvelin, whose impatience was by now quite beyond control, sat down beside the hearth, in such a way as to command a view of the door. Desgas had been gone nearly a quarter of an hour. It was quite plain to Marguerite&rsquo;s aching senses that as soon as he arrived, Chauvelin would abandon all his other plans with regard to the fugitives, and capture this impudent Scarlet Pimpernel at once.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Hey, M. Chauvelin,&rdquo; the latter was saying airily, &ldquo;tell me, I pray you, is your friend pretty? Demmed smart these little French women sometimes⁠&mdash;what? But I protest I need not ask,&rdquo; he added, as he carelessly strode back towards the supper-table. &ldquo;In matters of taste the Church has never been backward.⁠ ⁠&hellip; Eh?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But Chauvelin was not listening. His every faculty was now concentrated on that door through which presently Desgas would enter. Marguerite&rsquo;s thoughts, too, were centred there, for her ears had suddenly caught, through the stillness of the night, the sound of numerous and measured treads some distance away.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It was Desgas and his men. Another three minutes and they would be here! Another three minutes and the awful thing would have occurred: the brave eagle would have fallen in the ferret&rsquo;s trap! She would have moved now and screamed, but she dared not; for whilst she heard the soldiers approaching, she was looking at Percy and watching his every movement. He was standing by the table whereon the remnants of the supper, plates, glasses, spoons, salt and pepper-pots were scattered pell-mell. His back was turned to Chauvelin and he was still prattling along in his own affected and inane way, but from his pocket he had taken his snuffbox, and quickly and suddenly he emptied the contents of the pepper-pot into it.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Then he again turned with an inane laugh to Chauvelin⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Eh? Did you speak, sir?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin had been too intent on listening to the sound of those approaching footsteps, to notice what his cunning adversary had been doing. He now pulled himself together, trying to look unconcerned in the very midst of his anticipated triumph. &ldquo;No,&rdquo; he said presently, &ldquo;that is⁠&mdash;as you were saying, Sir Percy⁠&mdash;?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I was saying,&rdquo; said Blakeney, going up to Chauvelin, by the fire, &ldquo;that the Jew in Piccadilly has sold me better snuff this time than I have ever tasted. Will you honour me, Monsieur l&rsquo;Abbé?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He stood close to Chauvelin in his own careless, debonair way, holding out his snuffbox to his arch-enemy.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin, who, as he told Marguerite once, had seen a trick or two in his day, had never dreamed of this one. With one ear fixed on those fast-approaching footsteps, one eye turned to that door where Desgas and his men would presently appear, lulled into false security by the impudent Englishman&rsquo;s airy manner, he never even remotely guessed the trick which was being played upon him.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He took a pinch of snuff.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Only he, who has ever by accident sniffed vigorously a dose of pepper, can have the faintest conception of the hopeless condition in which such a sniff would reduce any human being.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin felt as if his head would burst⁠&mdash;sneeze after sneeze seemed nearly to choke him; he was blind, deaf, and dumb for the moment, and during that moment Blakeney quietly, without the slightest haste, took up his hat, took some money out of his pocket, which he left on the table, then calmly stalked out of the room!</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 25).</div>
+                </div>
+            </details>
+            <!-- ===== EMBEDDED READING: The Scarlet Pimpernel 26 ===== -->
+            <details style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; CHAPTER XXVI &middot; The Jew &middot; 3,024 words &middot; already read; open it if you want to look back</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">It took Marguerite some time to collect her scattered senses; the whole of this last short episode had taken place in less than a minute, and Desgas and the soldiers were still about two hundred yards away from the Chat Gris.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">When she realised what had happened, a curious mixture of joy and wonder filled her heart. It all was so neat, so ingenious. Chauvelin was still absolutely helpless, far more so than he could even have been under a blow from the fist, for now he could neither see, nor hear, nor speak, whilst his cunning adversary had quietly slipped through his fingers.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Blakeney was gone, obviously to try and join the fugitives at the Père Blanchard&rsquo;s hut. For the moment, true, Chauvelin was helpless; for the moment the daring Scarlet Pimpernel had not been caught by Desgas and his men. But all the roads and the beach were patrolled. Every place was watched, and every stranger kept in sight. How far could Percy go, thus arrayed in his gorgeous clothes, without being sighted and followed? Now she blamed herself terribly for not having gone down to him sooner, and given him that word of warning and of love which, perhaps, after all, he needed. He could not know of the orders which Chauvelin had given for his capture, and even now, perhaps⁠ ⁠&hellip;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">But before all these horrible thoughts had taken concrete form in her brain, she heard the grounding of arms outside, close to the door, and Desgas&rsquo; voice shouting &ldquo;Halt!&rdquo; to his men.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin had partially recovered; his sneezing had become less violent, and he had struggled to his feet. He managed to reach the door just as Desgas&rsquo; knock was heard on the outside.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin threw open the door, and before his secretary could say a word, he had managed to stammer between two sneezes⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The tall stranger⁠&mdash;quick!⁠&mdash;did any of you see him?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Where, citoyen?&rdquo; asked Desgas, in surprise.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Here, man! through that door! not five minutes ago.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;We saw nothing, citoyen! The moon is not yet up, and⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And you are just five minutes too late, my friend,&rdquo; said Chauvelin, with concentrated fury.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Citoyen⁠ ⁠&hellip; I⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You did what I ordered you to do,&rdquo; said Chauvelin, with impatience. &ldquo;I know that, but you were a precious long time about it. Fortunately, there&rsquo;s not much harm done, or it had fared ill with you, Citoyen Desgas.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Desgas turned a little pale. There was so much rage and hatred in his superior&rsquo;s whole attitude.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The tall stranger, citoyen⁠&mdash;&rdquo; he stammered.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Was here, in this room, five minutes ago, having supper at that table. Damn his impudence! For obvious reasons, I dared not tackle him alone. Brogard is too big a fool, and that cursed Englishman appears to have the strength of a bullock, and so he slipped away under your very nose.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He cannot go far without being sighted, citoyen.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Captain Jutley sent forty men as reinforcements for the patrol duty: twenty went down to the beach. He again assured me that the watch had been constant all day, and that no stranger could possibly get to the beach, or reach a boat, without being sighted.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;That&rsquo;s good.⁠&mdash;Do the men know their work?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;They have had very clear orders, citoyen: and I myself spoke to those who were about to start. They are to shadow⁠&mdash;as secretly as possible⁠&mdash;any stranger they may see, especially if he be tall, or stoop as if he would disguise his height.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;In no case to detain such a person, of course,&rdquo; said Chauvelin, eagerly. &ldquo;That impudent Scarlet Pimpernel would slip through clumsy fingers. We must let him get to the Père Blanchard&rsquo;s hut now; there surround and capture him.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The men understand that, citoyen, and also that, as soon as a tall stranger has been sighted, he must be shadowed, whilst one man is to turn straight back and report to you.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;That is right,&rdquo; said Chauvelin, rubbing his hands, well pleased.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I have further news for you, citoyen.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What is it?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A tall Englishman had a long conversation about three-quarters of an hour ago with a Jew, Reuben by name, who lives not ten paces from here.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes⁠&mdash;and?&rdquo; queried Chauvelin, impatiently.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The conversation was all about a horse and cart, which the tall Englishman wished to hire, and which was to have been ready for him by eleven o&rsquo;clock.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;It is past that now. Where does that Reuben live?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;A few minutes&rsquo; walk from this door.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Send one of the men to find out if the stranger has driven off in Reuben&rsquo;s cart.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, citoyen.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Desgas went to give the necessary orders to one of the men. Not a word of this conversation between him and Chauvelin had escaped Marguerite, and every word they had spoken seemed to strike at her heart, with terrible hopelessness and dark foreboding.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">She had come all this way, and with such high hopes and firm determination to help her husband, and so far she had been able to do nothing, but to watch, with a heart breaking with anguish, the meshes of the deadly net closing round the daring Scarlet Pimpernel.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He could not now advance many steps, without spying eyes to track and denounce him. Her own helplessness struck her with the terrible sense of utter disappointment. The possibility of being the slightest use to her husband had become almost nil, and her only hope rested in being allowed to share his fate, whatever it might ultimately be.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">For the moment, even her chance of ever seeing the man she loved again, had become a remote one. Still, she was determined to keep a close watch over his enemy, and a vague hope filled her heart, that whilst she kept Chauvelin in sight, Percy&rsquo;s fate might still be hanging in the balance.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Desgas left Chauvelin moodily pacing up and down the room, whilst he himself waited outside for the return of the man whom he had sent in search of Reuben. Thus several minutes went by. Chauvelin was evidently devoured with impatience. Apparently he trusted no one: this last trick played upon him by the daring Scarlet Pimpernel had made him suddenly doubtful of success, unless he himself was there to watch, direct and superintend the capture of this impudent Englishman.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">About five minutes later, Desgas returned, followed by an elderly Jew, in a dirty, threadbare gaberdine, worn greasy across the shoulders. His red hair, which he wore after the fashion of the Polish Jews, with the corkscrew curls each side of his face, was plentifully sprinkled with grey⁠&mdash;a general coating of grime, about his cheeks and his chin, gave him a peculiarly dirty and loathsome appearance. He had the habitual stoop, those of his race affected in mock humility in past centuries, before the dawn of equality and freedom in matters of faith, and he walked behind Desgas with the peculiar shuffling gait which has remained the characteristic of the Jew trader in continental Europe to this day.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin, who had all the Frenchman&rsquo;s prejudice against the despised race, motioned to the fellow to keep at a respectful distance. The group of the three men were standing just underneath the hanging oil-lamp, and Marguerite had a clear view of them all.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Is this the man?&rdquo; asked Chauvelin.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No, citoyen,&rdquo; replied Desgas, &ldquo;Reuben could not be found, so presumably his cart has gone with the stranger; but this man here seems to know something, which he is willing to sell for a consideration.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Ah!&rdquo; said Chauvelin, turning away with disgust from the loathsome specimen of humanity before him.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The Jew, with characteristic patience, stood humbly on one side, leaning on the knotted staff, his greasy, broad-brimmed hat casting a deep shadow over his grimy face, waiting for the noble Excellency to deign to put some questions to him.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The citoyen tells me,&rdquo; said Chauvelin peremptorily to him, &ldquo;that you know something of my friend, the tall Englishman, whom I desire to meet.⁠ ⁠&hellip;<em>Morbleu!</em>keep your distance, man,&rdquo; he added hurriedly, as the Jew took a quick and eager step forward.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, your Excellency,&rdquo; replied the Jew, who spoke the language with that peculiar lisp which denotes Eastern origin, &ldquo;I and Reuben Goldstein met a tall Englishman, on the road, close by here this evening.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Did you speak to him?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He spoke to us, your Excellency. He wanted to know if he could hire a horse and cart to go down along the St. Martin road, to a place he wanted to reach tonight.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What did you say?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I did not say anything,&rdquo; said the Jew in an injured tone, &ldquo;Reuben Goldstein, that accursed traitor, that son of Belial⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Cut that short, man,&rdquo; interrupted Chauvelin, roughly, &ldquo;and go on with your story.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He took the words out of my mouth, your Excellency: when I was about to offer the wealthy Englishman my horse and cart, to take him wheresoever he chose, Reuben had already spoken, and offered his half-starved nag, and his broken-down cart.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And what did the Englishman do?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He listened to Reuben Goldstein, your Excellency, and put his hand in his pocket then and there, and took out a handful of gold, which he showed to that descendant of Beelzebub, telling him that all that would be his, if the horse and cart were ready for him by eleven o&rsquo;clock.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;And, of course, the horse and cart were ready?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Well! they were ready for him in a manner, so to speak, your Excellency. Reuben&rsquo;s nag was lame as usual; she refused to budge at first. It was only after a time and with plenty of kicks, that she at last could be made to move,&rdquo; said the Jew with a malicious chuckle.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Then they started?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Yes, they started about five minutes ago. I was disgusted with that stranger&rsquo;s folly. An Englishman too!⁠&mdash;He ought to have known Reuben&rsquo;s nag was not fit to drive.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;But if he had no choice?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;No choice, your Excellency?&rdquo; protested the Jew, in a rasping voice, &ldquo;did I not repeat to him a dozen times, that my horse and cart would take him quicker, and more comfortably than Reuben&rsquo;s bag of bones. He would not listen. Reuben is such a liar, and has such insinuating ways. The stranger was deceived. If he was in a hurry, he would have had better value for his money by taking my cart.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You have a horse and cart too, then?&rdquo; asked Chauvelin, peremptorily.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Aye! that I have, your Excellency, and if your Excellency wants to drive⁠ ⁠&hellip;&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Do you happen to know which way my friend went in Reuben Goldstein&rsquo;s cart?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Thoughtfully the Jew rubbed his dirty chin. Marguerite&rsquo;s heart was beating well-nigh to bursting. She had heard the peremptory question; she looked anxiously at the Jew, but could not read his face beneath the shadow of his broad-brimmed hat. Vaguely she felt somehow as if he held Percy&rsquo;s fate in his long dirty hands.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">There was a long pause, whilst Chauvelin frowned impatiently at the stooping figure before him: at last the Jew slowly put his hand in his breast pocket, and drew out from its capacious depths a number of silver coins. He gazed at them thoughtfully, then remarked, in a quiet tone of voice⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;This is what the tall stranger gave me, when he drove away with Reuben, for holding my tongue about him, and his doings.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin shrugged his shoulders impatiently.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How much is there there?&rdquo; he asked.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Twenty francs, your Excellency,&rdquo; replied the Jew, &ldquo;and I have been an honest man all my life.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin without further comment took a few pieces of gold out of his own pocket, and leaving them in the palm of his hand, he allowed them to jingle as he held them out towards the Jew.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How many gold pieces are there in the palm of my hand?&rdquo; he asked quietly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Evidently he had no desire to terrorize the man, but to conciliate him, for his own purposes, for his manner was pleasant and suave. No doubt he feared that threats of the guillotine, and various other persuasive methods of that type, might addle the old man&rsquo;s brains, and that he would be more likely to be useful through greed of gain, than through terror of death.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The eyes of the Jew shot a quick, keen glance at the gold in his interlocutor&rsquo;s hand.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;At least five, I should say, your Excellency,&rdquo; he replied obsequiously.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Enough, do you think, to loosen that honest tongue of yours?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;What does your Excellency wish to know?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Whether your horse and cart can take me to where I can find my friend the tall stranger, who has driven off in Reuben Goldstein&rsquo;s cart?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;My horse and cart can take your Honour there, where you please.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;To a place called the Père Blanchard&rsquo;s hut?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Your Honour has guessed?&rdquo; said the Jew in astonishment.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You know the place? Which road leads to it?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;The St. Martin Road, your Honour, then a footpath from there to the cliffs.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You know the road?&rdquo; repeated Chauvelin, roughly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Every stone, every blade of grass, your Honour,&rdquo; replied the Jew quietly.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Chauvelin without another word threw the five pieces of gold one by one before the Jew, who knelt down, and on his hands and knees struggled to collect them. One rolled away, and he had some trouble to get it, for it had lodged underneath the dresser. Chauvelin quietly waited while the old man scrambled on the floor, to find the piece of gold.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">When the Jew was again on his feet, Chauvelin said⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How soon can your horse and cart be ready?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;They are ready now, your Honour.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Where?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Not ten metres from this door. Will your Excellency deign to look.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I don&rsquo;t want to see it. How far can you drive me in it?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;As far as the Père Blanchard&rsquo;s hut, your Honour, and further than Reuben&rsquo;s nag took your friend. I am sure that, not two leagues from here, we shall come across that wily Reuben, his nag, his cart and the tall stranger all in a heap in the middle of the road.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;How far is the nearest village from here?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;On the road which the Englishman took, Miquelon is the nearest village, not two leagues from here.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;There he could get fresh conveyance, if he wanted to go further?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;He could⁠&mdash;if he ever got so far.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Can you?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Will your Excellency try?&rdquo; said the Jew simply.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;That is my intention,&rdquo; said Chauvelin very quietly, &ldquo;but remember, if you have deceived me, I shall tell off two of my most stalwart soldiers to give you such a beating, that your breath will perhaps leave your ugly body forever. But if we find my friend the tall Englishman, either on the road or at the Père Blanchard&rsquo;s hut, there will be ten more gold pieces for you. Do you accept the bargain?&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">The Jew again thoughtfully rubbed his chin. He looked at the money in his hand, then at this stern interlocutor, and at Desgas, who had stood silently behind him all this while. After a moment&rsquo;s pause, he said deliberately⁠&mdash;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I accept.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Go and wait outside then,&rdquo; said Chauvelin, &ldquo;and remember to stick to your bargain, or by Heaven, I will keep to mine.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">With a final, most abject and cringing bow, the old Jew shuffled out of the room. Chauvelin seemed pleased with his interview, for he rubbed his hands together, with that usual gesture of his, of malignant satisfaction.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;My coat and boots,&rdquo; he said to Desgas at last.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Desgas went to the door, and apparently gave the necessary orders, for presently a soldier entered, carrying Chauvelin&rsquo;s coat, boots, and hat.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">He took off his soutane, beneath which he was wearing close-fitting breeches and a cloth waistcoat, and began changing his attire.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;You, citoyen, in the meanwhile,&rdquo; he said to Desgas, &ldquo;go back to Captain Jutley as fast as you can, and tell him to let you have another dozen men, and bring them with you along the St. Martin Road, where I daresay you will soon overtake the Jew&rsquo;s cart with myself in it. There will be hot work presently, if I mistake not, in the Père Blanchard&rsquo;s hut. We shall corner our game there, I&rsquo;ll warrant, for this impudent Scarlet Pimpernel has had the audacity⁠&mdash;or the stupidity, I hardly know which⁠&mdash;to adhere to his original plans. He has gone to meet de Tournay, St. Just and the other traitors, which for the moment, I thought, perhaps, he did not intend to do. When we find them, there will be a band of desperate men at bay. Some of our men will, I presume, be put hors de combat. These royalists are good swordsmen, and the Englishman is devilish cunning, and looks very powerful. Still, we shall be five against one at least. You can follow the cart closely with your men, all along the St. Martin Road, through Miquelon. The Englishman is ahead of us, and not likely to look behind him.&rdquo;</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">Whilst he gave these curt and concise orders, he had completed his change of attire. The priest&rsquo;s costume had been laid aside, and he was once more dressed in his usual dark, tight-fitting clothes. At last he took up his hat.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;I shall have an interesting prisoner to deliver into your hands,&rdquo; he said with a chuckle, as with unwonted familiarity he took Desgas&rsquo; arm, and led him towards the door. &ldquo;We won&rsquo;t kill him outright, eh, friend Desgas? The Père Blanchard&rsquo;s hut is⁠&mdash;an I mistake not⁠&mdash;a lonely spot upon the beach, and our men will enjoy a bit of rough sport there with the wounded fox. Choose your men well, friend Desgas⁠ ⁠&hellip; of the sort who would enjoy that type of sport⁠&mdash;eh? We must see that Scarlet Pimpernel wither a bit⁠&mdash;what?⁠&mdash;shrink and tremble, eh?⁠ ⁠&hellip; before we finally⁠ ⁠&hellip;&rdquo; He made an expressive gesture, whilst he laughed a low, evil laugh, which filled Marguerite&rsquo;s soul with sickening horror.</p>
+                    <p style="font-size: 17px; color: #1a2340; line-height: 1.75; margin: 0 0 15px 0;">&ldquo;Choose your men well, Citoyen Desgas,&rdquo; he said once more, as he led his secretary finally out of the room.</p>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">Baroness Orczy, <em>The Scarlet Pimpernel</em> (1905). Public domain. Cite this text as (Orczy, Ch. 26).</div>
+                </div>
+            </details>
+
+
+
+
     <!-- Title card -->
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
         <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.02</div>
@@ -183,17 +574,6 @@
         </div>
     </div>
 
-    <!-- What You'll Do Next -->
-    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
-        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
-        <div style="display: flex; align-items: flex-start; gap: 14px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-            <div>
-                <div style="font-size: 17px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: The Irony Station</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Complete the two Reading Journal questions above. Then complete VR Activity 1: The Irony Station.</div>
-            </div>
-        </div>
-    </div>
 
 </div>
 

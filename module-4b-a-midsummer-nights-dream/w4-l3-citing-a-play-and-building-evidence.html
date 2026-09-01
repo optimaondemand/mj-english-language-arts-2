@@ -63,6 +63,208 @@
 
 <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+
 
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
@@ -74,7 +276,7 @@
             <span style="background: #C7922C; color: #ffffff; font-size: 13px; padding: 4px 12px; border-radius: 12px; white-space: nowrap;">&#9201; ~17 min</span>
         </div>
     </div>
-<div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#127919; TODAY&rsquo;S FOCUS</div><div style="font-size: 18px; color: #1a2340; line-height: 1.65;">A play is not a novel. It has no chapters and no page a reader can point to the same way every time. Today you learn the format writers use to quote and cite a play exactly: the playwright&rsquo;s name, plus act and scene. You will use this exact format in your final project essay.</div></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; WARM-UP</div><div class="optima-widget ow-reflect"><div class="widget-kicker">&#9889; QUICK CHECK-IN</div><div class="widget-question">When you cite a novel, you usually give the author&rsquo;s last name and a chapter or page number. What do you think you would cite for a play written mostly in verse?</div><div class="widget-options"><button data-response="Close. A play is split into acts and scenes. That two-part address, plus the playwright&rsquo;s name, is exactly what you will learn today.">Something like a scene number</button><button data-response="Some editions do use page numbers, but the standard way to cite a play cites the play itself, not the specific book it was printed in, using the playwright&rsquo;s name plus act and scene.">A page number, the same as a novel</button><button data-response="Right instinct. The playwright&rsquo;s name has to appear too, either in your own sentence or in the parentheses, alongside the act and scene.">The playwright&rsquo;s name, somehow</button></div><div class="widget-feedback"></div><button class="widget-reset">Reset</button></div></div><div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE FORMAT: AUTHOR, ACT.SCENE</div><div style="display: flex; flex-wrap: wrap; gap: 0; border: 1px solid #D0D9E8; border-radius: 8px; overflow: hidden; margin-bottom: 12px;"><div style="flex: 1; min-width: 180px; background: #FDF3E3; padding: 16px; border-right: 1px solid #D0D9E8;"><div style="font-size: 20px; color: #C7922C; font-weight: bold; margin-bottom: 6px;">Shakespeare</div><div style="font-size: 15px; color: #C7922C; font-weight: bold; margin-bottom: 6px;">Author</div><div style="font-size: 14px; color: #1a2340; line-height: 1.55;">The playwright&rsquo;s last name. Always comes first.</div></div><div style="flex: 1; min-width: 180px; background: #EEF1F8; padding: 16px; border-right: 1px solid #D0D9E8;"><div style="font-size: 28px; color: #E2725B; font-weight: bold; margin-bottom: 6px;">4</div><div style="font-size: 15px; color: #E2725B; font-weight: bold; margin-bottom: 6px;">Act</div><div style="font-size: 14px; color: #1a2340; line-height: 1.55;">The large division of the play. This module reads Act 4.</div></div><div style="flex: 1; min-width: 180px; background: #EEF1F8; padding: 16px;"><div style="font-size: 28px; color: #2A9D8F; font-weight: bold; margin-bottom: 6px;">1</div><div style="font-size: 15px; color: #2A9D8F; font-weight: bold; margin-bottom: 6px;">Scene</div><div style="font-size: 14px; color: #1a2340; line-height: 1.55;">The smaller division inside the act. Act 4 has two scenes.</div></div></div><div style="font-size: 17px; color: #0e1c42; text-align: center; background: #EEF1F8; border-radius: 7px; padding: 12px;">Put together: <strong>(Shakespeare, 4.1)</strong> means Shakespeare, Act 4, Scene 1.</div><div style="font-size: 14px; color: #6b7a99; margin-top: 10px; line-height: 1.5;">Our pages carry no page numbers, so act and scene are what you cite: the two divisions any reader can find no matter which printed copy they check. If you already name Shakespeare in your own sentence, do not name him again in the parentheses; just give the act and scene.</div></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; QUOTING FEWER THAN THREE LINES OF VERSE</div><p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">When you quote one or two lines of verse, you can run the quotation right into your own sentence. Mark where one line of the original ends and the next begins with a forward slash, with a space on each side: <strong> / </strong>.</p><div style="background: #EEF1F8; border-radius: 8px; padding: 16px 20px; margin-bottom: 10px;"><div style="font-size: 14px; color: #6b7a99; margin-bottom: 8px; font-style: italic;">Worked example:</div><p style="font-size: 16px; color: #1a2340; line-height: 1.7; margin: 0;">Titania&rsquo;s shock is immediate: &ldquo;My Oberon, what visions have I seen! / Methought I was enamour’d of an ass.&rdquo; (Shakespeare, 4.1).</p></div><p style="font-size: 15px; color: #1a2340; line-height: 1.6; margin: 0;">Notice the slash stands in for the line break that the block quote below shows visually. The period comes after the closing parenthesis, since the citation ends the sentence.</p></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; QUOTING THREE OR MORE LINES OF VERSE</div><p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Once you are quoting three lines or more, set the quotation off from your paragraph as its own indented block. Drop the quotation marks (the indenting shows the reader it is a quotation) and keep the original line breaks exactly as printed.</p><div style="background: #EEF1F8; border-radius: 8px; padding: 16px 24px; margin-bottom: 10px; border-left: 4px solid #C7922C;"><div style="font-size: 14px; color: #6b7a99; margin-bottom: 8px; font-style: italic;">Worked example: Oberon&rsquo;s spell that restores Titania&rsquo;s sight</div><div style="font-size: 16px; color: #1a2340; line-height: 1.8;">Be as thou wast wont to be;<br>See as thou was wont to see.<br>Dian’s bud o’er Cupid’s flower<br>Hath such force and blessed power.</div><div style="font-size: 15px; color: #6b7a99; margin-top: 8px;">(Shakespeare, 4.1)</div></div><p style="font-size: 15px; color: #1a2340; line-height: 1.6; margin: 0;">Because the citation is set on its own line after a block quotation, no extra period follows it. The period from the end of the quoted material already does that work.</p></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; QUOTING PROSE</div><p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Not every character speaks in verse. Bottom often speaks in prose, and the mechanicals always do. Prose is quoted like ordinary prose: no slash marks are needed, since prose is not built from fixed lines the way verse is. The citation still gives Shakespeare&rsquo;s name plus act and scene.</p><div style="background: #EEF1F8; border-radius: 8px; padding: 16px 20px;"><div style="font-size: 14px; color: #6b7a99; margin-bottom: 8px; font-style: italic;">Worked example:</div><p style="font-size: 16px; color: #1a2340; line-height: 1.7; margin: 0;">Bottom insists, &ldquo;I have had a most rare vision. I have had a dream, past the wit of man to say what dream it was.&rdquo; (Shakespeare, 4.1).</p></div></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; YOUR TURN</div><div class="optima-widget ow-select"><div class="widget-kicker">&#9889; TRY IT &middot; CITING A PLAY</div><div class="widget-question">Decide before you click.</div><div class="widget-row" data-correct="1" data-fb="Right. A play citation gives the playwright&rsquo;s name plus act and scene, separated by a period, not a page number." data-hint="Plays are cited by the playwright&rsquo;s name and their own internal structure, not by the page a particular book happens to print them on."><div class="widget-row-prompt">1. Which correctly formats an in-text citation for a play?</div><div class="widget-options"><button data-choice="0">(Act 4, page 1)</button><button data-choice="1">(Shakespeare, 4.1)</button><button data-choice="2">(p. 128)</button></div></div><div class="widget-row" data-correct="2" data-fb="Right. Once a quotation reaches three lines or more, set it off as an indented block and keep the original line breaks." data-hint="What is the rule once a verse quotation gets longer than two lines?"><div class="widget-row-prompt">2. You want to quote four lines of verse in your essay. What should you do?</div><div class="widget-options"><button data-choice="0">Run them into your sentence with slash marks.</button><button data-choice="1">Leave out the citation, since it is a long quote.</button><button data-choice="2">Set them off as an indented block, keeping the original line breaks.</button></div></div><div class="widget-row" data-correct="0" data-fb="Right. A forward slash with a space on each side marks a line break when you run verse into your own sentence." data-hint="You learned one specific piece of punctuation for exactly this job today."><div class="widget-row-prompt">3. You are quoting two lines of verse inside your own sentence. How do you show where one line ends and the next begins?</div><div class="widget-options"><button data-choice="0">A forward slash with a space on each side ( / )</button><button data-choice="1">A comma</button><button data-choice="2">Start a new paragraph</button></div></div></div></div><div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#9999;&#65039; APPLY IT: BUILDING EVIDENCE</div><div style="font-size: 17px; color: #1a2340; line-height: 1.65;">In your Reading Journal, find one short passage from Act 4 that supports a claim about who you trust most (or least) after this week&rsquo;s reading. Write the three-part evidence move: state your claim, quote the passage using the correct format for verse or prose, and explain in your own words what it shows. This exact skill feeds directly into VR Activity 2 and Quick Write 4.</div></div><div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #0e1c42; margin-bottom: 12px;">&#128220; YOUR WORKS CITED ENTRY</div><div style="font-size: 17px; color: #1a2340; line-height: 1.65; margin-bottom: 12px;">Your final project essay ends with one Works Cited entry for the play:</div><div style="background: #EEF1F8; border-radius: 8px; padding: 12px 18px; font-size: 16px; color: #0e1c42;">Shakespeare, William. <em>A Midsummer Night&rsquo;s Dream</em>.</div></div><div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU&rsquo;LL DO NEXT</div><div style="display: flex; align-items: flex-start; gap: 14px;"><div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div><div><div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Quick Write 4</strong></div><div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Then complete this week&rsquo;s Check-up.</div></div></div></div>
+<div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#127919; TODAY&rsquo;S FOCUS</div><div style="font-size: 18px; color: #1a2340; line-height: 1.65;">A play is not a novel. It has no chapters and no page a reader can point to the same way every time. Today you learn the format writers use to quote and cite a play exactly: the playwright&rsquo;s name, plus act and scene. You will use this exact format in your final project essay.</div></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; WARM-UP</div><div class="optima-widget ow-reflect"><div class="widget-kicker">&#9889; QUICK CHECK-IN</div><div class="widget-question">When you cite a novel, you usually give the author&rsquo;s last name and a chapter or page number. What do you think you would cite for a play written mostly in verse?</div><div class="widget-options"><button data-response="Close. A play is split into acts and scenes. That two-part address, plus the playwright&rsquo;s name, is exactly what you will learn today.">Something like a scene number</button><button data-response="Some editions do use page numbers, but the standard way to cite a play cites the play itself, not the specific book it was printed in, using the playwright&rsquo;s name plus act and scene.">A page number, the same as a novel</button><button data-response="Right instinct. The playwright&rsquo;s name has to appear too, either in your own sentence or in the parentheses, alongside the act and scene.">The playwright&rsquo;s name, somehow</button></div><div class="widget-feedback"></div><button class="widget-reset">Reset</button></div></div><div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128161; THE FORMAT: AUTHOR, ACT.SCENE</div><div style="display: flex; flex-wrap: wrap; gap: 0; border: 1px solid #D0D9E8; border-radius: 8px; overflow: hidden; margin-bottom: 12px;"><div style="flex: 1; min-width: 180px; background: #FDF3E3; padding: 16px; border-right: 1px solid #D0D9E8;"><div style="font-size: 20px; color: #C7922C; font-weight: bold; margin-bottom: 6px;">Shakespeare</div><div style="font-size: 15px; color: #C7922C; font-weight: bold; margin-bottom: 6px;">Author</div><div style="font-size: 14px; color: #1a2340; line-height: 1.55;">The playwright&rsquo;s last name. Always comes first.</div></div><div style="flex: 1; min-width: 180px; background: #EEF1F8; padding: 16px; border-right: 1px solid #D0D9E8;"><div style="font-size: 28px; color: #E2725B; font-weight: bold; margin-bottom: 6px;">4</div><div style="font-size: 15px; color: #E2725B; font-weight: bold; margin-bottom: 6px;">Act</div><div style="font-size: 14px; color: #1a2340; line-height: 1.55;">The large division of the play. This module reads Act 4.</div></div><div style="flex: 1; min-width: 180px; background: #EEF1F8; padding: 16px;"><div style="font-size: 28px; color: #2A9D8F; font-weight: bold; margin-bottom: 6px;">1</div><div style="font-size: 15px; color: #2A9D8F; font-weight: bold; margin-bottom: 6px;">Scene</div><div style="font-size: 14px; color: #1a2340; line-height: 1.55;">The smaller division inside the act. Act 4 has two scenes.</div></div></div><div style="font-size: 17px; color: #0e1c42; text-align: center; background: #EEF1F8; border-radius: 7px; padding: 12px;">Put together: <strong>(Shakespeare, 4.1)</strong> means Shakespeare, Act 4, Scene 1.</div><div style="font-size: 14px; color: #6b7a99; margin-top: 10px; line-height: 1.5;">Our pages carry no page numbers, so act and scene are what you cite: the two divisions any reader can find no matter which printed copy they check. If you already name Shakespeare in your own sentence, do not name him again in the parentheses; just give the act and scene.</div></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; QUOTING FEWER THAN THREE LINES OF VERSE</div><p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">When you quote one or two lines of verse, you can run the quotation right into your own sentence. Mark where one line of the original ends and the next begins with a forward slash, with a space on each side: <strong> / </strong>.</p><div style="background: #EEF1F8; border-radius: 8px; padding: 16px 20px; margin-bottom: 10px;"><div style="font-size: 14px; color: #6b7a99; margin-bottom: 8px; font-style: italic;">Worked example:</div><p style="font-size: 16px; color: #1a2340; line-height: 1.7; margin: 0;">Titania&rsquo;s shock is immediate: &ldquo;My Oberon, what visions have I seen! / Methought I was enamour’d of an ass.&rdquo; (Shakespeare, 4.1).</p></div><p style="font-size: 15px; color: #1a2340; line-height: 1.6; margin: 0;">Notice the slash stands in for the line break that the block quote below shows visually. The period comes after the closing parenthesis, since the citation ends the sentence.</p></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; QUOTING THREE OR MORE LINES OF VERSE</div><p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Once you are quoting three lines or more, set the quotation off from your paragraph as its own indented block. Drop the quotation marks (the indenting shows the reader it is a quotation) and keep the original line breaks exactly as printed.</p><div style="background: #EEF1F8; border-radius: 8px; padding: 16px 24px; margin-bottom: 10px; border-left: 4px solid #C7922C;"><div style="font-size: 14px; color: #6b7a99; margin-bottom: 8px; font-style: italic;">Worked example: Oberon&rsquo;s spell that restores Titania&rsquo;s sight</div><div style="font-size: 16px; color: #1a2340; line-height: 1.8;">Be as thou wast wont to be;<br>See as thou was wont to see.<br>Dian’s bud o’er Cupid’s flower<br>Hath such force and blessed power.</div><div style="font-size: 15px; color: #6b7a99; margin-top: 8px;">(Shakespeare, 4.1)</div></div><p style="font-size: 15px; color: #1a2340; line-height: 1.6; margin: 0;">Because the citation is set on its own line after a block quotation, no extra period follows it. The period from the end of the quoted material already does that work.</p></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#128218; QUOTING PROSE</div><p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">Not every character speaks in verse. Bottom often speaks in prose, and the mechanicals always do. Prose is quoted like ordinary prose: no slash marks are needed, since prose is not built from fixed lines the way verse is. The citation still gives Shakespeare&rsquo;s name plus act and scene.</p><div style="background: #EEF1F8; border-radius: 8px; padding: 16px 20px;"><div style="font-size: 14px; color: #6b7a99; margin-bottom: 8px; font-style: italic;">Worked example:</div><p style="font-size: 16px; color: #1a2340; line-height: 1.7; margin: 0;">Bottom insists, &ldquo;I have had a most rare vision. I have had a dream, past the wit of man to say what dream it was.&rdquo; (Shakespeare, 4.1).</p></div></div><div style="background: #FFFFFF; border-top: 3px solid #E2725B; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #E2725B; margin-bottom: 14px;">&#9889; YOUR TURN</div><div class="optima-widget ow-select"><div class="widget-kicker">&#9889; TRY IT &middot; CITING A PLAY</div><div class="widget-question">Decide before you click.</div><div class="widget-row" data-correct="1" data-fb="Right. A play citation gives the playwright&rsquo;s name plus act and scene, separated by a period, not a page number." data-hint="Plays are cited by the playwright&rsquo;s name and their own internal structure, not by the page a particular book happens to print them on."><div class="widget-row-prompt">1. Which correctly formats an in-text citation for a play?</div><div class="widget-options"><button data-choice="0">(Act 4, page 1)</button><button data-choice="1">(Shakespeare, 4.1)</button><button data-choice="2">(p. 128)</button></div></div><div class="widget-row" data-correct="2" data-fb="Right. Once a quotation reaches three lines or more, set it off as an indented block and keep the original line breaks." data-hint="What is the rule once a verse quotation gets longer than two lines?"><div class="widget-row-prompt">2. You want to quote four lines of verse in your essay. What should you do?</div><div class="widget-options"><button data-choice="0">Run them into your sentence with slash marks.</button><button data-choice="1">Leave out the citation, since it is a long quote.</button><button data-choice="2">Set them off as an indented block, keeping the original line breaks.</button></div></div><div class="widget-row" data-correct="0" data-fb="Right. A forward slash with a space on each side marks a line break when you run verse into your own sentence." data-hint="You learned one specific piece of punctuation for exactly this job today."><div class="widget-row-prompt">3. You are quoting two lines of verse inside your own sentence. How do you show where one line ends and the next begins?</div><div class="widget-options"><button data-choice="0">A forward slash with a space on each side ( / )</button><button data-choice="1">A comma</button><button data-choice="2">Start a new paragraph</button></div></div></div></div><div style="background: #FFFFFF; border-top: 3px solid #2A9D8F; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #2A9D8F; margin-bottom: 12px;">&#9999;&#65039; APPLY IT: BUILDING EVIDENCE</div><div style="font-size: 17px; color: #1a2340; line-height: 1.65;">In your Reading Journal, find one short passage from Act 4 that supports a claim about who you trust most (or least) after this week&rsquo;s reading. Write the three-part evidence move: state your claim, quote the passage using the correct format for verse or prose, and explain in your own words what it shows. This exact skill feeds directly into VR Activity 2 and Quick Write 4.</div></div><div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;"><div style="font-size: 11px; color: #0e1c42; margin-bottom: 12px;">&#128220; YOUR WORKS CITED ENTRY</div><div style="font-size: 17px; color: #1a2340; line-height: 1.65; margin-bottom: 12px;">Your final project essay ends with one Works Cited entry for the play:</div><div style="background: #EEF1F8; border-radius: 8px; padding: 12px 18px; font-size: 16px; color: #0e1c42;">Shakespeare, William. <em>A Midsummer Night&rsquo;s Dream</em>.</div></div>
 <div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
     <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; 7TH GRADE ENGLISH LANGUAGE ARTS &middot; Quarter 3 &middot; Student Lesson Page</div>
     <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.03 &middot; Citing a Play and Building Evidence</div>
@@ -121,5 +323,6 @@
 })();
 </script>
 
+</div>
 </body>
 </html>

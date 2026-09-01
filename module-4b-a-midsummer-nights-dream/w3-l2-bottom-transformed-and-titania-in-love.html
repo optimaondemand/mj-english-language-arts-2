@@ -63,6 +63,472 @@
 
 <div style="padding: 24px 34px;">
 
+<!-- ═══ OPTIMA READ-ALOUD PLAYER ═══ -->
+<div id="optima-read-aloud">
+<style>
+    #optima-read-aloud { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 14px 18px; margin: 0 0 20px 0; }
+    #optima-read-aloud .ora-kicker { font-size: 11px; color: #1B6A94; letter-spacing: 0.4px; margin-bottom: 10px; }
+    #optima-read-aloud .ora-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #optima-read-aloud .ora-controls button { border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    #ora-play { background: #0E1C42; color: #FFFFFF; border: 1.5px solid #0E1C42; }
+    #ora-play:hover:enabled { background: #1B2D5E; }
+    #ora-play:disabled { background: #D0D9E8; border-color: #D0D9E8; color: #6b7a99; cursor: default; }
+    #ora-stop { background: #FFFFFF; color: #0E1C42; border: 1.5px solid #D0D9E8; }
+    #ora-stop:hover:enabled { background: #F4F6FA; border-color: #55C8E8; }
+    #ora-stop:disabled { color: #999; border-color: #E4E9F2; cursor: default; }
+    #optima-read-aloud .ora-speed { font-size: 12px; color: #6b7a99; display: flex; align-items: center; gap: 6px; }
+    #ora-rate { font-family: inherit; font-size: 13px; color: #0E1C42; border: 1.5px solid #D0D9E8; border-radius: 6px; padding: 5px 8px; background: #FFFFFF; }
+    #ora-status { font-size: 12px; color: #666; }
+    .ora-highlight { background: #FDF3E3 !important; box-shadow: inset 4px 0 0 #C7922C; border-radius: 4px; transition: background 0.2s; }
+</style>
+    <div class="ora-kicker">&#128266; READ ALOUD &mdash; LISTEN TO THIS PAGE</div>
+    <div class="ora-controls">
+        <button id="ora-play" type="button" aria-label="Listen to this page">&#9654;&#65039; Listen</button>
+        <button id="ora-stop" type="button" aria-label="Stop reading" disabled>&#9632; Stop</button>
+        <label class="ora-speed">Speed
+            <select id="ora-rate" aria-label="Reading speed">
+                <option value="0.8">Slower</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.25">Faster</option>
+            </select>
+        </label>
+        <span id="ora-status" role="status" aria-live="polite"></span>
+    </div>
+<script>
+(function () {
+    "use strict";
+    var playBtn  = document.getElementById("ora-play");
+    var stopBtn  = document.getElementById("ora-stop");
+    var rateSel  = document.getElementById("ora-rate");
+    var statusEl = document.getElementById("ora-status");
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        playBtn.disabled = true;
+        rateSel.disabled = true;
+        statusEl.textContent = "Read-aloud is not supported in this browser.";
+        return;
+    }
+
+    var LABEL_PLAY   = "▶️ Listen";
+    var LABEL_PAUSE  = "⏸️ Pause";
+    var LABEL_RESUME = "▶️ Resume";
+    var BLOCK_SEL = "p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th, dt, dd, figcaption, div";
+    var SKIP_SEL  = "#optima-read-aloud, [data-ra-skip], button, script, style, select, noscript, iframe";
+
+    var queue = [];        // [{ el, text }] — one entry per sentence
+    var idx = 0;
+    var playing = false, paused = false, stopping = false;
+    var currentBlock = null;
+    var currentUtterance = null;  // held to dodge a Chrome garbage-collection bug
+
+    var voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    loadVoices();
+    if ("onvoiceschanged" in window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+        if (!voices.length) loadVoices();
+        var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
+        return en.filter(function (v) { return /natural/i.test(v.name); })[0]
+            || en.filter(function (v) { return /google us english/i.test(v.name); })[0]
+            || en.filter(function (v) { return v.default; })[0]
+            || en[0] || null;
+    }
+
+    function isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    // Walk text nodes, attach each to its nearest block ancestor, split into sentences.
+    function collectQueue() {
+        var root = document.querySelector("[data-readaloud-root]")
+                || document.querySelector(".canvas-frame")
+                || document.body;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var items = [];   // [{ el, text }] — one entry per block, in reading order
+        var node;
+        while ((node = walker.nextNode())) {
+            if (!/\S/.test(node.textContent)) continue;
+            var el = node.parentElement;
+            if (!el || el.closest(SKIP_SEL)) continue;
+            if (!isVisible(el)) continue;
+            var block = el.closest(BLOCK_SEL) || root;
+            var last = items[items.length - 1];
+            if (last && last.el === block) last.text += " " + node.textContent;
+            else items.push({ el: block, text: node.textContent });
+        }
+        var q = [];
+        items.forEach(function (item) {
+            var clean = item.text.replace(/\s+/g, " ").trim();
+            if (!clean) return;
+            var sentences = clean.match(/[^.!?]+[.!?]+[”"')\]]*\s*|[^.!?]+$/g) || [clean];
+            sentences.forEach(function (s) {
+                s = s.trim();
+                if (s) q.push({ el: item.el, text: s });
+            });
+        });
+        return q;
+    }
+
+    function highlight(el) {
+        if (el === currentBlock) return;
+        clearHighlight();
+        currentBlock = el;
+        if (el && el !== document.body) {
+            el.classList.add("ora-highlight");
+            try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+        }
+    }
+    function clearHighlight() {
+        if (currentBlock) currentBlock.classList.remove("ora-highlight");
+        currentBlock = null;
+    }
+
+    function speakNext() {
+        if (idx >= queue.length) { finish("Finished reading this page."); return; }
+        var item = queue[idx];
+        highlight(item.el);
+        var u = new SpeechSynthesisUtterance(item.text);
+        u.rate = parseFloat(rateSel.value) || 1;
+        var v = pickVoice();
+        if (v) u.voice = v;
+        u.onend = function () {
+            if (stopping) return;
+            idx++;
+            speakNext();
+        };
+        u.onerror = function (e) {
+            if (stopping || e.error === "canceled" || e.error === "interrupted") return;
+            idx++;
+            speakNext();
+        };
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+        statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+    }
+
+    function finish(message) {
+        playing = false;
+        paused = false;
+        clearHighlight();
+        playBtn.textContent = LABEL_PLAY;
+        stopBtn.disabled = true;
+        statusEl.textContent = message || "";
+        currentUtterance = null;
+    }
+
+    playBtn.addEventListener("click", function () {
+        if (playing && !paused) {
+            window.speechSynthesis.pause();
+            paused = true;
+            playBtn.textContent = LABEL_RESUME;
+            statusEl.textContent = "Paused";
+            return;
+        }
+        if (playing && paused) {
+            window.speechSynthesis.resume();
+            paused = false;
+            playBtn.textContent = LABEL_PAUSE;
+            statusEl.textContent = "Reading… " + (idx + 1) + " / " + queue.length;
+            return;
+        }
+        queue = collectQueue();
+        if (!queue.length) { statusEl.textContent = "Nothing to read on this page."; return; }
+        idx = 0;
+        stopping = false;
+        playing = true;
+        paused = false;
+        window.speechSynthesis.cancel();
+        playBtn.textContent = LABEL_PAUSE;
+        stopBtn.disabled = false;
+        speakNext();
+    });
+
+    stopBtn.addEventListener("click", function () {
+        stopping = true;
+        window.speechSynthesis.cancel();
+        finish("");
+    });
+
+    // Changing speed mid-read restarts the current sentence at the new rate.
+    rateSel.addEventListener("change", function () {
+        if (!playing || paused) return;
+        stopping = true;
+        window.speechSynthesis.cancel();
+        setTimeout(function () { stopping = false; speakNext(); }, 60);
+    });
+
+    window.addEventListener("pagehide", function () { window.speechSynthesis.cancel(); });
+})();
+</script>
+</div>
+
+            <!-- ===== EMBEDDED READING: A Midsummer Night's Dream 3.1 ===== -->
+            <details open style="background: #FFFFFF; border: 1px solid #D0D9E8; border-top: 3px solid #E2725B; border-radius: 8px; padding: 18px 24px; margin: 16px 0;">
+                <summary style="cursor: pointer; font-size: 11px; color: #E2725B; letter-spacing: 0.4px;">&#128214; THE TEXT &middot; ACT III, SCENE I &middot; 1,601 words &middot; click to collapse when you have finished reading</summary>
+                <div style="max-width: 730px; margin: 16px auto 0 auto;">
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Setting: The Wood.</em></div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The Queen of Fairies still lying asleep.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter Bottom, Quince, Snout, Starveling, Snug and Flute.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Are we all met?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Pat, pat; and here&rsquo;s a marvellous convenient place for our rehearsal.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">This green plot shall be our stage, this hawthorn brake our</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">tiring-house; and we will do it in action, as we will do it before the</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Duke.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Peter Quince?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">What sayest thou, bully Bottom?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">There are things in this comedy of Pyramus and Thisbe that will never</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">please. First, Pyramus must draw a sword to kill himself; which the</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">ladies cannot abide. How answer you that?</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">SNOUT</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">By&rsquo;r lakin, a parlous fear.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">STARVELING</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I believe we must leave the killing out, when all is done.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Not a whit; I have a device to make all well. Write me a prologue, and</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">let the prologue seem to say we will do no harm with our swords, and</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">that Pyramus is not killed indeed; and for the more better assurance,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">tell them that I Pyramus am not Pyramus but Bottom the weaver. This</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">will put them out of fear.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Well, we will have such a prologue; and it shall be written in eight</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">and six.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">No, make it two more; let it be written in eight and eight.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">SNOUT</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Will not the ladies be afeard of the lion?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">STARVELING</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I fear it, I promise you.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Masters, you ought to consider with yourselves, to bring in (God shield</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">us!) a lion among ladies is a most dreadful thing. For there is not a</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">more fearful wild-fowl than your lion living; and we ought to look to</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">it.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">SNOUT</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Therefore another prologue must tell he is not a lion.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Nay, you must name his name, and half his face must be seen through the</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">lion&rsquo;s neck; and he himself must speak through, saying thus, or to the</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">same defect: &lsquo;Ladies,&rsquo; or, &lsquo;Fair ladies, I would wish you,&rsquo; or, &lsquo;I</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">would request you,&rsquo; or, &rsquo;I would entreat you, not to fear, not to</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">tremble: my life for yours. If you think I come hither as a lion, it</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">were pity of my life. No, I am no such thing; I am a man as other men</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">are&rsquo;: and there, indeed, let him name his name, and tell them plainly</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">he is Snug the joiner.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Well, it shall be so. But there is two hard things: that is, to bring</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">the moonlight into a chamber, for you know, Pyramus and Thisbe meet by</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">moonlight.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">SNOUT</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Doth the moon shine that night we play our play?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">A calendar, a calendar! Look in the almanack; find out moonshine, find</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">out moonshine.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Yes, it doth shine that night.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Why, then may you leave a casement of the great chamber window, where</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">we play, open; and the moon may shine in at the casement.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Ay; or else one must come in with a bush of thorns and a lantern, and</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">say he comes to disfigure or to present the person of Moonshine. Then</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">there is another thing: we must have a wall in the great chamber; for</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Pyramus and Thisbe, says the story, did talk through the chink of a</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">wall.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">SNOUT</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">You can never bring in a wall. What say you, Bottom?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Some man or other must present Wall. And let him have some plaster, or</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">some loam, or some rough-cast about him, to signify wall; and let him</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">hold his fingers thus, and through that cranny shall Pyramus and Thisbe</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">whisper.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">If that may be, then all is well. Come, sit down, every mother&rsquo;s son,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">and rehearse your parts. Pyramus, you begin: when you have spoken your</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">speech, enter into that brake; and so everyone according to his cue.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter Puck behind.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PUCK</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">What hempen homespuns have we swaggering here,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So near the cradle of the Fairy Queen?</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">What, a play toward? I&rsquo;ll be an auditor;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">An actor too perhaps, if I see cause.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Speak, Pyramus.&mdash;Thisbe, stand forth.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PYRAMUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Thisbe, the flowers of odious savours sweet</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Odours, odours.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PYRAMUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">. . . odours savours sweet.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So hath thy breath, my dearest Thisbe dear.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">But hark, a voice! Stay thou but here awhile,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And by and by I will to thee appear.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PUCK</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">A stranger Pyramus than e&rsquo;er played here!</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THISBE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Must I speak now?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Ay, marry, must you, For you must understand he goes but to see a noise</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">that he heard, and is to come again.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THISBE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Most radiant Pyramus, most lily-white of hue,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Of colour like the red rose on triumphant brier,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Most brisky juvenal, and eke most lovely Jew,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">As true as truest horse, that yet would never tire,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I&rsquo;ll meet thee, Pyramus, at Ninny&rsquo;s tomb.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Ninus&rsquo; tomb, man! Why, you must not speak that yet. That you answer to</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Pyramus. You speak all your part at once, cues, and all.&mdash;Pyramus enter!</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Your cue is past; it is &lsquo;never tire.&rsquo;</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">THISBE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O, As true as truest horse, that yet would never tire.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter Puck and Bottom with an ass&rsquo;s head.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PYRAMUS</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">If I were fair, Thisbe, I were only thine.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O monstrous! O strange! We are haunted. Pray, masters, fly, masters!</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Help!</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exeunt Clowns.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PUCK</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I&rsquo;ll follow you. I&rsquo;ll lead you about a round,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Through bog, through bush, through brake, through brier;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Sometime a horse I&rsquo;ll be, sometime a hound,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">A hog, a headless bear, sometime a fire;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And neigh, and bark, and grunt, and roar, and burn,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Like horse, hound, hog, bear, fire, at every turn.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Why do they run away? This is a knavery of them to make me afeard.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter Snout.</em></div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">SNOUT</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">O Bottom, thou art changed! What do I see on thee?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">What do you see? You see an ass-head of your own, do you?</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit Snout.</em></div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter Quince.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">QUINCE</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Bless thee, Bottom! bless thee! Thou art translated.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exit.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I see their knavery. This is to make an ass of me, to fright me, if</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">they could. But I will not stir from this place, do what they can. I</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">will walk up and down here, and I will sing, that they shall hear I am</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">not afraid.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Sings.</em></div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The ousel cock, so black of hue,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">With orange-tawny bill,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The throstle with his note so true,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The wren with little quill.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">TITANIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">[Waking.] What angel wakes me from my flowery bed?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Sings.</em></div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The finch, the sparrow, and the lark,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The plain-song cuckoo gray,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Whose note full many a man doth mark,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And dares not answer nay.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">for, indeed, who would set his wit to so foolish a bird? Who would give</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">a bird the lie, though he cry &lsquo;cuckoo&rsquo; never so?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">TITANIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I pray thee, gentle mortal, sing again.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Mine ear is much enamour&rsquo;d of thy note.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">So is mine eye enthrallèd to thy shape;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And thy fair virtue&rsquo;s force perforce doth move me,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">On the first view, to say, to swear, I love thee.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Methinks, mistress, you should have little reason for that. And yet, to</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">say the truth, reason and love keep little company together nowadays.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The more the pity that some honest neighbours will not make them</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">friends. Nay, I can gleek upon occasion.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">TITANIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Thou art as wise as thou art beautiful.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Not so, neither; but if I had wit enough to get out of this wood, I</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">have enough to serve mine own turn.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">TITANIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Out of this wood do not desire to go.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Thou shalt remain here whether thou wilt or no.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I am a spirit of no common rate.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The summer still doth tend upon my state;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And I do love thee: therefore, go with me.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I&rsquo;ll give thee fairies to attend on thee;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And they shall fetch thee jewels from the deep,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And sing, while thou on pressèd flowers dost sleep.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And I will purge thy mortal grossness so</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">That thou shalt like an airy spirit go.&mdash;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Peaseblossom! Cobweb! Moth! and Mustardseed!</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Enter four Fairies.</em></div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PEASEBLOSSOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Ready.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">COBWEB</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And I.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">MOTH</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And I.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">MUSTARDSEED</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And I.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">ALL</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Where shall we go?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">TITANIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Be kind and courteous to this gentleman;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Hop in his walks and gambol in his eyes;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Feed him with apricocks and dewberries,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">With purple grapes, green figs, and mulberries;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The honey-bags steal from the humble-bees,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And for night-tapers, crop their waxen thighs,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And light them at the fiery glow-worm&rsquo;s eyes,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To have my love to bed and to arise;</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And pluck the wings from painted butterflies,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">To fan the moonbeams from his sleeping eyes.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Nod to him, elves, and do him courtesies.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PEASEBLOSSOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Hail, mortal!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">COBWEB</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Hail!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">MOTH</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Hail!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">MUSTARDSEED</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Hail!</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I cry your worships mercy, heartily.&mdash;I beseech your worship&rsquo;s name.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">COBWEB</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Cobweb.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I shall desire you of more acquaintance, good Master Cobweb. If I cut</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">my finger, I shall make bold with you.&mdash;Your name, honest gentleman?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">PEASEBLOSSOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Peaseblossom.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">I pray you, commend me to Mistress Squash, your mother, and to Master</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Peascod, your father. Good Master Peaseblossom, I shall desire you of</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">more acquaintance too.&mdash;Your name, I beseech you, sir?</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">MUSTARDSEED</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Mustardseed.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">BOTTOM</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Good Master Mustardseed, I know your patience well. That same cowardly</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">giant-like ox-beef hath devoured many a gentleman of your house. I</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">promise you, your kindred hath made my eyes water ere now. I desire you</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">of more acquaintance, good Master Mustardseed.</div>
+                    <div style="font-size: 12px; color: #0E1C42; letter-spacing: 0.6px; margin: 16px 0 4px 0;">TITANIA</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Come, wait upon him; lead him to my bower.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">The moon, methinks, looks with a watery eye,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">And when she weeps, weeps every little flower,</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Lamenting some enforced chastity.</div>
+                    <div style="font-size: 17px; color: #1a2340; line-height: 1.7; margin: 0 0 2px 0; padding-left: 14px; text-indent: -14px;">Tie up my love&rsquo;s tongue, bring him silently.</div>
+                    <div style="font-size: 15px; color: #6b7a99; font-style: italic; margin: 8px 0 8px 0;"><em>Exeunt.</em></div>
+                    <div style="border-top: 1px solid #D0D9E8; margin-top: 18px; padding-top: 10px; font-size: 13px; color: #6b7a99; line-height: 1.55;">William Shakespeare, <em>A Midsummer Night's Dream</em> (c. 1595). Public domain. Cite this text as (Shakespeare, 3.1).</div>
+                </div>
+            </details>
+
+
+
 
     <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
@@ -220,16 +686,6 @@
         <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">Add this to the Week 3 section of your Reading Journal: In your own words, what is funny about this scene, and what does it add to your growing answer to the module question about whose account of events in the wood we can trust?</p>
     </div>
 
-    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
-        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
-        <div style="display: flex; align-items: flex-start; gap: 14px;">
-            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-            <div>
-                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>VR Activity 1: The Wood at Cross-Purposes</strong></div>
-                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Open VR Activity 1 in Canvas after this lesson. It feeds the Module 4B project.</div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
