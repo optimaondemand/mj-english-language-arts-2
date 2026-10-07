@@ -54,8 +54,8 @@
         .schedule-card { border-top: 4px solid #0E1C42; }
         .schedule-card .card-kicker { color: #0E1C42; }
 
-        .question-card { border-top: 4px solid #C7922C; }
-        .question-card .card-kicker { color: #C7922C; }
+        .journal-card { border-top: 4px solid #C7922C; }
+        .journal-card .card-kicker { color: #C7922C; }
 
         .ongoing-card { border-top: 4px solid #2A9D8F; }
         .ongoing-card .card-kicker { color: #2A9D8F; }
@@ -81,8 +81,8 @@
         .total-label { font-size: 13px; color: #55C8E8; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
         .total-value { font-size: 15px; color: #FFFFFF; font-weight: 700; }
 
-        .map-question { font-size: 17px; color: #0E1C42; font-style: italic; line-height: 1.6; margin-bottom: 10px; }
-        .map-instruction { font-size: 14px; color: #4a5a7a; line-height: 1.55; }
+        .journal-question { font-size: 17px; color: #0E1C42; font-style: italic; line-height: 1.6; margin-bottom: 10px; }
+        .journal-instruction { font-size: 14px; color: #4a5a7a; line-height: 1.55; }
 
         .ongoing-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #EEF0F5; }
         .ongoing-item:last-child { border-bottom: none; }
@@ -94,7 +94,6 @@
         .footer-meta { font-size: 12px; color: #55C8E8; }
         .footer-copy { font-size: 12px; color: rgba(255,255,255,0.55); }
 
-        .placeholder-note { font-size: 12px; color: #7A8BA8; font-style: italic; background: #F4F6FA; border: 1px dashed #C5D0E0; border-radius: 4px; padding: 5px 10px; display: inline-block; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -314,6 +313,7 @@
 </div>
 
 
+
     <!-- METADATA STRIP -->
     <div class="meta-strip">
         <div class="meta-cell">
@@ -349,8 +349,6 @@
             <div class="card-kicker">&#128214; This Week's Reading</div>
             <div class="card-body">
                 <p style="margin: 0 0 8px;">Read Chapters 9&ndash;10 in your copy of <em>The Outsiders</em>. (~35 min across the week)</p>
-                <p style="margin: 0 0 8px;"><strong>Assignment:</strong> Read Chapters 9&ndash;10 in your copy of <em>The Outsiders</em>.</p>
-                <span class="placeholder-note">[Teacher: link the approved student copy, purchase option, or library access here]</span>
             </div>
         </div>
 
@@ -362,7 +360,7 @@
                 <!-- Day 1 -->
                 <div class="day-card coral">
                     <div class="day-label">Day 1</div>
-                    <div class="day-title">Lesson 5.01: The Climax</div>
+                    <div class="day-title">The Climax</div>
                     <div class="day-activities">
                         <ul>
                             <li>The rumble and the hospital</li>
@@ -387,15 +385,14 @@
                 <!-- Day 3 -->
                 <div class="day-card teal">
                     <div class="day-label">Day 3</div>
-                    <div class="day-title">Lesson 5.02: Sequence of Events and Family</div>
+                    <div class="day-title">Sequence of Events and Family</div>
                     <div class="day-activities">
                         <ul>
                             <li>Sequence of events analysis</li>
                             <li>Family themes in the novel</li>
-                            <li>VR Activity 1</li>
                         </ul>
                     </div>
-                    <span class="time-pill">~50 min</span>
+                    <span class="time-pill">~25 min</span>
                 </div>
 
                 <!-- Day 4 -->
@@ -406,16 +403,15 @@
                         <ul>
                             <li>Correcting dialogue punctuation</li>
                             <li>Grammar POP Quiz</li>
-                            <li>VR Activity 2</li>
                         </ul>
                     </div>
-                    <span class="time-pill">~50 min</span>
+                    <span class="time-pill">~25 min</span>
                 </div>
 
                 <!-- Day 5 (full width) -->
                 <div class="day-card coral" style="grid-column: 1 / -1;">
                     <div class="day-label">Day 5</div>
-                    <div class="day-title">Lesson 5.03: Weekly Workshop</div>
+                    <div class="day-title">Weekly Workshop</div>
                     <div class="day-activities" style="display: flex; gap: 24px; flex-wrap: wrap;">
                         <ul style="margin: 4px 0 0 0; padding-left: 18px; flex: 1; min-width: 160px;">
                             <li>Weekly Workshop activities</li>
@@ -429,21 +425,19 @@
                 <!-- Total row -->
                 <div class="total-row">
                     <span class="total-label">Total this week</span>
-                    <span class="total-value">~260 min</span>
+                    <span class="total-value">~210 min</span>
                 </div>
 
             </div>
         </div>
 
-        <!-- THIS WEEK'S QUESTION -->
-        <div class="info-card question-card">
-            <div class="card-kicker">&#128221; This Week's Question</div>
+        <div class="info-card journal-card">
+            <div class="card-kicker">&#128221; This Week's Response Question</div>
             <div class="card-body">
-                <p class="map-question">"At the end of Chapters 9&ndash;10, what two things happen that change everything Ponyboy thought he knew? Which one hits harder, and why?"</p>
-                <p class="map-instruction"> Aim for 4&ndash;6 sentences.</p>
+                <p class="journal-question">"At the end of Chapters 9&ndash;10, what two things happen that change everything Ponyboy thought he knew? Which one hits harder, and why?"</p>
+                <p class="journal-instruction">Write a response of 4&ndash;6 sentences.</p>
             </div>
         </div>
-
 
         <!-- REQUIRED NOTICE -->
         <div style="background: #E8F6FB; border-left: 5px solid #2196D0; border-top: 3px solid #55C8E8; border-radius: 6px; padding: 14px 20px; margin: 14px 0;">
