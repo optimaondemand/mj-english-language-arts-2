@@ -1,0 +1,266 @@
+{
+ "version": 1,
+ "module": "A Christmas Carol",
+ "made": "2026-11-12",
+ "lessons": [
+  {
+   "page": "w1-lesson1-link-by-link.html",
+   "week": 1,
+   "lesson": 1,
+   "title": "Link by Link",
+   "folder": "Week 1/Lesson 1 - Link by Link",
+   "combined": {
+    "path": "Week 1/Lesson 1 - Link by Link/Lesson 1 - all cards.pdf",
+    "bytes": 2005100
+   },
+   "files": [
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Where Are We/01 - The Hay Wain.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Where Are We/01 - The Hay Wain.jpg",
+     "activity": "Where Are We?",
+     "label": "The Hay Wain",
+     "bytes": 258620
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Where Are We/02 - The Streets, Morning.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Where Are We/02 - The Streets, Morning.jpg",
+     "activity": "Where Are We?",
+     "label": "The Streets, Morning",
+     "bytes": 106783
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Where Are We/03 - Winter Landscape with Ice Skaters.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Where Are We/03 - Winter Landscape with Ice Skaters.jpg",
+     "activity": "Where Are We?",
+     "label": "Winter Landscape with Ice Skaters",
+     "bytes": 262472
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Where Are We/04 - El Khasneh.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Where Are We/04 - El Khasneh.jpg",
+     "activity": "Where Are We?",
+     "label": "El Khasneh",
+     "bytes": 114732
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Where Are We/05 - Charles Dickens.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Where Are We/05 - Charles Dickens.jpg",
+     "activity": "Where Are We?",
+     "label": "Charles Dickens",
+     "bytes": 73432
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Characterization/01 - Fred Barnard, 1878.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Characterization/01 - Fred Barnard, 1878.jpg",
+     "activity": "Characterization",
+     "label": "Fred Barnard, 1878",
+     "bytes": 264192
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Daily Oral Language/01 - The Royal Exchange before the fire of 1838.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Daily Oral Language/01 - The Royal Exchange before the fire of 1838.jpg",
+     "activity": "Daily Oral Language",
+     "label": "The Royal Exchange before the fire of 1838",
+     "bytes": 264909
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Poetry Corner/01 - Gustave Dor, Ludgate Hill, 1872.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Poetry Corner/01 - Gustave Dor, Ludgate Hill, 1872.jpg",
+     "activity": "Poetry Corner",
+     "label": "Gustave Doré, Ludgate Hill, 1872",
+     "bytes": 260406
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Words Stave I/01 - First-edition title page, 1843.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Words Stave I/01 - First-edition title page, 1843.jpg",
+     "activity": "Words: Stave I",
+     "label": "First-edition title page, 1843",
+     "bytes": 264080
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Read Stave I/01 - John Leech, 1843.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Read Stave I/01 - John Leech, 1843.jpg",
+     "activity": "Read: Stave I",
+     "label": "John Leech, 1843",
+     "bytes": 76122
+    },
+    {
+     "path": "Week 1/Lesson 1 - Link by Link/Marley's Chain/01 - Fred Barnard, 1878.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Link by Link/Marley's Chain/01 - Fred Barnard, 1878.jpg",
+     "activity": "Marley’s Chain",
+     "label": "Fred Barnard, 1878",
+     "bytes": 262597
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson2-shadows-of-the-past.html",
+   "week": 1,
+   "lesson": 2,
+   "title": "Shadows of the Past",
+   "folder": "Week 1/Lesson 2 - Shadows of the Past",
+   "combined": {
+    "path": "Week 1/Lesson 2 - Shadows of the Past/Lesson 2 - all cards.pdf",
+    "bytes": 269533
+   },
+   "files": [
+    {
+     "path": "Week 1/Lesson 2 - Shadows of the Past/Flashback/01 - Sol Eytinge Jr., 1868.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Shadows of the Past/Flashback/01 - Sol Eytinge Jr., 1868.jpg",
+     "activity": "Flashback",
+     "label": "Sol Eytinge Jr., 1868",
+     "bytes": 112491
+    },
+    {
+     "path": "Week 1/Lesson 2 - Shadows of the Past/Read Stave II, The First of the Three Spirits/01 - John Leech, 1843.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Shadows of the Past/Read Stave II, The First of the Three Spirits/01 - John Leech, 1843.jpg",
+     "activity": "Read: Stave II, The First of the Three Spirits",
+     "label": "John Leech, 1843",
+     "bytes": 88987
+    },
+    {
+     "path": "Week 1/Lesson 2 - Shadows of the Past/The Magic Lantern/01 - The solitary child.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Shadows of the Past/The Magic Lantern/01 - The solitary child.jpg",
+     "activity": "The Magic Lantern",
+     "label": "The solitary child",
+     "bytes": 108509
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson4-fear-memory-or-love.html",
+   "week": 1,
+   "lesson": 4,
+   "title": "Fear, Memory, or Love",
+   "folder": "Week 1/Lesson 4 - Fear, Memory, or Love",
+   "combined": {
+    "path": "Week 1/Lesson 4 - Fear, Memory, or Love/Lesson 4 - all cards.pdf",
+    "bytes": 21667
+   },
+   "files": [
+    {
+     "path": "Week 1/Lesson 4 - Fear, Memory, or Love/The Strongboxes/01 - Sign - Fear.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Fear, Memory, or Love/The Strongboxes/01 - Sign - Fear.jpg",
+     "activity": "The Strongboxes",
+     "label": "FEAR",
+     "bytes": 18440
+    },
+    {
+     "path": "Week 1/Lesson 4 - Fear, Memory, or Love/The Strongboxes/02 - Sign - Memory.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Fear, Memory, or Love/The Strongboxes/02 - Sign - Memory.jpg",
+     "activity": "The Strongboxes",
+     "label": "MEMORY",
+     "bytes": 18881
+    },
+    {
+     "path": "Week 1/Lesson 4 - Fear, Memory, or Love/The Strongboxes/03 - Sign - Love.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Fear, Memory, or Love/The Strongboxes/03 - Sign - Love.jpg",
+     "activity": "The Strongboxes",
+     "label": "LOVE",
+     "bytes": 18455
+    },
+    {
+     "path": "Week 1/Lesson 4 - Fear, Memory, or Love/The Strongboxes/04 - Sign - Not Yet.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Fear, Memory, or Love/The Strongboxes/04 - Sign - Not Yet.jpg",
+     "activity": "The Strongboxes",
+     "label": "NOT YET",
+     "bytes": 18529
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson1-know-me-better.html",
+   "week": 2,
+   "lesson": 1,
+   "title": "Know Me Better",
+   "folder": "Week 2/Lesson 1 - Know Me Better",
+   "combined": {
+    "path": "Week 2/Lesson 1 - Know Me Better/Lesson 1 - all cards.pdf",
+    "bytes": 311277
+   },
+   "files": [
+    {
+     "path": "Week 2/Lesson 1 - Know Me Better/Symbol/01 - Sol Eytinge Jr., 1869.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - Know Me Better/Symbol/01 - Sol Eytinge Jr., 1869.jpg",
+     "activity": "Symbol",
+     "label": "Sol Eytinge Jr., 1869",
+     "bytes": 162189
+    },
+    {
+     "path": "Week 2/Lesson 1 - Know Me Better/Read Stave III/01 - Fred Barnard.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - Know Me Better/Read Stave III/01 - Fred Barnard.jpg",
+     "activity": "Read: Stave III",
+     "label": "Fred Barnard",
+     "bytes": 111508
+    },
+    {
+     "path": "Week 2/Lesson 1 - Know Me Better/Questions from Professor Lovelore/01 - John Leech, 1843.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - Know Me Better/Questions from Professor Lovelore/01 - John Leech, 1843.jpg",
+     "activity": "Questions from Professor Lovelore",
+     "label": "John Leech, 1843",
+     "bytes": 76554
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson2-the-pointing-hand.html",
+   "week": 2,
+   "lesson": 2,
+   "title": "The Pointing Hand",
+   "folder": "Week 2/Lesson 2 - The Pointing Hand",
+   "combined": {
+    "path": "Week 2/Lesson 2 - The Pointing Hand/Lesson 2 - all cards.pdf",
+    "bytes": 253349
+   },
+   "files": [
+    {
+     "path": "Week 2/Lesson 2 - The Pointing Hand/The Writer's Desk/01 - The Last of the Spirits.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - The Pointing Hand/The Writer's Desk/01 - The Last of the Spirits.jpg",
+     "activity": "The Writer’s Desk",
+     "label": "The Last of the Spirits",
+     "bytes": 253349
+    }
+   ]
+  },
+  {
+   "page": "project2-write-your-reflection.html",
+   "heading": "Final Project",
+   "title": "Write Your Reflection",
+   "folder": "Final Project/Lesson 2 - Write Your Reflection",
+   "combined": {
+    "path": "Final Project/Lesson 2 - Write Your Reflection/Final Project - all cards.pdf",
+    "bytes": 19117
+   },
+   "files": [
+    {
+     "path": "Final Project/Lesson 2 - Write Your Reflection/Your Claim/01 - Sign - Fear.pdf",
+     "thumb": "thumbs/Final Project/Lesson 2 - Write Your Reflection/Your Claim/01 - Sign - Fear.jpg",
+     "activity": "Your Claim",
+     "label": "Fear",
+     "bytes": 16248
+    },
+    {
+     "path": "Final Project/Lesson 2 - Write Your Reflection/Your Claim/02 - Sign - Memory.pdf",
+     "thumb": "thumbs/Final Project/Lesson 2 - Write Your Reflection/Your Claim/02 - Sign - Memory.jpg",
+     "activity": "Your Claim",
+     "label": "Memory",
+     "bytes": 16684
+    },
+    {
+     "path": "Final Project/Lesson 2 - Write Your Reflection/Your Claim/03 - Sign - Love.pdf",
+     "thumb": "thumbs/Final Project/Lesson 2 - Write Your Reflection/Your Claim/03 - Sign - Love.jpg",
+     "activity": "Your Claim",
+     "label": "Love",
+     "bytes": 16550
+    },
+    {
+     "path": "Final Project/Lesson 2 - Write Your Reflection/Your Claim/04 - Sign - More than one.pdf",
+     "thumb": "thumbs/Final Project/Lesson 2 - Write Your Reflection/Your Claim/04 - Sign - More than one.jpg",
+     "activity": "Your Claim",
+     "label": "More than one",
+     "bytes": 16257
+    }
+   ]
+  }
+ ]
+}

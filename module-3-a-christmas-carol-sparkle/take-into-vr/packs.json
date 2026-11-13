@@ -1,0 +1,280 @@
+{
+ "module": "A Christmas Carol",
+ "note": "Weeks 1-2 and the Final Project. Pictures used inside the lessons; page header art, the book cover and the Lovelore and Priya pictures are left out. A picture is carded once, in the first lesson that shows it.",
+ "lessons": [
+  {
+   "page": "w1-lesson1-link-by-link.html",
+   "title": "Link by Link",
+   "activities": [
+    {
+     "name": "Where Are We?",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "ctx_haywain",
+       "label": "The Hay Wain",
+       "artist": "John Constable",
+       "credit": "1821, National Gallery, London, public domain."
+      },
+      {
+       "type": "picture",
+       "img": "ctx_cruikshank",
+       "label": "The Streets, Morning",
+       "artist": "George Cruikshank",
+       "credit": "(Chapman & Hall, 1836–39), Wikimedia Commons, public domain."
+      },
+      {
+       "type": "picture",
+       "img": "ctx_avercamp",
+       "label": "Winter Landscape with Ice Skaters",
+       "artist": "Hendrick Avercamp",
+       "credit": "about 1608 (detail), Rijksmuseum, public domain."
+      },
+      {
+       "type": "picture",
+       "img": "ctx_petra",
+       "label": "El Khasneh",
+       "artist": "David Roberts",
+       "credit": "1839, lithograph by Louis Haghe (detail), Library of Congress, public domain."
+      },
+      {
+       "type": "picture",
+       "img": "dickens",
+       "label": "Charles Dickens",
+       "artist": "Francis Alexander",
+       "credit": "oil portrait, 1842. Museum of Fine Arts, Boston. Public domain."
+      }
+     ]
+    },
+    {
+     "name": "Characterization",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_counting",
+       "label": "Fred Barnard, 1878",
+       "caption": "Scrooge and his clerk at the counting-house window, an engraving by Fred Barnard"
+      }
+     ]
+    },
+    {
+     "name": "Daily Oral Language",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_exchange",
+       "label": "The Royal Exchange before the fire of 1838",
+       "caption": "The Royal Exchange and Cornhill, an engraving from 1828"
+      }
+     ]
+    },
+    {
+     "name": "Poetry Corner",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_ludgate",
+       "label": "Gustave Doré, Ludgate Hill, 1872",
+       "caption": "Ludgate Hill packed with carts and crowds beneath a railway bridge, St Paul's behind"
+      }
+     ]
+    },
+    {
+     "name": "Words: Stave I",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_title",
+       "label": "First-edition title page, 1843",
+       "caption": "Title page of the first edition of A Christmas Carol, 1843"
+      }
+     ]
+    },
+    {
+     "name": "Read: Stave I",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_usurers",
+       "label": "John Leech, 1843",
+       "caption": "John Leech's engraving of the phantoms in the air outside Scrooge's window"
+      }
+     ]
+    },
+    {
+     "name": "Marley’s Chain",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_marley",
+       "label": "Fred Barnard, 1878",
+       "caption": "Marley's Ghost, wound in a chain of cash-boxes and padlocks, stands before Scrooge by candlelight"
+      }
+     ]
+    }
+   ],
+   "week": 1,
+   "lesson": 1
+  },
+  {
+   "page": "w1-lesson2-shadows-of-the-past.html",
+   "title": "Shadows of the Past",
+   "activities": [
+    {
+     "name": "Flashback",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_eytinge",
+       "label": "Sol Eytinge Jr., 1868",
+       "caption": "The Ghost of Christmas Past as a small glowing figure at the bed curtains, wood engraving by Sol Eytinge Jr., 1868"
+      }
+     ]
+    },
+    {
+     "name": "Read: Stave II, The First of the Three Spirits",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_extinguisher",
+       "label": "John Leech, 1843",
+       "caption": "Scrooge presses the extinguisher cap down on the first Spirit while light streams from beneath, wood engraving by John Leech, 1843"
+      }
+     ]
+    },
+    {
+     "name": "The Magic Lantern",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_webster",
+       "label": "The solitary child",
+       "caption": "Children reading and reciting in one low schoolroom, painting by Thomas Webster, 1845"
+      }
+     ]
+    }
+   ],
+   "week": 1,
+   "lesson": 2
+  },
+  {
+   "page": "w1-lesson4-fear-memory-or-love.html",
+   "title": "Fear, Memory, or Love",
+   "activities": [
+    {
+     "name": "The Strongboxes",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "FEAR"
+      },
+      {
+       "type": "sign",
+       "label": "MEMORY"
+      },
+      {
+       "type": "sign",
+       "label": "LOVE"
+      },
+      {
+       "type": "sign",
+       "label": "NOT YET"
+      }
+     ]
+    }
+   ],
+   "week": 1,
+   "lesson": 4
+  },
+  {
+   "page": "w2-lesson1-know-me-better.html",
+   "title": "Know Me Better",
+   "activities": [
+    {
+     "name": "Symbol",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_eytinge",
+       "label": "Sol Eytinge Jr., 1869",
+       "caption": "The Ghost of Christmas Present on a throne of food, holding up a torch shaped like a horn of plenty, while Scrooge looks in at the door"
+      }
+     ]
+    },
+    {
+     "name": "Read: Stave III",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_barnard",
+       "label": "Fred Barnard",
+       "caption": "Bob Cratchit coming in at the door with Tiny Tim on his shoulder"
+      }
+     ]
+    },
+    {
+     "name": "Questions from Professor Lovelore",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_ignorance",
+       "label": "John Leech, 1843",
+       "caption": "Two ragged children stand at the Spirit's feet while Scrooge looks on"
+      }
+     ]
+    }
+   ],
+   "week": 2,
+   "lesson": 1
+  },
+  {
+   "page": "w2-lesson2-the-pointing-hand.html",
+   "title": "The Pointing Hand",
+   "activities": [
+    {
+     "name": "The Writer’s Desk",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "deskart",
+       "label": "The Last of the Spirits",
+       "caption": "The silent Phantom beside a kneeling Scrooge in a churchyard, etching by John Leech, 1843"
+      }
+     ]
+    }
+   ],
+   "week": 2,
+   "lesson": 2
+  },
+  {
+   "page": "project2-write-your-reflection.html",
+   "title": "Write Your Reflection",
+   "activities": [
+    {
+     "name": "Your Claim",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Fear"
+      },
+      {
+       "type": "sign",
+       "label": "Memory"
+      },
+      {
+       "type": "sign",
+       "label": "Love"
+      },
+      {
+       "type": "sign",
+       "label": "More than one"
+      }
+     ]
+    }
+   ],
+   "heading": "Final Project",
+   "folder": "Final Project/Lesson 2 - Write Your Reflection",
+   "lesson": 2
+  }
+ ]
+}
