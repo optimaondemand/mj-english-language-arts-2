@@ -1143,6 +1143,81 @@ body .trail-paws { display: none; }
 }
 </style>
 
+<style>
+/* MS ELA book reader layer (msreader). Sits over the lesson's existing .cw-reader parts:
+   a cover that opens, a Focus view, highlighters, stickers and typed notes. Marks print in the lesson PDF. */
+.msr { margin: 16px 0 8px; }
+/* the tool bar stays in view while the page scrolls: the reading card must not clip it */
+.activity:has(.msr) { overflow: visible; }
+.activity:has(.msr) > .activity-head { border-radius: 16px 16px 0 0; }
+.msr-cover { display: flex; gap: 26px; align-items: center; flex-wrap: wrap; justify-content: center; padding: 26px 20px; border-radius: 16px; background: #F4EEDD; border: 2px solid #D8CBA6; }
+.msr-vol { position: relative; width: 190px; min-height: 262px; flex-shrink: 0; border-radius: 4px 12px 12px 4px; background: #7A1F2B; color: #F6E7B8; padding: 20px 16px 18px 26px; box-shadow: 8px 10px 0 #E3D8BA, 0 10px 24px rgba(35,29,18,.28); display: flex; flex-direction: column; align-items: center; text-align: center; transform-origin: left center; transition: transform .6s ease; }
+.msr-vol::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 3px; background: rgba(246,231,184,.45); }
+.msr-vol::after { content: ''; position: absolute; inset: 9px 9px 9px 20px; border: 1.5px solid rgba(246,231,184,.6); border-radius: 2px 8px 8px 2px; pointer-events: none; }
+.msr-vol img { width: 84px; height: auto; border-radius: 3px; margin: 6px 0 12px; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+.msr-vt { font-family: 'IM Fell English', 'Lora', Georgia, serif; font-size: 23px; line-height: 1.15; font-weight: 700; }
+.msr-va { font-size: 13.5px; font-weight: 700; letter-spacing: .4px; margin-top: 8px; }
+.msr-vs { margin-top: auto; padding-top: 12px; font-size: 13px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; }
+.msr.opening .msr-vol { transform: perspective(900px) rotateY(-62deg); }
+.msr-side { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.msr-open { font: inherit; font-size: 18px; font-weight: 800; color: #fff; background: #7A1F2B; border: 0; border-radius: 999px; padding: 13px 26px; cursor: pointer; box-shadow: 0 4px 0 #4E121B; }
+.msr-open:hover { background: #8E2634; }
+.msr-open:focus-visible, .msr-bar button:focus-visible, .msr-tray button:focus-visible, .msr-stk:focus-visible, .msr-slip:focus-visible, .msr-ed button:focus-visible { outline: 3px solid #1F6FB5; outline-offset: 2px; }
+.msr-count { font-size: 15px; font-weight: 700; color: #4A3F28; }
+.msr.closed .msr-book { display: none; }
+.msr:not(.closed) .msr-cover { display: none; }
+
+.msr-book { position: relative; }
+.msr-bar { -webkit-user-select: none; user-select: none; position: sticky; z-index: 60; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px 10px; background: #FFFDF6; border: 2px solid #D8CBA6; border-radius: 14px; box-shadow: 0 3px 10px rgba(35,29,18,.12); }
+.msr-bar button { font: inherit; font-size: 15px; font-weight: 800; color: #231D12; background: #fff; border: 2px solid #CFC3A0; border-radius: 999px; padding: 7px 14px; cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; gap: 6px; }
+.msr-bar button[aria-pressed="true"] { background: #231D12; color: #fff; border-color: #231D12; }
+.msr-bar .msr-pen { width: 40px; padding: 0; justify-content: center; border-radius: 50%; }
+.msr-bar .msr-pen i { display: block; width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(35,29,18,.35); }
+.msr-bar .msr-pen[aria-pressed="true"] { background: #fff; border-color: #231D12; box-shadow: 0 0 0 3px #231D12; }
+.msr-group { display: inline-flex; gap: 6px; align-items: center; padding: 0 2px; }
+.msr-gap { flex: 1 1 auto; }
+.msr-tip { flex: 1 1 100%; font-size: 15px; font-weight: 700; color: #4A3F28; padding: 2px 4px; min-height: 0; }
+.msr-tip:empty { display: none; }
+.msr-tray { flex: 1 1 100%; display: none; flex-wrap: wrap; gap: 8px; padding: 4px 0 2px; }
+.msr-tray.open { display: flex; }
+.msr-bar .msr-tray button { flex-direction: column; gap: 2px; border-radius: 12px; padding: 6px 8px; min-width: 76px; font-size: 13px; }
+.msr-tray button b { font-size: 26px; line-height: 1.1; font-weight: 400; }
+
+.msr-y { background: #FFE66B; } .msr-p { background: #FFB5D8; } .msr-g { background: #B4EE9C; } .msr-b { background: #A9DCFF; }
+mark.msr-hl { color: inherit; border-radius: 3px; padding: 1px 0; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.msr-strip { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; margin: -0.5em 0 1em; }
+.msr-stk { font: inherit; font-size: 30px; line-height: 1; background: #fff; border: 2px solid #E3D8BA; border-radius: 50%; width: 48px; height: 48px; cursor: default; box-shadow: 1px 2px 0 rgba(35,29,18,.18); transform: rotate(-7deg); padding: 0; }
+.msr-stk:nth-child(even) { transform: rotate(6deg); }
+.msr-slip { font-family: 'Nunito', 'Segoe UI', Arial, sans-serif; font-size: 15.5px; line-height: 1.45; color: #231D12; text-align: left; background: #FFF3A8; border: 0; border-radius: 2px 2px 12px 2px; padding: 9px 12px; max-width: 320px; cursor: pointer; box-shadow: 2px 3px 0 rgba(35,29,18,.2); white-space: pre-wrap; }
+.msr-book.t-x mark.msr-hl, .msr-book.t-x .msr-stk, .msr-book.t-x .msr-slip { cursor: pointer; outline: 2px dashed #A3312B; outline-offset: 1px; }
+.msr-book.t-s .msr-para, .msr-book.t-n .msr-para { cursor: pointer; }
+.msr-book.t-s .msr-para:hover, .msr-book.t-n .msr-para:hover, .msr-para:focus-visible { background: rgba(255,230,107,.28); outline: none; box-shadow: -6px 0 0 rgba(255,230,107,.28), 6px 0 0 rgba(255,230,107,.28); }
+
+.msr-ed { position: fixed; z-index: 9200; display: none; width: min(360px, calc(100vw - 24px)); background: #FFF8C9; border: 2px solid #231D12; border-radius: 12px; padding: 12px; box-shadow: 0 10px 30px rgba(35,29,18,.3); }
+.msr-ed.open { display: block; }
+.msr-ed label { display: block; font-size: 15px; font-weight: 800; color: #231D12; margin-bottom: 6px; }
+.msr-ed textarea { width: 100%; box-sizing: border-box; min-height: 92px; font: inherit; font-size: 16px; line-height: 1.45; padding: 8px; border: 2px solid #CFC3A0; border-radius: 8px; background: #fff; color: #231D12; }
+.msr-ed .row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.msr-ed button { font: inherit; font-size: 15px; font-weight: 800; border-radius: 999px; padding: 7px 16px; cursor: pointer; border: 2px solid #231D12; background: #fff; color: #231D12; }
+.msr-ed button.go { background: #231D12; color: #fff; }
+
+/* Focus view: the book fills the window; nothing else on the page shows. */
+.msr-book.focus { position: fixed; inset: 0; z-index: 9000; overflow: auto; background: #FBF6EA; padding: 10px max(12px, calc(50vw - 450px)) 60px; }
+.msr-book.focus .msr-bar { top: 0 !important; }
+body.msr-focus-on { overflow: hidden; }
+.msr-focus-anc { transform: none !important; animation: none !important; filter: none !important; perspective: none !important; contain: none !important; will-change: auto !important; }
+@media (max-width: 560px) {
+  .msr-vol { width: 150px; min-height: 210px; }
+  .msr-vt { font-size: 19px; }
+  .msr-bar { gap: 6px; padding: 6px; }
+  .msr-bar button { font-size: 14px; padding: 6px 10px; }
+  .msr-bar .msr-pen { width: 36px; min-height: 36px; }
+  .msr-gap { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .msr-vol { transition: none; } }
+@media print { .msr-bar, .msr-cover, .msr-ed { display: none !important; } .msr.closed .msr-book { display: block; } mark.msr-hl { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+
 </head>
 <body>
 <canvas id="confettiCanvas"></canvas>
@@ -3475,6 +3550,246 @@ gatherAnswers(); renderStatus();
 </script>
 
 <script>
+/* MS ELA book reader layer (msreader). Loaded after the lesson's own scripts.
+   Wraps the lesson's .cw-reader parts in a book with a cover, a Focus view and annotation tools:
+   four highlighters, stickers, typed notes, an eraser. Nothing in the lesson source changes; Dickens's
+   paragraphs are only marked up at run time. Marks save under PREFIX + "msr" and print in the lesson PDF
+   and in the copy text (lessonSectionHtml / gatherAnswers are extended at the bottom).
+   Mark: { id, t: "h"|"s"|"n", p: paragraph index, a, b: character offsets (h), c: colour (h), k: sticker key (s), note (n), q: quoted words } */
+(function(){
+  var parts = [].slice.call(document.querySelectorAll('details.cw-reader'));
+  if (!parts.length || document.querySelector('.msr')) return;
+  var COLORS = { y: 'Yellow', p: 'Pink', g: 'Green', b: 'Blue' };
+  var STICKERS = [['star', '⭐', 'Important'], ['heart', '❤️', 'Love this'], ['what', '❓', 'Confused'], ['wow', '❗', 'Surprise'],
+                  ['ha', '😂', 'Funny'], ['sad', '😢', 'Sad'], ['ghost', '👻', 'Spooky'], ['idea', '💡', 'Idea'],
+                  ['bell', '🔔', 'Remember'], ['link', '🔗', 'Connection']];
+  var SMAP = {}; STICKERS.forEach(function(s){ SMAP[s[0]] = s; });
+  function h(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  /* ---------- wrap the reading in a book ---------- */
+  var first = parts[0], holder = first.parentNode, kids = [].slice.call(holder.children), from = kids.indexOf(first), to = from;
+  kids.forEach(function(k, i){ if (i >= from && (k.matches('.cw-reader, .read-done') || k.querySelector('.cw-reader, .read-done'))) to = i; });
+  if (kids[to + 1] && kids[to + 1].matches('.read-lock.half-lock-msg')) to++;
+  var root = document.createElement('div'); root.className = 'msr closed';
+  var credit = (document.querySelector('.cw-credit') || {}).textContent || '', stave = (credit.match(/Stave [IVX]+/) || [''])[0];
+  var bt = (document.querySelector('.book-title') || {}).textContent || 'The book', ba = (document.querySelector('.book-author') || {}).textContent || '';
+  root.innerHTML =
+    '<div class="msr-cover"><div class="msr-vol" aria-hidden="true"><img alt="" hidden><div class="msr-vt">' + h(bt) + '</div><div class="msr-va">' + h(ba) + '</div><div class="msr-vs">' + h(stave) + '</div></div>' +
+    '<div class="msr-side"><button class="msr-open" type="button">📖 Open the book</button><div class="msr-count" aria-live="polite"></div></div></div>' +
+    '<div class="msr-book"><div class="msr-bar" role="toolbar" aria-label="Book tools" data-ra-skip>' +
+      '<button type="button" data-msr="focus" aria-pressed="false">⛶ Focus</button>' +
+      '<span class="msr-group">' + Object.keys(COLORS).map(function(c){ return '<button type="button" class="msr-pen" data-msr="h-' + c + '" aria-pressed="false" aria-label="' + COLORS[c] + ' highlighter" title="' + COLORS[c] + ' highlighter"><i class="msr-' + c + '"></i></button>'; }).join('') + '</span>' +
+      '<button type="button" data-msr="stickers" aria-pressed="false" aria-expanded="false">⭐ Stickers</button>' +
+      '<button type="button" data-msr="n" aria-pressed="false">📝 Note</button>' +
+      '<button type="button" data-msr="x" aria-pressed="false">🧽 Eraser</button>' +
+      '<span class="msr-gap"></span><button type="button" data-msr="close">✕ Close book</button>' +
+      '<div class="msr-tray">' + STICKERS.map(function(s){ return '<button type="button" data-stk="' + s[0] + '" aria-pressed="false"><b>' + s[1] + '</b>' + s[2] + '</button>'; }).join('') + '</div>' +
+      '<div class="msr-tip" aria-live="polite"></div>' +
+    '</div></div>';
+  holder.insertBefore(root, first);
+  var book = root.querySelector('.msr-book'), bar = root.querySelector('.msr-bar'), tray = root.querySelector('.msr-tray'), tip = root.querySelector('.msr-tip');
+  for (var i = from; i <= to; i++) book.appendChild(kids[i]);
+  var ed = document.createElement('div'); ed.className = 'msr-ed'; ed.setAttribute('data-ra-skip', '');
+  ed.innerHTML = '<label for="msrNote">My note</label><textarea id="msrNote"></textarea><div class="row"><button type="button" class="go" data-ed="save">Save</button><button type="button" data-ed="cancel">Cancel</button><button type="button" data-ed="del">Delete</button></div>';
+  book.appendChild(ed);
+  /* the cover picture is the one the lesson already shows on its book card */
+  function coverArt(){ var src = (document.querySelector('img.book-cover') || {}).src, im = root.querySelector('.msr-vol img'); if (src && im && /^(data:|https?:|file:)/.test(src) && src !== location.href) { im.src = src; im.hidden = false; } }
+  coverArt(); window.addEventListener('load', coverArt); setTimeout(coverArt, 800);
+
+  var paras = [].slice.call(book.querySelectorAll('.cw-body p')).filter(function(p){ return !p.closest('.cw-stop, .lore-card, .cw-credit, .cw-online, .cw-link, .cw-tools, .cw-bar'); });
+  paras.forEach(function(p, i){ p.classList.add('msr-para'); p.dataset.msrP = i; });
+
+  /* ---------- state ---------- */
+  var marks = []; try { marks = JSON.parse(STORE.get('msr') || '[]') || []; } catch(e){ marks = []; }
+  marks = marks.filter(function(m){ return m && paras[m.p]; });
+  var tool = '', stk = '';
+  function save(){ STORE.set('msr', JSON.stringify(marks)); render(); if (typeof gatherAnswers === 'function') { try { gatherAnswers(); } catch(e){} } }
+  function uid(){ return 'm' + Date.now().toString(36) + Math.floor(Math.random() * 1e4).toString(36); }
+  function ptext(p){ return p.textContent; }
+  function quote(p, a, b){ var t = ptext(p).slice(a, b).replace(/\s+/g, ' ').trim(); return t; }
+  function lead(p){ var w = ptext(p).replace(/\s+/g, ' ').trim().split(' '); return w.slice(0, 8).join(' ') + (w.length > 8 ? ' …' : ''); }
+
+  /* ---------- render ---------- */
+  function unwrap(p){ [].slice.call(p.querySelectorAll('mark.msr-hl')).forEach(function(m){ while (m.firstChild) m.parentNode.insertBefore(m.firstChild, m); m.parentNode.removeChild(m); }); p.normalize(); }
+  function paint(p, a, b, m){
+    var w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, null, false), n, pos = 0, hits = [];
+    while ((n = w.nextNode())) { var len = n.nodeValue.length, s = Math.max(a, pos), e = Math.min(b, pos + len); if (s < e) hits.push([n, s - pos, e - pos]); pos += len; }
+    hits.forEach(function(x){
+      var node = x[0]; if (x[2] < node.nodeValue.length) node.splitText(x[2]); if (x[1] > 0) node = node.splitText(x[1]);
+      var mk = document.createElement('mark'); mk.className = 'msr-hl msr-' + m.c; mk.dataset.m = m.id; node.parentNode.insertBefore(mk, node); mk.appendChild(node);
+    });
+  }
+  function render(){
+    book.querySelectorAll('.msr-strip').forEach(function(s){ s.parentNode.removeChild(s); });
+    paras.forEach(unwrap);
+    marks.filter(function(m){ return m.t === 'h'; }).forEach(function(m){ paint(paras[m.p], m.a, m.b, m); });
+    var byP = {};
+    marks.forEach(function(m){ if (m.t !== 'h') (byP[m.p] = byP[m.p] || []).push(m); });
+    Object.keys(byP).forEach(function(pi){
+      var strip = document.createElement('div'); strip.className = 'msr-strip'; strip.setAttribute('data-ra-skip', '');
+      byP[pi].sort(function(x, y){ return (x.t === 'n') - (y.t === 'n'); }).forEach(function(m){
+        var b = document.createElement('button'); b.type = 'button'; b.dataset.m = m.id;
+        if (m.t === 's') { var s = SMAP[m.k] || STICKERS[0]; b.className = 'msr-stk'; b.textContent = s[1]; b.setAttribute('aria-label', 'Sticker: ' + s[2]); b.title = s[2]; }
+        else { b.className = 'msr-slip'; b.textContent = m.note; b.setAttribute('aria-label', 'My note: ' + m.note); }
+        strip.appendChild(b);
+      });
+      var p = paras[pi]; p.parentNode.insertBefore(strip, p.nextSibling);
+    });
+    var n = marks.length; root.querySelector('.msr-count').textContent = n ? n + (n === 1 ? ' mark' : ' marks') + ' in this book' : '';
+  }
+
+  /* ---------- tools ---------- */
+  var TIPS = { h: 'Drag across the words to highlight them.', s: 'Tap a paragraph to place the sticker.', n: 'Tap a paragraph to add a note.', x: 'Tap a highlight, sticker or note to erase it.' };
+  function setTool(t, k){
+    tool = t; stk = t === 's' ? k : '';
+    book.classList.remove('t-h', 't-s', 't-n', 't-x'); if (t) book.classList.add('t-' + t.charAt(0));
+    bar.querySelectorAll('[data-msr]').forEach(function(b){ var v = b.dataset.msr; if (v === 'focus' || v === 'close') return; b.setAttribute('aria-pressed', v === t || (v === 'stickers' && t === 's') ? 'true' : 'false'); });
+    tray.querySelectorAll('[data-stk]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.stk === stk ? 'true' : 'false'); });
+    tip.textContent = t ? TIPS[t.charAt(0)] : '';
+    var sb = bar.querySelector('[data-msr="stickers"]'); sb.textContent = (t === 's' && SMAP[k] ? SMAP[k][1] + ' ' + SMAP[k][2] : '⭐ Stickers');
+    paras.forEach(function(p){ if (t && t !== 'x') p.tabIndex = 0; else p.removeAttribute('tabindex'); });
+    if (t.charAt(0) !== 'h') { var s = window.getSelection && window.getSelection(); if (s && tool) s.removeAllRanges(); }
+  }
+  function openTray(on){ tray.classList.toggle('open', on); bar.querySelector('[data-msr="stickers"]').setAttribute('aria-expanded', on ? 'true' : 'false'); }
+  bar.addEventListener('mousedown', function(e){ if (e.target.closest('button')) e.preventDefault(); });
+  bar.addEventListener('click', function(e){
+    var s = e.target.closest('[data-stk]'); if (s) { setTool(stk === s.dataset.stk ? '' : 's', s.dataset.stk); openTray(false); return; }   /* the tray closes so it never covers the text */
+    var b = e.target.closest('[data-msr]'); if (!b) return; var v = b.dataset.msr;
+    if (v === 'focus') return setFocus(!book.classList.contains('focus'));
+    if (v === 'close') return setOpen(false);
+    if (v === 'stickers') { var on = !tray.classList.contains('open'); openTray(on); if (!on && tool === 's') setTool(''); return; }
+    openTray(false); setTool(tool === v ? '' : v);
+  });
+
+  /* highlighter: a finished selection inside the book becomes a highlight */
+  function offsetIn(p, node, off){ var r = document.createRange(); r.selectNodeContents(p); try { r.setEnd(node, off); } catch(e){ return 0; } return r.toString().length; }
+  function addHighlight(p, a, b){
+    var t = ptext(p), pi = +p.dataset.msrP, c = tool.charAt(2);
+    while (a < b && /\s/.test(t.charAt(a))) a++; while (b > a && /\s/.test(t.charAt(b - 1))) b--;
+    if (b <= a) return false;
+    while (a > 0 && !/\s/.test(t.charAt(a - 1))) a--; while (b < t.length && !/\s/.test(t.charAt(b))) b++;
+    marks = marks.filter(function(m){ if (m.t !== 'h' || m.p !== pi || m.b <= a || m.a >= b) return true; if (m.c === c) { a = Math.min(a, m.a); b = Math.max(b, m.b); } return false; });
+    marks.push({ id: uid(), t: 'h', p: pi, a: a, b: b, c: c, q: quote(p, a, b) });
+    return true;
+  }
+  function takeSelection(){
+    if (tool.charAt(0) !== 'h') return;
+    var s = window.getSelection(); if (!s || !s.rangeCount || s.isCollapsed) return;
+    var r = s.getRangeAt(0); if (!book.contains(r.commonAncestorContainer)) return;
+    var any = false;
+    paras.forEach(function(p){
+      if (!r.intersectsNode(p)) return;
+      var a = p.contains(r.startContainer) ? offsetIn(p, r.startContainer, r.startOffset) : 0;
+      var b = p.contains(r.endContainer) ? offsetIn(p, r.endContainer, r.endOffset) : ptext(p).length;
+      if (addHighlight(p, a, b)) any = true;
+    });
+    s.removeAllRanges(); if (any) save();
+  }
+  book.addEventListener('mouseup', function(){ setTimeout(takeSelection, 10); });
+  book.addEventListener('touchend', function(){ setTimeout(takeSelection, 350); });
+  var selT; document.addEventListener('selectionchange', function(){ if (tool.charAt(0) !== 'h' || !('ontouchstart' in window)) return; clearTimeout(selT); selT = setTimeout(takeSelection, 900); });
+
+  function act(p, anchor){
+    var pi = +p.dataset.msrP;
+    if (tool === 's') { marks.push({ id: uid(), t: 's', p: pi, k: stk, q: lead(p) }); save(); }
+    else if (tool === 'n') openEd(null, pi, anchor || p);
+    else if (tool.charAt(0) === 'h') { tool && addHighlight(p, 0, ptext(p).length) && save(); }
+  }
+  book.addEventListener('click', function(e){
+    if (e.target.closest('.msr-bar, .msr-ed')) return;
+    var own = e.target.closest('[data-m]');
+    if (own && book.contains(own)) {
+      var m = marks.filter(function(x){ return x.id === own.dataset.m; })[0]; if (!m) return;
+      if (tool === 'x') { marks = marks.filter(function(x){ return x !== m; }); save(); return; }
+      if (m.t === 'n') { openEd(m, m.p, own); return; }
+      if (m.t !== 'h') return;
+    }
+    if (tool !== 's' && tool !== 'n') return;
+    var p = e.target.closest('.msr-para'); if (p) act(p, null);
+  });
+  book.addEventListener('keydown', function(e){
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('msr-para') && tool && tool !== 'x') { e.preventDefault(); act(e.target, e.target); }
+  });
+
+  /* note editor */
+  var edFor = null, edP = -1, edBack = null, ta = ed.querySelector('textarea');
+  function openEd(m, pi, anchor){
+    edFor = m; edP = pi; edBack = anchor; ta.value = m ? m.note : ''; ed.querySelector('[data-ed="del"]').style.display = m ? '' : 'none'; ed.classList.add('open');
+    var r = anchor.getBoundingClientRect(), w = ed.offsetWidth, hh = ed.offsetHeight;
+    ed.style.left = Math.max(12, Math.min(window.innerWidth - w - 12, r.left)) + 'px';
+    ed.style.top = Math.max(12, Math.min(window.innerHeight - hh - 12, Math.min(r.bottom, window.innerHeight * .6) + 8)) + 'px';
+    setTimeout(function(){ ta.focus(); }, 30);
+  }
+  function closeEd(){ ed.classList.remove('open'); if (edBack && edBack.focus && document.body.contains(edBack)) { try { edBack.focus({ preventScroll: true }); } catch(e){} } edFor = null; }
+  ed.addEventListener('click', function(e){
+    var b = e.target.closest('[data-ed]'); if (!b) return; var v = b.dataset.ed, txt = ta.value.trim();
+    if (v === 'save' && txt) { if (edFor) edFor.note = txt; else marks.push({ id: uid(), t: 'n', p: edP, note: txt, q: lead(paras[edP]) }); save(); }
+    else if (v === 'del' || (v === 'save' && !txt && edFor)) { marks = marks.filter(function(x){ return x !== edFor; }); save(); }
+    closeEd();
+  });
+
+  /* ---------- open / close / focus ---------- */
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function place(){ var tb = document.querySelector('.tab-bar'), pw = document.querySelector('.progress-wrap'); bar.style.top = ((tb ? tb.offsetHeight : 0) + (pw ? pw.offsetHeight : 0) + 4) + 'px'; }
+  function setOpen(on, anim){
+    if (!on) { if (book.classList.contains('focus')) setFocus(false); closeEd(); }
+    function done(){ root.classList.remove('opening'); root.classList.toggle('closed', !on); place(); if (on && anim) bar.querySelector('[data-msr="focus"]').focus({ preventScroll: true }); if (!on && anim !== 0) root.querySelector('.msr-open').focus({ preventScroll: true }); }
+    if (on && anim && !reduced) { root.classList.add('opening'); setTimeout(done, 520); } else done();
+    STORE.set('msr-open', on ? '1' : '0');
+  }
+  function ancestors(on){ for (var n = book.parentNode; n && n !== document.documentElement; n = n.parentNode) if (n.classList) n.classList.toggle('msr-focus-anc', on); }
+  function setFocus(on){
+    var keep = null; if (on) { for (var i = 0; i < paras.length; i++) { var r = paras[i].getBoundingClientRect(); if (r.height && r.bottom > 120) { keep = paras[i]; break; } } }
+    else { for (var j = 0; j < paras.length; j++) { var q = paras[j].getBoundingClientRect(); if (q.height && q.bottom > 90) { keep = paras[j]; break; } } }
+    ancestors(on); book.classList.toggle('focus', on); document.body.classList.toggle('msr-focus-on', on);
+    var b = bar.querySelector('[data-msr="focus"]'); b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.textContent = on ? '✕ Exit Focus' : '⛶ Focus';
+    if (keep) { if (on) book.scrollTop = Math.max(0, keep.getBoundingClientRect().top - book.getBoundingClientRect().top + book.scrollTop - bar.offsetHeight - 16); else keep.scrollIntoView({ block: 'center' }); }
+  }
+  root.querySelector('.msr-open').addEventListener('click', function(){ setOpen(true, 1); });
+  document.addEventListener('keydown', function(e){ if (e.key !== 'Escape') return; if (ed.classList.contains('open')) closeEd(); else if (tool) setTool(''); else if (book.classList.contains('focus')) setFocus(false); });
+  window.addEventListener('resize', place);
+
+  if (STORE.get('msr-open') === '1') setOpen(true, 0); else place();
+  render();
+
+  /* ---------- the marks in the lesson PDF and the copy text ---------- */
+  function listFor(n){
+    var raw = n === CFG.lesson ? JSON.stringify(marks) : STORE.rawGet(CFG.weekKey + '-L' + n + '-msr'), list = [];
+    try { list = JSON.parse(raw || '[]') || []; } catch(e){ list = []; }
+    return list.slice().sort(function(x, y){ return x.p - y.p || (x.a || 0) - (y.a || 0); });
+  }
+  var SW = { y: '#FFE66B', p: '#FFB5D8', g: '#B4EE9C', b: '#A9DCFF' };
+  function marksHtml(n){
+    var list = listFor(n); if (!list.length) return '';
+    var out = '<h3>My marks in the book</h3>';
+    list.forEach(function(m){
+      if (m.t === 'h') out += '<div class="a" style="margin-top:8px;"><span style="background:' + (SW[m.c] || SW.y) + ';-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:1px 3px;border-radius:3px;">' + h(m.q) + '</span> <span style="font-size:11px;color:#7A88A8;">' + (COLORS[m.c] || '') + ' highlight</span></div>';
+      else if (m.t === 's') { var s = SMAP[m.k] || STICKERS[0]; out += '<div class="a" style="margin-top:8px;"><span style="font-size:18px;">' + s[1] + '</span> <strong>' + h(s[2]) + '</strong> &middot; at: <em>' + h(m.q) + '</em></div>'; }
+      else out += '<div class="a" style="margin-top:8px;"><span style="background:#FFF3A8;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:2px 6px;border-radius:3px;">' + h(m.note) + '</span><div style="font-size:12px;color:#7A88A8;">Note at: <em>' + h(m.q) + '</em></div></div>';
+    });
+    return out;
+  }
+  function marksText(){
+    var list = listFor(CFG.lesson); if (!list.length) return '';
+    var out = '\nMY MARKS IN THE BOOK\n────────────────────────────────\n';
+    list.forEach(function(m){
+      if (m.t === 'h') out += (COLORS[m.c] || '') + ' highlight: ' + m.q + '\n';
+      else if (m.t === 's') { var s = SMAP[m.k] || STICKERS[0]; out += 'Sticker ' + s[1] + ' ' + s[2] + ': at ' + m.q + '\n'; }
+      else out += 'Note: ' + m.note + ' (at ' + m.q + ')\n';
+    });
+    return out;
+  }
+  if (typeof lessonSectionHtml === 'function') { var _ls = lessonSectionHtml; lessonSectionHtml = function(L){ return _ls(L) + marksHtml(L.n); }; }
+  if (typeof gatherAnswers === 'function') {
+    var _ga = gatherAnswers;
+    gatherAnswers = function(){ _ga(); var g = document.getElementById('gatheredOutput'); if (g) g.value += marksText(); };
+    try { gatherAnswers(); } catch(e){}
+  }
+  window.MSREADER = { marks: function(){ return marks.slice(); }, setTool: setTool, open: function(){ setOpen(true, 0); }, paras: paras.length };
+})();
+</script>
+
+<script>
 /* A CHRISTMAS CAROL · animated header scene ("London, 1843").
    Decoration only: inserts one aria-hidden scene behind the header text (fog, gas lamps, a church tower with a bell, frost on the edge).
    Never touches ids, saved keys, fields or handlers. Idempotent. Class names (cw-scene, cw-header) are kept so lesson CSS written for earlier modules still resolves. */
@@ -3520,6 +3835,6 @@ gatherAnswers(); renderStatus();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
 })();
 </script>
-<script type="application/json" id="optima-standards">{"schema":"optima-standards-inpage/1","course":"1001040","tagged":"2026-11-12","frameworks":[{"id":"al","state":"AL","label":"Alabama Course of Study"},{"id":"ar","state":"AR","label":"Arkansas Academic Standards"},{"id":"dj","state":"MS","label":"Diocese of Jackson English Language Arts Standards"},{"id":"fl","state":"FL","label":"Florida Course Standards (B.E.S.T. / NGSSS via CPALMS)"},{"id":"mde","state":"MS","label":"Mississippi College- and Career-Readiness Standards"},{"id":"mde2","state":"MS","label":"Mississippi College- and Career-Readiness Standards"},{"id":"mo","state":"MO","label":"Missouri Learning Standards"},{"id":"tn","state":"TN","label":"Tennessee Academic Standards"},{"id":"tx","state":"TX","label":"TEKS"}],"item":[{"fw":"fl","code":"ELA.K12.EE.1.1","role":"assess"},{"fw":"fl","code":"ELA.K12.EE.3.1","role":"practice"},{"fw":"fl","code":"ELA.7.R.2.3","role":"practice"},{"fw":"fl","code":"ELA.7.C.3.1","role":"practice"},{"fw":"fl","code":"ELA.7.C.1.5","role":"practice"},{"fw":"tx","code":"110.23(b)(6)(C)","role":"assess"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"practice"},{"fw":"tx","code":"110.23(b)(9)(F)","role":"practice"},{"fw":"tx","code":"110.23(b)(10)(A)","role":"practice"},{"fw":"tx","code":"110.23(b)(6)(B)","role":"practice"},{"fw":"al","code":"3","role":"assess"},{"fw":"al","code":"4","role":"practice"},{"fw":"al","code":"R4","role":"practice"},{"fw":"al","code":"21b","role":"practice"},{"fw":"ar","code":"7.RC.3.RF","role":"assess"},{"fw":"ar","code":"7.RC.4.RF","role":"practice"},{"fw":"ar","code":"7.V.5","role":"practice"},{"fw":"ar","code":"7.W.10.P","role":"practice"},{"fw":"dj","code":"RL.7.1","role":"assess"},{"fw":"dj","code":"RL.7.10","role":"practice"},{"fw":"dj","code":"W.7.5","role":"practice"},{"fw":"mde2","code":"RL.7.1","role":"assess"},{"fw":"mde2","code":"RL.7.4","role":"practice"},{"fw":"mde2","code":"RL.7.10","role":"practice"},{"fw":"mde2","code":"W.7.5","role":"practice"},{"fw":"mo","code":"7.RL.1.A","role":"assess"},{"fw":"mo","code":"7.RL.2.C","role":"practice"},{"fw":"mo","code":"7.RL.3.D","role":"practice"},{"fw":"mo","code":"7.W.2.A","role":"practice"},{"fw":"tn","code":"7.RL.KID.1","role":"assess"},{"fw":"tn","code":"7.RL.CS.4","role":"practice"},{"fw":"tn","code":"7.RL.RRTC.10","role":"practice"},{"fw":"tn","code":"7.W.PDW.5","role":"practice"},{"fw":"tn","code":"7.L.CSE.1b","role":"practice"}],"blocks":{"tab":{"hash":"82ea99df4f19","tags":[{"fw":"fl","code":"ELA.7.C.3.1","role":"practice"},{"fw":"tx","code":"110.23(b)(10)(D)","role":"practice"},{"fw":"al","code":"18","role":"practice"},{"fw":"ar","code":"7.L.12.C","role":"practice"},{"fw":"dj","code":"L.7.2","role":"practice"},{"fw":"mde2","code":"L.7.2","role":"practice"},{"fw":"mo","code":"7.W.3.A.c","role":"practice"},{"fw":"tn","code":"7.L.CSE.2","role":"practice"}]},"the-text-stave-i-marley-s-ghost-second-h":{"hash":"4efa0cf44e14","tags":[{"fw":"fl","code":"ELA.K12.EE.2.1","role":"practice"},{"fw":"tx","code":"110.23(b)(6)(B)","role":"practice"},{"fw":"ar","code":"7.RC.4.RF","role":"practice"},{"fw":"dj","code":"RL.7.10","role":"practice"},{"fw":"mde2","code":"RL.7.10","role":"practice"},{"fw":"mo","code":"7.RL.3.D","role":"practice"},{"fw":"tn","code":"7.RL.RRTC.10","role":"practice"},{"fw":"fl","code":"ELA.7.R.2.3","role":"practice"},{"fw":"tx","code":"110.23(b)(9)(F)","role":"practice"},{"fw":"ar","code":"7.V.5","role":"practice"},{"fw":"mde2","code":"RL.7.4","role":"practice"},{"fw":"mo","code":"7.RL.2.C","role":"practice"},{"fw":"tn","code":"7.RL.CS.4","role":"practice"},{"fw":"fl","code":"ELA.7.C.3.1","role":"practice"},{"fw":"al","code":"21b","role":"practice"},{"fw":"tn","code":"7.L.CSE.1b","role":"practice"}]},"scrooge-and-marley":{"hash":"b3c532dd166c","tags":[{"fw":"fl","code":"ELA.K12.EE.3.1","role":"practice"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"practice"},{"fw":"al","code":"4","role":"practice"}]},"my-chain-in-words-goes-into-this-lesson-":{"hash":"a40e1276e21e","tags":[{"fw":"fl","code":"ELA.K12.EE.1.1","role":"assess"},{"fw":"tx","code":"110.23(b)(6)(C)","role":"assess"},{"fw":"al","code":"3","role":"assess"},{"fw":"ar","code":"7.RC.3.RF","role":"assess"},{"fw":"dj","code":"RL.7.1","role":"assess"},{"fw":"mde2","code":"RL.7.1","role":"assess"},{"fw":"mo","code":"7.RL.1.A","role":"assess"},{"fw":"tn","code":"7.RL.KID.1","role":"assess"},{"fw":"fl","code":"ELA.7.C.1.5","role":"practice"},{"fw":"tx","code":"110.23(b)(10)(A)","role":"practice"},{"fw":"al","code":"R4","role":"practice"},{"fw":"ar","code":"7.W.10.P","role":"practice"},{"fw":"dj","code":"W.7.5","role":"practice"},{"fw":"mde2","code":"W.7.5","role":"practice"},{"fw":"mo","code":"7.W.2.A","role":"practice"},{"fw":"tn","code":"7.W.PDW.5","role":"practice"}]}}}</script>
+<script type="application/json" id="optima-standards">{"schema":"optima-standards-inpage/1","course":"1001040","tagged":"2026-11-13","frameworks":[{"id":"al","state":"AL","label":"Alabama Course of Study"},{"id":"ar","state":"AR","label":"Arkansas Academic Standards"},{"id":"dj","state":"MS","label":"Diocese of Jackson English Language Arts Standards"},{"id":"fl","state":"FL","label":"Florida Course Standards (B.E.S.T. / NGSSS via CPALMS)"},{"id":"mde","state":"MS","label":"Mississippi College- and Career-Readiness Standards"},{"id":"mde2","state":"MS","label":"Mississippi College- and Career-Readiness Standards"},{"id":"mo","state":"MO","label":"Missouri Learning Standards"},{"id":"tn","state":"TN","label":"Tennessee Academic Standards"},{"id":"tx","state":"TX","label":"TEKS"}],"item":[{"fw":"fl","code":"ELA.K12.EE.1.1","role":"assess"},{"fw":"fl","code":"ELA.K12.EE.3.1","role":"practice"},{"fw":"fl","code":"ELA.7.R.2.3","role":"practice"},{"fw":"fl","code":"ELA.7.C.3.1","role":"practice"},{"fw":"fl","code":"ELA.7.C.1.5","role":"practice"},{"fw":"tx","code":"110.23(b)(6)(C)","role":"assess"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"practice"},{"fw":"tx","code":"110.23(b)(9)(F)","role":"practice"},{"fw":"tx","code":"110.23(b)(10)(A)","role":"practice"},{"fw":"tx","code":"110.23(b)(6)(B)","role":"practice"},{"fw":"al","code":"3","role":"assess"},{"fw":"al","code":"4","role":"practice"},{"fw":"al","code":"R4","role":"practice"},{"fw":"al","code":"21b","role":"practice"},{"fw":"ar","code":"7.RC.3.RF","role":"assess"},{"fw":"ar","code":"7.RC.4.RF","role":"practice"},{"fw":"ar","code":"7.V.5","role":"practice"},{"fw":"ar","code":"7.W.10.P","role":"practice"},{"fw":"dj","code":"RL.7.1","role":"assess"},{"fw":"dj","code":"RL.7.10","role":"practice"},{"fw":"dj","code":"W.7.5","role":"practice"},{"fw":"mde2","code":"RL.7.1","role":"assess"},{"fw":"mde2","code":"RL.7.4","role":"practice"},{"fw":"mde2","code":"RL.7.10","role":"practice"},{"fw":"mde2","code":"W.7.5","role":"practice"},{"fw":"mo","code":"7.RL.1.A","role":"assess"},{"fw":"mo","code":"7.RL.2.C","role":"practice"},{"fw":"mo","code":"7.RL.3.D","role":"practice"},{"fw":"mo","code":"7.W.2.A","role":"practice"},{"fw":"tn","code":"7.RL.KID.1","role":"assess"},{"fw":"tn","code":"7.RL.CS.4","role":"practice"},{"fw":"tn","code":"7.RL.RRTC.10","role":"practice"},{"fw":"tn","code":"7.W.PDW.5","role":"practice"},{"fw":"tn","code":"7.L.CSE.1b","role":"practice"}],"blocks":{"tab":{"hash":"82ea99df4f19","tags":[{"fw":"fl","code":"ELA.7.C.3.1","role":"practice"},{"fw":"tx","code":"110.23(b)(10)(D)","role":"practice"},{"fw":"al","code":"18","role":"practice"},{"fw":"ar","code":"7.L.12.C","role":"practice"},{"fw":"dj","code":"L.7.2","role":"practice"},{"fw":"mde2","code":"L.7.2","role":"practice"},{"fw":"mo","code":"7.W.3.A.c","role":"practice"},{"fw":"tn","code":"7.L.CSE.2","role":"practice"}]},"the-text-stave-i-marley-s-ghost-second-h":{"hash":"4efa0cf44e14","tags":[{"fw":"fl","code":"ELA.K12.EE.2.1","role":"practice"},{"fw":"tx","code":"110.23(b)(6)(B)","role":"practice"},{"fw":"ar","code":"7.RC.4.RF","role":"practice"},{"fw":"dj","code":"RL.7.10","role":"practice"},{"fw":"mde2","code":"RL.7.10","role":"practice"},{"fw":"mo","code":"7.RL.3.D","role":"practice"},{"fw":"tn","code":"7.RL.RRTC.10","role":"practice"},{"fw":"fl","code":"ELA.7.R.2.3","role":"practice"},{"fw":"tx","code":"110.23(b)(9)(F)","role":"practice"},{"fw":"ar","code":"7.V.5","role":"practice"},{"fw":"mde2","code":"RL.7.4","role":"practice"},{"fw":"mo","code":"7.RL.2.C","role":"practice"},{"fw":"tn","code":"7.RL.CS.4","role":"practice"},{"fw":"fl","code":"ELA.7.C.3.1","role":"practice"},{"fw":"al","code":"21b","role":"practice"},{"fw":"tn","code":"7.L.CSE.1b","role":"practice"}]},"scrooge-and-marley":{"hash":"b3c532dd166c","tags":[{"fw":"fl","code":"ELA.K12.EE.3.1","role":"practice"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"practice"},{"fw":"al","code":"4","role":"practice"}]},"my-chain-in-words-goes-into-this-lesson-":{"hash":"a40e1276e21e","tags":[{"fw":"fl","code":"ELA.K12.EE.1.1","role":"assess"},{"fw":"tx","code":"110.23(b)(6)(C)","role":"assess"},{"fw":"al","code":"3","role":"assess"},{"fw":"ar","code":"7.RC.3.RF","role":"assess"},{"fw":"dj","code":"RL.7.1","role":"assess"},{"fw":"mde2","code":"RL.7.1","role":"assess"},{"fw":"mo","code":"7.RL.1.A","role":"assess"},{"fw":"tn","code":"7.RL.KID.1","role":"assess"},{"fw":"fl","code":"ELA.7.C.1.5","role":"practice"},{"fw":"tx","code":"110.23(b)(10)(A)","role":"practice"},{"fw":"al","code":"R4","role":"practice"},{"fw":"ar","code":"7.W.10.P","role":"practice"},{"fw":"dj","code":"W.7.5","role":"practice"},{"fw":"mde2","code":"W.7.5","role":"practice"},{"fw":"mo","code":"7.W.2.A","role":"practice"},{"fw":"tn","code":"7.W.PDW.5","role":"practice"}]}}}</script>
 </body>
 </html>
