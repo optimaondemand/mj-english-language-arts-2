@@ -1288,7 +1288,7 @@ body .trail-paws { display: none; }
             <div class="pj-what">On how clearly it shows the theme, not on drawing skill.</div>
           </div>
         </div>
-        <button class="ll-showall" type="button">&#128220; Show everything</button>
+        <button class="ll-showall" type="button">&#128220; See the whole script</button>
       </div>
 
       <div class="mini-label">Four answers, all open</div>
@@ -1504,7 +1504,7 @@ body .trail-paws { display: none; }
           </div>
         </div>
         <p class="vb-hint">Not sure which stave? Check the contents of your copy. Keep each line short: a few words, or one sentence.</p>
-        <button class="ll-showall" type="button">&#128220; Show everything</button>
+        <button class="ll-showall" type="button">&#128220; See the whole script</button>
       </div>
 
       <div class="mini-label">Which way your evidence leans</div>
@@ -1607,7 +1607,7 @@ body .trail-paws { display: none; }
             </div>
           </div>
         </div>
-        <button class="ll-showall" type="button">&#128220; Show everything</button>
+        <button class="ll-showall" type="button">&#128220; See the whole script</button>
       </div>
 
       <div class="cv-note"><b>This mock-up is a plan.</b> Make your real cover by hand or in any app, photograph or save it, and submit it as its own file. <b>Grade note:</b> the cover is judged on how clearly it shows the theme, not on drawing skill.</div>
@@ -2561,11 +2561,12 @@ function narrator(o){
 /* ───── PROFESSOR LOVELORE: narrated parts light up as she reaches them ───── */
 function lorePlayer(box, N, anchors, storeKey){
   if (!box) return;
+  var full = false, sayAll = null;
   var duration = +box.dataset.dur || 40;
   var items = [].slice.call(box.querySelectorAll('[data-key]')), cap = box.querySelector('.ll-caption'), all = box.querySelector('.ll-showall');
   function reveal(){ items.forEach(function(e){ e.classList.add('lit'); e.classList.remove('now'); }); }
   function showAll(){ reveal(); STORE.set(storeKey, '1'); }
-  all.addEventListener('click', showAll);
+  all.addEventListener('click', function(){ showAll(); if (sayAll) sayAll(); });
   if (STORE.get(storeKey) === '1') showAll();
   if (!N || !N.audio || !N.words) {
     box.querySelector('.poet-controls').style.display = 'none'; if (cap) cap.style.display = 'none'; all.style.display = 'none'; box.classList.add('noaudio'); reveal();
@@ -2587,9 +2588,11 @@ function lorePlayer(box, N, anchors, storeKey){
   W.forEach(function(w, i){ cur.push(i); if (/[.!?]["”]?$/.test(w[2])) { sents.push(cur); cur = []; } });
   if (cur.length) sents.push(cur);
   var shown = -1;
+  /* Show everything: her full words stay on the page as text */
+  sayAll = function(){ full = true; shown = -1; cap.innerHTML = W.map(function(w, k){ return w[2] ? '<span class="pw" data-i="' + k + '">' + esc(w[2]) + '<\/span>' : ''; }).filter(Boolean).join(' '); };
   function caption(i){
     var si = -1; for (var s = 0; s < sents.length; s++) if (sents[s].indexOf(i) >= 0) { si = s; break; }
-    if (si !== shown) {
+    if (si !== shown && !full) {
       shown = si;
       cap.innerHTML = si < 0 ? '' : sents[si].filter(function(k){ return W[k][2]; }).map(function(k){ return '<span class="pw" data-i="' + k + '">' + esc(W[k][2]) + '<\/span>'; }).join(' ');
     }
@@ -2601,7 +2604,7 @@ function lorePlayer(box, N, anchors, storeKey){
     btn: box.querySelector('.poet-play'), fill: box.querySelector('.poet-bar-fill'), time: box.querySelector('.poet-time'), bar: box.querySelector('.poet-bar'),
     labels: { again: '&#9654; Listen again', resume: '&#9654; Resume' },
     onStart: function(){ box.classList.add('playing'); if (STORE.get(storeKey) !== '1') items.forEach(function(e){ e.classList.remove('lit'); }); },
-    onEnd: function(){ box.classList.remove('playing'); showAll(); cap.innerHTML = ''; shown = -1; },
+    onEnd: function(){ box.classList.remove('playing'); showAll(); shown = -1; if (full) cap.querySelectorAll('.pw.hl').forEach(function(sp){ sp.classList.remove('hl'); }); else cap.innerHTML = ''; },
     onTime: function(t, i){
       var last = -1;
       items.forEach(function(e, k){ if (t + 0.05 >= lightAt[k]) { e.classList.add('lit'); last = k; } });
@@ -2963,6 +2966,6 @@ gatherAnswers();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
 })();
 </script>
-<script type="application/json" id="optima-standards">{"schema":"optima-standards-inpage/1","course":"1001040","tagged":"2026-11-12","frameworks":[{"id":"al","state":"AL","label":"Alabama Course of Study"},{"id":"ar","state":"AR","label":"Arkansas Academic Standards"},{"id":"dj","state":"MS","label":"Diocese of Jackson English Language Arts Standards"},{"id":"fl","state":"FL","label":"Florida Course Standards (B.E.S.T. / NGSSS via CPALMS)"},{"id":"mde","state":"MS","label":"Mississippi College- and Career-Readiness Standards"},{"id":"mde2","state":"MS","label":"Mississippi College- and Career-Readiness Standards"},{"id":"mo","state":"MO","label":"Missouri Learning Standards"},{"id":"tn","state":"TN","label":"Tennessee Academic Standards"},{"id":"tx","state":"TX","label":"TEKS"}],"item":[{"fw":"fl","code":"ELA.K12.EE.3.1","role":"practice"},{"fw":"fl","code":"ELA.K12.EE.1.1","role":"practice"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"practice"},{"fw":"dj","code":"RL.7.1","role":"practice"},{"fw":"mde2","code":"RL.7.1","role":"practice"},{"fw":"tn","code":"7.RL.KID.1","role":"practice"},{"fw":"mo","code":"7.RL.1.A","role":"practice"},{"fw":"ar","code":"7.RC.3.RF","role":"practice"}],"blocks":{"tab-3":{"hash":"913243e70c19","tags":[{"fw":"fl","code":"ELA.K12.EE.3.1","role":"practice"},{"fw":"fl","code":"ELA.K12.EE.1.1","role":"practice"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"practice"},{"fw":"dj","code":"RL.7.1","role":"practice"},{"fw":"mde2","code":"RL.7.1","role":"practice"},{"fw":"tn","code":"7.RL.KID.1","role":"practice"},{"fw":"mo","code":"7.RL.1.A","role":"practice"},{"fw":"ar","code":"7.RC.3.RF","role":"practice"}]},"watch-how-priya-filled-in-a-visit":{"hash":"db435246b72c","tags":[{"fw":"fl","code":"ELA.K12.EE.3.1","role":"teach"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"teach"},{"fw":"dj","code":"RL.7.1","role":"teach"},{"fw":"mde2","code":"RL.7.1","role":"teach"},{"fw":"tn","code":"7.RL.KID.1","role":"teach"},{"fw":"mo","code":"7.RL.1.A","role":"teach"},{"fw":"ar","code":"7.RC.3.RF","role":"teach"}]}}}</script>
+<script type="application/json" id="optima-standards">{"schema":"optima-standards-inpage/1","course":"1001040","tagged":"2026-11-13","frameworks":[{"id":"al","state":"AL","label":"Alabama Course of Study"},{"id":"ar","state":"AR","label":"Arkansas Academic Standards"},{"id":"dj","state":"MS","label":"Diocese of Jackson English Language Arts Standards"},{"id":"fl","state":"FL","label":"Florida Course Standards (B.E.S.T. / NGSSS via CPALMS)"},{"id":"mde","state":"MS","label":"Mississippi College- and Career-Readiness Standards"},{"id":"mde2","state":"MS","label":"Mississippi College- and Career-Readiness Standards"},{"id":"mo","state":"MO","label":"Missouri Learning Standards"},{"id":"tn","state":"TN","label":"Tennessee Academic Standards"},{"id":"tx","state":"TX","label":"TEKS"}],"item":[{"fw":"fl","code":"ELA.K12.EE.3.1","role":"practice"},{"fw":"fl","code":"ELA.K12.EE.1.1","role":"practice"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"practice"},{"fw":"dj","code":"RL.7.1","role":"practice"},{"fw":"mde2","code":"RL.7.1","role":"practice"},{"fw":"tn","code":"7.RL.KID.1","role":"practice"},{"fw":"mo","code":"7.RL.1.A","role":"practice"},{"fw":"ar","code":"7.RC.3.RF","role":"practice"}],"blocks":{"tab-3":{"hash":"913243e70c19","tags":[{"fw":"fl","code":"ELA.K12.EE.3.1","role":"practice"},{"fw":"fl","code":"ELA.K12.EE.1.1","role":"practice"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"practice"},{"fw":"dj","code":"RL.7.1","role":"practice"},{"fw":"mde2","code":"RL.7.1","role":"practice"},{"fw":"tn","code":"7.RL.KID.1","role":"practice"},{"fw":"mo","code":"7.RL.1.A","role":"practice"},{"fw":"ar","code":"7.RC.3.RF","role":"practice"}]},"watch-how-priya-filled-in-a-visit":{"hash":"db435246b72c","tags":[{"fw":"fl","code":"ELA.K12.EE.3.1","role":"teach"},{"fw":"tx","code":"110.23(b)(5)(F)","role":"teach"},{"fw":"dj","code":"RL.7.1","role":"teach"},{"fw":"mde2","code":"RL.7.1","role":"teach"},{"fw":"tn","code":"7.RL.KID.1","role":"teach"},{"fw":"mo","code":"7.RL.1.A","role":"teach"},{"fw":"ar","code":"7.RC.3.RF","role":"teach"}]}}}</script>
 </body>
 </html>

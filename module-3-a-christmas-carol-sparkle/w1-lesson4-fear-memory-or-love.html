@@ -1430,7 +1430,7 @@ body.msr-focus-on { overflow: hidden; }
             </div>
           </div>
         </div>
-        <button class="ll-showall" type="button">&#128220; Show everything</button>
+        <button class="ll-showall" type="button">&#128220; See the whole script</button>
       </div>
     </div>
   </div>
@@ -1528,7 +1528,7 @@ A Shroud as well as a Shirt.</div>
           <div class="lore-card lw-step" data-key="s3"><span class="lw-n">3</span><span>Build your claim, then your theme.</span></div>
           <div class="lore-card lw-step" data-key="s4"><span class="lw-n">4</span><span>Open the Change Ledger.</span></div>
         </div>
-        <button class="ll-showall" type="button">&#128220; Show everything</button>
+        <button class="ll-showall" type="button">&#128220; See the whole script</button>
       </div>
       <div class="sb-step-h">Step 1 &middot; Figure It Out</div>
       <div class="choice-game fg-game" id="figGame" data-practice="Figure It Out: seven lines named">
@@ -1754,7 +1754,7 @@ A Shroud as well as a Shirt.</div>
             </div>
           </div>
         </div>
-        <button class="ll-showall" type="button">&#128220; Show everything</button>
+        <button class="ll-showall" type="button">&#128220; See the whole script</button>
       </div>
     </div>
   </div>
@@ -1814,7 +1814,7 @@ A Shroud as well as a Shirt.</div>
           <p><strong>Before:</strong> I put it back on, it slipped off again.</p>
           <p><strong>After:</strong> I put it back on, and it slipped off again.</p>
         </div>
-        <button class="ll-showall" type="button">&#128220; Show everything</button>
+        <button class="ll-showall" type="button">&#128220; See the whole script</button>
       </div>
       <div class="wr-desk">
         <details class="wr-orig" id="wrPlan">
@@ -2826,9 +2826,10 @@ function narrator(o){
 /* box: the .lovelore element; N: { audio, words: [start, end, text] }; anchors: { data-key: regex for the first word that names it } */
 function lorePlayer(box, N, anchors, storeKey, duration){
   if (!box) return;
+  var full = false, sayAll = null;
   var items = [].slice.call(box.querySelectorAll('[data-key]')), cap = box.querySelector('.ll-caption');
   function showAll(){ items.forEach(function(e){ e.classList.add('lit'); e.classList.remove('now'); }); STORE.set(storeKey, '1'); }
-  box.querySelector('.ll-showall').addEventListener('click', showAll);
+  box.querySelector('.ll-showall').addEventListener('click', function(){ showAll(); if (sayAll) sayAll(); });
   if (STORE.get(storeKey) === '1') showAll();
   if (!N || !N.audio || !N.words) { box.querySelector('.poet-controls').style.display = 'none'; showAll(); return; }
   var W = N.words;
@@ -2846,9 +2847,11 @@ function lorePlayer(box, N, anchors, storeKey, duration){
   W.forEach(function(w, i){ cur.push(i); if (/[.!?]["”]?$/.test(w[2])) { sents.push(cur); cur = []; } });
   if (cur.length) sents.push(cur);
   var shown = -1;
+  /* Show everything: her full words stay on the page as text */
+  sayAll = function(){ full = true; shown = -1; cap.innerHTML = W.map(function(w, k){ return w[2] ? '<span class="pw" data-i="' + k + '">' + esc(w[2]) + '<\/span>' : ''; }).filter(Boolean).join(' '); };
   function caption(i){
     var si = -1; for (var s = 0; s < sents.length; s++) if (sents[s].indexOf(i) >= 0) { si = s; break; }
-    if (si !== shown) {
+    if (si !== shown && !full) {
       shown = si;
       cap.innerHTML = si < 0 ? '' : sents[si].filter(function(k){ return W[k][2]; }).map(function(k){ return '<span class="pw" data-i="' + k + '">' + esc(W[k][2]) + '<\/span>'; }).join(' ');
     }
@@ -2860,7 +2863,7 @@ function lorePlayer(box, N, anchors, storeKey, duration){
     btn: box.querySelector('.poet-play'), fill: box.querySelector('.poet-bar-fill'), time: box.querySelector('.poet-time'), bar: box.querySelector('.poet-bar'),
     labels: { again: '&#9654; Listen again', resume: '&#9654; Resume' },
     onStart: function(){ box.classList.add('playing'); if (STORE.get(storeKey) !== '1') items.forEach(function(e){ e.classList.remove('lit'); }); },
-    onEnd: function(){ box.classList.remove('playing'); showAll(); cap.innerHTML = ''; shown = -1; },
+    onEnd: function(){ box.classList.remove('playing'); showAll(); shown = -1; if (full) cap.querySelectorAll('.pw.hl').forEach(function(sp){ sp.classList.remove('hl'); }); else cap.innerHTML = ''; },
     onTime: function(t, i){
       var last = -1;
       items.forEach(function(e, k){ if (t + 0.05 >= lightAt[k]) { e.classList.add('lit'); last = k; } });
