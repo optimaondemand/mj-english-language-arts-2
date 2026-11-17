@@ -1,0 +1,346 @@
+{
+ "version": 1,
+ "module": "A Midsummer Night's Dream",
+ "made": "2026-11-17",
+ "lessons": [
+  {
+   "page": "w1-lesson1-by-whose-eyes.html",
+   "week": 1,
+   "lesson": 1,
+   "title": "By Whose Eyes",
+   "folder": "Week 1/Lesson 1 - By Whose Eyes",
+   "combined": {
+    "path": "Week 1/Lesson 1 - By Whose Eyes/Lesson 1 - all cards.pdf",
+    "bytes": 1156586
+   },
+   "files": [
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/Where Are We/01 - The Tower of the Winds and the Acropolis.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/Where Are We/01 - The Tower of the Winds and the Acropolis.jpg",
+     "activity": "Where Are We?",
+     "label": "The Tower of the Winds and the Acropolis",
+     "bytes": 255848
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/Where Are We/02 - A print of the Globe playhouse, after Visscher, 1616.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/Where Are We/02 - A print of the Globe playhouse, after Visscher, 1616.jpg",
+     "activity": "Where Are We?",
+     "label": "A print of the Globe playhouse, after Visscher, 1616",
+     "bytes": 244005
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/Where Are We/03 - Drury Lane Theatre.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/Where Are We/03 - Drury Lane Theatre.jpg",
+     "activity": "Where Are We?",
+     "label": "Drury Lane Theatre",
+     "bytes": 254496
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/Where Are We/04 - Engraving of Shakespeare.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/Where Are We/04 - Engraving of Shakespeare.jpg",
+     "activity": "Where Are We?",
+     "label": "engraving of Shakespeare",
+     "bytes": 211530
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/A Script Page Taken Apart/01 - The same scene in the First Folio, 1623.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/A Script Page Taken Apart/01 - The same scene in the First Folio, 1623.jpg",
+     "activity": "A Script Page Taken Apart",
+     "label": "The same scene in the First Folio, 1623",
+     "bytes": 267603
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/A Script Page Taken Apart/02 - Sign - Stage direction.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/A Script Page Taken Apart/02 - Sign - Stage direction.jpg",
+     "activity": "A Script Page Taken Apart",
+     "label": "Stage direction",
+     "bytes": 19502
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/A Script Page Taken Apart/03 - Sign - Speaker label.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/A Script Page Taken Apart/03 - Sign - Speaker label.jpg",
+     "activity": "A Script Page Taken Apart",
+     "label": "Speaker label",
+     "bytes": 20136
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/A Script Page Taken Apart/04 - Sign - Dialogue.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/A Script Page Taken Apart/04 - Sign - Dialogue.jpg",
+     "activity": "A Script Page Taken Apart",
+     "label": "Dialogue",
+     "bytes": 19391
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/01 - Sign - Claim.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/01 - Sign - Claim.jpg",
+     "activity": "The Duke’s Hearing",
+     "label": "Claim",
+     "bytes": 19948
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/02 - Sign - Evidence.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/02 - Sign - Evidence.jpg",
+     "activity": "The Duke’s Hearing",
+     "label": "Evidence",
+     "bytes": 20072
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/03 - Sign - Audience.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/03 - Sign - Audience.jpg",
+     "activity": "The Duke’s Hearing",
+     "label": "Audience",
+     "bytes": 19793
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/04 - Sign - Demand.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/04 - Sign - Demand.jpg",
+     "activity": "The Duke’s Hearing",
+     "label": "Demand",
+     "bytes": 19507
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/05 - Sign - Deeds.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/05 - Sign - Deeds.jpg",
+     "activity": "The Duke’s Hearing",
+     "label": "Deeds",
+     "bytes": 19502
+    },
+    {
+     "path": "Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/06 - Sign - Slant.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - By Whose Eyes/The Duke's Hearing/06 - Sign - Slant.jpg",
+     "activity": "The Duke’s Hearing",
+     "label": "Slant",
+     "bytes": 19670
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson2-let-me-play-the-lion.html",
+   "week": 1,
+   "lesson": 2,
+   "title": "Let Me Play the Lion",
+   "folder": "Week 1/Lesson 2 - Let Me Play the Lion",
+   "combined": {
+    "path": "Week 1/Lesson 2 - Let Me Play the Lion/Lesson 2 - all cards.pdf",
+    "bytes": 27346
+   },
+   "files": [
+    {
+     "path": "Week 1/Lesson 2 - Let Me Play the Lion/The Ear Test/01 - Sign - Verse.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Let Me Play the Lion/The Ear Test/01 - Sign - Verse.jpg",
+     "activity": "The Ear Test",
+     "label": "Verse",
+     "bytes": 18527
+    },
+    {
+     "path": "Week 1/Lesson 2 - Let Me Play the Lion/The Ear Test/02 - Sign - Prose.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Let Me Play the Lion/The Ear Test/02 - Sign - Prose.jpg",
+     "activity": "The Ear Test",
+     "label": "Prose",
+     "bytes": 18472
+    },
+    {
+     "path": "Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/01 - Sign - Pyramus.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/01 - Sign - Pyramus.jpg",
+     "activity": "Quince’s Casting Scroll",
+     "label": "Pyramus",
+     "bytes": 20628
+    },
+    {
+     "path": "Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/02 - Sign - Thisbe.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/02 - Sign - Thisbe.jpg",
+     "activity": "Quince’s Casting Scroll",
+     "label": "Thisbe",
+     "bytes": 20323
+    },
+    {
+     "path": "Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/03 - Sign - Thisbe's mother.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/03 - Sign - Thisbe's mother.jpg",
+     "activity": "Quince’s Casting Scroll",
+     "label": "Thisbe’s mother",
+     "bytes": 20335
+    },
+    {
+     "path": "Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/04 - Sign - Pyramus' father.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/04 - Sign - Pyramus' father.jpg",
+     "activity": "Quince’s Casting Scroll",
+     "label": "Pyramus’ father",
+     "bytes": 20913
+    },
+    {
+     "path": "Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/05 - Sign - Thisbe's father.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/05 - Sign - Thisbe's father.jpg",
+     "activity": "Quince’s Casting Scroll",
+     "label": "Thisbe’s father",
+     "bytes": 20636
+    },
+    {
+     "path": "Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/06 - Sign - the lion.pdf",
+     "thumb": "thumbs/Week 1/Lesson 2 - Let Me Play the Lion/Quince's Casting Scroll/06 - Sign - the lion.jpg",
+     "activity": "Quince’s Casting Scroll",
+     "label": "the lion",
+     "bytes": 20138
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson3-writers-bench.html",
+   "week": 1,
+   "lesson": 3,
+   "title": "The Writer's Bench",
+   "folder": "Week 1/Lesson 3 - The Writer's Bench",
+   "combined": {
+    "path": "Week 1/Lesson 3 - The Writer's Bench/Lesson 3 - all cards.pdf",
+    "bytes": 30559
+   },
+   "files": [
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/Grammar Learn/01 - Sign - subject noun.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/Grammar Learn/01 - Sign - subject noun.jpg",
+     "activity": "Grammar: Learn",
+     "label": "subject noun",
+     "bytes": 18800
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/Grammar Learn/02 - Sign - subject pronoun.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/Grammar Learn/02 - Sign - subject pronoun.jpg",
+     "activity": "Grammar: Learn",
+     "label": "subject pronoun",
+     "bytes": 19183
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/Grammar Learn/03 - Sign - helping verb.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/Grammar Learn/03 - Sign - helping verb.jpg",
+     "activity": "Grammar: Learn",
+     "label": "helping verb",
+     "bytes": 19118
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/Grammar Learn/04 - Sign - main verb.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/Grammar Learn/04 - Sign - main verb.jpg",
+     "activity": "Grammar: Learn",
+     "label": "main verb",
+     "bytes": 18570
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/Grammar Find in Shakespeare's Lines/01 - Sign - Already done.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/Grammar Find in Shakespeare's Lines/01 - Sign - Already done.jpg",
+     "activity": "Grammar: Find in Shakespeare’s Lines",
+     "label": "Already done",
+     "bytes": 20665
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/Grammar Find in Shakespeare's Lines/02 - Sign - Happening now.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/Grammar Find in Shakespeare's Lines/02 - Sign - Happening now.jpg",
+     "activity": "Grammar: Find in Shakespeare’s Lines",
+     "label": "Happening now",
+     "bytes": 20998
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/Grammar Find in Shakespeare's Lines/03 - Sign - Still to come.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/Grammar Find in Shakespeare's Lines/03 - Sign - Still to come.jpg",
+     "activity": "Grammar: Find in Shakespeare’s Lines",
+     "label": "Still to come",
+     "bytes": 20548
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/The Prompter's Marks/01 - Sign - Semicolon.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/The Prompter's Marks/01 - Sign - Semicolon.jpg",
+     "activity": "The Prompter’s Marks",
+     "label": "Semicolon",
+     "bytes": 19985
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/The Prompter's Marks/02 - Sign - Colon.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/The Prompter's Marks/02 - Sign - Colon.jpg",
+     "activity": "The Prompter’s Marks",
+     "label": "Colon",
+     "bytes": 19988
+    },
+    {
+     "path": "Week 1/Lesson 3 - The Writer's Bench/The Prompter's Marks/03 - Sign - Dash.pdf",
+     "thumb": "thumbs/Week 1/Lesson 3 - The Writer's Bench/The Prompter's Marks/03 - Sign - Dash.jpg",
+     "activity": "The Prompter’s Marks",
+     "label": "Dash",
+     "bytes": 19527
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson4-whose-account-to-trust.html",
+   "week": 1,
+   "lesson": 4,
+   "title": "Whose Account to Trust",
+   "folder": "Week 1/Lesson 4 - Whose Account to Trust",
+   "combined": {
+    "path": "Week 1/Lesson 4 - Whose Account to Trust/Lesson 4 - all cards.pdf",
+    "bytes": 29184
+   },
+   "files": [
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/Point of View/01 - Sign - Subjective.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/Point of View/01 - Sign - Subjective.jpg",
+     "activity": "Point of View",
+     "label": "Subjective",
+     "bytes": 20076
+    },
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/Point of View/02 - Sign - Objective.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/Point of View/02 - Sign - Objective.jpg",
+     "activity": "Point of View",
+     "label": "Objective",
+     "bytes": 19630
+    },
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/By the Moon/01 - Sign - I trust it.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/By the Moon/01 - Sign - I trust it.jpg",
+     "activity": "By the Moon",
+     "label": "I trust it",
+     "bytes": 18717
+    },
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/By the Moon/02 - Sign - Part of it.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/By the Moon/02 - Sign - Part of it.jpg",
+     "activity": "By the Moon",
+     "label": "Part of it",
+     "bytes": 19064
+    },
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/By the Moon/03 - Sign - I doubt it.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/By the Moon/03 - Sign - I doubt it.jpg",
+     "activity": "By the Moon",
+     "label": "I doubt it",
+     "bytes": 19068
+    },
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/The Book of Accounts/01 - Sign - Who told it.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/The Book of Accounts/01 - Sign - Who told it.jpg",
+     "activity": "The Book of Accounts",
+     "label": "Who told it",
+     "bytes": 20083
+    },
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/The Book of Accounts/02 - Sign - To whom.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/The Book of Accounts/02 - Sign - To whom.jpg",
+     "activity": "The Book of Accounts",
+     "label": "To whom",
+     "bytes": 20436
+    },
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/The Book of Accounts/03 - Sign - To get what.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/The Book of Accounts/03 - Sign - To get what.jpg",
+     "activity": "The Book of Accounts",
+     "label": "To get what",
+     "bytes": 20442
+    },
+    {
+     "path": "Week 1/Lesson 4 - Whose Account to Trust/The Book of Accounts/04 - Sign - What we saw ourselves.pdf",
+     "thumb": "thumbs/Week 1/Lesson 4 - Whose Account to Trust/The Book of Accounts/04 - Sign - What we saw ourselves.jpg",
+     "activity": "The Book of Accounts",
+     "label": "What we saw ourselves",
+     "bytes": 20914
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,128 @@
+{
+ "module": "The Outsiders",
+ "note": "Week 1. Word signs only (the book is in copyright and the lessons show no photographs): the named places, lists and categories a class stands at or sorts under. No sentence or quotation from the novel, no portraits, no scenes.",
+ "lessons": [
+  {
+   "page": "w1-lesson2-the-nightly-double.html",
+   "title": "The Nightly Double",
+   "week": 1,
+   "lesson": 2,
+   "activities": [
+    {
+     "name": "Ponyboy’s Voice",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "SLANG"
+      },
+      {
+       "type": "sign",
+       "label": "COMPARISON"
+      },
+      {
+       "type": "sign",
+       "label": "TO YOU"
+      }
+     ]
+    },
+    {
+     "name": "The Drive-In Rows",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "What Ponyboy believed about Socs"
+      },
+      {
+       "type": "sign",
+       "label": "What Cherry tells him"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson3-writers-bench.html",
+   "title": "The Writer's Bench",
+   "week": 1,
+   "lesson": 3,
+   "activities": [
+    {
+     "name": "Tense Turntable",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Past"
+      },
+      {
+       "type": "sign",
+       "label": "Present"
+      },
+      {
+       "type": "sign",
+       "label": "Future"
+      },
+      {
+       "type": "sign",
+       "label": "Past perfect"
+      }
+     ]
+    },
+    {
+     "name": "The Type Case",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "semicolon"
+      },
+      {
+       "type": "sign",
+       "label": "colon"
+      },
+      {
+       "type": "sign",
+       "label": "dash"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson4-both-sides-of-town.html",
+   "title": "Both Sides of Town",
+   "week": 1,
+   "lesson": 4,
+   "activities": [
+    {
+     "name": "The Road Map",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Ponyboy says it"
+      },
+      {
+       "type": "sign",
+       "label": "You infer it"
+      }
+     ]
+    },
+    {
+     "name": "Pin the Map",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "EAST SIDE"
+      },
+      {
+       "type": "sign",
+       "label": "THE DIVIDING LINE"
+      },
+      {
+       "type": "sign",
+       "label": "WEST SIDE"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

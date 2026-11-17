@@ -1,0 +1,278 @@
+{
+ "module": "A Midsummer Night's Dream",
+ "note": "Week 1. Pictures used inside the lessons' activities (public domain, with the credit the page gives) and word signs for the named headings and categories a class stands at or sorts under. Page header art, the title-page cover and the Lovelore and Priya pictures are left out. A picture is carded once, in the first lesson that shows it. Nothing past Act 1.",
+ "lessons": [
+  {
+   "page": "w1-lesson1-by-whose-eyes.html",
+   "title": "By Whose Eyes",
+   "week": 1,
+   "lesson": 1,
+   "activities": [
+    {
+     "name": "Where Are We?",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "ctx_athens",
+       "label": "The Tower of the Winds and the Acropolis",
+       "caption": "A hand-coloured engraving of Athens with the rock of the Acropolis behind, and in front the Tower of the Winds, an eight-sided stone building, with small groups of townspeople and a horseman in the street.",
+       "credit": "Wikimedia Commons, public domain.",
+       "artist": "James Stuart and Nicholas Revett"
+      },
+      {
+       "type": "picture",
+       "img": "ctx_globe",
+       "label": "A print of the Globe playhouse, after Visscher, 1616",
+       "caption": "A woodcut-style print of the Globe playhouse in London: a tall round building with small windows, a turret and a flag on top, and four men in hats and cloaks standing beside it.",
+       "credit": "Wikimedia Commons, public domain."
+      },
+      {
+       "type": "picture",
+       "img": "ctx_drury",
+       "label": "Drury Lane Theatre",
+       "caption": "A coloured print of the inside of Drury Lane Theatre in London in 1808: tiers of boxes crowded with people, chandeliers hanging in the boxes, a curtained stage with painted scenery of a wide plain and a small group of actors on it, and the audience packed together in the pit below.",
+       "credit": "1808, Wikimedia Commons, public domain.",
+       "artist": "Rowlandson and Pugin"
+      },
+      {
+       "type": "picture",
+       "img": "shakespeare",
+       "label": "engraving of Shakespeare",
+       "artist": "Martin Droeshout",
+       "caption": "The Droeshout engraving of William Shakespeare from the First Folio: a man with a high forehead, moustache and short beard, in a wide white collar and a patterned jacket.",
+       "credit": "First Folio, 1623. Public domain."
+      }
+     ]
+    },
+    {
+     "name": "A Script Page Taken Apart",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "art_folio",
+       "label": "The same scene in the First Folio, 1623",
+       "caption": [
+        "A page of the 1623 First Folio",
+        "printed in two columns, with the speeches of Hermia, Lysander and Helena from the first scene."
+       ],
+       "credit": "Miami University Libraries Digital Collections, no restrictions"
+      },
+      {
+       "type": "sign",
+       "label": "Stage direction"
+      },
+      {
+       "type": "sign",
+       "label": "Speaker label"
+      },
+      {
+       "type": "sign",
+       "label": "Dialogue"
+      }
+     ]
+    },
+    {
+     "name": "The Duke’s Hearing",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Claim"
+      },
+      {
+       "type": "sign",
+       "label": "Evidence"
+      },
+      {
+       "type": "sign",
+       "label": "Audience"
+      },
+      {
+       "type": "sign",
+       "label": "Demand"
+      },
+      {
+       "type": "sign",
+       "label": "Deeds"
+      },
+      {
+       "type": "sign",
+       "label": "Slant"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson2-let-me-play-the-lion.html",
+   "title": "Let Me Play the Lion",
+   "week": 1,
+   "lesson": 2,
+   "activities": [
+    {
+     "name": "The Ear Test",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Verse"
+      },
+      {
+       "type": "sign",
+       "label": "Prose"
+      }
+     ]
+    },
+    {
+     "name": "Quince’s Casting Scroll",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Pyramus"
+      },
+      {
+       "type": "sign",
+       "label": "Thisbe"
+      },
+      {
+       "type": "sign",
+       "label": "Thisbe’s mother"
+      },
+      {
+       "type": "sign",
+       "label": "Pyramus’ father"
+      },
+      {
+       "type": "sign",
+       "label": "Thisbe’s father"
+      },
+      {
+       "type": "sign",
+       "label": "the lion"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson3-writers-bench.html",
+   "title": "The Writer's Bench",
+   "week": 1,
+   "lesson": 3,
+   "activities": [
+    {
+     "name": "Grammar: Learn",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "subject noun"
+      },
+      {
+       "type": "sign",
+       "label": "subject pronoun"
+      },
+      {
+       "type": "sign",
+       "label": "helping verb"
+      },
+      {
+       "type": "sign",
+       "label": "main verb"
+      }
+     ]
+    },
+    {
+     "name": "Grammar: Find in Shakespeare’s Lines",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Already done"
+      },
+      {
+       "type": "sign",
+       "label": "Happening now"
+      },
+      {
+       "type": "sign",
+       "label": "Still to come"
+      }
+     ]
+    },
+    {
+     "name": "The Prompter’s Marks",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Semicolon"
+      },
+      {
+       "type": "sign",
+       "label": "Colon"
+      },
+      {
+       "type": "sign",
+       "label": "Dash"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w1-lesson4-whose-account-to-trust.html",
+   "title": "Whose Account to Trust",
+   "week": 1,
+   "lesson": 4,
+   "activities": [
+    {
+     "name": "Point of View",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Subjective"
+      },
+      {
+       "type": "sign",
+       "label": "Objective"
+      }
+     ]
+    },
+    {
+     "name": "By the Moon",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "I trust it"
+      },
+      {
+       "type": "sign",
+       "label": "Part of it"
+      },
+      {
+       "type": "sign",
+       "label": "I doubt it"
+      }
+     ]
+    },
+    {
+     "name": "The Book of Accounts",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Who told it"
+      },
+      {
+       "type": "sign",
+       "label": "To whom"
+      },
+      {
+       "type": "sign",
+       "label": "To get what"
+      },
+      {
+       "type": "sign",
+       "label": "What we saw ourselves"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
