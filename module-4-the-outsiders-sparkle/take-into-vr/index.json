@@ -1,7 +1,7 @@
 {
  "version": 1,
  "module": "The Outsiders",
- "made": "2026-11-17",
+ "made": "2026-11-18",
  "lessons": [
   {
    "page": "w1-lesson2-the-nightly-double.html",
@@ -158,6 +158,1014 @@
      "activity": "Pin the Map",
      "label": "WEST SIDE",
      "bytes": 17030
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson1-the-same-sunset.html",
+   "week": 2,
+   "lesson": 1,
+   "title": "The Same Sunset",
+   "folder": "Week 2/Lesson 1 - The Same Sunset",
+   "combined": {
+    "path": "Week 2/Lesson 1 - The Same Sunset/Lesson 1 - all cards.pdf",
+    "bytes": 25101
+   },
+   "files": [
+    {
+     "path": "Week 2/Lesson 1 - The Same Sunset/The Same Sky/01 - Sign - Cherry'S Patio.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - The Same Sunset/The Same Sky/01 - Sign - Cherry'S Patio.jpg",
+     "activity": "The Same Sky",
+     "label": "CHERRY’S PATIO",
+     "bytes": 18041
+    },
+    {
+     "path": "Week 2/Lesson 1 - The Same Sunset/The Same Sky/02 - Sign - The Same Sun.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - The Same Sunset/The Same Sky/02 - Sign - The Same Sun.jpg",
+     "activity": "The Same Sky",
+     "label": "THE SAME SUN",
+     "bytes": 17405
+    },
+    {
+     "path": "Week 2/Lesson 1 - The Same Sunset/The Same Sky/03 - Sign - Ponyboy'S Back Steps.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - The Same Sunset/The Same Sky/03 - Sign - Ponyboy'S Back Steps.jpg",
+     "activity": "The Same Sky",
+     "label": "PONYBOY’S BACK STEPS",
+     "bytes": 18247
+    },
+    {
+     "path": "Week 2/Lesson 1 - The Same Sunset/Warning Signs/01 - Sign - Signal.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - The Same Sunset/Warning Signs/01 - Sign - Signal.jpg",
+     "activity": "Warning Signs",
+     "label": "SIGNAL",
+     "bytes": 16133
+    },
+    {
+     "path": "Week 2/Lesson 1 - The Same Sunset/Warning Signs/02 - Sign - Just A Detail.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - The Same Sunset/Warning Signs/02 - Sign - Just A Detail.jpg",
+     "activity": "Warning Signs",
+     "label": "JUST A DETAIL",
+     "bytes": 17484
+    },
+    {
+     "path": "Week 2/Lesson 1 - The Same Sunset/Warning Signs/03 - Sign - Trouble With The Socs.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - The Same Sunset/Warning Signs/03 - Sign - Trouble With The Socs.jpg",
+     "activity": "Warning Signs",
+     "label": "TROUBLE WITH THE SOCS",
+     "bytes": 17903
+    },
+    {
+     "path": "Week 2/Lesson 1 - The Same Sunset/Warning Signs/04 - Sign - Trouble At Home.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - The Same Sunset/Warning Signs/04 - Sign - Trouble At Home.jpg",
+     "activity": "Warning Signs",
+     "label": "TROUBLE AT HOME",
+     "bytes": 17987
+    },
+    {
+     "path": "Week 2/Lesson 1 - The Same Sunset/Warning Signs/05 - Sign - Trouble Inside Ponyboy.pdf",
+     "thumb": "thumbs/Week 2/Lesson 1 - The Same Sunset/Warning Signs/05 - Sign - Trouble Inside Ponyboy.jpg",
+     "activity": "Warning Signs",
+     "label": "TROUBLE INSIDE PONYBOY",
+     "bytes": 18285
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson2-a-choice-in-the-dark.html",
+   "week": 2,
+   "lesson": 2,
+   "title": "A Choice in the Dark",
+   "folder": "Week 2/Lesson 2 - A Choice in the Dark",
+   "combined": {
+    "path": "Week 2/Lesson 2 - A Choice in the Dark/Lesson 2 - all cards.pdf",
+    "bytes": 26655
+   },
+   "files": [
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/A Stranger's Eyes/01 - Sign - What a stranger sees.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/A Stranger's Eyes/01 - Sign - What a stranger sees.jpg",
+     "activity": "A Stranger’s Eyes",
+     "label": "What a stranger sees",
+     "bytes": 17653
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/A Stranger's Eyes/02 - Sign - What Ponyboy knows.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/A Stranger's Eyes/02 - Sign - What Ponyboy knows.jpg",
+     "activity": "A Stranger’s Eyes",
+     "label": "What Ponyboy knows",
+     "bytes": 18680
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/01 - Sign - Buck Merril's house.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/01 - Sign - Buck Merril's house.jpg",
+     "activity": "The Night Clock",
+     "label": "Buck Merril’s house",
+     "bytes": 17730
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/02 - Sign - The country.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/02 - Sign - The country.jpg",
+     "activity": "The Night Clock",
+     "label": "The country",
+     "bytes": 16969
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/03 - Sign - The freight.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/03 - Sign - The freight.jpg",
+     "activity": "The Night Clock",
+     "label": "The freight",
+     "bytes": 17026
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/04 - Sign - The old church.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/04 - Sign - The old church.jpg",
+     "activity": "The Night Clock",
+     "label": "The old church",
+     "bytes": 16721
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/05 - Sign - The park.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Night Clock/05 - Sign - The park.jpg",
+     "activity": "The Night Clock",
+     "label": "The park",
+     "bytes": 17082
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson3-writers-bench.html",
+   "week": 2,
+   "lesson": 3,
+   "title": "The Writer's Bench",
+   "folder": "Week 2/Lesson 3 - The Writer's Bench",
+   "combined": {
+    "path": "Week 2/Lesson 3 - The Writer's Bench/Lesson 3 - all cards.pdf",
+    "bytes": 26622
+   },
+   "files": [
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Stable Row/01 - Sign - Noun.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Stable Row/01 - Sign - Noun.jpg",
+     "activity": "The Stable Row",
+     "label": "Noun",
+     "bytes": 16900
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Stable Row/02 - Sign - Pronoun.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Stable Row/02 - Sign - Pronoun.jpg",
+     "activity": "The Stable Row",
+     "label": "Pronoun",
+     "bytes": 16821
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Stable Row/03 - Sign - Verb.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Stable Row/03 - Sign - Verb.jpg",
+     "activity": "The Stable Row",
+     "label": "Verb",
+     "bytes": 17219
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Stable Row/04 - Sign - Adjective.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Stable Row/04 - Sign - Adjective.jpg",
+     "activity": "The Stable Row",
+     "label": "Adjective",
+     "bytes": 17430
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Stable Row/05 - Sign - Adverb.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Stable Row/05 - Sign - Adverb.jpg",
+     "activity": "The Stable Row",
+     "label": "Adverb",
+     "bytes": 17239
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Stable Row/06 - Sign - Preposition.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Stable Row/06 - Sign - Preposition.jpg",
+     "activity": "The Stable Row",
+     "label": "Preposition",
+     "bytes": 17229
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Stable Row/07 - Sign - Conjunction.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Stable Row/07 - Sign - Conjunction.jpg",
+     "activity": "The Stable Row",
+     "label": "Conjunction",
+     "bytes": 17410
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Stable Row/08 - Sign - Interjection.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Stable Row/08 - Sign - Interjection.jpg",
+     "activity": "The Stable Row",
+     "label": "Interjection",
+     "bytes": 17332
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Back Seat/01 - Sign - Active.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Back Seat/01 - Sign - Active.jpg",
+     "activity": "The Back Seat",
+     "label": "ACTIVE",
+     "bytes": 17449
+    },
+    {
+     "path": "Week 2/Lesson 3 - The Writer's Bench/The Back Seat/02 - Sign - Passive.pdf",
+     "thumb": "thumbs/Week 2/Lesson 3 - The Writer's Bench/The Back Seat/02 - Sign - Passive.jpg",
+     "activity": "The Back Seat",
+     "label": "PASSIVE",
+     "bytes": 17694
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson4-clues-and-consequences.html",
+   "week": 2,
+   "lesson": 4,
+   "title": "Clues and Consequences",
+   "folder": "Week 2/Lesson 4 - Clues and Consequences",
+   "combined": {
+    "path": "Week 2/Lesson 4 - Clues and Consequences/Lesson 4 - all cards.pdf",
+    "bytes": 18695
+   },
+   "files": [
+    {
+     "path": "Week 2/Lesson 4 - Clues and Consequences/Read the Gauge/01 - Sign - Low.pdf",
+     "thumb": "thumbs/Week 2/Lesson 4 - Clues and Consequences/Read the Gauge/01 - Sign - Low.jpg",
+     "activity": "Read the Gauge",
+     "label": "LOW",
+     "bytes": 16630
+    },
+    {
+     "path": "Week 2/Lesson 4 - Clues and Consequences/Read the Gauge/02 - Sign - Medium.pdf",
+     "thumb": "thumbs/Week 2/Lesson 4 - Clues and Consequences/Read the Gauge/02 - Sign - Medium.jpg",
+     "activity": "Read the Gauge",
+     "label": "MEDIUM",
+     "bytes": 17262
+    },
+    {
+     "path": "Week 2/Lesson 4 - Clues and Consequences/Read the Gauge/03 - Sign - High.pdf",
+     "thumb": "thumbs/Week 2/Lesson 4 - Clues and Consequences/Read the Gauge/03 - Sign - High.jpg",
+     "activity": "Read the Gauge",
+     "label": "HIGH",
+     "bytes": 16848
+    }
+   ]
+  },
+  {
+   "page": "w3-lesson1-nothing-gold-can-stay.html",
+   "week": 3,
+   "lesson": 1,
+   "title": "Nothing Gold Can Stay",
+   "folder": "Week 3/Lesson 1 - Nothing Gold Can Stay",
+   "combined": {
+    "path": "Week 3/Lesson 1 - Nothing Gold Can Stay/Lesson 1 - all cards.pdf",
+    "bytes": 23796
+   },
+   "files": [
+    {
+     "path": "Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/01 - Sign - Gold.pdf",
+     "thumb": "thumbs/Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/01 - Sign - Gold.jpg",
+     "activity": "The Paint Chip Card",
+     "label": "GOLD",
+     "bytes": 17460
+    },
+    {
+     "path": "Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/02 - Sign - Yellow-Green.pdf",
+     "thumb": "thumbs/Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/02 - Sign - Yellow-Green.jpg",
+     "activity": "The Paint Chip Card",
+     "label": "YELLOW-GREEN",
+     "bytes": 17948
+    },
+    {
+     "path": "Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/03 - Sign - Spring Green.pdf",
+     "thumb": "thumbs/Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/03 - Sign - Spring Green.jpg",
+     "activity": "The Paint Chip Card",
+     "label": "SPRING GREEN",
+     "bytes": 17871
+    },
+    {
+     "path": "Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/04 - Sign - Leaf Green.pdf",
+     "thumb": "thumbs/Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/04 - Sign - Leaf Green.jpg",
+     "activity": "The Paint Chip Card",
+     "label": "LEAF GREEN",
+     "bytes": 17745
+    },
+    {
+     "path": "Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/05 - Sign - Green-Grey.pdf",
+     "thumb": "thumbs/Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/05 - Sign - Green-Grey.jpg",
+     "activity": "The Paint Chip Card",
+     "label": "GREEN-GREY",
+     "bytes": 17942
+    },
+    {
+     "path": "Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/06 - Sign - Dusk Grey.pdf",
+     "thumb": "thumbs/Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/06 - Sign - Dusk Grey.jpg",
+     "activity": "The Paint Chip Card",
+     "label": "DUSK GREY",
+     "bytes": 18973
+    },
+    {
+     "path": "Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/07 - Sign - Going.pdf",
+     "thumb": "thumbs/Week 3/Lesson 1 - Nothing Gold Can Stay/The Paint Chip Card/07 - Sign - Going.jpg",
+     "activity": "The Paint Chip Card",
+     "label": "GOING",
+     "bytes": 17462
+    }
+   ]
+  },
+  {
+   "page": "w3-lesson2-two-boys-in-a-church.html",
+   "week": 3,
+   "lesson": 2,
+   "title": "Two Boys in a Church",
+   "folder": "Week 3/Lesson 2 - Two Boys in a Church",
+   "combined": {
+    "path": "Week 3/Lesson 2 - Two Boys in a Church/Lesson 2 - all cards.pdf",
+    "bytes": 23329
+   },
+   "files": [
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/01 - Sign - Johnny.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/01 - Sign - Johnny.jpg",
+     "activity": "The Hideout Deck",
+     "label": "JOHNNY",
+     "bytes": 17617
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/02 - Sign - Ponyboy.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/02 - Sign - Ponyboy.jpg",
+     "activity": "The Hideout Deck",
+     "label": "PONYBOY",
+     "bytes": 18051
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/03 - Sign - Then.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/03 - Sign - Then.jpg",
+     "activity": "The Hideout Deck",
+     "label": "THEN",
+     "bytes": 16980
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/04 - Sign - Now.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/04 - Sign - Now.jpg",
+     "activity": "The Hideout Deck",
+     "label": "NOW",
+     "bytes": 16979
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/05 - Sign - Does.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/05 - Sign - Does.jpg",
+     "activity": "The Hideout Deck",
+     "label": "DOES",
+     "bytes": 17061
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/06 - Sign - Says.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/06 - Sign - Says.jpg",
+     "activity": "The Hideout Deck",
+     "label": "SAYS",
+     "bytes": 17786
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/07 - Sign - Thinks.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/07 - Sign - Thinks.jpg",
+     "activity": "The Hideout Deck",
+     "label": "THINKS",
+     "bytes": 17399
+    }
+   ]
+  },
+  {
+   "page": "w3-lesson3-sentences-that-hold.html",
+   "week": 3,
+   "lesson": 3,
+   "title": "Sentences That Hold",
+   "folder": "Week 3/Lesson 3 - Sentences That Hold",
+   "combined": {
+    "path": "Week 3/Lesson 3 - Sentences That Hold/Lesson 3 - all cards.pdf",
+    "bytes": 22023
+   },
+   "files": [
+    {
+     "path": "Week 3/Lesson 3 - Sentences That Hold/The Roof Frame/01 - Sign - simple.pdf",
+     "thumb": "thumbs/Week 3/Lesson 3 - Sentences That Hold/The Roof Frame/01 - Sign - simple.jpg",
+     "activity": "The Roof Frame",
+     "label": "simple",
+     "bytes": 17238
+    },
+    {
+     "path": "Week 3/Lesson 3 - Sentences That Hold/The Roof Frame/02 - Sign - compound.pdf",
+     "thumb": "thumbs/Week 3/Lesson 3 - Sentences That Hold/The Roof Frame/02 - Sign - compound.jpg",
+     "activity": "The Roof Frame",
+     "label": "compound",
+     "bytes": 17358
+    },
+    {
+     "path": "Week 3/Lesson 3 - Sentences That Hold/The Roof Frame/03 - Sign - complex.pdf",
+     "thumb": "thumbs/Week 3/Lesson 3 - Sentences That Hold/The Roof Frame/03 - Sign - complex.jpg",
+     "activity": "The Roof Frame",
+     "label": "complex",
+     "bytes": 18008
+    },
+    {
+     "path": "Week 3/Lesson 3 - Sentences That Hold/The Order Ticket/01 - Sign - Prep Phrase.pdf",
+     "thumb": "thumbs/Week 3/Lesson 3 - Sentences That Hold/The Order Ticket/01 - Sign - Prep Phrase.jpg",
+     "activity": "The Order Ticket",
+     "label": "PREP PHRASE",
+     "bytes": 17353
+    }
+   ]
+  },
+  {
+   "page": "w3-lesson4-panning-for-theme.html",
+   "week": 3,
+   "lesson": 4,
+   "title": "Panning for Theme",
+   "folder": "Week 3/Lesson 4 - Panning for Theme",
+   "combined": {
+    "path": "Week 3/Lesson 4 - Panning for Theme/Lesson 4 - all cards.pdf",
+    "bytes": 19679
+   },
+   "files": [
+    {
+     "path": "Week 3/Lesson 4 - Panning for Theme/The Gold Pan/01 - Sign - Topic.pdf",
+     "thumb": "thumbs/Week 3/Lesson 4 - Panning for Theme/The Gold Pan/01 - Sign - Topic.jpg",
+     "activity": "The Gold Pan",
+     "label": "TOPIC",
+     "bytes": 17160
+    },
+    {
+     "path": "Week 3/Lesson 4 - Panning for Theme/The Gold Pan/02 - Sign - Theme Statement.pdf",
+     "thumb": "thumbs/Week 3/Lesson 4 - Panning for Theme/The Gold Pan/02 - Sign - Theme Statement.jpg",
+     "activity": "The Gold Pan",
+     "label": "THEME STATEMENT",
+     "bytes": 17468
+    },
+    {
+     "path": "Week 3/Lesson 4 - Panning for Theme/The Gold Pan/03 - Sign - Plot Fact.pdf",
+     "thumb": "thumbs/Week 3/Lesson 4 - Panning for Theme/The Gold Pan/03 - Sign - Plot Fact.jpg",
+     "activity": "The Gold Pan",
+     "label": "PLOT FACT",
+     "bytes": 17215
+    }
+   ]
+  },
+  {
+   "page": "w4-lesson1-the-way-they-tell-it.html",
+   "week": 4,
+   "lesson": 1,
+   "title": "The Way They Tell It",
+   "folder": "Week 4/Lesson 1 - The Way They Tell It",
+   "combined": {
+    "path": "Week 4/Lesson 1 - The Way They Tell It/Lesson 1 - all cards.pdf",
+    "bytes": 18782
+   },
+   "files": [
+    {
+     "path": "Week 4/Lesson 1 - The Way They Tell It/The Front Page/01 - Sign - Printed.pdf",
+     "thumb": "thumbs/Week 4/Lesson 1 - The Way They Tell It/The Front Page/01 - Sign - Printed.jpg",
+     "activity": "The Front Page",
+     "label": "PRINTED",
+     "bytes": 17247
+    },
+    {
+     "path": "Week 4/Lesson 1 - The Way They Tell It/The Front Page/02 - Sign - Only Ponyboy.pdf",
+     "thumb": "thumbs/Week 4/Lesson 1 - The Way They Tell It/The Front Page/02 - Sign - Only Ponyboy.jpg",
+     "activity": "The Front Page",
+     "label": "ONLY PONYBOY",
+     "bytes": 17549
+    }
+   ]
+  },
+  {
+   "page": "w4-lesson2-who-shows-up.html",
+   "week": 4,
+   "lesson": 2,
+   "title": "Who Shows Up",
+   "folder": "Week 4/Lesson 2 - Who Shows Up",
+   "combined": {
+    "path": "Week 4/Lesson 2 - Who Shows Up/Lesson 2 - all cards.pdf",
+    "bytes": 20352
+   },
+   "files": [
+    {
+     "path": "Week 4/Lesson 2 - Who Shows Up/The Card Catalog/01 - Sign - Author'S Last Name.pdf",
+     "thumb": "thumbs/Week 4/Lesson 2 - Who Shows Up/The Card Catalog/01 - Sign - Author'S Last Name.jpg",
+     "activity": "The Card Catalog",
+     "label": "AUTHOR’S LAST NAME",
+     "bytes": 18268
+    },
+    {
+     "path": "Week 4/Lesson 2 - Who Shows Up/The Card Catalog/02 - Sign - Chapter, Not Page.pdf",
+     "thumb": "thumbs/Week 4/Lesson 2 - Who Shows Up/The Card Catalog/02 - Sign - Chapter, Not Page.jpg",
+     "activity": "The Card Catalog",
+     "label": "CHAPTER, NOT PAGE",
+     "bytes": 17308
+    },
+    {
+     "path": "Week 4/Lesson 2 - Who Shows Up/The Card Catalog/03 - Sign - Period.pdf",
+     "thumb": "thumbs/Week 4/Lesson 2 - Who Shows Up/The Card Catalog/03 - Sign - Period.jpg",
+     "activity": "The Card Catalog",
+     "label": "PERIOD",
+     "bytes": 17016
+    }
+   ]
+  },
+  {
+   "page": "w4-lesson3-writers-bench.html",
+   "week": 4,
+   "lesson": 3,
+   "title": "The Writer's Bench",
+   "folder": "Week 4/Lesson 3 - The Writer's Bench",
+   "combined": {
+    "path": "Week 4/Lesson 3 - The Writer's Bench/Lesson 3 - all cards.pdf",
+    "bytes": 24405
+   },
+   "files": [
+    {
+     "path": "Week 4/Lesson 3 - The Writer's Bench/The Proof Desk/01 - Sign - capital.pdf",
+     "thumb": "thumbs/Week 4/Lesson 3 - The Writer's Bench/The Proof Desk/01 - Sign - capital.jpg",
+     "activity": "The Proof Desk",
+     "label": "capital",
+     "bytes": 18320
+    },
+    {
+     "path": "Week 4/Lesson 3 - The Writer's Bench/The Proof Desk/02 - Sign - lowercase.pdf",
+     "thumb": "thumbs/Week 4/Lesson 3 - The Writer's Bench/The Proof Desk/02 - Sign - lowercase.jpg",
+     "activity": "The Proof Desk",
+     "label": "lowercase",
+     "bytes": 18411
+    },
+    {
+     "path": "Week 4/Lesson 3 - The Writer's Bench/The Proof Desk/03 - Sign - end mark.pdf",
+     "thumb": "thumbs/Week 4/Lesson 3 - The Writer's Bench/The Proof Desk/03 - Sign - end mark.jpg",
+     "activity": "The Proof Desk",
+     "label": "end mark",
+     "bytes": 17946
+    },
+    {
+     "path": "Week 4/Lesson 3 - The Writer's Bench/The Spinner Rack/01 - Sign - Italics.pdf",
+     "thumb": "thumbs/Week 4/Lesson 3 - The Writer's Bench/The Spinner Rack/01 - Sign - Italics.jpg",
+     "activity": "The Spinner Rack",
+     "label": "ITALICS",
+     "bytes": 17633
+    },
+    {
+     "path": "Week 4/Lesson 3 - The Writer's Bench/The Spinner Rack/02 - Sign - Quotation Marks.pdf",
+     "thumb": "thumbs/Week 4/Lesson 3 - The Writer's Bench/The Spinner Rack/02 - Sign - Quotation Marks.jpg",
+     "activity": "The Spinner Rack",
+     "label": "QUOTATION MARKS",
+     "bytes": 18607
+    }
+   ]
+  },
+  {
+   "page": "w4-lesson4-everyday-heroes.html",
+   "week": 4,
+   "lesson": 4,
+   "title": "Everyday Heroes",
+   "folder": "Week 4/Lesson 4 - Everyday Heroes",
+   "combined": {
+    "path": "Week 4/Lesson 4 - Everyday Heroes/Lesson 4 - all cards.pdf",
+    "bytes": 19639
+   },
+   "files": [
+    {
+     "path": "Week 4/Lesson 4 - Everyday Heroes/The Trophy Case/01 - Sign - Loyalty.pdf",
+     "thumb": "thumbs/Week 4/Lesson 4 - Everyday Heroes/The Trophy Case/01 - Sign - Loyalty.jpg",
+     "activity": "The Trophy Case",
+     "label": "LOYALTY",
+     "bytes": 16653
+    },
+    {
+     "path": "Week 4/Lesson 4 - Everyday Heroes/The Trophy Case/02 - Sign - Family.pdf",
+     "thumb": "thumbs/Week 4/Lesson 4 - Everyday Heroes/The Trophy Case/02 - Sign - Family.jpg",
+     "activity": "The Trophy Case",
+     "label": "FAMILY",
+     "bytes": 17547
+    },
+    {
+     "path": "Week 4/Lesson 4 - Everyday Heroes/The Trophy Case/03 - Sign - Everyday Heroism.pdf",
+     "thumb": "thumbs/Week 4/Lesson 4 - Everyday Heroes/The Trophy Case/03 - Sign - Everyday Heroism.jpg",
+     "activity": "The Trophy Case",
+     "label": "EVERYDAY HEROISM",
+     "bytes": 17879
+    }
+   ]
+  },
+  {
+   "page": "w5-lesson1-under-the-street-lamp.html",
+   "week": 5,
+   "lesson": 1,
+   "title": "Under the Street Lamp",
+   "folder": "Week 5/Lesson 1 - Under the Street Lamp",
+   "combined": {
+    "path": "Week 5/Lesson 1 - Under the Street Lamp/Lesson 1 - all cards.pdf",
+    "bytes": 21038
+   },
+   "files": [
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Survey Clipboard/01 - Sign - Soda.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Survey Clipboard/01 - Sign - Soda.jpg",
+     "activity": "The Survey Clipboard",
+     "label": "SODA",
+     "bytes": 18630
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Survey Clipboard/02 - Sign - Steve.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Survey Clipboard/02 - Sign - Steve.jpg",
+     "activity": "The Survey Clipboard",
+     "label": "STEVE",
+     "bytes": 18634
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Survey Clipboard/03 - Sign - Darry.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Survey Clipboard/03 - Sign - Darry.jpg",
+     "activity": "The Survey Clipboard",
+     "label": "DARRY",
+     "bytes": 18633
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Survey Clipboard/04 - Sign - Two-Bit.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Survey Clipboard/04 - Sign - Two-Bit.jpg",
+     "activity": "The Survey Clipboard",
+     "label": "TWO-BIT",
+     "bytes": 18738
+    }
+   ]
+  },
+  {
+   "page": "w5-lesson2-the-long-walk-home.html",
+   "week": 5,
+   "lesson": 2,
+   "title": "The Long Walk Home",
+   "folder": "Week 5/Lesson 2 - The Long Walk Home",
+   "combined": {
+    "path": "Week 5/Lesson 2 - The Long Walk Home/Lesson 2 - all cards.pdf",
+    "bytes": 20075
+   },
+   "files": [
+    {
+     "path": "Week 5/Lesson 2 - The Long Walk Home/The Kitchen Clock/01 - Sign - because of that.pdf",
+     "thumb": "thumbs/Week 5/Lesson 2 - The Long Walk Home/The Kitchen Clock/01 - Sign - because of that.jpg",
+     "activity": "The Kitchen Clock",
+     "label": "because of that",
+     "bytes": 17674
+    },
+    {
+     "path": "Week 5/Lesson 2 - The Long Walk Home/The Front Steps/01 - Sign - Both.pdf",
+     "thumb": "thumbs/Week 5/Lesson 2 - The Long Walk Home/The Front Steps/01 - Sign - Both.jpg",
+     "activity": "The Front Steps",
+     "label": "BOTH",
+     "bytes": 17117
+    }
+   ]
+  },
+  {
+   "page": "w5-lesson4-the-turning-point.html",
+   "week": 5,
+   "lesson": 4,
+   "title": "The Turning Point",
+   "folder": "Week 5/Lesson 4 - The Turning Point",
+   "combined": {
+    "path": "Week 5/Lesson 4 - The Turning Point/Lesson 4 - all cards.pdf",
+    "bytes": 18727
+   },
+   "files": [
+    {
+     "path": "Week 5/Lesson 4 - The Turning Point/Sort the Evidence/01 - Sign - My Side.pdf",
+     "thumb": "thumbs/Week 5/Lesson 4 - The Turning Point/Sort the Evidence/01 - Sign - My Side.jpg",
+     "activity": "Sort the Evidence",
+     "label": "MY SIDE",
+     "bytes": 17987
+    },
+    {
+     "path": "Week 5/Lesson 4 - The Turning Point/Sort the Evidence/02 - Sign - The Other Side.pdf",
+     "thumb": "thumbs/Week 5/Lesson 4 - The Turning Point/Sort the Evidence/02 - Sign - The Other Side.jpg",
+     "activity": "Sort the Evidence",
+     "label": "THE OTHER SIDE",
+     "bytes": 17266
+    }
+   ]
+  },
+  {
+   "page": "w6-lesson1-a-face-in-the-yearbook.html",
+   "week": 6,
+   "lesson": 1,
+   "title": "A Face in the Yearbook",
+   "folder": "Week 6/Lesson 1 - A Face in the Yearbook",
+   "combined": {
+    "path": "Week 6/Lesson 1 - A Face in the Yearbook/Lesson 1 - all cards.pdf",
+    "bytes": 19902
+   },
+   "files": [
+    {
+     "path": "Week 6/Lesson 1 - A Face in the Yearbook/The Yearbook Page/01 - Sign - Knew.pdf",
+     "thumb": "thumbs/Week 6/Lesson 1 - A Face in the Yearbook/The Yearbook Page/01 - Sign - Knew.jpg",
+     "activity": "The Yearbook Page",
+     "label": "KNEW",
+     "bytes": 17728
+    },
+    {
+     "path": "Week 6/Lesson 1 - A Face in the Yearbook/The Yearbook Page/02 - Sign - Told.pdf",
+     "thumb": "thumbs/Week 6/Lesson 1 - A Face in the Yearbook/The Yearbook Page/02 - Sign - Told.jpg",
+     "activity": "The Yearbook Page",
+     "label": "TOLD",
+     "bytes": 17690
+    },
+    {
+     "path": "Week 6/Lesson 1 - A Face in the Yearbook/The Yearbook Page/03 - Sign - Wonders.pdf",
+     "thumb": "thumbs/Week 6/Lesson 1 - A Face in the Yearbook/The Yearbook Page/03 - Sign - Wonders.jpg",
+     "activity": "The Yearbook Page",
+     "label": "WONDERS",
+     "bytes": 18434
+    }
+   ]
+  },
+  {
+   "page": "w6-lesson2-their-side-of-the-story.html",
+   "week": 6,
+   "lesson": 2,
+   "title": "Their Side of the Story",
+   "folder": "Week 6/Lesson 2 - Their Side of the Story",
+   "combined": {
+    "path": "Week 6/Lesson 2 - Their Side of the Story/Lesson 2 - all cards.pdf",
+    "bytes": 22280
+   },
+   "files": [
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/01 - Sign - Picture.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/01 - Sign - Picture.jpg",
+     "activity": "The Picture Frame",
+     "label": "PICTURE",
+     "bytes": 17505
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/02 - Sign - Frame.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/02 - Sign - Frame.jpg",
+     "activity": "The Picture Frame",
+     "label": "FRAME",
+     "bytes": 17500
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/03 - Sign - Who Tells It.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/03 - Sign - Who Tells It.jpg",
+     "activity": "The Picture Frame",
+     "label": "WHO TELLS IT",
+     "bytes": 17929
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/04 - Sign - For Whom.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/04 - Sign - For Whom.jpg",
+     "activity": "The Picture Frame",
+     "label": "FOR WHOM",
+     "bytes": 17503
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/05 - Sign - When.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/05 - Sign - When.jpg",
+     "activity": "The Picture Frame",
+     "label": "WHEN",
+     "bytes": 17790
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/06 - Sign - Why.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/06 - Sign - Why.jpg",
+     "activity": "The Picture Frame",
+     "label": "WHY",
+     "bytes": 17859
+    }
+   ]
+  },
+  {
+   "page": "w6-lesson3-writers-bench.html",
+   "week": 6,
+   "lesson": 3,
+   "title": "The Writer's Bench",
+   "folder": "Week 6/Lesson 3 - The Writer's Bench",
+   "combined": {
+    "path": "Week 6/Lesson 3 - The Writer's Bench/Lesson 3 - all cards.pdf",
+    "bytes": 23419
+   },
+   "files": [
+    {
+     "path": "Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/01 - Sign - Their.pdf",
+     "thumb": "thumbs/Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/01 - Sign - Their.jpg",
+     "activity": "The Mail Slots",
+     "label": "THEIR",
+     "bytes": 16864
+    },
+    {
+     "path": "Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/02 - Sign - There.pdf",
+     "thumb": "thumbs/Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/02 - Sign - There.jpg",
+     "activity": "The Mail Slots",
+     "label": "THERE",
+     "bytes": 16864
+    },
+    {
+     "path": "Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/03 - Sign - They'Re.pdf",
+     "thumb": "thumbs/Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/03 - Sign - They'Re.jpg",
+     "activity": "The Mail Slots",
+     "label": "THEY’RE",
+     "bytes": 17449
+    },
+    {
+     "path": "Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/04 - Sign - Its.pdf",
+     "thumb": "thumbs/Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/04 - Sign - Its.jpg",
+     "activity": "The Mail Slots",
+     "label": "ITS",
+     "bytes": 16528
+    },
+    {
+     "path": "Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/05 - Sign - It'S.pdf",
+     "thumb": "thumbs/Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/05 - Sign - It'S.jpg",
+     "activity": "The Mail Slots",
+     "label": "IT’S",
+     "bytes": 16745
+    },
+    {
+     "path": "Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/06 - Sign - Than.pdf",
+     "thumb": "thumbs/Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/06 - Sign - Than.jpg",
+     "activity": "The Mail Slots",
+     "label": "THAN",
+     "bytes": 16825
+    },
+    {
+     "path": "Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/07 - Sign - Affect.pdf",
+     "thumb": "thumbs/Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/07 - Sign - Affect.jpg",
+     "activity": "The Mail Slots",
+     "label": "AFFECT",
+     "bytes": 17143
+    },
+    {
+     "path": "Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/08 - Sign - Effect.pdf",
+     "thumb": "thumbs/Week 6/Lesson 3 - The Writer's Bench/The Mail Slots/08 - Sign - Effect.jpg",
+     "activity": "The Mail Slots",
+     "label": "EFFECT",
+     "bytes": 17142
+    }
+   ]
+  },
+  {
+   "page": "w6-lesson4-inside-the-frame.html",
+   "week": 6,
+   "lesson": 4,
+   "title": "Inside the Frame",
+   "folder": "Week 6/Lesson 4 - Inside the Frame",
+   "combined": {
+    "path": "Week 6/Lesson 4 - Inside the Frame/Lesson 4 - all cards.pdf",
+    "bytes": 25474
+   },
+   "files": [
+    {
+     "path": "Week 6/Lesson 4 - Inside the Frame/The Blueprint/01 - Sign - Hook.pdf",
+     "thumb": "thumbs/Week 6/Lesson 4 - Inside the Frame/The Blueprint/01 - Sign - Hook.jpg",
+     "activity": "The Blueprint",
+     "label": "HOOK",
+     "bytes": 17235
+    },
+    {
+     "path": "Week 6/Lesson 4 - Inside the Frame/The Blueprint/02 - Sign - Context.pdf",
+     "thumb": "thumbs/Week 6/Lesson 4 - Inside the Frame/The Blueprint/02 - Sign - Context.jpg",
+     "activity": "The Blueprint",
+     "label": "CONTEXT",
+     "bytes": 17679
+    },
+    {
+     "path": "Week 6/Lesson 4 - Inside the Frame/The Blueprint/03 - Sign - Claim.pdf",
+     "thumb": "thumbs/Week 6/Lesson 4 - Inside the Frame/The Blueprint/03 - Sign - Claim.jpg",
+     "activity": "The Blueprint",
+     "label": "CLAIM",
+     "bytes": 17888
+    },
+    {
+     "path": "Week 6/Lesson 4 - Inside the Frame/The Blueprint/04 - Sign - Bigger Idea.pdf",
+     "thumb": "thumbs/Week 6/Lesson 4 - Inside the Frame/The Blueprint/04 - Sign - Bigger Idea.jpg",
+     "activity": "The Blueprint",
+     "label": "BIGGER IDEA",
+     "bytes": 17910
+    },
+    {
+     "path": "Week 6/Lesson 4 - Inside the Frame/Load-Bearing Beams/01 - Sign - Body I.pdf",
+     "thumb": "thumbs/Week 6/Lesson 4 - Inside the Frame/Load-Bearing Beams/01 - Sign - Body I.jpg",
+     "activity": "Load-Bearing Beams",
+     "label": "BODY I",
+     "bytes": 18280
+    },
+    {
+     "path": "Week 6/Lesson 4 - Inside the Frame/Load-Bearing Beams/02 - Sign - Body Ii.pdf",
+     "thumb": "thumbs/Week 6/Lesson 4 - Inside the Frame/Load-Bearing Beams/02 - Sign - Body Ii.jpg",
+     "activity": "Load-Bearing Beams",
+     "label": "BODY II",
+     "bytes": 18282
+    },
+    {
+     "path": "Week 6/Lesson 4 - Inside the Frame/Load-Bearing Beams/03 - Sign - Body Iii.pdf",
+     "thumb": "thumbs/Week 6/Lesson 4 - Inside the Frame/Load-Bearing Beams/03 - Sign - Body Iii.jpg",
+     "activity": "Load-Bearing Beams",
+     "label": "BODY III",
+     "bytes": 18281
+    },
+    {
+     "path": "Week 6/Lesson 4 - Inside the Frame/Load-Bearing Beams/04 - Sign - Scrap Pile.pdf",
+     "thumb": "thumbs/Week 6/Lesson 4 - Inside the Frame/Load-Bearing Beams/04 - Sign - Scrap Pile.jpg",
+     "activity": "Load-Bearing Beams",
+     "label": "SCRAP PILE",
+     "bytes": 18437
+    }
+   ]
+  },
+  {
+   "page": "w7-lesson1-build-your-case.html",
+   "week": 7,
+   "lesson": 1,
+   "title": "Build Your Case",
+   "folder": "Week 7/Lesson 1 - Build Your Case",
+   "combined": {
+    "path": "Week 7/Lesson 1 - Build Your Case/Lesson 1 - all cards.pdf",
+    "bytes": 24243
+   },
+   "files": [
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Case File/01 - Sign - Staying gold.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Case File/01 - Sign - Staying gold.jpg",
+     "activity": "The Case File",
+     "label": "Staying gold",
+     "bytes": 17964
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Case File/02 - Sign - Strong.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Case File/02 - Sign - Strong.jpg",
+     "activity": "The Case File",
+     "label": "STRONG",
+     "bytes": 17397
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Case File/03 - Sign - Less Certain.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Case File/03 - Sign - Less Certain.jpg",
+     "activity": "The Case File",
+     "label": "LESS CERTAIN",
+     "bytes": 17064
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/Step 2 Log It/01 - Sign - Doesn't fit.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/Step 2 Log It/01 - Sign - Doesn't fit.jpg",
+     "activity": "Step 2 · Log It",
+     "label": "Doesn't fit",
+     "bytes": 16810
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Filing Order/01 - Sign - Introduction.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Filing Order/01 - Sign - Introduction.jpg",
+     "activity": "The Filing Order",
+     "label": "INTRODUCTION",
+     "bytes": 17373
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Filing Order/02 - Sign - Conclusion.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Filing Order/02 - Sign - Conclusion.jpg",
+     "activity": "The Filing Order",
+     "label": "CONCLUSION",
+     "bytes": 17756
+    }
+   ]
+  },
+  {
+   "page": "w7-lesson2-write-your-essay.html",
+   "week": 7,
+   "lesson": 2,
+   "title": "Write Your Essay",
+   "folder": "Week 7/Lesson 2 - Write Your Essay",
+   "combined": {
+    "path": "Week 7/Lesson 2 - Write Your Essay/Lesson 2 - all cards.pdf",
+    "bytes": 20582
+   },
+   "files": [
+    {
+     "path": "Week 7/Lesson 2 - Write Your Essay/The Three Lenses/01 - Sign - Evidence.pdf",
+     "thumb": "thumbs/Week 7/Lesson 2 - Write Your Essay/The Three Lenses/01 - Sign - Evidence.jpg",
+     "activity": "The Three Lenses",
+     "label": "EVIDENCE",
+     "bytes": 17100
+    },
+    {
+     "path": "Week 7/Lesson 2 - Write Your Essay/The Three Lenses/02 - Sign - Words.pdf",
+     "thumb": "thumbs/Week 7/Lesson 2 - Write Your Essay/The Three Lenses/02 - Sign - Words.jpg",
+     "activity": "The Three Lenses",
+     "label": "WORDS",
+     "bytes": 16267
+    },
+    {
+     "path": "Week 7/Lesson 2 - Write Your Essay/Before and after/01 - Sign - Before.pdf",
+     "thumb": "thumbs/Week 7/Lesson 2 - Write Your Essay/Before and after/01 - Sign - Before.jpg",
+     "activity": "Before and after",
+     "label": "Before",
+     "bytes": 16888
+    },
+    {
+     "path": "Week 7/Lesson 2 - Write Your Essay/Before and after/02 - Sign - After.pdf",
+     "thumb": "thumbs/Week 7/Lesson 2 - Write Your Essay/Before and after/02 - Sign - After.jpg",
+     "activity": "Before and after",
+     "label": "After",
+     "bytes": 16883
     }
    ]
   }

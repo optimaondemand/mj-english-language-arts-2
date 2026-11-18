@@ -1,6 +1,6 @@
 {
  "module": "The Outsiders",
- "note": "Week 1. Word signs only (the book is in copyright and the lessons show no photographs): the named places, lists and categories a class stands at or sorts under. No sentence or quotation from the novel, no portraits, no scenes.",
+ "note": "Weeks 1-7. Word signs only (the book is in copyright and the lessons show no photographs): the names, categories and sorting places a class stands beside, sorts under or points to. No sentence or quotation from the novel, no portraits, no scenes. A sign is carded once, in the first lesson that uses it.",
  "lessons": [
   {
    "page": "w1-lesson2-the-nightly-double.html",
@@ -119,6 +119,749 @@
       {
        "type": "sign",
        "label": "WEST SIDE"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson1-the-same-sunset.html",
+   "title": "The Same Sunset",
+   "week": 2,
+   "lesson": 1,
+   "activities": [
+    {
+     "name": "The Same Sky",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "CHERRY’S PATIO"
+      },
+      {
+       "type": "sign",
+       "label": "THE SAME SUN"
+      },
+      {
+       "type": "sign",
+       "label": "PONYBOY’S BACK STEPS"
+      }
+     ]
+    },
+    {
+     "name": "Warning Signs",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "SIGNAL"
+      },
+      {
+       "type": "sign",
+       "label": "JUST A DETAIL"
+      },
+      {
+       "type": "sign",
+       "label": "TROUBLE WITH THE SOCS"
+      },
+      {
+       "type": "sign",
+       "label": "TROUBLE AT HOME"
+      },
+      {
+       "type": "sign",
+       "label": "TROUBLE INSIDE PONYBOY"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson2-a-choice-in-the-dark.html",
+   "title": "A Choice in the Dark",
+   "week": 2,
+   "lesson": 2,
+   "activities": [
+    {
+     "name": "A Stranger’s Eyes",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "What a stranger sees"
+      },
+      {
+       "type": "sign",
+       "label": "What Ponyboy knows"
+      }
+     ]
+    },
+    {
+     "name": "The Night Clock",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Buck Merril’s house"
+      },
+      {
+       "type": "sign",
+       "label": "The country"
+      },
+      {
+       "type": "sign",
+       "label": "The freight"
+      },
+      {
+       "type": "sign",
+       "label": "The old church"
+      },
+      {
+       "type": "sign",
+       "label": "The park"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson3-writers-bench.html",
+   "title": "The Writer's Bench",
+   "week": 2,
+   "lesson": 3,
+   "activities": [
+    {
+     "name": "The Stable Row",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Noun"
+      },
+      {
+       "type": "sign",
+       "label": "Pronoun"
+      },
+      {
+       "type": "sign",
+       "label": "Verb"
+      },
+      {
+       "type": "sign",
+       "label": "Adjective"
+      },
+      {
+       "type": "sign",
+       "label": "Adverb"
+      },
+      {
+       "type": "sign",
+       "label": "Preposition"
+      },
+      {
+       "type": "sign",
+       "label": "Conjunction"
+      },
+      {
+       "type": "sign",
+       "label": "Interjection"
+      }
+     ]
+    },
+    {
+     "name": "The Back Seat",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "ACTIVE"
+      },
+      {
+       "type": "sign",
+       "label": "PASSIVE"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w2-lesson4-clues-and-consequences.html",
+   "title": "Clues and Consequences",
+   "week": 2,
+   "lesson": 4,
+   "activities": [
+    {
+     "name": "Read the Gauge",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "LOW"
+      },
+      {
+       "type": "sign",
+       "label": "MEDIUM"
+      },
+      {
+       "type": "sign",
+       "label": "HIGH"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w3-lesson1-nothing-gold-can-stay.html",
+   "title": "Nothing Gold Can Stay",
+   "week": 3,
+   "lesson": 1,
+   "activities": [
+    {
+     "name": "The Paint Chip Card",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "GOLD"
+      },
+      {
+       "type": "sign",
+       "label": "YELLOW-GREEN"
+      },
+      {
+       "type": "sign",
+       "label": "SPRING GREEN"
+      },
+      {
+       "type": "sign",
+       "label": "LEAF GREEN"
+      },
+      {
+       "type": "sign",
+       "label": "GREEN-GREY"
+      },
+      {
+       "type": "sign",
+       "label": "DUSK GREY"
+      },
+      {
+       "type": "sign",
+       "label": "GOING"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w3-lesson2-two-boys-in-a-church.html",
+   "title": "Two Boys in a Church",
+   "week": 3,
+   "lesson": 2,
+   "activities": [
+    {
+     "name": "The Hideout Deck",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "JOHNNY"
+      },
+      {
+       "type": "sign",
+       "label": "PONYBOY"
+      },
+      {
+       "type": "sign",
+       "label": "THEN"
+      },
+      {
+       "type": "sign",
+       "label": "NOW"
+      },
+      {
+       "type": "sign",
+       "label": "DOES"
+      },
+      {
+       "type": "sign",
+       "label": "SAYS"
+      },
+      {
+       "type": "sign",
+       "label": "THINKS"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w3-lesson3-sentences-that-hold.html",
+   "title": "Sentences That Hold",
+   "week": 3,
+   "lesson": 3,
+   "activities": [
+    {
+     "name": "The Roof Frame",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "simple"
+      },
+      {
+       "type": "sign",
+       "label": "compound"
+      },
+      {
+       "type": "sign",
+       "label": "complex"
+      }
+     ]
+    },
+    {
+     "name": "The Order Ticket",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "PREP PHRASE"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w3-lesson4-panning-for-theme.html",
+   "title": "Panning for Theme",
+   "week": 3,
+   "lesson": 4,
+   "activities": [
+    {
+     "name": "The Gold Pan",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "TOPIC"
+      },
+      {
+       "type": "sign",
+       "label": "THEME STATEMENT"
+      },
+      {
+       "type": "sign",
+       "label": "PLOT FACT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w4-lesson1-the-way-they-tell-it.html",
+   "title": "The Way They Tell It",
+   "week": 4,
+   "lesson": 1,
+   "activities": [
+    {
+     "name": "The Front Page",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "PRINTED"
+      },
+      {
+       "type": "sign",
+       "label": "ONLY PONYBOY"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w4-lesson2-who-shows-up.html",
+   "title": "Who Shows Up",
+   "week": 4,
+   "lesson": 2,
+   "activities": [
+    {
+     "name": "The Card Catalog",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "AUTHOR’S LAST NAME"
+      },
+      {
+       "type": "sign",
+       "label": "CHAPTER, NOT PAGE"
+      },
+      {
+       "type": "sign",
+       "label": "PERIOD"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w4-lesson3-writers-bench.html",
+   "title": "The Writer's Bench",
+   "week": 4,
+   "lesson": 3,
+   "activities": [
+    {
+     "name": "The Proof Desk",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "capital"
+      },
+      {
+       "type": "sign",
+       "label": "lowercase"
+      },
+      {
+       "type": "sign",
+       "label": "end mark"
+      }
+     ]
+    },
+    {
+     "name": "The Spinner Rack",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "ITALICS"
+      },
+      {
+       "type": "sign",
+       "label": "QUOTATION MARKS"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w4-lesson4-everyday-heroes.html",
+   "title": "Everyday Heroes",
+   "week": 4,
+   "lesson": 4,
+   "activities": [
+    {
+     "name": "The Trophy Case",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "LOYALTY"
+      },
+      {
+       "type": "sign",
+       "label": "FAMILY"
+      },
+      {
+       "type": "sign",
+       "label": "EVERYDAY HEROISM"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w5-lesson1-under-the-street-lamp.html",
+   "title": "Under the Street Lamp",
+   "week": 5,
+   "lesson": 1,
+   "activities": [
+    {
+     "name": "The Survey Clipboard",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "SODA"
+      },
+      {
+       "type": "sign",
+       "label": "STEVE"
+      },
+      {
+       "type": "sign",
+       "label": "DARRY"
+      },
+      {
+       "type": "sign",
+       "label": "TWO-BIT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w5-lesson2-the-long-walk-home.html",
+   "title": "The Long Walk Home",
+   "week": 5,
+   "lesson": 2,
+   "activities": [
+    {
+     "name": "The Kitchen Clock",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "because of that"
+      }
+     ]
+    },
+    {
+     "name": "The Front Steps",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "BOTH"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w5-lesson4-the-turning-point.html",
+   "title": "The Turning Point",
+   "week": 5,
+   "lesson": 4,
+   "activities": [
+    {
+     "name": "Sort the Evidence",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "MY SIDE"
+      },
+      {
+       "type": "sign",
+       "label": "THE OTHER SIDE"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w6-lesson1-a-face-in-the-yearbook.html",
+   "title": "A Face in the Yearbook",
+   "week": 6,
+   "lesson": 1,
+   "activities": [
+    {
+     "name": "The Yearbook Page",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "KNEW"
+      },
+      {
+       "type": "sign",
+       "label": "TOLD"
+      },
+      {
+       "type": "sign",
+       "label": "WONDERS"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w6-lesson2-their-side-of-the-story.html",
+   "title": "Their Side of the Story",
+   "week": 6,
+   "lesson": 2,
+   "activities": [
+    {
+     "name": "The Picture Frame",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "PICTURE"
+      },
+      {
+       "type": "sign",
+       "label": "FRAME"
+      },
+      {
+       "type": "sign",
+       "label": "WHO TELLS IT"
+      },
+      {
+       "type": "sign",
+       "label": "FOR WHOM"
+      },
+      {
+       "type": "sign",
+       "label": "WHEN"
+      },
+      {
+       "type": "sign",
+       "label": "WHY"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w6-lesson3-writers-bench.html",
+   "title": "The Writer's Bench",
+   "week": 6,
+   "lesson": 3,
+   "activities": [
+    {
+     "name": "The Mail Slots",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "THEIR"
+      },
+      {
+       "type": "sign",
+       "label": "THERE"
+      },
+      {
+       "type": "sign",
+       "label": "THEY’RE"
+      },
+      {
+       "type": "sign",
+       "label": "ITS"
+      },
+      {
+       "type": "sign",
+       "label": "IT’S"
+      },
+      {
+       "type": "sign",
+       "label": "THAN"
+      },
+      {
+       "type": "sign",
+       "label": "AFFECT"
+      },
+      {
+       "type": "sign",
+       "label": "EFFECT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w6-lesson4-inside-the-frame.html",
+   "title": "Inside the Frame",
+   "week": 6,
+   "lesson": 4,
+   "activities": [
+    {
+     "name": "The Blueprint",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "HOOK"
+      },
+      {
+       "type": "sign",
+       "label": "CONTEXT"
+      },
+      {
+       "type": "sign",
+       "label": "CLAIM"
+      },
+      {
+       "type": "sign",
+       "label": "BIGGER IDEA"
+      }
+     ]
+    },
+    {
+     "name": "Load-Bearing Beams",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "BODY I"
+      },
+      {
+       "type": "sign",
+       "label": "BODY II"
+      },
+      {
+       "type": "sign",
+       "label": "BODY III"
+      },
+      {
+       "type": "sign",
+       "label": "SCRAP PILE"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w7-lesson1-build-your-case.html",
+   "title": "Build Your Case",
+   "week": 7,
+   "lesson": 1,
+   "activities": [
+    {
+     "name": "The Case File",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Staying gold"
+      },
+      {
+       "type": "sign",
+       "label": "STRONG"
+      },
+      {
+       "type": "sign",
+       "label": "LESS CERTAIN"
+      }
+     ]
+    },
+    {
+     "name": "Step 2 · Log It",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Doesn't fit"
+      }
+     ]
+    },
+    {
+     "name": "The Filing Order",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "INTRODUCTION"
+      },
+      {
+       "type": "sign",
+       "label": "CONCLUSION"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "page": "w7-lesson2-write-your-essay.html",
+   "title": "Write Your Essay",
+   "week": 7,
+   "lesson": 2,
+   "activities": [
+    {
+     "name": "The Three Lenses",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "EVIDENCE"
+      },
+      {
+       "type": "sign",
+       "label": "WORDS"
+      }
+     ]
+    },
+    {
+     "name": "Before and after",
+     "cards": [
+      {
+       "type": "sign",
+       "label": "Before"
+      },
+      {
+       "type": "sign",
+       "label": "After"
       }
      ]
     }
