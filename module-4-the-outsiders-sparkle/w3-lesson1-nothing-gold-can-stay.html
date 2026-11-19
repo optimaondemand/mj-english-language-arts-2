@@ -2954,13 +2954,19 @@ function penSync(){
   var b = document.getElementById('readDoneBtn'), box = document.getElementById('readDone'), panel = document.getElementById('tab-reading');
   if (!b || !panel) return;
   box.closest('.activity').classList.add('read-first');
+  /* the Questions and the rest of this tab are blurred, inert, hidden from screen readers and skipped by the read-aloud player
+     until the gate is tapped; they open without a reload (same lock as Week 6 Lesson 2) */
+  function rdGate(on){
+    panel.classList.toggle('gated', on);
+    panel.querySelectorAll('.activity:not(.read-first), .tab-next-wrap').forEach(function(e){ try { e.inert = on; } catch(x){} if (on) { e.setAttribute('aria-hidden', 'true'); e.setAttribute('data-ra-skip', ''); } else { e.removeAttribute('aria-hidden'); e.removeAttribute('data-ra-skip'); } });
+  }
   function open(fresh){
-    panel.classList.remove('gated'); var shf = document.querySelector('.shelf'); if (shf) shf.classList.add('opened'); b.classList.add('done'); b.innerHTML = '&#10003; I have read Chapter 5';
+    rdGate(false); var shf = document.querySelector('.shelf'); if (shf) shf.classList.add('opened'); b.classList.add('done'); b.innerHTML = '&#10003; I have read Chapter 5';
     STORE.set('read-done', '1'); l1markDone(box);
     if (fresh) { var nx = box.closest('.activity').nextElementSibling; while (nx && !nx.classList.contains('activity')) nx = nx.nextElementSibling; if (nx) setTimeout(function(){ nx.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 250); }
   }
   b.addEventListener('click', function(){ if (!b.classList.contains('done')) open(true); });
-  if (STORE.get('read-done') === '1') open(false); else panel.classList.add('gated');
+  if (STORE.get('read-done') === '1') open(false); else rdGate(true);
 })();
 function stopLog(){
   var ta = document.getElementById('stop-log'); if (!ta) return;

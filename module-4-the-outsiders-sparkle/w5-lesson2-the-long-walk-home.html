@@ -2900,7 +2900,7 @@ function penSync(){
   if (!b || !panel) return;
   function gated(on){
     panel.classList.toggle('gated', on);
-    panel.querySelectorAll('.activity:not(.read-first), .tab-next-wrap').forEach(function(e){ try { e.inert = on; } catch(x){} });
+    panel.querySelectorAll('.activity:not(.read-first), .tab-next-wrap').forEach(function(e){ try { e.inert = on; } catch(x){} if (on) { e.setAttribute('aria-hidden', 'true'); e.setAttribute('data-ra-skip', ''); } else { e.removeAttribute('aria-hidden'); e.removeAttribute('data-ra-skip'); } });
   }
   function open(fresh){
     gated(false); b.classList.add('done'); b.innerHTML = '&#10003; I have read Chapter 10';
@@ -3035,7 +3035,7 @@ function loreAnswer(q){
   function sync(){
     var open = STORE.get('read-done') === '1';
     panel.classList.toggle('gated', !open);
-    panel.querySelectorAll('.activity, .tab-next-wrap').forEach(function(e){ try { e.inert = !open; } catch(x){} });
+    panel.querySelectorAll('.activity, .tab-next-wrap').forEach(function(e){ try { e.inert = !open; } catch(x){} if (!open) { e.setAttribute('aria-hidden', 'true'); e.setAttribute('data-ra-skip', ''); } else { e.removeAttribute('aria-hidden'); e.removeAttribute('data-ra-skip'); } });
   }
   window.clockGate = sync; sync();
 })();
