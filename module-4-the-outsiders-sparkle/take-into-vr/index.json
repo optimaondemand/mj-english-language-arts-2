@@ -4,6 +4,61 @@
  "made": "2026-11-18",
  "lessons": [
   {
+   "page": "w1-lesson1-walking-home-alone.html",
+   "week": 1,
+   "lesson": 1,
+   "title": "Walking Home Alone",
+   "folder": "Week 1/Lesson 1 - Walking Home Alone",
+   "combined": {
+    "path": "Week 1/Lesson 1 - Walking Home Alone/Lesson 1 - all cards.pdf",
+    "bytes": 931481
+   },
+   "files": [
+    {
+     "path": "Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/01 - Pencil sketch of a fine-featured boy with long straight hair combed ba.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/01 - Pencil sketch of a fine-featured boy with long straight hair combed ba.jpg",
+     "activity": "Ponyboy's Sketchbook",
+     "label": "Pencil sketch of a fine-featured boy with long straight hair combed back and a quick, warm grin.",
+     "bytes": 152406
+    },
+    {
+     "path": "Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/02 - Pencil sketch of a sharp-featured boy with near-white hair falling in.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/02 - Pencil sketch of a sharp-featured boy with near-white hair falling in.jpg",
+     "activity": "Ponyboy's Sketchbook",
+     "label": "Pencil sketch of a sharp-featured boy with near-white hair falling in wisps and a hard, guarded stare.",
+     "bytes": 169705
+    },
+    {
+     "path": "Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/03 - Pencil sketch of a small, slight boy with big dark eyes and long greas.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/03 - Pencil sketch of a small, slight boy with big dark eyes and long greas.jpg",
+     "activity": "Ponyboy's Sketchbook",
+     "label": "Pencil sketch of a small, slight boy with big dark eyes and long greased bangs, looking wary.",
+     "bytes": 183304
+    },
+    {
+     "path": "Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/04 - Pencil sketch of a stocky older boy with long sideburns and a wide, am.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/04 - Pencil sketch of a stocky older boy with long sideburns and a wide, am.jpg",
+     "activity": "Ponyboy's Sketchbook",
+     "label": "Pencil sketch of a stocky older boy with long sideburns and a wide, amused grin.",
+     "bytes": 168982
+    },
+    {
+     "path": "Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/05 - Pencil sketch of a tall, broad-shouldered young man with dark hair tha.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/05 - Pencil sketch of a tall, broad-shouldered young man with dark hair tha.jpg",
+     "activity": "Ponyboy's Sketchbook",
+     "label": "Pencil sketch of a tall, broad-shouldered young man with dark hair that kicks up in front and light, steady eyes.",
+     "bytes": 187089
+    },
+    {
+     "path": "Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/06 - Pencil sketch of a tall, lean boy with thick hair combed into elaborat.pdf",
+     "thumb": "thumbs/Week 1/Lesson 1 - Walking Home Alone/Ponyboy's Sketchbook/06 - Pencil sketch of a tall, lean boy with thick hair combed into elaborat.jpg",
+     "activity": "Ponyboy's Sketchbook",
+     "label": "Pencil sketch of a tall, lean boy with thick hair combed into elaborate swirls.",
+     "bytes": 175095
+    }
+   ]
+  },
+  {
    "page": "w1-lesson2-the-nightly-double.html",
    "week": 1,
    "lesson": 2,
@@ -238,7 +293,7 @@
    "folder": "Week 2/Lesson 2 - A Choice in the Dark",
    "combined": {
     "path": "Week 2/Lesson 2 - A Choice in the Dark/Lesson 2 - all cards.pdf",
-    "bytes": 26655
+    "bytes": 730851
    },
    "files": [
     {
@@ -289,6 +344,48 @@
      "activity": "The Night Clock",
      "label": "The park",
      "bytes": 17082
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/01 - Darry hits Ponyboy, and Ponyboy runs out of the house.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/01 - Darry hits Ponyboy, and Ponyboy runs out of the house.jpg",
+     "activity": "The Switch Yard",
+     "label": "Darry hits Ponyboy, and Ponyboy runs out of the house.",
+     "bytes": 127175
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/02 - Ponyboy and Johnny walk to the park to cool off.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/02 - Ponyboy and Johnny walk to the park to cool off.jpg",
+     "activity": "The Switch Yard",
+     "label": "Ponyboy and Johnny walk to the park to cool off.",
+     "bytes": 124958
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/03 - Ponyboy asks a farmer the way to Jay Mountain.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/03 - Ponyboy asks a farmer the way to Jay Mountain.jpg",
+     "activity": "The Switch Yard",
+     "label": "Ponyboy asks a farmer the way to Jay Mountain.",
+     "bytes": 155813
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/04 - The boys find Dally at Buck Merril's party.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/04 - The boys find Dally at Buck Merril's party.jpg",
+     "activity": "The Switch Yard",
+     "label": "The boys find Dally at Buck Merril’s party.",
+     "bytes": 126066
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/05 - They climb in the back window of the old church and fall asleep.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/05 - They climb in the back window of the old church and fall asleep.jpg",
+     "activity": "The Switch Yard",
+     "label": "They climb in the back window of the old church and fall asleep.",
+     "bytes": 160274
+    },
+    {
+     "path": "Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/06 - They hop the freight in the dark.pdf",
+     "thumb": "thumbs/Week 2/Lesson 2 - A Choice in the Dark/The Switch Yard/06 - They hop the freight in the dark.jpg",
+     "activity": "The Switch Yard",
+     "label": "They hop the freight in the dark.",
+     "bytes": 129274
     }
    ]
   },
@@ -479,7 +576,7 @@
    "folder": "Week 3/Lesson 2 - Two Boys in a Church",
    "combined": {
     "path": "Week 3/Lesson 2 - Two Boys in a Church/Lesson 2 - all cards.pdf",
-    "bytes": 23329
+    "bytes": 503085
    },
    "files": [
     {
@@ -530,6 +627,34 @@
      "activity": "The Hideout Deck",
      "label": "THINKS",
      "bytes": 17399
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/08 - JOHNNY NOW.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/08 - JOHNNY NOW.jpg",
+     "activity": "The Hideout Deck",
+     "label": "JOHNNY NOW",
+     "bytes": 139394
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/09 - JOHNNY THEN.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/09 - JOHNNY THEN.jpg",
+     "activity": "The Hideout Deck",
+     "label": "JOHNNY THEN",
+     "bytes": 139388
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/10 - PONYBOY NOW.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/10 - PONYBOY NOW.jpg",
+     "activity": "The Hideout Deck",
+     "label": "PONYBOY NOW",
+     "bytes": 127028
+    },
+    {
+     "path": "Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/11 - PONYBOY THEN.pdf",
+     "thumb": "thumbs/Week 3/Lesson 2 - Two Boys in a Church/The Hideout Deck/11 - PONYBOY THEN.jpg",
+     "activity": "The Hideout Deck",
+     "label": "PONYBOY THEN",
+     "bytes": 149431
     }
    ]
   },
@@ -616,7 +741,7 @@
    "folder": "Week 4/Lesson 1 - The Way They Tell It",
    "combined": {
     "path": "Week 4/Lesson 1 - The Way They Tell It/Lesson 1 - all cards.pdf",
-    "bytes": 18782
+    "bytes": 156836
    },
    "files": [
     {
@@ -632,6 +757,13 @@
      "activity": "The Front Page",
      "label": "ONLY PONYBOY",
      "bytes": 17549
+    },
+    {
+     "path": "Week 4/Lesson 1 - The Way They Tell It/The Front Page/03 - A newspaper picture of three brothers standing side by side.pdf",
+     "thumb": "thumbs/Week 4/Lesson 1 - The Way They Tell It/The Front Page/03 - A newspaper picture of three brothers standing side by side.jpg",
+     "activity": "The Front Page",
+     "label": "A newspaper picture of three brothers standing side by side.",
+     "bytes": 154279
     }
    ]
   },
@@ -759,7 +891,7 @@
    "folder": "Week 5/Lesson 1 - Under the Street Lamp",
    "combined": {
     "path": "Week 5/Lesson 1 - Under the Street Lamp/Lesson 1 - all cards.pdf",
-    "bytes": 21038
+    "bytes": 877823
    },
    "files": [
     {
@@ -789,6 +921,55 @@
      "activity": "The Survey Clipboard",
      "label": "TWO-BIT",
      "bytes": 18738
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/01 - At sunrise, Ponyboy remembers a poem about gold.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/01 - At sunrise, Ponyboy remembers a poem about gold.jpg",
+     "activity": "The Story Arc",
+     "label": "At sunrise, Ponyboy remembers a poem about gold.",
+     "bytes": 128736
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/02 - At the drive-in, Ponyboy and Johnny end up sitting with two Soc girls.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/02 - At the drive-in, Ponyboy and Johnny end up sitting with two Soc girls.jpg",
+     "activity": "The Story Arc",
+     "label": "At the drive-in, Ponyboy and Johnny end up sitting with two Soc girls.",
+     "bytes": 122755
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/03 - Cherry tells Ponyboy she can't go see Johnny.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/03 - Cherry tells Ponyboy she can't go see Johnny.jpg",
+     "activity": "The Story Arc",
+     "label": "Cherry tells Ponyboy she can’t go see Johnny.",
+     "bytes": 157630
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/04 - Ponyboy and Johnny go back into the burning church to save the childre.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/04 - Ponyboy and Johnny go back into the burning church to save the childre.jpg",
+     "activity": "The Story Arc",
+     "label": "Ponyboy and Johnny go back into the burning church to save the children.",
+     "bytes": 163728
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/05 - Ponyboy walks home alone from the movies, and the gang comes running.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/05 - Ponyboy walks home alone from the movies, and the gang comes running.jpg",
+     "activity": "The Story Arc",
+     "label": "Ponyboy walks home alone from the movies, and the gang comes running.",
+     "bytes": 152674
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/06 - Randy, a Soc, tells Ponyboy he won't show up at the rumble.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/06 - Randy, a Soc, tells Ponyboy he won't show up at the rumble.jpg",
+     "activity": "The Story Arc",
+     "label": "Randy, a Soc, tells Ponyboy he won’t show up at the rumble.",
+     "bytes": 133371
+    },
+    {
+     "path": "Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/07 - The greasers beat the Socs at the rumble.pdf",
+     "thumb": "thumbs/Week 5/Lesson 1 - Under the Street Lamp/The Story Arc/07 - The greasers beat the Socs at the rumble.jpg",
+     "activity": "The Story Arc",
+     "label": "The greasers beat the Socs at the rumble.",
+     "bytes": 135851
     }
    ]
   },
@@ -888,7 +1069,7 @@
    "folder": "Week 6/Lesson 2 - Their Side of the Story",
    "combined": {
     "path": "Week 6/Lesson 2 - Their Side of the Story/Lesson 2 - all cards.pdf",
-    "bytes": 22280
+    "bytes": 684255
    },
    "files": [
     {
@@ -932,6 +1113,48 @@
      "activity": "The Picture Frame",
      "label": "WHY",
      "bytes": 17859
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/07 - Ponyboy finds Johnny's note and starts his theme.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/07 - Ponyboy finds Johnny's note and starts his theme.jpg",
+     "activity": "The Picture Frame",
+     "label": "Ponyboy finds Johnny’s note and starts his theme.",
+     "bytes": 111155
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/08 - Ponyboy looks at Bob's picture in an old yearbook.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/08 - Ponyboy looks at Bob's picture in an old yearbook.jpg",
+     "activity": "The Picture Frame",
+     "label": "Ponyboy looks at Bob’s picture in an old yearbook.",
+     "bytes": 133297
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/09 - Ponyboy's English teacher offers him a C for a good theme.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/09 - Ponyboy's English teacher offers him a C for a good theme.jpg",
+     "activity": "The Picture Frame",
+     "label": "Ponyboy’s English teacher offers him a C for a good theme.",
+     "bytes": 125980
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/10 - Randy comes to see Ponyboy.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/10 - Randy comes to see Ponyboy.jpg",
+     "activity": "The Picture Frame",
+     "label": "Randy comes to see Ponyboy.",
+     "bytes": 132501
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/11 - The brothers chase Soda to the park and promise to stop fighting.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/11 - The brothers chase Soda to the park and promise to stop fighting.jpg",
+     "activity": "The Picture Frame",
+     "label": "The brothers chase Soda to the park and promise to stop fighting.",
+     "bytes": 151343
+    },
+    {
+     "path": "Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/12 - The judge closes the case.pdf",
+     "thumb": "thumbs/Week 6/Lesson 2 - Their Side of the Story/The Picture Frame/12 - The judge closes the case.jpg",
+     "activity": "The Picture Frame",
+     "label": "The judge closes the case.",
+     "bytes": 124710
     }
    ]
   },
@@ -1081,7 +1304,7 @@
    "folder": "Week 7/Lesson 1 - Build Your Case",
    "combined": {
     "path": "Week 7/Lesson 1 - Build Your Case/Lesson 1 - all cards.pdf",
-    "bytes": 24243
+    "bytes": 506840
    },
    "files": [
     {
@@ -1104,6 +1327,34 @@
      "activity": "The Case File",
      "label": "LESS CERTAIN",
      "bytes": 17064
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Case File/04 - Cherry tells Ponyboy that if she does not say hi to him at school, it.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Case File/04 - Cherry tells Ponyboy that if she does not say hi to him at school, it.jpg",
+     "activity": "The Case File",
+     "label": "Cherry tells Ponyboy that if she does not say hi to him at school, it is not personal",
+     "bytes": 119516
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Case File/05 - Darry roofs houses so the three brothers can stay together.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Case File/05 - Darry roofs houses so the three brothers can stay together.jpg",
+     "activity": "The Case File",
+     "label": "Darry roofs houses so the three brothers can stay together",
+     "bytes": 140187
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Case File/06 - Soda's horse is named Mickey Mouse.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Case File/06 - Soda's horse is named Mickey Mouse.jpg",
+     "activity": "The Case File",
+     "label": "Soda’s horse is named Mickey Mouse",
+     "bytes": 144215
+    },
+    {
+     "path": "Week 7/Lesson 1 - Build Your Case/The Case File/07 - The Socs throw silverware in the school cafeteria, and everybody blame.pdf",
+     "thumb": "thumbs/Week 7/Lesson 1 - Build Your Case/The Case File/07 - The Socs throw silverware in the school cafeteria, and everybody blame.jpg",
+     "activity": "The Case File",
+     "label": "The Socs throw silverware in the school cafeteria, and everybody blames the greasers",
+     "bytes": 153652
     },
     {
      "path": "Week 7/Lesson 1 - Build Your Case/Step 2 Log It/01 - Sign - Doesn't fit.pdf",

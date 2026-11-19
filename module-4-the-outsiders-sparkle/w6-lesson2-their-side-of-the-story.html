@@ -2901,24 +2901,25 @@ function penSync(){
    Her replies come from prepared notes on Chapters 1 to 12 of Hinton's The Outsiders (no AI service; nothing leaves the page). Thinking questions are turned back to the student. Replies are text only. */
 var ASK_THINK = 'That’s yours to decide. Look back at the page, and trust what you find.';
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 12,\u201D then write to me again.';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter Twelve, and I will send my pigeon back with an answer.' },
-  { k: ['hearing','why a hearing','what is a hearing','why is there a hearing','judge decide'], a: 'The hearing is held so a judge can decide what happens to Ponyboy and where he lives. (the first page)' },
-  { k: ['perry mason','tv','television','dramatic','like on tv'], a: 'Perry Mason is a TV show Ponyboy has watched. He thought the hearing would be dramatic, like TV, but nothing exciting happened. (the first page)' },
-  { k: ['who is at the hearing','who was at the hearing','who came to the hearing','who was there','cherry at the hearing','randy at the hearing'], a: 'Randy, Cherry, their parents and some of the Socs from that night are at the hearing. (the first page)' },
-  { k: ['semester theme','what is a theme','what is a semester theme'], a: 'A semester theme is the big writing assignment for the term. (after school)' },
-  { k: ['reference theme','what is a reference theme','own ideas','own experiences'], a: 'A reference theme is a report built from books and articles. Ponyboy’s teacher wants his own ideas and experiences instead. (after school)' },
-  { k: ['mr syme','syme','english teacher','who is the english teacher','teacher name','who is his english teacher'], a: 'Ponyboy’s English teacher is Mr. Syme. (near the end)' },
-  { k: ['cafeteria','lunch','lunch hour','blamed','blame the greasers','throwing silverware'], a: 'Ponyboy says the Socs were making trouble in the school cafeteria and the greasers got blamed. (lunch hour)' },
-  { k: ['grocery store','neighborhood grocery','hang-out','hangout','where do the greasers eat','where do they eat lunch'], a: 'The greasers’ lunch spot is a little neighborhood grocery store. (lunch hour)' },
-  { k: ['two-bit','steve','who is steve','who is two-bit'], a: 'Two-Bit and Steve are two of the gang. They eat lunch with Ponyboy at the grocery store. (lunch hour)' },
-  { k: ['mickey mouse','soda\'s horse','the horse','horse'], a: 'Mickey Mouse is the horse Soda used to take care of and ride. Ponyboy tries to write about him for his theme. (that evening)' },
+  { post: 1, k: ['hearing','why a hearing','what is a hearing','why is there a hearing','judge decide'], a: 'The hearing is held so a judge can decide what happens to Ponyboy and where he lives. (the first page)' },
+  { post: 1, k: ['perry mason','tv','television','dramatic','like on tv'], a: 'Perry Mason is a TV show Ponyboy has watched. He thought the hearing would be dramatic, like TV, but nothing exciting happened. (the first page)' },
+  { post: 1, k: ['who is at the hearing','who was at the hearing','who came to the hearing','who was there','cherry at the hearing','randy at the hearing'], a: 'Randy, Cherry, their parents and some of the Socs from that night are at the hearing. (the first page)' },
+  { post: 1, k: ['semester theme','what is a theme','what is a semester theme'], a: 'A semester theme is the big writing assignment for the term. (after school)' },
+  { post: 1, k: ['reference theme','what is a reference theme','own ideas','own experiences'], a: 'A reference theme is a report built from books and articles. Ponyboy’s teacher wants his own ideas and experiences instead. (after school)' },
+  { post: 1, k: ['mr syme','syme','english teacher','who is the english teacher','teacher name','who is his english teacher'], a: 'Ponyboy’s English teacher is Mr. Syme. (near the end)' },
+  { post: 1, k: ['cafeteria','lunch','lunch hour','blamed','blame the greasers','throwing silverware'], a: 'Ponyboy says the Socs were making trouble in the school cafeteria and the greasers got blamed. (lunch hour)' },
+  { post: 1, k: ['grocery store','neighborhood grocery','hang-out','hangout','where do the greasers eat','where do they eat lunch'], a: 'The greasers’ lunch spot is a little neighborhood grocery store. (lunch hour)' },
+  { post: 1, k: ['two-bit','steve','who is steve','who is two-bit'], a: 'Two-Bit and Steve are two of the gang. They eat lunch with Ponyboy at the grocery store. (lunch hour)' },
+  { post: 1, k: ['mickey mouse','soda\'s horse','the horse','horse'], a: 'Mickey Mouse is the horse Soda used to take care of and ride. Ponyboy tries to write about him for his theme. (that evening)' },
   { k: ['sandy','who is sandy','florida','soda\'s girl'], a: 'Sandy is the girl Soda hoped to marry. She moved to Florida. (after supper)' },
   { k: ['tug of war','tug o war','tug','middleman','what is a tug of war'], a: 'A tug of war is a game where two teams pull opposite ends of a rope. (in the park)' },
   { k: ['track','runs track','what is track','football','best runner'], a: 'Ponyboy runs track, the running team at school. (in the park)' },
-  { k: ['carpetbaggers','the carpetbaggers','what is the carpetbaggers'], a: 'The Carpetbaggers is a book Darry owns. He had told Ponyboy he wasn’t old enough to read it. (that night)' },
+  { post: 1, k: ['carpetbaggers','the carpetbaggers','what is the carpetbaggers'], a: 'The Carpetbaggers is a book Darry owns. He had told Ponyboy he wasn’t old enough to read it. (that night)' },
   { k: ['gone with the wind','what is gone with the wind','the novel johnny'], a: 'Gone with the Wind is the novel Johnny and Ponyboy read while they hid out, back in Chapter 5. (that night)' },
-  { k: ['last sentence','first sentence','last line','same words','begins and ends'], a: 'The last sentence of Chapter Twelve is the first sentence of the whole book. (the last line)' },
+  { post: 1, k: ['last sentence','first sentence','last line','same words','begins and ends'], a: 'The last sentence of Chapter Twelve is the first sentence of the whole book. (the last line)' },
   { k: ['flinching','acquitted','roundabout','vacuum','vast','vocabulary','vocab','the words','new words','the five words'], a: 'The five words are on the cards at the top of the Read tab: flinching, acquitted, roundabout, vacuum, and vast. Tap a card to flip it, and watch for each word in the chapter.' }
 ];
 /* Questions that ask her to decide for the reader: she turns them back with a question that points to a real moment in the reading. Text only. */
@@ -2927,18 +2928,19 @@ var POINT = 'That one is among my questions for you, so I will only point the wa
 var TURNS = [
   { re: /how does (it|the book|the story|the chapter) end|\bthe ending\b/i, back: 'That one is yours to find. Read Chapter 12 all the way to the last line.', pt: 1 },
   { re: /\b(theme|write|writing|wrote)\b.*\b(why|decide|decides|decided)\b|\bwhy\b.*\b(theme|write|writing|wrote)\b/i, back: 'Read the last two pages slowly.' },
-  { re: /\bsoda\b.*\b(quiet|upset|sad|bug|bugging|wrong with|letter|mail|envelope)\b|\b(envelope|mail)\b|\bwhy\b.*\bsoda\b.*\b(run|ran|runs|leave|left|bolt|bolted)\b/i, back: 'Read what Darry picks up after Soda runs out.', pt: 1 },
-  { re: /\bjudge\b.*\b(ask|asks|asked|question|questions)\b/i, back: 'Read what Ponyboy says the judge did ask him.', pt: 1 },
-  { re: /\bdarry\b.*\b(right|wrong|mean|fair|unfair|cruel|harsh|strict|good|bad)\b/i, back: 'Read what Soda says about both of them in the park.' },
-  { re: /\bgold\b/i, back: 'What does Ponyboy notice the night they race home?' },
-  { re: /\b(note|letter|slip of paper)\b.*\b(say|says|said|mean|tell|write|wrote|johnny)\b|\bjohnny\b.*\b(note|letter)\b/i, back: 'Read the note in your own copy. What does Johnny ask Ponyboy to do?', pt: 1 }
+  { post: 1, re: /\bsoda\b.*\b(quiet|upset|sad|bug|bugging|wrong with|letter|mail|envelope)\b|\b(envelope|mail)\b|\bwhy\b.*\bsoda\b.*\b(run|ran|runs|leave|left|bolt|bolted)\b/i, back: 'Read what Darry picks up after Soda runs out.', pt: 1 },
+  { post: 1, re: /\bjudge\b.*\b(ask|asks|asked|question|questions)\b/i, back: 'Read what Ponyboy says the judge did ask him.', pt: 1 },
+  { post: 1, re: /\bdarry\b.*\b(right|wrong|mean|fair|unfair|cruel|harsh|strict|good|bad)\b/i, back: 'Read what Soda says about both of them in the park.' },
+  { post: 1, re: /\bgold\b/i, back: 'What does Ponyboy notice the night they race home?' },
+  { post: 1, re: /\b(note|letter|slip of paper)\b.*\b(say|says|said|mean|tell|write|wrote|johnny)\b|\bjohnny\b.*\b(note|letter)\b/i, back: 'Read the note in your own copy. What does Johnny ask Ponyboy to do?', pt: 1 }
 ];
 var LATER = /(chapter (thirteen|13)|sequel|another book|next book)/i;
 var LORE_THINK = /(what do you think|why does hinton|what does (it|this|that|the (line|scene|chapter))\b.{0,40}\b(mean|show|prove|teach|stand for|represent)|is (it|he|she|ponyboy|johnny|cherry|dally|marcia|two-bit|soda|randy|the judge|mr\.? syme) (fair|unfair|wrong|right|kind|cruel|mean|good|bad|brave|selfish)|was it (fair|wrong|right|kind|cruel)|should (ponyboy|johnny|cherry|dally|marcia|he|she)|how (do|does|did) (ponyboy|johnny|cherry) feel|what is the (theme|lesson|moral)|which (is|was) (more|most|better)|do you think)/i;
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   if (LATER.test(q)) return { text: ASK_LATER, clip: '' };
-  for (var i = 0; i < TURNS.length; i++) if (TURNS[i].re.test(q)) return { text: (TURNS[i].pt ? (/^That one is yours/.test(TURNS[i].back) ? '' : POINT) : 'That\u2019s yours to decide. ') + TURNS[i].back, clip: '' };
+  for (var i = 0; i < TURNS.length; i++) if (TURNS[i].re.test(q)) return (TURNS[i].post && !read) ? { text: ASK_EARLY, clip: '' } : { text: (TURNS[i].pt ? (/^That one is yours/.test(TURNS[i].back) ? '' : POINT) : 'That\u2019s yours to decide. ') + TURNS[i].back, clip: '' };
   if (LORE_THINK.test(q)) return { text: ASK_THINK, clip: '' };
   var best = null, bs = 0;
   LORE_NOTES.forEach(function(n){
@@ -2948,6 +2950,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER, clip: '' };
+  if (best.post && !read) return { text: ASK_EARLY, clip: '' };
   return { text: best.a, clip: '' };
 }
 

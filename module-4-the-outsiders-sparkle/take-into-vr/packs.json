@@ -3,6 +3,55 @@
  "note": "Weeks 1-7. Word signs only (the book is in copyright and the lessons show no photographs): the names, categories and sorting places a class stands beside, sorts under or points to. No sentence or quotation from the novel, no portraits, no scenes. A sign is carded once, in the first lesson that uses it.",
  "lessons": [
   {
+   "page": "w1-lesson1-walking-home-alone.html",
+   "title": "Walking Home Alone",
+   "week": 1,
+   "lesson": 1,
+   "activities": [
+    {
+     "name": "Ponyboy's Sketchbook",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "w1l1-sketch-soda",
+       "label": "Pencil sketch of a fine-featured boy with long straight hair combed back and a quick, warm grin.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w1l1-sketch-dally",
+       "label": "Pencil sketch of a sharp-featured boy with near-white hair falling in wisps and a hard, guarded stare.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w1l1-sketch-johnny",
+       "label": "Pencil sketch of a small, slight boy with big dark eyes and long greased bangs, looking wary.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w1l1-sketch-twobit",
+       "label": "Pencil sketch of a stocky older boy with long sideburns and a wide, amused grin.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w1l1-sketch-darry",
+       "label": "Pencil sketch of a tall, broad-shouldered young man with dark hair that kicks up in front and light, steady eyes.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w1l1-sketch-steve",
+       "label": "Pencil sketch of a tall, lean boy with thick hair combed into elaborate swirls.",
+       "credit": "Illustrations made with AI."
+      }
+     ]
+    }
+   ]
+  },
+  {
    "page": "w1-lesson2-the-nightly-double.html",
    "title": "The Nightly Double",
    "week": 1,
@@ -217,6 +266,47 @@
        "label": "The park"
       }
      ]
+    },
+    {
+     "name": "The Switch Yard",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "w2l2-st1",
+       "label": "Darry hits Ponyboy, and Ponyboy runs out of the house.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w2l2-st2",
+       "label": "Ponyboy and Johnny walk to the park to cool off.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w2l2-st5",
+       "label": "Ponyboy asks a farmer the way to Jay Mountain.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w2l2-st3",
+       "label": "The boys find Dally at Buck Merril’s party.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w2l2-st6",
+       "label": "They climb in the back window of the old church and fall asleep.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w2l2-st4",
+       "label": "They hop the freight in the dark.",
+       "credit": "Illustrations made with AI."
+      }
+     ]
     }
    ]
   },
@@ -380,6 +470,30 @@
       {
        "type": "sign",
        "label": "THINKS"
+      },
+      {
+       "type": "picture",
+       "img": "w3l2-jn",
+       "label": "JOHNNY NOW",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w3l2-jt",
+       "label": "JOHNNY THEN",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w3l2-pn",
+       "label": "PONYBOY NOW",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w3l2-pt",
+       "label": "PONYBOY THEN",
+       "credit": "Illustrations made with AI."
       }
      ]
     }
@@ -460,6 +574,12 @@
       {
        "type": "sign",
        "label": "ONLY PONYBOY"
+      },
+      {
+       "type": "picture",
+       "img": "w4l1-paper-photo",
+       "label": "A newspaper picture of three brothers standing side by side.",
+       "credit": "AI-generated image. These are not real people."
       }
      ]
     }
@@ -579,6 +699,53 @@
        "label": "TWO-BIT"
       }
      ]
+    },
+    {
+     "name": "The Story Arc",
+     "cards": [
+      {
+       "type": "picture",
+       "img": "w5l1-ch5",
+       "label": "At sunrise, Ponyboy remembers a poem about gold.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w5l1-ch2",
+       "label": "At the drive-in, Ponyboy and Johnny end up sitting with two Soc girls.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w5l1-ch8",
+       "label": "Cherry tells Ponyboy she can’t go see Johnny.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w5l1-ch6",
+       "label": "Ponyboy and Johnny go back into the burning church to save the children.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w5l1-ch1",
+       "label": "Ponyboy walks home alone from the movies, and the gang comes running.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w5l1-ch7",
+       "label": "Randy, a Soc, tells Ponyboy he won’t show up at the rumble.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w5l1-ch9",
+       "label": "The greasers beat the Socs at the rumble.",
+       "credit": "Illustrations made with AI."
+      }
+     ]
     }
    ]
   },
@@ -686,6 +853,42 @@
       {
        "type": "sign",
        "label": "WHY"
+      },
+      {
+       "type": "picture",
+       "img": "w6l2-note",
+       "label": "Ponyboy finds Johnny’s note and starts his theme.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w6l2-yearbook",
+       "label": "Ponyboy looks at Bob’s picture in an old yearbook.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w6l2-teacher",
+       "label": "Ponyboy’s English teacher offers him a C for a good theme.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w6l2-randy",
+       "label": "Randy comes to see Ponyboy.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w6l2-park",
+       "label": "The brothers chase Soda to the park and promise to stop fighting.",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w6l2-hearing",
+       "label": "The judge closes the case.",
+       "credit": "Illustrations made with AI."
       }
      ]
     }
@@ -806,6 +1009,30 @@
       {
        "type": "sign",
        "label": "LESS CERTAIN"
+      },
+      {
+       "type": "picture",
+       "img": "w7l1-so3",
+       "label": "Cherry tells Ponyboy that if she does not say hi to him at school, it is not personal",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w7l1-so2",
+       "label": "Darry roofs houses so the three brothers can stay together",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w7l1-so5",
+       "label": "Soda’s horse is named Mickey Mouse",
+       "credit": "Illustrations made with AI."
+      },
+      {
+       "type": "picture",
+       "img": "w7l1-so4",
+       "label": "The Socs throw silverware in the school cafeteria, and everybody blames the greasers",
+       "credit": "Illustrations made with AI."
       }
      ]
     },

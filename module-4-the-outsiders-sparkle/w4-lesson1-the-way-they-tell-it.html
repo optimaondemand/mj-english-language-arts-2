@@ -2978,6 +2978,7 @@ stopLog();
    Fact questions that are also Questions from Professor Lovelore get a pointer, never the answer. */
 var ASK_THINK = 'That\u2019s yours to decide. ';
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 7,\u201D then write to me again.';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter 7, and I will send my pigeon back with an answer.' },
   { k: ['who is ponyboy','ponyboy','narrator','who is telling','who tells'], a: 'Ponyboy is the narrator: a fourteen-year-old greaser who likes movies and books. He tells the whole story himself. (the opening)' },
@@ -2985,47 +2986,48 @@ var LORE_NOTES = [
   { k: ['who is darry','darry','darrel','oldest brother'], a: 'Darry (Darrel) is Ponyboy’s oldest brother. (the opening)' },
   { k: ['who is johnny','johnny cade'], w: 2, a: 'Johnny Cade is sixteen, the youngest of the gang after Ponyboy. He is in the hospital. (the opening)' },
   { k: ['who is dally','dallas winston'], w: 2, a: 'Dally (Dallas Winston) is a member of the gang with a long police record. He is in the hospital. (the paper)' },
-  { k: ['who is two-bit','two-bit','two bit','twobit','mathews'], a: 'Two-Bit Mathews is the oldest of the gang, and the joker. He and Steve come to the Curtis house the morning after. (the next morning)' },
-  { k: ['waiting room','waiting','wait','hospital','all night'], a: 'Ponyboy, Soda and Darry wait at the hospital for news of Johnny and Dally. (the opening)' },
-  { k: ['reporter','reporters','police','policemen','cops','questions'], a: 'Reporters and police ask Ponyboy question after question until Darry tells them to slow down. (the opening)' },
-  { k: ['jerry wood','jerry','pictures','photographs','photos','good looking','good-looking','public appeal'], a: 'Jerry Wood, the man who rode with Ponyboy to the hospital, tells Ponyboy the reporters took so many pictures because Soda and Darry are good-looking. (the opening)' },
-  { k: ['dally arm','dally okay','dally ok','how is dally','dally hurt','burned arm','arm'], w: 2, a: 'Dally’s arm is badly burned, but the doctor says he will be all right in a few days. (the doctor)' },
-  { k: ['how is johnny','johnny hurt','johnny injured','johnny back','johnny critical','critical condition','critical','broken back','johnny okay'], w: 2, a: 'Johnny is badly hurt: his back is broken and he is badly burned. The doctor says he is in critical condition, which means he may not live. (the doctor)' },
-  { k: ['doctor','nurse','nurses'], a: 'The doctor is the one who tells Ponyboy, Darry and Soda how Dally and Johnny are. (the doctor)' },
-  { k: ['rule','house rule','breakfast','dishes','chocolate cake','cake','eggs','icebox'], a: 'The house rule: the first one up fixes breakfast and the other two do the dishes. All three brothers love chocolate cake. (the next morning)' },
-  { k: ['door','unlocked','locked','tim shepard','shepard','walk in'], a: 'The Curtis front door is never locked, so any boy in the gang can come in to cool off. Tim Shepard, who leads another gang, once sat reading their paper. (when Two-Bit and Steve arrive)' },
-  { k: ['second section','front page'], w: 2, a: 'A second section is a newspaper’s second part, with its own front page. The headline there calls the boys heroes. (breakfast)' },
-  { k: ['juvenile court','juvenile','court'], a: 'Juvenile court is a court for young people. Ponyboy, and Johnny if he recovers, must go there for running away. (the paper)' },
-  { k: ['boys home','boys\' home','boy home','state home'], w: 2, a: 'A boys’ home is a place where the state sends boys with no family able to care for them. (the paper)' },
-  { k: ['superman','muscles','pepsi-cola','pepsi cola','pepsi','nickname','nicknames'], a: 'The gang calls Darry Superman or Muscles. Pepsi-Cola is the nickname the boys’ father gave Soda. (breakfast)' },
-  { k: ['nightmare','bad dream','dream','dreams','funeral'], a: 'Ponyboy’s bad dream began after his parents’ funeral. He never remembers it, and Darry worries every time it comes back. (breakfast)' },
-  { k: ['sandy'], a: 'Sandy, Soda’s girl, has moved to Florida to live with her grandmother. (breakfast)' },
-  { k: ['social outcast','social outcasts','outcast','outcasts'], a: 'A social outcast is someone a group shuts out. Two-Bit makes a joke of the idea. (doing the dishes)' },
-  { k: ['rumble','tonight'], a: 'The rumble is a planned fight between the greasers and the Socs, set for that night. (breakfast)' },
-  { k: ['who is randy','randy adderson','marcia','tasty freeze'], w: 2, a: 'Randy Adderson is Marcia’s boyfriend, a Soc. Ponyboy and Two-Bit meet him at the Tasty Freeze, where they stop for Cokes. (the walk to the hospital)' },
+  { post: 1, k: ['who is two-bit','two-bit','two bit','twobit','mathews'], a: 'Two-Bit Mathews is the oldest of the gang, and the joker. He and Steve come to the Curtis house the morning after. (the next morning)' },
+  { post: 1, k: ['waiting room','waiting','wait','hospital','all night'], a: 'Ponyboy, Soda and Darry wait at the hospital for news of Johnny and Dally. (the opening)' },
+  { post: 1, k: ['reporter','reporters','police','policemen','cops','questions'], a: 'Reporters and police ask Ponyboy question after question until Darry tells them to slow down. (the opening)' },
+  { post: 1, k: ['jerry wood','jerry','pictures','photographs','photos','good looking','good-looking','public appeal'], a: 'Jerry Wood, the man who rode with Ponyboy to the hospital, tells Ponyboy the reporters took so many pictures because Soda and Darry are good-looking. (the opening)' },
+  { post: 1, k: ['dally arm','dally okay','dally ok','how is dally','dally hurt','burned arm','arm'], w: 2, a: 'Dally’s arm is badly burned, but the doctor says he will be all right in a few days. (the doctor)' },
+  { post: 1, k: ['how is johnny','johnny hurt','johnny injured','johnny back','johnny critical','critical condition','critical','broken back','johnny okay'], w: 2, a: 'Johnny is badly hurt: his back is broken and he is badly burned. The doctor says he is in critical condition, which means he may not live. (the doctor)' },
+  { post: 1, k: ['doctor','nurse','nurses'], a: 'The doctor is the one who tells Ponyboy, Darry and Soda how Dally and Johnny are. (the doctor)' },
+  { post: 1, k: ['rule','house rule','breakfast','dishes','chocolate cake','cake','eggs','icebox'], a: 'The house rule: the first one up fixes breakfast and the other two do the dishes. All three brothers love chocolate cake. (the next morning)' },
+  { post: 1, k: ['door','unlocked','locked','tim shepard','shepard','walk in'], a: 'The Curtis front door is never locked, so any boy in the gang can come in to cool off. Tim Shepard, who leads another gang, once sat reading their paper. (when Two-Bit and Steve arrive)' },
+  { post: 1, k: ['second section','front page'], w: 2, a: 'A second section is a newspaper’s second part, with its own front page. The headline there calls the boys heroes. (breakfast)' },
+  { post: 1, k: ['juvenile court','juvenile','court'], a: 'Juvenile court is a court for young people. Ponyboy, and Johnny if he recovers, must go there for running away. (the paper)' },
+  { post: 1, k: ['boys home','boys\' home','boy home','state home'], w: 2, a: 'A boys’ home is a place where the state sends boys with no family able to care for them. (the paper)' },
+  { post: 1, k: ['superman','muscles','pepsi-cola','pepsi cola','pepsi','nickname','nicknames'], a: 'The gang calls Darry Superman or Muscles. Pepsi-Cola is the nickname the boys’ father gave Soda. (breakfast)' },
+  { post: 1, k: ['nightmare','bad dream','dream','dreams','funeral'], a: 'Ponyboy’s bad dream began after his parents’ funeral. He never remembers it, and Darry worries every time it comes back. (breakfast)' },
+  { post: 1, k: ['sandy'], a: 'Sandy, Soda’s girl, has moved to Florida to live with her grandmother. (breakfast)' },
+  { post: 1, k: ['social outcast','social outcasts','outcast','outcasts'], a: 'A social outcast is someone a group shuts out. Two-Bit makes a joke of the idea. (doing the dishes)' },
+  { post: 1, k: ['rumble','tonight'], a: 'The rumble is a planned fight between the greasers and the Socs, set for that night. (breakfast)' },
+  { post: 1, k: ['who is randy','randy adderson','marcia','tasty freeze'], w: 2, a: 'Randy Adderson is Marcia’s boyfriend, a Soc. Ponyboy and Two-Bit meet him at the Tasty Freeze, where they stop for Cokes. (the walk to the hospital)' },
   { k: ['mimicking','radiates','genuine','recurring','aghast','word','words','vocabulary'], a: 'The five words are on the cards at the top of the Read tab: mimicking, radiates, genuine, recurring, and aghast. Flip a card to check its meaning, then watch for the word in Hinton’s sentences.' }
 ];
 var LORE_TURNBACKS = [
-  { re: /\b(hero|heroes|heroic)\b.*\b(really|real|are|were|deserve)\b/i, back: 'What did Two-Bit say about the word turn?' },
-  { re: /\brandy\b.*\b(good|bad|coward|chicken|brave|right|wrong)\b/i, back: 'What does Randy say right after Ponyboy tells him running away won’t help?' },
-  { re: /\bdarry\b.*\b(love|loves|care|cares|mean|strict)\b/i, back: 'What does Darry say to the reporters about Ponyboy?' },
+  { post: 1, re: /\b(hero|heroes|heroic)\b.*\b(really|real|are|were|deserve)\b/i, back: 'What did Two-Bit say about the word turn?' },
+  { post: 1, re: /\brandy\b.*\b(good|bad|coward|chicken|brave|right|wrong)\b/i, back: 'What does Randy say right after Ponyboy tells him running away won’t help?' },
+  { post: 1, re: /\bdarry\b.*\b(love|loves|care|cares|mean|strict)\b/i, back: 'What does Darry say to the reporters about Ponyboy?' },
   { re: /\b(socs?|greasers?)\b.*\b(same|different|human|better|worse)\b/i, back: 'Read the chapter’s last paragraph again.' },
-  { re: /\b(newspaper|paper)\b.*\b(right|wrong|fair|lie|lies|true)\b/i, back: 'Who does the paper leave out, and what does it leave out about them?' }
+  { post: 1, re: /\b(newspaper|paper)\b.*\b(right|wrong|fair|lie|lies|true)\b/i, back: 'Who does the paper leave out, and what does it leave out about them?' }
 ];
 var LORE_POINT = 'That one is among my questions for you, so I will only point the way. ';
 var LORE_POINTS = [
-  { re: /\b(why|how come)\b.*\bdoctor\b|\bdoctor\b.*\b(refuse|refused|won't|wont|wouldn't|wouldnt|won\u2019t)\b/i, text: LORE_POINT + 'Read the part where the reporters have left and Darry goes to find the doctor.' },
-  { re: /\b(frighten\w*|scare\w*|scary|afraid|fear\w*|worr\w*)\b.*\b(newspaper|paper|article|column)\b|\b(newspaper|paper|article|column)\b.*\b(frighten\w*|scare\w*|scary|afraid|fear\w*|worr\w*)\b/i, text: LORE_POINT + 'Read the last line of the column about Darry, Soda and Ponyboy, and what Steve says when Ponyboy asks about it.' },
-  { re: /\brandy\b.*\b(rumble|decide|decides|going to do|plan|show up|come|fight)\b|\brumble\b.*\brandy\b/i, text: LORE_POINT + 'Read what Randy says right after Ponyboy answers him in the car.' }
+  { post: 1, re: /\b(why|how come)\b.*\bdoctor\b|\bdoctor\b.*\b(refuse|refused|won't|wont|wouldn't|wouldnt|won\u2019t)\b/i, text: LORE_POINT + 'Read the part where the reporters have left and Darry goes to find the doctor.' },
+  { post: 1, re: /\b(frighten\w*|scare\w*|scary|afraid|fear\w*|worr\w*)\b.*\b(newspaper|paper|article|column)\b|\b(newspaper|paper|article|column)\b.*\b(frighten\w*|scare\w*|scary|afraid|fear\w*|worr\w*)\b/i, text: LORE_POINT + 'Read the last line of the column about Darry, Soda and Ponyboy, and what Steve says when Ponyboy asks about it.' },
+  { post: 1, re: /\brandy\b.*\b(rumble|decide|decides|going to do|plan|show up|come|fight)\b|\brumble\b.*\brandy\b/i, text: LORE_POINT + 'Read what Randy says right after Ponyboy answers him in the car.' }
 ];
 var LORE_LATER = /(what happens (next|after|at the end)|\bwill (he|she|they|johnny|dally|soda|darry|ponyboy|randy|the greasers|the socs)\b|who wins|who dies|how does (it|the book|the story) end|\bending\b|next chapter)/i;
 var LORE_THINK = /(what do you think|why (does|did|would) (hinton|the author) (show|use|include|put|want|choose|open|begin|start|end)|what does (hinton|the author) want|\bcompare\b|\bshould\b|who is to blame|is it fair|which is (better|worse)|do you think|is ponyboy (a )?(liar|honest|reliable|unreliable)|can (we|i|you) trust|is (darry|soda|randy|two-bit|steve|dally|johnny) (a )?(hero|good|bad|brave|right|wrong))/i;
 var LORE_THINK_BACK = 'Look back at the page, and trust what you find.';
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   var i;
-  for (i = 0; i < LORE_POINTS.length; i++) if (LORE_POINTS[i].re.test(q) || LORE_POINTS[i].re.test(t)) return { text: LORE_POINTS[i].text };
-  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return { text: ASK_THINK + LORE_TURNBACKS[i].back };
+  for (i = 0; i < LORE_POINTS.length; i++) if (LORE_POINTS[i].re.test(q) || LORE_POINTS[i].re.test(t)) return (LORE_POINTS[i].post && !read) ? { text: ASK_EARLY } : { text: LORE_POINTS[i].text };
+  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return (LORE_TURNBACKS[i].post && !read) ? { text: ASK_EARLY } : { text: ASK_THINK + LORE_TURNBACKS[i].back };
   if (LORE_THINK.test(q)) return { text: ASK_THINK + LORE_THINK_BACK };
   if (LORE_LATER.test(q)) return { text: ASK_LATER };
   var best = null, bs = 0;
@@ -3039,6 +3041,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER };
+  if (best.post && !read) return { text: ASK_EARLY };
   return { text: best.a };
 }
 

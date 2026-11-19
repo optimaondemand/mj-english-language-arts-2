@@ -3029,47 +3029,49 @@ stopLog();
    the best-scoring note answers. A thinking question is turned back: "That's yours to decide." plus a question that points to a real moment. */
 var ASK_THINK = 'That\u2019s yours to decide. ';
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 9,\u201D then write to me again.';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter 9, and I will send my pigeon back with an answer.' },
   { k: ['what is a rumble','a rumble','what does rumble mean','planned fight'], a: 'A rumble is a planned fight between two gangs. The time and the rules are set ahead. (the first lines)' },
-  { k: ['skin rumble','skin','no weapons','weapons','fists','fists only'], a: 'A skin rumble means fists only: no blades, chains or pop bottles. (Soda and Ponyboy talk Darry round)' },
-  { k: ['hair oil','grease','greasy','oil','hair'], a: 'The boys put on extra hair oil to show they are greasers. Ponyboy wonders why he should be proud of that. (getting ready)' },
-  { k: ['curly','curly shepard','reformatory','cooler'], a: 'Curly Shepard is Tim Shepard\u2019s kid brother. He is in the reformatory, a jail for young people, so he will miss the rumble. (Steve and Ponyboy talk about him)' },
-  { k: ['acrobatics','flips','flip','somersault','somersaults','cartwheel','the y','porch steps'], a: 'Darry learned acrobatics at the Y and taught the others. That is why they do flips off the porch steps. (Two-Bit arrives)' },
-  { k: ['why do you fight','survey','four boys','asks each boy','why they fight'], a: 'Ponyboy asks four boys why they fight, and sums each one up in a word. (the walk to the lot)' },
-  { k: ['tim','tim shepard','brumly','brumly boys','suburb','who is tim shepard'], a: 'Tim Shepard leads his own greaser gang, and a gang from Brumly, a suburb, comes too. Both are on the greasers\u2019 side. (at the vacant lot)' },
-  { k: ['hoods','hood','enjoy being','tim gang'], a: 'Ponyboy thinks Tim\u2019s gang and the Brumly boys enjoy being hoods, and decides his own gang is different. (at the lot)' },
-  { k: ['bopper','bop','bop-action','good bopper'], a: 'A Brumly boy asks if Darry is a good bopper. He means a good fighter at a rumble. (a Brumly boy waves Ponyboy over)' },
-  { k: ['twenty-two','22','how many socs','four cars','odds','how many'], a: 'Twenty-two Socs come in four cars. The greasers have twenty. (the Socs arrive)' },
-  { k: ['paul','paul holden','holden','who is paul'], a: 'Paul Holden is a Soc, now in college. Read what Ponyboy remembers about him and Darry. (the two face each other)' },
-  { k: ['jack london','london','wolf','wolves','wolf pack'], a: 'Jack London wrote stories about wolves and dogs in the far North. Ponyboy thinks of his wolf packs while the two circle. (before the first punch)' },
-  { k: ['dally hospital','dally arm','left the hospital','dally','dallas','arm'], a: 'Dally left the hospital to join the rumble, even with his hurt arm. (the rumble begins)' },
-  { k: ['t-bird','buck merril','buck','police car','policeman','escort'], a: 'Dally drives Ponyboy to the hospital in Buck Merril\u2019s car, and a police car leads the way. (after the rumble)' },
+  { post: 1, k: ['skin rumble','skin','no weapons','weapons','fists','fists only'], a: 'A skin rumble means fists only: no blades, chains or pop bottles. (Soda and Ponyboy talk Darry round)' },
+  { post: 1, k: ['hair oil','grease','greasy','oil','hair'], a: 'The boys put on extra hair oil to show they are greasers. Ponyboy wonders why he should be proud of that. (getting ready)' },
+  { post: 1, k: ['curly','curly shepard','reformatory','cooler'], a: 'Curly Shepard is Tim Shepard\u2019s kid brother. He is in the reformatory, a jail for young people, so he will miss the rumble. (Steve and Ponyboy talk about him)' },
+  { post: 1, k: ['acrobatics','flips','flip','somersault','somersaults','cartwheel','the y','porch steps'], a: 'Darry learned acrobatics at the Y and taught the others. That is why they do flips off the porch steps. (Two-Bit arrives)' },
+  { post: 1, k: ['why do you fight','survey','four boys','asks each boy','why they fight'], a: 'Ponyboy asks four boys why they fight, and sums each one up in a word. (the walk to the lot)' },
+  { post: 1, k: ['tim','tim shepard','brumly','brumly boys','suburb','who is tim shepard'], a: 'Tim Shepard leads his own greaser gang, and a gang from Brumly, a suburb, comes too. Both are on the greasers\u2019 side. (at the vacant lot)' },
+  { post: 1, k: ['hoods','hood','enjoy being','tim gang'], a: 'Ponyboy thinks Tim\u2019s gang and the Brumly boys enjoy being hoods, and decides his own gang is different. (at the lot)' },
+  { post: 1, k: ['bopper','bop','bop-action','good bopper'], a: 'A Brumly boy asks if Darry is a good bopper. He means a good fighter at a rumble. (a Brumly boy waves Ponyboy over)' },
+  { post: 1, k: ['twenty-two','22','how many socs','four cars','odds','how many'], a: 'Twenty-two Socs come in four cars. The greasers have twenty. (the Socs arrive)' },
+  { post: 1, k: ['paul','paul holden','holden','who is paul'], a: 'Paul Holden is a Soc, now in college. Read what Ponyboy remembers about him and Darry. (the two face each other)' },
+  { post: 1, k: ['jack london','london','wolf','wolves','wolf pack'], a: 'Jack London wrote stories about wolves and dogs in the far North. Ponyboy thinks of his wolf packs while the two circle. (before the first punch)' },
+  { post: 1, k: ['dally hospital','dally arm','left the hospital','dally','dallas','arm'], a: 'Dally left the hospital to join the rumble, even with his hurt arm. (the rumble begins)' },
+  { post: 1, k: ['t-bird','buck merril','buck','police car','policeman','escort'], a: 'Dally drives Ponyboy to the hospital in Buck Merril\u2019s car, and a police car leads the way. (after the rumble)' },
   { k: ['does johnny die','johnny die','johnny dies','johnny dead','what happens to johnny','is johnny dead'], a: 'Johnny dies in the hospital, with Ponyboy and Dally beside him. (the end of the chapter)', gate: 1 },
   { k: ['editorial','editorials','papers','newspaper'], a: 'An editorial is a newspaper article that gives the paper\u2019s opinion. The papers are calling Johnny a hero. (Dally talks to Johnny)' },
   { k: ['affectionately','leery','ruefully','contempt','realization','word','words','vocabulary'], a: 'The five words are on the cards at the top of the Read tab: affectionately, leery, ruefully, contempt, and realization. Flip a card to check its meaning, then watch for the word in Hinton\u2019s sentences.' }
 ];
 var LORE_TURNBACKS = [
-  { re: /\b(rumble|fight)\b.*\b(climax|peak|turning point)\b/i, back: 'What changes for Ponyboy in the minutes after the fight?' },
-  { re: /\bwhy\b.*\b(ponyboy|pony)\b.*\bfights?\b/i, back: 'Read the lines right after Two-Bit\u2019s answer.' },
-  { re: /\b(darry|paul)\b.*\b(hate|hates|enemies|friends)\b/i, back: 'What does Ponyboy think about the side each one stands on?' },
-  { re: /\bjohnny\b.*\b(hero|brave|right|wrong)\b/i, back: 'What does Johnny say about fighting?' },
-  { re: /\b(greasers?|hoods?)\b.*\b(different|same|better|worse)\b/i, back: 'Read what Ponyboy thinks as he watches Tim\u2019s gang.' },
+  { post: 1, re: /\b(rumble|fight)\b.*\b(climax|peak|turning point)\b/i, back: 'What changes for Ponyboy in the minutes after the fight?' },
+  { post: 1, re: /\bwhy\b.*\b(ponyboy|pony)\b.*\bfights?\b/i, back: 'Read the lines right after Two-Bit\u2019s answer.' },
+  { post: 1, re: /\b(darry|paul)\b.*\b(hate|hates|enemies|friends)\b/i, back: 'What does Ponyboy think about the side each one stands on?' },
+  { post: 1, re: /\bjohnny\b.*\b(hero|brave|right|wrong)\b/i, back: 'What does Johnny say about fighting?' },
+  { post: 1, re: /\b(greasers?|hoods?)\b.*\b(different|same|better|worse)\b/i, back: 'Read what Ponyboy thinks as he watches Tim\u2019s gang.' },
   { re: /\b(survey|fun|hatred|pride|conformity)\b/i, back: 'That\u2019s yours to work out on the clipboard. Match each boy to his own answer first.', raw: true }
 ];
 /* fact questions that are also Questions from Professor Lovelore: she points to the place, without answering */
 var LORE_POINTS = [
-  { re: /\b(what|why)\b.*\bdarry\b.*\b(worr(y|ies|ied)|afraid|scared|doesn'?t want)\b/i, text: 'That one is among my questions for you, so I will only point the way. Find where Darry says he isn\u2019t sure Ponyboy ought to be in this rumble.' },
-  { re: /\bwho\b.*\b(fights?|fought|steps? forward|faces|takes on)\b.*\bdarry\b/i, text: 'That one is among my questions for you, so I will only point the way. Who calls Darry by his full first name?' },
-  { re: /\bwhat\b.*\bjohnny\b.*\b(say|says|said)\b.*\bfight/i, text: 'That one is among my questions for you, so I will only point the way. Read Johnny\u2019s answer to Dally\u2019s news, word by word.' }
+  { post: 1, re: /\b(what|why)\b.*\bdarry\b.*\b(worr(y|ies|ied)|afraid|scared|doesn'?t want)\b/i, text: 'That one is among my questions for you, so I will only point the way. Find where Darry says he isn\u2019t sure Ponyboy ought to be in this rumble.' },
+  { post: 1, re: /\bwho\b.*\b(fights?|fought|steps? forward|faces|takes on)\b.*\bdarry\b/i, text: 'That one is among my questions for you, so I will only point the way. Who calls Darry by his full first name?' },
+  { post: 1, re: /\bwhat\b.*\bjohnny\b.*\b(say|says|said)\b.*\bfight/i, text: 'That one is among my questions for you, so I will only point the way. Read Johnny\u2019s answer to Dally\u2019s news, word by word.' }
 ];
 var LORE_THINK = /(what do you think|why (does|did|would) (hinton|the author) (show|use|include|put|want|choose|open|begin|start|end)|what does (hinton|the author) want|\bcompare\b|\bshould\b|who is to blame|is it fair|which is (better|worse)|do you think|is ponyboy (a )?(liar|honest|reliable|unreliable)|can (we|i|you) trust)/i;
 var LORE_THINK_BACK = 'Look back at the page, and trust what you find.';
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   var i;
-  for (i = 0; i < LORE_POINTS.length; i++) if (LORE_POINTS[i].re.test(q) || LORE_POINTS[i].re.test(t)) return { text: LORE_POINTS[i].text };
-  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return { text: ASK_THINK + LORE_TURNBACKS[i].back };
+  for (i = 0; i < LORE_POINTS.length; i++) if (LORE_POINTS[i].re.test(q) || LORE_POINTS[i].re.test(t)) return (LORE_POINTS[i].post && !read) ? { text: ASK_EARLY } : { text: LORE_POINTS[i].text };
+  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return (LORE_TURNBACKS[i].post && !read) ? { text: ASK_EARLY } : { text: ASK_THINK + LORE_TURNBACKS[i].back };
   if (LORE_THINK.test(q)) return { text: ASK_THINK + LORE_THINK_BACK };
   var best = null, bs = 0;
   LORE_NOTES.forEach(function(n){
@@ -3082,7 +3084,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER };
-  if (best.gate && STORE.get('read-done') !== '1') return { text: ASK_LATER };   /* a death is told only after the read gate */
+  if ((best.gate || best.post) && !read) return { text: ASK_EARLY };   /* a death is told only after the read gate */
   return { text: best.a };
 }
 (function initPigeon(){

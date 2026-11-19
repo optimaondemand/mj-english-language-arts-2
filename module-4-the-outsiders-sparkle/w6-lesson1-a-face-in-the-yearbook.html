@@ -2964,51 +2964,53 @@ stopLog();
 /* ───── ASK PROFESSOR LOVELORE: letters by pigeon ─────
    Prepared notes on Chapter 11 and earlier (no AI service; nothing leaves the page). A thinking question is turned back to the page. */
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 11,\u201D then write to me again.';
 var POINT = 'That one is among my questions for you, so I will only point the way. ';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter 11, and I will send my pigeon back with an answer.' },
-  { k: ['bed','stay in bed','sick','whole week'], a: 'Ponyboy has to stay in bed for a whole week. He reads and draws to pass the time. (the first lines)' },
-  { k: ['yearbook','year book','annual'], a: 'A yearbook is a school\u2019s book of student pictures for one year. The one Ponyboy looks through is Soda\u2019s, from a year when Bob was a sophomore. (the first page)' },
+  { post: 1, k: ['bed','stay in bed','sick','whole week'], a: 'Ponyboy has to stay in bed for a whole week. He reads and draws to pass the time. (the first lines)' },
+  { post: 1, k: ['yearbook','year book','annual'], a: 'A yearbook is a school\u2019s book of student pictures for one year. The one Ponyboy looks through is Soda\u2019s, from a year when Bob was a sophomore. (the first page)' },
   { k: ['sophomore','sophomores'], a: 'A sophomore is a student in the second year of high school. (the first page)' },
   { k: ['who is bob','bob','bob sheldon','sheldon','robert'], a: 'Bob Sheldon is the Soc who died in the park the night Johnny and Ponyboy ran away (Chapter 4). (the first page)' },
   { k: ['cherry','cherry valance','cheerleader'], a: 'Cherry Valance is the Soc cheerleader Ponyboy met at the drive-in. Bob was her boyfriend. (the yearbook paragraph)' },
   { k: ['who is randy','randy','adderson','randy adderson'], a: 'Randy Adderson is a Soc and Bob\u2019s best friend. He talked with Ponyboy before the rumble, and then stayed out of it. (Randy\u2019s visit)' },
   { k: ['curly','curly shepard','tim shepard','shepard','reform school','reformatory'], a: 'Curly Shepard is Tim Shepard\u2019s younger brother. Ponyboy says he keeps getting sent to reform school, a school the state runs for young people who break the law. (the yearbook paragraph)' },
   { k: ['social worker','social workers'], a: 'A social worker works for the city or state to help families and young people. (the yearbook paragraph)' },
-  { k: ['middle class','school friends','good homes','friends at school'], a: 'Ponyboy says his school friends come from good homes: not rich like the Socs, but middle class. (before Randy comes in)' },
-  { k: ['doctor','the doctor'], a: 'The doctor comes almost every day, though mostly he just talks with Ponyboy. (before Randy comes in)' },
+  { post: 1, k: ['middle class','school friends','good homes','friends at school'], a: 'Ponyboy says his school friends come from good homes: not rich like the Socs, but middle class. (before Randy comes in)' },
+  { post: 1, k: ['doctor','the doctor'], a: 'The doctor comes almost every day, though mostly he just talks with Ponyboy. (before Randy comes in)' },
   { k: ['hearing','judge','court','see the judge'], a: 'A hearing is a meeting where a judge listens to what happened and decides what comes next. (Randy\u2019s visit)' },
   { k: ['fine','fined','pay a fine'], a: 'A fine is money a court orders someone to pay. (Randy\u2019s visit)' },
-  { k: ['what happened to johnny','did johnny die','is johnny alive','johnny dead','johnny alive'], a: 'Johnny died in the hospital after the rumble, in Chapter 9. Ponyboy, still sick, tells Randy that Johnny is alive. (Randy\u2019s visit)' },
-  { k: ['dally','dallas','street light','who was shot'], a: 'The buddy Ponyboy thinks of, shot under a street light, is Dally (Chapter 10). (Randy\u2019s visit)' },
-  { k: ['super-tuff','super tuff','mr super tuff','west side'], a: 'Mr. Super-Tuff is Ponyboy\u2019s joke name for how some Socs act because they live on the West Side. (the yearbook paragraph)' },
+  { post: 1, k: ['what happened to johnny','did johnny die','is johnny alive','johnny dead','johnny alive'], a: 'Johnny died in the hospital after the rumble, in Chapter 9. Ponyboy, still sick, tells Randy that Johnny is alive. (Randy\u2019s visit)' },
+  { post: 1, k: ['dally','dallas','street light','who was shot'], a: 'The buddy Ponyboy thinks of, shot under a street light, is Dally (Chapter 10). (Randy\u2019s visit)' },
+  { post: 1, k: ['super-tuff','super tuff','mr super tuff','west side'], a: 'Mr. Super-Tuff is Ponyboy\u2019s joke name for how some Socs act because they live on the West Side. (the yearbook paragraph)' },
   { k: ['darry','darrel','oldest brother'], a: 'Darry (Darrel) is Ponyboy\u2019s oldest brother, and he is twenty. (Chapter 1)' },
   { k: ['soda','sodapop'], a: 'Sodapop (Soda) is Ponyboy\u2019s middle brother. (Chapter 1)' },
-  { k: ['parents','mom and dad','mother and father','car wreck','orphan'], a: 'Ponyboy\u2019s parents died in a car wreck. In this chapter he says he lives with just Darry and Soda. (Randy\u2019s visit)' },
+  { post: 1, k: ['parents','mom and dad','mother and father','car wreck','orphan'], a: 'Ponyboy\u2019s parents died in a car wreck. In this chapter he says he lives with just Darry and Soda. (Randy\u2019s visit)' },
   { k: ['idolized','cocky','liable','guardian','bewildered','word','words','vocabulary'], a: 'The five words are on the cards at the top of the Read tab: idolized, cocky, liable, guardian, and bewildered. Flip a card to check its meaning, then watch for the word in Hinton\u2019s sentences.' }
 ];
 /* a thinking question is turned back, with a question that points to a real moment */
 var LORE_TURNBACKS = [
-  { re: /\bbob\b.*\b(good|bad|deserve|deserved|evil|nice|mean)\b/i, back: 'That\u2019s yours to decide. Read the last lines of the yearbook paragraph again.' },
-  { re: /\b(pity|hate)\b/i, back: 'That\u2019s yours to work out. Read the sentence where Ponyboy weighs the two.' },
-  { re: /\bgrin\b/i, back: 'Look at the picture paragraph again. Whose grin does he name?' },
-  { re: /\bjohnny\b.*\b(lying|lie|believe|true)\b|\bwhy\b.*\bjohnny\b.*\balive\b/i, back: 'That\u2019s yours to think through. What does Ponyboy want to be true, and why?' },
-  { re: /\bdarry\b.*\b(fair|unfair|cruel|mean|harsh|strict|right|wrong|good|bad|kind)\b/i, back: 'That\u2019s yours to decide. Read what Darry says on the way out with Randy, and what he says to Ponyboy at the very end.' },
-  { re: /\brandy\b.*\b(fair|unfair|cruel|mean|kind|good|bad|right|wrong|honest|lying|nice)\b/i, back: 'That\u2019s yours to decide. Read what Ponyboy thinks right after Randy talks about his dad.' }
+  { post: 1, re: /\bbob\b.*\b(good|bad|deserve|deserved|evil|nice|mean)\b/i, back: 'That\u2019s yours to decide. Read the last lines of the yearbook paragraph again.' },
+  { post: 1, re: /\b(pity|hate)\b/i, back: 'That\u2019s yours to work out. Read the sentence where Ponyboy weighs the two.' },
+  { post: 1, re: /\bgrin\b/i, back: 'Look at the picture paragraph again. Whose grin does he name?' },
+  { post: 1, re: /\bjohnny\b.*\b(lying|lie|believe|true)\b|\bwhy\b.*\bjohnny\b.*\balive\b/i, back: 'That\u2019s yours to think through. What does Ponyboy want to be true, and why?' },
+  { post: 1, re: /\bdarry\b.*\b(fair|unfair|cruel|mean|harsh|strict|right|wrong|good|bad|kind)\b/i, back: 'That\u2019s yours to decide. Read what Darry says on the way out with Randy, and what he says to Ponyboy at the very end.' },
+  { post: 1, re: /\brandy\b.*\b(fair|unfair|cruel|mean|kind|good|bad|right|wrong|honest|lying|nice)\b/i, back: 'That\u2019s yours to decide. Read what Ponyboy thinks right after Randy talks about his dad.' }
 ];
 /* fact questions that are also Questions from Professor Lovelore: she points to the place and does not answer */
 var LORE_POINTS = [
-  { re: /^(?!.*\bpony)(?=.*\b(dad|father)\b)(?=.*\b(tell|tells|told|say|says|said|advice)\b)/i, text: POINT + 'Read what Randy says about his dad, right after the judge comes up.' },
-  { re: /\bwhy\b.*\brandy\b.*\b(come|came|visit|visits|here)\b|\brandy\b.*\bwhy\b.*\b(come|came|visit|here)\b/i, text: POINT + 'Read Randy\u2019s words right after he sits down.' },
-  { re: /\bdarry\b.*\b(call|calls|called|name|buddy)\b/i, text: POINT + 'Read the chapter\u2019s last lines slowly.' }
+  { post: 1, re: /^(?!.*\bpony)(?=.*\b(dad|father)\b)(?=.*\b(tell|tells|told|say|says|said|advice)\b)/i, text: POINT + 'Read what Randy says about his dad, right after the judge comes up.' },
+  { post: 1, re: /\bwhy\b.*\brandy\b.*\b(come|came|visit|visits|here)\b|\brandy\b.*\bwhy\b.*\b(come|came|visit|here)\b/i, text: POINT + 'Read Randy\u2019s words right after he sits down.' },
+  { post: 1, re: /\bdarry\b.*\b(call|calls|called|name|buddy)\b/i, text: POINT + 'Read the chapter\u2019s last lines slowly.' }
 ];
 var LORE_THINK = /(what do you think|why (does|did|would) (hinton|the author) (show|use|include|put|want|choose|open|begin|start|end)|what does (hinton|the author) want|\bcompare\b|\bshould\b|who is to blame|is it fair|which is (better|worse)|do you think|can (we|i|you) trust|\b(is|was) (he|she|ponyboy|soda|cherry|the judge|his dad) (fair|unfair|cruel|mean|kind|right|wrong|good|bad|brave|selfish))/i;
 var LORE_THINK_BACK = 'That\u2019s yours to decide. Look back at the page, and trust what you find.';
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   var i;
-  for (i = 0; i < LORE_POINTS.length; i++) if (LORE_POINTS[i].re.test(q) || LORE_POINTS[i].re.test(t)) return { text: LORE_POINTS[i].text };
-  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return { text: LORE_TURNBACKS[i].back };
+  for (i = 0; i < LORE_POINTS.length; i++) if (LORE_POINTS[i].re.test(q) || LORE_POINTS[i].re.test(t)) return (LORE_POINTS[i].post && !read) ? { text: ASK_EARLY } : { text: LORE_POINTS[i].text };
+  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return (LORE_TURNBACKS[i].post && !read) ? { text: ASK_EARLY } : { text: LORE_TURNBACKS[i].back };
   if (LORE_THINK.test(q)) return { text: LORE_THINK_BACK };
   var best = null, bs = 0;
   LORE_NOTES.forEach(function(n){
@@ -3021,6 +3023,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER };
+  if (best.post && !read) return { text: ASK_EARLY };
   return { text: best.a };
 }
 (function initPigeon(){

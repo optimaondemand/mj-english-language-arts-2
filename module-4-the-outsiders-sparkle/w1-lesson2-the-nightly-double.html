@@ -2936,44 +2936,46 @@ function penSync(){
    questions about later chapters wait. Replies are text only. */
 var ASK_THINK = 'That\u2019s yours to decide. Look back at the page, and trust what you find.';
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 2,\u201D then write to me again.';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter Two, and I will send my pigeon back with an answer.' },
-  { k: ['pickett','sutton','street light','where does dally wait','where do they meet','where do they start'], a: 'Dally waits for Johnny and Ponyboy under the street light at the corner of Pickett and Sutton. (the first lines)' },
-  { k: ['dingo','jays','jay\'s','way out','rusty','rustys','rusty\'s','drive-ins','drive ins','hangout','hangouts','which drive-in','where do the socs go','where do the greasers go'], a: 'The Dingo and Jay\u2019s are the greasers\u2019 drive-ins; the Socs go to The Way Out and Rusty\u2019s. (the first page)' },
-  { k: ['nightly double','nightly','quarter','walkers','walker','admission','how many movies','two movies','biggest drive-in','how much to get in','how much does it cost'], a: 'The Nightly Double is the biggest drive-in in town: two movies a night, four on weekends. Walkers pay a quarter. (the first page)' },
-  { k: ['fence','back fence','sneak in','sneaks in','snuck in','sneak','sneaks','break rules','break laws','legal way','why does dally sneak'], a: 'Dally sneaks in over the back fence because he likes to break rules, even though they all have the money. (the first page)' },
-  { k: ['concession','concession stand','popcorn','snack bar','what is a concession stand'], a: 'A concession stand sells popcorn and Cokes. (the popcorn line)' },
-  { k: ['sherri','cherry valance','real name','called cherry','red hair','redhead','cheerleader','who is cherry','who\'s cherry'], a: 'Cherry\u2019s real name is Sherri Valance; she is called Cherry because of her red hair. She is a cheerleader at Ponyboy\u2019s school. (after Dally leaves)' },
-  { k: ['who is marcia','who\'s marcia','dark hair','short hair','other girl','smaller one','what does marcia look like'], a: 'Marcia is the girl with short dark hair, a little smaller than Cherry. (after Cherry gives her name)' },
-  { k: ['barrel','barrel race','barrel racing','rodeo','rodeos','saddle bronc','bronc','ligament','what is barrel racing','what is a rodeo'], a: 'Barrel racing is a rodeo race on horseback around barrels. Saddle bronc riding is riding a bucking horse; Soda did it until he tore a ligament. (Cherry asks about Soda)' },
-  { k: ['put up a year','put up','skipped a grade','skip a grade','skipped','too young','looks too young','high school at fourteen','why is ponyboy in high school'], a: 'Ponyboy was put up a year in grade school, so he is in high school at fourteen. (Marcia says he looks too young)' },
-  { k: ['dropout','drop out','dropped out','quit school','quits school','what is a dropout','why does ponyboy hate dropout'], a: 'A dropout is someone who quits school before finishing. Soda is one, and Ponyboy can\u2019t stand it. (Marcia asks about Soda)' },
-  { k: ['walked out','walk out','their dates','boyfriends','boyfriend','alcohol','without a car','no car','why are the girls alone','how did the girls get there','why did the girls leave'], a: 'That one is among my questions for you, so I will only point the way. Find where Ponyboy says they found out why the girls were without a car. (after they all sit together)' },
-  { k: ['why is johnny scared','why did johnny go white','scare johnny','scared johnny','frightened','two-bit voice','soc voice','fake voice','imitation','imitate'], a: 'Two-Bit sneaks up and fakes a Soc\u2019s voice. Johnny is badly frightened. (the beach movie)' },
-  { k: ['what movie','which movie','beach-party','beach party','beach movie','movie they watch'], a: 'They watch a beach-party movie that Ponyboy says has no plot and no acting, but some good songs. (after they all sit together)' },
-  { k: ['tim shepard','shepard','shepards','curly shepard','tires','slashed','who is tim','who is tim shepard'], a: 'Tim Shepard leads another bunch of greasers. Two-Bit says they are looking for whoever slashed their car\u2019s tires. (after Two-Bit sits down)' },
-  { k: ['gang rules','gang\'s rules','the rules','two rules','stick together','get caught','what are the rules'], a: 'Two-Bit says the gang\u2019s rules are to stick together and not get caught. (after Two-Bit sits down)' },
-  { k: ['carload','who beat johnny','who hurt johnny','what happened to johnny','how did johnny get hurt','johnny\'s scar','four months','hurt and scared'], a: 'At the popcorn line, Ponyboy tells Cherry how the gang found Johnny after a carload of Socs had beaten him, about four months before. (the popcorn line)' },
-  { k: ['socy','what does socy mean','socy cheerleader','what is socy'], a: 'Socy means like a Soc. A Socy cheerleader is a Soc. (the popcorn line)' },
+  { post: 1, k: ['pickett','sutton','street light','where does dally wait','where do they meet','where do they start'], a: 'Dally waits for Johnny and Ponyboy under the street light at the corner of Pickett and Sutton. (the first lines)' },
+  { post: 1, k: ['dingo','jays','jay\'s','way out','rusty','rustys','rusty\'s','drive-ins','drive ins','hangout','hangouts','which drive-in','where do the socs go','where do the greasers go'], a: 'The Dingo and Jay\u2019s are the greasers\u2019 drive-ins; the Socs go to The Way Out and Rusty\u2019s. (the first page)' },
+  { post: 1, k: ['nightly double','nightly','quarter','walkers','walker','admission','how many movies','two movies','biggest drive-in','how much to get in','how much does it cost'], a: 'The Nightly Double is the biggest drive-in in town: two movies a night, four on weekends. Walkers pay a quarter. (the first page)' },
+  { post: 1, k: ['fence','back fence','sneak in','sneaks in','snuck in','sneak','sneaks','break rules','break laws','legal way','why does dally sneak'], a: 'Dally sneaks in over the back fence because he likes to break rules, even though they all have the money. (the first page)' },
+  { post: 1, k: ['concession','concession stand','popcorn','snack bar','what is a concession stand'], a: 'A concession stand sells popcorn and Cokes. (the popcorn line)' },
+  { post: 1, k: ['sherri','cherry valance','real name','called cherry','red hair','redhead','cheerleader','who is cherry','who\'s cherry'], a: 'Cherry\u2019s real name is Sherri Valance; she is called Cherry because of her red hair. She is a cheerleader at Ponyboy\u2019s school. (after Dally leaves)' },
+  { post: 1, k: ['who is marcia','who\'s marcia','dark hair','short hair','other girl','smaller one','what does marcia look like'], a: 'Marcia is the girl with short dark hair, a little smaller than Cherry. (after Cherry gives her name)' },
+  { post: 1, k: ['barrel','barrel race','barrel racing','rodeo','rodeos','saddle bronc','bronc','ligament','what is barrel racing','what is a rodeo'], a: 'Barrel racing is a rodeo race on horseback around barrels. Saddle bronc riding is riding a bucking horse; Soda did it until he tore a ligament. (Cherry asks about Soda)' },
+  { post: 1, k: ['put up a year','put up','skipped a grade','skip a grade','skipped','too young','looks too young','high school at fourteen','why is ponyboy in high school'], a: 'Ponyboy was put up a year in grade school, so he is in high school at fourteen. (Marcia says he looks too young)' },
+  { post: 1, k: ['dropout','drop out','dropped out','quit school','quits school','what is a dropout','why does ponyboy hate dropout'], a: 'A dropout is someone who quits school before finishing. Soda is one, and Ponyboy can\u2019t stand it. (Marcia asks about Soda)' },
+  { post: 1, k: ['walked out','walk out','their dates','boyfriends','boyfriend','alcohol','without a car','no car','why are the girls alone','how did the girls get there','why did the girls leave'], a: 'That one is among my questions for you, so I will only point the way. Find where Ponyboy says they found out why the girls were without a car. (after they all sit together)' },
+  { post: 1, k: ['why is johnny scared','why did johnny go white','scare johnny','scared johnny','frightened','two-bit voice','soc voice','fake voice','imitation','imitate'], a: 'Two-Bit sneaks up and fakes a Soc\u2019s voice. Johnny is badly frightened. (the beach movie)' },
+  { post: 1, k: ['what movie','which movie','beach-party','beach party','beach movie','movie they watch'], a: 'They watch a beach-party movie that Ponyboy says has no plot and no acting, but some good songs. (after they all sit together)' },
+  { post: 1, k: ['tim shepard','shepard','shepards','curly shepard','tires','slashed','who is tim','who is tim shepard'], a: 'Tim Shepard leads another bunch of greasers. Two-Bit says they are looking for whoever slashed their car\u2019s tires. (after Two-Bit sits down)' },
+  { post: 1, k: ['gang rules','gang\'s rules','the rules','two rules','stick together','get caught','what are the rules'], a: 'Two-Bit says the gang\u2019s rules are to stick together and not get caught. (after Two-Bit sits down)' },
+  { post: 1, k: ['carload','who beat johnny','who hurt johnny','what happened to johnny','how did johnny get hurt','johnny\'s scar','four months','hurt and scared'], a: 'At the popcorn line, Ponyboy tells Cherry how the gang found Johnny after a carload of Socs had beaten him, about four months before. (the popcorn line)' },
+  { post: 1, k: ['socy','what does socy mean','socy cheerleader','what is socy'], a: 'Socy means like a Soc. A Socy cheerleader is a Soc. (the popcorn line)' },
   { k: ['what is a soc','what are socs','what does soc mean','soc short for','socials','who are the socs'], a: 'Soc is short for the Socials: the rich kids from the West Side. (Chapter One)' },
   { k: ['what is a greaser','what are greasers','what does greaser mean','who are the greasers'], a: 'Greaser is the name for the boys from the East Side. Ponyboy says they wear their hair long. (Chapter One)' },
   { k: ['incredulous','roguishly','defensively','distrustful','finality','vocabulary','vocab','the words','new words','the five words'], a: 'The five words are on the cards at the top of the Read tab: incredulous, roguishly, defensively, distrustful, and finality. Tap a card to flip it, and watch for each word in the chapter.' }
 ];
 /* Questions that ask her to decide for the reader: she turns them back with a question that points to a real moment in the reading. Text only. */
 var TURNS = [
-  { re: /\bcherry\b.*\b(likes?|loves?|crush|in love)\b/i, back: 'What does Cherry say about Dally, softly, so only Ponyboy hears?' },
-  { re: /\bdally\b.*\b(good|bad|deserves?|right|wrong)\b/i, back: 'What does Johnny say when Cherry calls the boys not dirty?' },
-  { re: /\b(socs?|cherry)\b.*\b(rough|troubles|problems|hard)\b/i, back: 'Read the last two lines of the chapter.' },
-  { re: /\bjohnny\b.*\b(brave|coward|weak|hero)\b/i, back: 'What does Johnny do when Dally sits down beside Cherry?' },
-  { re: /\b(greasers?|socs?)\b.*\b(same|alike|different|equal)\b/i, back: 'Read what Cherry says right after Ponyboy finishes Johnny\u2019s story.' },
-  { re: /\btwo-?bit\b.*\b(right|wrong|smart|fair)\b/i, back: 'Read what Ponyboy thinks of how Two-Bit puts things into words.' }
+  { post: 1, re: /\bcherry\b.*\b(likes?|loves?|crush|in love)\b/i, back: 'What does Cherry say about Dally, softly, so only Ponyboy hears?' },
+  { post: 1, re: /\bdally\b.*\b(good|bad|deserves?|right|wrong)\b/i, back: 'What does Johnny say when Cherry calls the boys not dirty?' },
+  { post: 1, re: /\b(socs?|cherry)\b.*\b(rough|troubles|problems|hard)\b/i, back: 'Read the last two lines of the chapter.' },
+  { post: 1, re: /\bjohnny\b.*\b(brave|coward|weak|hero)\b/i, back: 'What does Johnny do when Dally sits down beside Cherry?' },
+  { post: 1, re: /\b(greasers?|socs?)\b.*\b(same|alike|different|equal)\b/i, back: 'Read what Cherry says right after Ponyboy finishes Johnny\u2019s story.' },
+  { post: 1, re: /\btwo-?bit\b.*\b(right|wrong|smart|fair)\b/i, back: 'Read what Ponyboy thinks of how Two-Bit puts things into words.' }
 ];
 var LATER = /(chapter (three|iii|3|four|iv|4|five|v|5|six|vi|6|seven|vii|7|eight|viii|8|nine|ix|9|ten|x|10|eleven|xi|11|twelve|xii|12)|what happens next|how does (the story|the book) end|the ending|the (church|fire|rumble|hospital)|\b(bob|randy)\b|nothing gold|stay gold|staying gold)/i;
 var LORE_THINK = /(what do you think|why does hinton|what does (it|this|that|the (line|scene|chapter))\b.{0,40}\b(mean|show|prove|teach|stand for|represent)|is (it|he|she|ponyboy|johnny|cherry|dally|marcia|two-bit) (fair|wrong|right|kind|cruel|good|bad|brave|selfish)|was it (fair|wrong|right|kind|cruel)|should (ponyboy|johnny|cherry|dally|marcia|he|she)|how (do|does|did) (ponyboy|johnny|cherry) feel|what is the (theme|lesson|moral)|which (is|was) (more|most|better)|do you think)/i;
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   if (LATER.test(q)) return { text: ASK_LATER, clip: '' };
-  for (var i = 0; i < TURNS.length; i++) if (TURNS[i].re.test(q)) return { text: 'That\u2019s yours to decide. ' + TURNS[i].back, clip: '' };
+  for (var i = 0; i < TURNS.length; i++) if (TURNS[i].re.test(q)) return (TURNS[i].post && !read) ? { text: ASK_EARLY, clip: '' } : { text: 'That\u2019s yours to decide. ' + TURNS[i].back, clip: '' };
   if (LORE_THINK.test(q)) return { text: ASK_THINK, clip: '' };
   var best = null, bs = 0;
   LORE_NOTES.forEach(function(n){
@@ -2983,6 +2985,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER, clip: '' };
+  if (best.post && !read) return { text: ASK_EARLY, clip: '' };
   return { text: best.a, clip: '' };
 }
 

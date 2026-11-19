@@ -2941,42 +2941,44 @@ function penSync(){
    notes that would hand over a question's answer only point the way; questions about later chapters wait. Replies are text only. */
 var ASK_THINK = 'That’s yours to decide. Look back at the page, and trust what you find.';
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 10,\u201D then write to me again.';
 var ASK_POINT = 'That one is among my questions for you, so I will only point the way. ';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter Ten, and I will send my pigeon back with an answer.' },
-  { k: ['daze','in a daze','wander','wanders','wandered','walk home','walks home','the long walk','first page','how does the chapter start','how does the chapter begin','what happens first'], a: 'Ponyboy walks out of the hospital in a daze and wanders for hours, telling himself it isn’t true. (the first page)' },
-  { k: ['ride','a ride','who drives him','who drove him','who gave him a ride','get home','gets home','how does he get home','stranger','the man in the car','mid-twenties'], a: ASK_POINT + 'Read what happens after Ponyboy wanders into the street. (the first page)' },
-  { k: ['living room','bandaged','bandage','bandages','band-aid','stitches','steve','who is in the living room','what is the gang doing','sofa'], a: 'At home, the rest of the gang is bandaged from the rumble. Steve is stretched out on the sofa with his side bandaged. (the living room)' },
-  { k: ['breaking point','two-bit say','two-bit says','so even dally','what does two-bit say'], a: 'Two-Bit says that even Dally has a breaking point. (after Ponyboy tells the news)' },
-  { k: ['phone','phoned','phone call','who called','booth','robbed','grocery','grocery store','why are the police after dally','police after'], a: 'Dally phones from a booth. He says he has robbed a grocery store and the police are after him. (the phone call)' },
+  { post: 1, k: ['daze','in a daze','wander','wanders','wandered','walk home','walks home','the long walk','first page','how does the chapter start','how does the chapter begin','what happens first'], a: 'Ponyboy walks out of the hospital in a daze and wanders for hours, telling himself it isn’t true. (the first page)' },
+  { post: 1, k: ['ride','a ride','who drives him','who drove him','who gave him a ride','get home','gets home','how does he get home','stranger','the man in the car','mid-twenties'], a: ASK_POINT + 'Read what happens after Ponyboy wanders into the street. (the first page)' },
+  { post: 1, k: ['living room','bandaged','bandage','bandages','band-aid','stitches','steve','who is in the living room','what is the gang doing','sofa'], a: 'At home, the rest of the gang is bandaged from the rumble. Steve is stretched out on the sofa with his side bandaged. (the living room)' },
+  { post: 1, k: ['breaking point','two-bit say','two-bit says','so even dally','what does two-bit say'], a: 'Two-Bit says that even Dally has a breaking point. (after Ponyboy tells the news)' },
+  { post: 1, k: ['phone','phoned','phone call','who called','booth','robbed','grocery','grocery store','why are the police after dally','police after'], a: 'Dally phones from a booth. He says he has robbed a grocery store and the police are after him. (the phone call)' },
   { k: ['what happens to dally','what happened to dally','how does dally die','how did dally die','dally die','dally dies','is dally dead','dally shot','who got shot','shot','shoots','vacant lot','at the lot','the lot','what happens at the lot','what happened at the lot'], a: 'Dally robs a store, runs from the police into the vacant lot, raises an unloaded gun, and is shot. (the vacant lot)', gate: 1 },
   { k: ['how did johnny die','what happened to johnny','johnny die','johnny dies','is johnny dead','johnny dead','where did johnny die'], a: 'Johnny dies in the hospital at the end of Chapter Nine, with Ponyboy and Dally beside him. (the end of Chapter Nine)' },
-  { k: ['what did dally do for them','what did dally do for ponyboy','dally pulled','pulling johnny','dally risk','dally risking','what had dally done'], a: 'Ponyboy thinks of what Dally did for them: pulling Johnny out of the church window, and helping the two boys hide. (after the lot)' },
-  { k: ['blacks out','black out','blackout','passes out','pass out','faint','faints','fainted','collapse','collapses','collapsed'], a: 'Ponyboy blacks out at the lot. (the end of the lot scene)' },
-  { k: ['how long was ponyboy sick','how long was he sick','how long has he been asleep','is ponyboy sick','sick for days','concussion','exhaustion','what was wrong with ponyboy','why was ponyboy sick'], a: 'Ponyboy has been sick for days. (when he wakes and talks with Darry)' },
-  { k: ['court','go to court','why does ponyboy have to go to court','the police','night in the park','talk to the police'], a: 'Ponyboy still has to go to court and talk to the police about the night in the park. (talking with Darry)' },
-  { k: ['split','split up','split us up','a home','foster','sent away','taken away','what is he afraid of','afraid','scared of','fear'], a: ASK_POINT + 'Find the question Ponyboy asks Darry after he remembers the court. (talking with Darry)' },
+  { post: 1, k: ['what did dally do for them','what did dally do for ponyboy','dally pulled','pulling johnny','dally risk','dally risking','what had dally done'], a: 'Ponyboy thinks of what Dally did for them: pulling Johnny out of the church window, and helping the two boys hide. (after the lot)' },
+  { post: 1, k: ['blacks out','black out','blackout','passes out','pass out','faint','faints','fainted','collapse','collapses','collapsed'], a: 'Ponyboy blacks out at the lot. (the end of the lot scene)' },
+  { post: 1, k: ['how long was ponyboy sick','how long was he sick','how long has he been asleep','is ponyboy sick','sick for days','concussion','exhaustion','what was wrong with ponyboy','why was ponyboy sick'], a: 'Ponyboy has been sick for days. (when he wakes and talks with Darry)' },
+  { post: 1, k: ['court','go to court','why does ponyboy have to go to court','the police','night in the park','talk to the police'], a: 'Ponyboy still has to go to court and talk to the police about the night in the park. (talking with Darry)' },
+  { post: 1, k: ['split','split up','split us up','a home','foster','sent away','taken away','what is he afraid of','afraid','scared of','fear'], a: ASK_POINT + 'Find the question Ponyboy asks Darry after he remembers the court. (talking with Darry)' },
   { k: ['gone with the wind','paperback','what is gone with the wind','margaret mitchell','civil war'], a: 'Gone with the Wind is a long novel of the American Civil War by Margaret Mitchell (1936). (when Darry and Ponyboy talk)' },
-  { k: ['delirious','baloney','windrixville','what did he say while he was sick','what did ponyboy say while he was sick'], a: 'Delirious means confused by sickness. Soda says Ponyboy thought he was back in Windrixville, the town where the boys hid, most of the time. (Soda and the baloney)' },
-  { k: ['track','track meet','meets','race','races','coach','athletics'], a: 'Ponyboy runs track. He worries about missing the meets this season. (near the end)' },
+  { post: 1, k: ['delirious','baloney','windrixville','what did he say while he was sick','what did ponyboy say while he was sick'], a: 'Delirious means confused by sickness. Soda says Ponyboy thought he was back in Windrixville, the town where the boys hid, most of the time. (Soda and the baloney)' },
+  { post: 1, k: ['track','track meet','meets','race','races','coach','athletics'], a: 'Ponyboy runs track. He worries about missing the meets this season. (near the end)' },
   { k: ['who stays','who stayed','stayed with','stay with','who sleeps','who is asleep','asleep','armchair','soup','mushroom','how does the chapter end','how does chapter ten end','last lines','who makes the soup'], a: 'That is something to work out in your own copy. Read the last pages again, and watch who is in the room.' },
   { k: ['stupor','vaguely','hesitation','frankly','vocabulary','vocab','the words','new words','the five words'], a: 'The five words are on the cards at the top of the Read tab: stupor, vaguely, hesitation, delirious, and frankly. Tap a card to flip it, and watch for each word in the chapter.' }
 ];
 /* Questions that ask her to decide for the reader: she turns them back with a question that points to a real moment in the reading. Text only. */
 var TURNS = [
-  { re: /\bdally\b.*\b(hero|deserve|deserved|wanted|right|wrong|fault)\b/i, back: 'Read what Ponyboy remembers Dally doing, after the lot.' },
+  { post: 1, re: /\bdally\b.*\b(hero|deserve|deserved|wanted|right|wrong|fault)\b/i, back: 'Read what Ponyboy remembers Dally doing, after the lot.' },
   { re: /\bstay gold\b|\bgold\b.*\bmean/i, back: 'What was Johnny’s life like before the church?' },
-  { re: /\b(harder|worse|which)\b.*\b(loss|losses|death|deaths)\b/i, back: 'Look at how Ponyboy acts after each one.' },
-  { re: /\bdarry\b.*\b(love|loves|care|cares|sorry)\b/i, back: 'Look at where Darry is when Ponyboy wakes up.' },
-  { re: /\b(split|home|court)\b.*\b(will|going to|happen)\b/i, pre: 'That’s yours to wait and see. ', back: 'What does Darry answer when Ponyboy asks?' },
+  { post: 1, re: /\b(harder|worse|which)\b.*\b(loss|losses|death|deaths)\b/i, back: 'Look at how Ponyboy acts after each one.' },
+  { post: 1, re: /\bdarry\b.*\b(love|loves|care|cares|sorry)\b/i, back: 'Look at where Darry is when Ponyboy wakes up.' },
+  { post: 1, re: /\b(split|home|court)\b.*\b(will|going to|happen)\b/i, pre: 'That’s yours to wait and see. ', back: 'What does Darry answer when Ponyboy asks?' },
   { re: /\b(the turn|turning point|climax)\b/i, back: 'Which moment changes everything after it?' }
 ];
 var LATER = /(chapter (eleven|xi|11|twelve|xii|12)|what happens next|how does (the story|the book) end|the ending|\b(johnny'?s? letter|the letter)\b|\b(hearing|judge|trial|essay|composition)\b|the last chapter|the final chapter)/i;
 var LORE_THINK = /(what do you think|why does hinton|what does (it|this|that|the (line|scene|chapter))\b.{0,40}\b(mean|show|prove|teach|stand for|represent)|is (it|he|she|ponyboy|johnny|cherry|dally|marcia|two-bit) (fair|wrong|right|kind|cruel|good|bad|brave|selfish)|was it (fair|wrong|right|kind|cruel)|should (ponyboy|johnny|cherry|dally|marcia|he|she)|how (do|does|did) (ponyboy|johnny|cherry) feel|what is the (theme|lesson|moral)|which (is|was) (more|most|better)|do you think)/i;
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   if (LATER.test(q)) return { text: ASK_LATER, clip: '' };
-  for (var i = 0; i < TURNS.length; i++) if (TURNS[i].re.test(q)) return { text: (TURNS[i].pre || 'That\u2019s yours to decide. ') + TURNS[i].back, clip: '' };
+  for (var i = 0; i < TURNS.length; i++) if (TURNS[i].re.test(q)) return (TURNS[i].post && !read) ? { text: ASK_EARLY, clip: '' } : { text: (TURNS[i].pre || 'That\u2019s yours to decide. ') + TURNS[i].back, clip: '' };
   if (LORE_THINK.test(q)) return { text: ASK_THINK, clip: '' };
   var best = null, bs = 0;
   LORE_NOTES.forEach(function(n){
@@ -2986,7 +2988,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER, clip: '' };
-  if (best.gate && STORE.get('read-done') !== '1') return { text: ASK_LATER, clip: '' };   /* a death is told only after the read gate */
+  if ((best.gate || best.post) && !read) return { text: ASK_EARLY, clip: '' };   /* a death is told only after the read gate */
   return { text: best.a, clip: '' };
 }
 

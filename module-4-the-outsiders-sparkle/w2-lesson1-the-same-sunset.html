@@ -3079,34 +3079,35 @@ stopLog();
    Her replies come from prepared notes on Chapters 1 to 3 (no AI service; nothing leaves the page). Each note lists words a student might use;
    the best-scoring note answers. A thinking question is turned back with a question that points to a real moment. */
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 3,\u201D then write to me again.';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter 3, and I will send my pigeon back with an answer.' },
   { k: ['who is cherry','cherry valance','valance','who is marcia','marcia'], a: 'Cherry Valance and her friend Marcia are two Soc girls. They sat near the boys at the drive-in. (the first page)' },
-  { k: ['two-bit house','two bit house','pick up the car','his car','walk them home','toward home','where are they going'], a: 'After the movie, the boys walk Cherry and Marcia toward Two-Bit\u2019s house to get his car. (the first page)' },
-  { k: ['twenty miles','20 miles','how far','west side far'], a: 'Two-Bit jokes that the West Side is only about twenty miles away; it is a long way to walk. (the first page)' },
-  { k: ['beatles','elvis','elvis presley','music','rank'], a: 'The Beatles were a new British band in the 1960s; Elvis Presley was an American rock-and-roll singer. Ponyboy says the girls like the Beatles and the greasers like Elvis. (the first page)' },
-  { k: ['rat race','what is a rat race'], a: 'A rat race is a busy life of rushing without knowing why. Cherry uses the phrase about the Socs. (Cherry and Ponyboy talk)' },
-  { k: ['rep','what is a rep','reputation'], a: 'A rep is a reputation. Ponyboy has a rep for being quiet, almost as quiet as Johnny. (after Cherry and Ponyboy talk)' },
+  { post: 1, k: ['two-bit house','two bit house','pick up the car','his car','walk them home','toward home','where are they going'], a: 'After the movie, the boys walk Cherry and Marcia toward Two-Bit\u2019s house to get his car. (the first page)' },
+  { post: 1, k: ['twenty miles','20 miles','how far','west side far'], a: 'Two-Bit jokes that the West Side is only about twenty miles away; it is a long way to walk. (the first page)' },
+  { post: 1, k: ['beatles','elvis','elvis presley','music','rank'], a: 'The Beatles were a new British band in the 1960s; Elvis Presley was an American rock-and-roll singer. Ponyboy says the girls like the Beatles and the greasers like Elvis. (the first page)' },
+  { post: 1, k: ['rat race','what is a rat race'], a: 'A rat race is a busy life of rushing without knowing why. Cherry uses the phrase about the Socs. (Cherry and Ponyboy talk)' },
+  { post: 1, k: ['rep','what is a rep','reputation'], a: 'A rep is a reputation. Ponyboy has a rep for being quiet, almost as quiet as Johnny. (after Cherry and Ponyboy talk)' },
   { k: ['buckskin','quarter horse','pure quarter','what is a buckskin','what is a quarter horse'], a: 'A buckskin is a horse with a golden-tan coat. A quarter horse is a fast breed. (the horse story)' },
-  { k: ['mickey mouse','mickey','soda horse','sodas horse','who is mickey mouse','what was the horse'], a: 'Mickey Mouse belonged to another man at the stables where Soda used to work, but Soda called him his horse. (the horse story)' },
-  { k: ['randy','bob','blue mustang','mustang','who is randy','who is bob','who is in the mustang'], a: 'Randy and Bob are Socs who drive a blue Mustang. Bob is Cherry\u2019s boyfriend, and Randy is Marcia\u2019s. (the Mustang)' },
-  { k: ['socially elite','elite','checkered','checkered shirt'], a: 'Socially elite means the top rank of society. Two-Bit says it as a joke about the Socs. (the Mustang)' },
-  { k: ['rough all over','things are rough','things were rough'], a: 'Ponyboy repeats an idea Cherry gave him at the drive-in: things are rough all over. He means the East Side. (Ponyboy\u2019s outburst)' },
-  { k: ['snooker','pool table','what is snooker','poker'], a: 'Snooker is a game played on a pool table. Two-Bit goes off to play. (the vacant lot)' },
-  { k: ['tim shepard','shepard','who is tim'], a: 'Tim Shepard leads another bunch of greasers. Ponyboy says Tim actually enjoys being a greaser. (the vacant lot)' },
-  { k: ['yeller','yeller cur dog','cur dog','what is a cur','yellow dog'], a: 'A yeller cur dog is a yellow mixed-breed dog. Ponyboy dreams of having one again. (the dream in the lot)' },
-  { k: ['parents','mom and dad','mother and father','eight months','died','killed','car wreck','dream'], a: 'Ponyboy\u2019s parents died in a car wreck about eight months before this night. In his daydream of the country, they are alive again. (the dream in the lot)' },
-  { k: ['boys home','boys\u2019 home','boy home','home for boys','what is a boys home'], a: 'A boys\u2019 home is a place where boys can be sent to live away from their families. Darry says calling the police could get Ponyboy and Johnny thrown in one. (Darry shouts)' },
+  { post: 1, k: ['mickey mouse','mickey','soda horse','sodas horse','who is mickey mouse','what was the horse'], a: 'Mickey Mouse belonged to another man at the stables where Soda used to work, but Soda called him his horse. (the horse story)' },
+  { post: 1, k: ['randy','bob','blue mustang','mustang','who is randy','who is bob','who is in the mustang'], a: 'Randy and Bob are Socs who drive a blue Mustang. Bob is Cherry\u2019s boyfriend, and Randy is Marcia\u2019s. (the Mustang)' },
+  { post: 1, k: ['socially elite','elite','checkered','checkered shirt'], a: 'Socially elite means the top rank of society. Two-Bit says it as a joke about the Socs. (the Mustang)' },
+  { post: 1, k: ['rough all over','things are rough','things were rough'], a: 'Ponyboy repeats an idea Cherry gave him at the drive-in: things are rough all over. He means the East Side. (Ponyboy\u2019s outburst)' },
+  { post: 1, k: ['snooker','pool table','what is snooker','poker'], a: 'Snooker is a game played on a pool table. Two-Bit goes off to play. (the vacant lot)' },
+  { post: 1, k: ['tim shepard','shepard','who is tim'], a: 'Tim Shepard leads another bunch of greasers. Ponyboy says Tim actually enjoys being a greaser. (the vacant lot)' },
+  { post: 1, k: ['yeller','yeller cur dog','cur dog','what is a cur','yellow dog'], a: 'A yeller cur dog is a yellow mixed-breed dog. Ponyboy dreams of having one again. (the dream in the lot)' },
+  { post: 1, k: ['parents','mom and dad','mother and father','eight months','died','killed','car wreck','dream'], a: 'Ponyboy\u2019s parents died in a car wreck about eight months before this night. In his daydream of the country, they are alive again. (the dream in the lot)' },
+  { post: 1, k: ['boys home','boys\u2019 home','boy home','home for boys','what is a boys home'], a: 'A boys\u2019 home is a place where boys can be sent to live away from their families. Darry says calling the police could get Ponyboy and Johnny thrown in one. (Darry shouts)' },
   { k: ['sophisticated','aloofness','passionately','bleakly','resignedly','word','words','vocabulary'], a: 'The five words are on the cards at the top of the Read tab: sophisticated, aloofness, passionately, bleakly, and resignedly. Flip a card to check its meaning, then watch for the word in Hinton\u2019s sentences.' }
 ];
 var LORE_TURNBACKS = [
-  { re: /\b(why|reason)\b.*\b(cherry|marcia|girls)\b.*\b(leave|left|go|went|ride)\b/i, back: 'That\u2019s yours to find. Read what Cherry cries out just before she agrees to go.' },
-  { re: /\b(never|nobody|no one)\b.*\btold\b|\btold\b.*\b(never|first time)\b/i, back: 'That\u2019s yours to find. Look for the paragraph that starts with something of Soda\u2019s.' },
-  { re: /\b(why|reason)\b.*\b(pony|ponyboy)\b.*\b(run|ran|leave|left)\b/i, back: 'That\u2019s yours to find. Read the last lines before he reaches the lot.' },
-  { re: /\bdarry\b.*\b(hate|hates|mean|bad|love|loves|care|cares|right|wrong|fair|unfair|cruel)\b/i, back: 'That\u2019s yours to decide. What does Darry shout as Ponyboy runs?' },
-  { re: /\b(cruel|mean|unfair|nasty|rude)\b.*\b(pony|ponyboy|johnny)\b|\b(pony|ponyboy)\b.*\b(cruel|mean|unfair|nasty|rude)\b/i, back: 'That\u2019s yours to decide. What does Ponyboy say to Johnny right after Two-Bit slaps him?' },
+  { post: 1, re: /\b(why|reason)\b.*\b(cherry|marcia|girls)\b.*\b(leave|left|go|went|ride)\b/i, back: 'That\u2019s yours to find. Read what Cherry cries out just before she agrees to go.' },
+  { post: 1, re: /\b(never|nobody|no one)\b.*\btold\b|\btold\b.*\b(never|first time)\b/i, back: 'That\u2019s yours to find. Look for the paragraph that starts with something of Soda\u2019s.' },
+  { post: 1, re: /\b(why|reason)\b.*\b(pony|ponyboy)\b.*\b(run|ran|leave|left)\b/i, back: 'That\u2019s yours to find. Read the last lines before he reaches the lot.' },
+  { post: 1, re: /\bdarry\b.*\b(hate|hates|mean|bad|love|loves|care|cares|right|wrong|fair|unfair|cruel)\b/i, back: 'That\u2019s yours to decide. What does Darry shout as Ponyboy runs?' },
+  { post: 1, re: /\b(cruel|mean|unfair|nasty|rude)\b.*\b(pony|ponyboy|johnny)\b|\b(pony|ponyboy)\b.*\b(cruel|mean|unfair|nasty|rude)\b/i, back: 'That\u2019s yours to decide. What does Ponyboy say to Johnny right after Two-Bit slaps him?' },
   { re: /\b(signal|signals|sign|signs|warning|warnings|hint|hints)\b/i, back: 'That\u2019s for you to spot. Every sign is in the chapter, if you go slowly.' },
-  { re: /\b(money|feeling|feelings|values)\b.*\b(socs?|greasers?)\b|\b(socs?|greasers?)\b.*\b(money|feeling|feelings|values)\b/i, back: 'That\u2019s yours to decide. What does Ponyboy say right after Cherry talks about the rat race?' }
+  { post: 1, re: /\b(money|feeling|feelings|values)\b.*\b(socs?|greasers?)\b|\b(socs?|greasers?)\b.*\b(money|feeling|feelings|values)\b/i, back: 'That\u2019s yours to decide. What does Ponyboy say right after Cherry talks about the rat race?' }
 ];
 /* a plain question about the term: she says what it is, and nothing about this chapter */
 var LORE_POINTS = [
@@ -3116,9 +3117,10 @@ var LORE_THINK = /(\b(is|was) (it|that|this|he|she|they|[a-z-]+) (fair|unfair|cr
 var LORE_THINK_BACK = 'That\u2019s yours to decide. Look back at the chapter, and trust what you find.';
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   var i;
   for (i = 0; i < LORE_POINTS.length; i++) if (LORE_POINTS[i].re.test(q) || LORE_POINTS[i].re.test(t)) return { text: LORE_POINTS[i].text };
-  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return { text: LORE_TURNBACKS[i].back };
+  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return (LORE_TURNBACKS[i].post && !read) ? { text: ASK_EARLY } : { text: LORE_TURNBACKS[i].back };
   if (LORE_THINK.test(q)) return { text: LORE_THINK_BACK };
   var best = null, bs = 0;
   LORE_NOTES.forEach(function(n){
@@ -3131,6 +3133,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER };
+  if (best.post && !read) return { text: ASK_EARLY };
   return { text: best.a };
 }
 (function initPigeon(){

@@ -2983,42 +2983,44 @@ stopLog();
    the best-scoring note answers. A thinking question is turned back: "That's yours to decide." plus a question that points to a real moment. */
 var ASK_THINK = 'That\u2019s yours to decide. ';
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 5,\u201D then write to me again.';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter 5, and I will send my pigeon back with an answer.' },
   { k: ['where are they hiding','where do they hide','hideout','jay mountain','windrixville','abandoned','old church','where is the church','church'], a: 'The hideout is an old abandoned church on top of Jay Mountain, outside the small town of Windrixville. Dally told them to go there. (the first pages; set up at the end of the trip)' },
   { k: ['how did they get','train','freight','boxcar','get there'], a: 'They got there by hopping a freight train out of town, then walking. (the first pages, as Ponyboy remembers the night)' },
-  { k: ['pump','water','drink'], a: 'The pump behind the church gives them water, cold as ice. (the first pages)' },
-  { k: ['cry','cries','crying','grief','breaks down','upset','scared'], a: 'Johnny is grieving and scared after what happened in the park; partway through the chapter he breaks down about it, and Ponyboy holds him. (the afternoon of the haircut)' },
-  { k: ['note','dust','floor','where is johnny','where did johnny go'], a: 'Johnny left a note written in the dust on the floor: he had gone for supplies. (the first pages)' },
-  { k: ['whistle','who is there','signal'], a: 'A long, low whistle that ends on a high note means "Who\u2019s there?" to the gang and to Tim Shepard\u2019s gang. (Johnny\u2019s return)' },
+  { post: 1, k: ['pump','water','drink'], a: 'The pump behind the church gives them water, cold as ice. (the first pages)' },
+  { post: 1, k: ['cry','cries','crying','grief','breaks down','upset','scared'], a: 'Johnny is grieving and scared after what happened in the park; partway through the chapter he breaks down about it, and Ponyboy holds him. (the afternoon of the haircut)' },
+  { post: 1, k: ['note','dust','floor','where is johnny','where did johnny go'], a: 'Johnny left a note written in the dust on the floor: he had gone for supplies. (the first pages)' },
+  { post: 1, k: ['whistle','who is there','signal'], a: 'A long, low whistle that ends on a high note means "Who\u2019s there?" to the gang and to Tim Shepard\u2019s gang. (Johnny\u2019s return)' },
   { k: ['peroxide','bleach','what is peroxide'], a: 'Peroxide is a liquid bleach. It turns hair lighter. (unpacking the supplies)' },
-  { k: ['baloney','bologna','what is baloney','lunch meat','supplies','sack'], a: 'Baloney is bologna, a cheap lunch meat. Johnny brings a week\u2019s worth. (unpacking the supplies)' },
-  { k: ['gone with the wind','paperback','book','novel'], a: 'Gone with the Wind is a long novel about the American South during the Civil War. Johnny remembered Ponyboy wanting a copy. (unpacking the supplies)' },
-  { k: ['sherman','atlanta','siege','civil war'], a: 'Sherman\u2019s siege of Atlanta is a part of the Civil War that Ponyboy reaches in the book by the fifth day. (the fifth day)' },
-  { k: ['sunset','east','sunrise','which way','faces'], a: 'The back of the church faces east, so the boys can watch the sun come up but not go down. (the five days)' },
+  { post: 1, k: ['baloney','bologna','what is baloney','lunch meat','supplies','sack'], a: 'Baloney is bologna, a cheap lunch meat. Johnny brings a week\u2019s worth. (unpacking the supplies)' },
+  { post: 1, k: ['gone with the wind','paperback','book','novel'], a: 'Gone with the Wind is a long novel about the American South during the Civil War. Johnny remembered Ponyboy wanting a copy. (unpacking the supplies)' },
+  { post: 1, k: ['sherman','atlanta','siege','civil war'], a: 'Sherman\u2019s siege of Atlanta is a part of the Civil War that Ponyboy reaches in the book by the fifth day. (the fifth day)' },
+  { post: 1, k: ['sunset','east','sunrise','which way','faces'], a: 'The back of the church faces east, so the boys can watch the sun come up but not go down. (the five days)' },
   { k: ['robert frost','frost','who wrote the poem','who wrote it'], a: 'Robert Frost was an American poet. "Nothing Gold Can Stay" is eight lines long; it was printed in 1923. (the sunrise)' },
-  { k: ['how old','age','fourteen','thirteen','old is ponyboy'], a: 'Ponyboy is fourteen, and has been for a month. (when Johnny calls him a thirteen-year-old kid)' },
+  { post: 1, k: ['how old','age','fourteen','thirteen','old is ponyboy'], a: 'Ponyboy is fourteen, and has been for a month. (when Johnny calls him a thirteen-year-old kid)' },
   { k: ['fuzz','what is the fuzz','police slang'], a: 'The fuzz means the police. (Dally\u2019s visit)' },
-  { k: ['t-bird','tbird','thunderbird','dally car','what is a t-bird'], a: 'A T-bird is a Ford Thunderbird, a car. Dally borrowed Buck\u2019s. (Dally\u2019s visit)' },
+  { post: 1, k: ['t-bird','tbird','thunderbird','dally car','what is a t-bird'], a: 'A T-bird is a Ford Thunderbird, a car. Dally borrowed Buck\u2019s. (Dally\u2019s visit)' },
   { k: ['war council','rumble','what is a rumble','what is a war council'], a: 'A war council is a meeting of gang leaders to set the rules of a fight. A rumble is a planned fight between gangs. (Dally\u2019s news, at the end)' },
-  { k: ['cherry','cherry valance','who is cherry'], a: 'Cherry Valance is the Soc girl Ponyboy talked with at the drive-in. At sunrise he says that only Johnny, Soda and maybe Cherry would understand about the sunrise and the poem. (the sunrise)' },
-  { k: ['dally','dallas','winston'], a: 'Dally (Dallas Winston) is the gang member who sent the boys to the church and brings them news. Ponyboy says he is the one he likes least. (Dally\u2019s visit)' },
+  { post: 1, k: ['cherry','cherry valance','who is cherry'], a: 'Cherry Valance is the Soc girl Ponyboy talked with at the drive-in. At sunrise he says that only Johnny, Soda and maybe Cherry would understand about the sunrise and the poem. (the sunrise)' },
+  { post: 1, k: ['dally','dallas','winston'], a: 'Dally (Dallas Winston) is the gang member who sent the boys to the church and brings them news. Ponyboy says he is the one he likes least. (Dally\u2019s visit)' },
   { k: ['reluctantly','imploringly','sullenly','gallant','indignant','word','words','vocabulary'], a: 'The five words are on the cards at the top of the Read tab: reluctantly, imploringly, sullenly, gallant, and indignant. Flip a card to check its meaning, then watch for the word in Hinton\u2019s sentences.' }
 ];
 var LORE_TURNBACKS = [
-  { re: /\b(hair|haircut|bleach)\b.*\bwhy\b|\bwhy\b.*\b(hair|haircut|bleach)\b/i, pre: 'That\u2019s one to find yourself. ', back: 'Read what Johnny says while he unpacks the supplies.' },
-  { re: /\bdally\b.*\b(gallant|gentlem[ae]n|hero)\b/i, back: 'What story does Johnny tell about Dally and the police?' },
-  { re: /\b(letter|soda wrote)\b/i, pre: 'That\u2019s one to find yourself. ', back: 'Read the letter twice, the way Ponyboy does.' },
-  { re: /\b(poem|gold)\b.*\b(mean|means|meaning)\b/i, back: 'Read the poem again, then read what Johnny says right after it.' },
-  { re: /\bjohnny\b.*\b(change|changed|different|braver)\b/i, back: 'Compare the Johnny who hid in the lot with the Johnny who comes back with the supplies.' },
-  { re: /\b(go|going) home\b|\bturn (himself|themselves) in\b/i, back: 'What does Ponyboy say when Johnny tells him to go home?' }
+  { post: 1, re: /\b(hair|haircut|bleach)\b.*\bwhy\b|\bwhy\b.*\b(hair|haircut|bleach)\b/i, pre: 'That\u2019s one to find yourself. ', back: 'Read what Johnny says while he unpacks the supplies.' },
+  { post: 1, re: /\bdally\b.*\b(gallant|gentlem[ae]n|hero)\b/i, back: 'What story does Johnny tell about Dally and the police?' },
+  { post: 1, re: /\b(letter|soda wrote)\b/i, pre: 'That\u2019s one to find yourself. ', back: 'Read the letter twice, the way Ponyboy does.' },
+  { post: 1, re: /\b(poem|gold)\b.*\b(mean|means|meaning)\b/i, back: 'Read the poem again, then read what Johnny says right after it.' },
+  { post: 1, re: /\bjohnny\b.*\b(change|changed|different|braver)\b/i, back: 'Compare the Johnny who hid in the lot with the Johnny who comes back with the supplies.' },
+  { post: 1, re: /\b(go|going) home\b|\bturn (himself|themselves) in\b/i, back: 'What does Ponyboy say when Johnny tells him to go home?' }
 ];
 var LORE_THINK = /(what do you think|why (does|did|would) (hinton|the author) (show|use|include|put|want|choose|open|begin|start|end)|what does (hinton|the author) want|\bcompare\b|\bshould\b|who is to blame|is it fair|which is (better|worse)|do you think|\b(is|was|are|were) (it|he|she|they|ponyboy|johnny|dally|darry|soda|the judge)\b.{0,30}\b(fair|unfair|cruel|wrong|right|kind|mean|brave|selfish|good|bad|a hero|heroes)\b)/i;
 var LORE_THINK_BACK = 'Look back at the page, and trust what you find.';
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   var i;
-  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return { text: (LORE_TURNBACKS[i].pre || ASK_THINK) + LORE_TURNBACKS[i].back };
+  for (i = 0; i < LORE_TURNBACKS.length; i++) if (LORE_TURNBACKS[i].re.test(q) || LORE_TURNBACKS[i].re.test(t)) return (LORE_TURNBACKS[i].post && !read) ? { text: ASK_EARLY } : { text: (LORE_TURNBACKS[i].pre || ASK_THINK) + LORE_TURNBACKS[i].back };
   if (LORE_THINK.test(q)) return { text: ASK_THINK + LORE_THINK_BACK };
   var best = null, bs = 0;
   LORE_NOTES.forEach(function(n){
@@ -3031,6 +3033,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER };
+  if (best.post && !read) return { text: ASK_EARLY };
   return { text: best.a };
 }
 

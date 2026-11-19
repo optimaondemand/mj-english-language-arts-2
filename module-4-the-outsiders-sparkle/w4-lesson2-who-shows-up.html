@@ -2896,27 +2896,28 @@ function penSync(){
    questions about later chapters wait. Replies are text only. */
 var ASK_THINK = 'That\u2019s yours to decide. Look back at the page, and trust what you find.';
 var ASK_LATER = 'What a good question. My notes only cover the part of the story you have read, so that one will have to wait. What surprised you so far?';
+var ASK_EARLY = 'That one is about this chapter, so my notes wait until you have read it. Tap \u201CI have read Chapter 8,\u201D then write to me again.';
 var LORE_NOTES = [
   { k: ['hello','hi','hey','dear'], w: 1, a: 'Hello to you too! Write me a question about Chapter Eight, and I will send my pigeon back with an answer.' },
-  { k: ['nurses','nurse','visitors','critical condition','see johnny','let them in','let them see johnny','hospital','who lets them in'], a: 'At first the nurses won\u2019t let anyone see Johnny. The doctor lets Two-Bit and Ponyboy in because Johnny has been asking for them. (the opening)' },
-  { k: ['hair grease','grease','pomade'], a: 'Johnny makes a joke about hair grease, which is what greasers put in their hair. (the first visit)' },
-  { k: ['walk again','crutches','will johnny walk','can johnny walk','johnny walk','legs'], a: 'Johnny tells Ponyboy he will not be able to walk again. (the first visit)' },
+  { post: 1, k: ['nurses','nurse','visitors','critical condition','see johnny','let them in','let them see johnny','hospital','who lets them in'], a: 'At first the nurses won\u2019t let anyone see Johnny. The doctor lets Two-Bit and Ponyboy in because Johnny has been asking for them. (the opening)' },
+  { post: 1, k: ['hair grease','grease','pomade'], a: 'Johnny makes a joke about hair grease, which is what greasers put in their hair. (the first visit)' },
+  { post: 1, k: ['walk again','crutches','will johnny walk','can johnny walk','johnny walk','legs'], a: 'Johnny tells Ponyboy he will not be able to walk again. (the first visit)' },
   { k: ['gone with the wind','civil war','what is gone with the wind'], a: 'Gone with the Wind is a long 1936 novel set in the American South during the Civil War. (the first visit)' },
   { k: ['southern gentlemen','southern gentleman','southern boys','gentlemen'], a: 'Southern gentlemen are the men in Gone with the Wind, known for their fine manners and charm. In Chapter Five, Ponyboy says Johnny was especially stuck on them. (the first visit)' },
-  { k: ['darry and me','okay now','darry okay','are ponyboy and darry','what does ponyboy tell johnny'], a: 'Ponyboy tells Johnny that he and Darry are okay now. (the first visit)' },
-  { k: ['johnny\'s mother','johnnys mother','johnny\'s mom','his mother here','mother visit','johnny\'s parents'], a: 'Johnny\u2019s mother comes to the hospital. Johnny does not want to see her, and the nurse sends the boys out. (the first visit)' },
-  { k: ['drugstore','two-bit buy','two-bit buys','who brings the book','who buys the book','hands the book','nurse the book'], a: 'Two-Bit goes to the drugstore and hands the book to the nurse for Johnny. (outside Johnny\u2019s room)' },
-  { k: ['dally arguing','dally wants out','why is dally','dally leave','dally smoke','dally in the hospital','dally\'s room','where is dally','what is dally doing'], a: 'Dally is in another room, arguing with a nurse because he wants to leave. (Dally\u2019s room)' },
-  { k: ['tim shepard','shepard','who is tim'], a: 'Tim Shepard leads another bunch of greasers. He visited Dally, and the two have always been buddies. (Dally\u2019s room)' },
-  { k: ['church','jumped out','jumped out of the church','knocked ponyboy','put out the fire'], a: 'Dally and Ponyboy talk about the day of the church fire, which was in Chapter Six. (Dally\u2019s room)' },
-  { k: ['rumble','rumbles','tonight','what is a rumble','the big fight'], a: 'A rumble is a planned fight between two gangs. Dally says the greasers have to win this one for Johnny. (Dally\u2019s room)' },
-  { k: ['feel sick','ponyboy sick','ponyboy hot','fever','groggy','sick to his stomach','bus stop','the bus'], a: 'On the way home, Ponyboy is sick to his stomach and groggy. (the bus stop)' },
-  { k: ['corvette','sting ray','stingray','red car','cherry\'s car','what car','what kind of car'], a: 'Cherry Valance drives a bright red Corvette, a sporty car; Ponyboy calls it a Sting Ray. (the vacant lot)' },
+  { post: 1, k: ['darry and me','okay now','darry okay','are ponyboy and darry','what does ponyboy tell johnny'], a: 'Ponyboy tells Johnny that he and Darry are okay now. (the first visit)' },
+  { post: 1, k: ['johnny\'s mother','johnnys mother','johnny\'s mom','his mother here','mother visit','johnny\'s parents'], a: 'Johnny\u2019s mother comes to the hospital. Johnny does not want to see her, and the nurse sends the boys out. (the first visit)' },
+  { post: 1, k: ['drugstore','two-bit buy','two-bit buys','who brings the book','who buys the book','hands the book','nurse the book'], a: 'Two-Bit goes to the drugstore and hands the book to the nurse for Johnny. (outside Johnny\u2019s room)' },
+  { post: 1, k: ['dally arguing','dally wants out','why is dally','dally leave','dally smoke','dally in the hospital','dally\'s room','where is dally','what is dally doing'], a: 'Dally is in another room, arguing with a nurse because he wants to leave. (Dally\u2019s room)' },
+  { post: 1, k: ['tim shepard','shepard','who is tim'], a: 'Tim Shepard leads another bunch of greasers. He visited Dally, and the two have always been buddies. (Dally\u2019s room)' },
+  { post: 1, k: ['church','jumped out','jumped out of the church','knocked ponyboy','put out the fire'], a: 'Dally and Ponyboy talk about the day of the church fire, which was in Chapter Six. (Dally\u2019s room)' },
+  { post: 1, k: ['rumble','rumbles','tonight','what is a rumble','the big fight'], a: 'A rumble is a planned fight between two gangs. Dally says the greasers have to win this one for Johnny. (Dally\u2019s room)' },
+  { post: 1, k: ['feel sick','ponyboy sick','ponyboy hot','fever','groggy','sick to his stomach','bus stop','the bus'], a: 'On the way home, Ponyboy is sick to his stomach and groggy. (the bus stop)' },
+  { post: 1, k: ['corvette','sting ray','stingray','red car','cherry\'s car','what car','what kind of car'], a: 'Cherry Valance drives a bright red Corvette, a sporty car; Ponyboy calls it a Sting Ray. (the vacant lot)' },
   { k: ['vacant lot','vacant','empty lot'], a: 'A vacant lot is an empty piece of land with no building on it. (the vacant lot)' },
-  { k: ['spy','spying','passing news','cherry help','how does cherry help','news','what does cherry do'], a: 'Cherry is a Soc who has been passing news about the rumble to the greasers. (the vacant lot)' },
-  { k: ['randy','randy adderson'], a: 'Randy is a Soc, and Bob\u2019s best friend since grade school. Cherry says he is sick of fighting and will not come to the rumble. (the vacant lot)' },
+  { post: 1, k: ['spy','spying','passing news','cherry help','how does cherry help','news','what does cherry do'], a: 'Cherry is a Soc who has been passing news about the rumble to the greasers. (the vacant lot)' },
+  { post: 1, k: ['randy','randy adderson'], a: 'Randy is a Soc, and Bob\u2019s best friend since grade school. Cherry says he is sick of fighting and will not come to the rumble. (the vacant lot)' },
   { k: ['bob','bob sheldon'], a: 'Bob was a Soc, Cherry\u2019s boyfriend and Randy\u2019s best friend. His death in Chapter Four is on all their minds. (the vacant lot)' },
-  { k: ['sunset','west side','east side'], a: 'Ponyboy asks Cherry whether she can see the sunset from the West Side. (the vacant lot)' },
+  { post: 1, k: ['sunset','west side','east side'], a: 'Ponyboy asks Cherry whether she can see the sunset from the West Side. (the vacant lot)' },
   { k: ['dig','you dig','what does dig mean','dig mean'], a: 'Dig, in the gang\u2019s slang, means understand. (the last lines)' },
   { k: ['what is a soc','what are socs','what does soc mean','soc short for','socials','who are the socs'], a: 'Soc is short for the Socials: the rich kids from the West Side. (Chapter One)' },
   { k: ['what is a greaser','what are greasers','what does greaser mean','who are the greasers'], a: 'Greaser is the name for the boys from the East Side. Ponyboy says they wear their hair long. (Chapter One)' },
@@ -2924,19 +2925,20 @@ var LORE_NOTES = [
 ];
 /* Questions that ask her to decide for the reader: she turns them back with a question that points to a real moment in the reading. Text only. */
 var TURNS = [
-  { re: /\bcherry\b.*\b(traitor|fair|right|wrong|good|bad|loyal)\b/i, back: 'What does Ponyboy see in Cherry\u2019s face right after he says it?' },
-  { re: /\btwo-?bit\b.*\b(care|cares|loyal|friend|serious)\b/i, back: 'What does Two-Bit say, standing at Johnny\u2019s door?' },
-  { re: /\bdally\b.*\b(good|bad|friend|buddy|changed|right)\b/i, back: 'Why does Ponyboy say he feels like Dally\u2019s buddy for the first time?' },
-  { re: /\bdarry\b.*\b(soc|strict|fair|mean)\b/i, back: 'What does Two-Bit say about Darry on the bus?' },
-  { re: /\bjohnny'?s?\b.*\b(mother|mom|parents|family)\b.*\b(bad|good|fair|unfair|love|deserve|cruel|mean|wrong|right)\b/i, back: 'Read what Ponyboy remembers about his own mother right after.' },
-  { re: /\brandy\b.*\b(coward|chicken|scared|brave|good|bad|right|wrong|fair)\b/i, back: 'What does Cherry tell Ponyboy about Randy at the vacant lot?' }
+  { post: 1, re: /\bcherry\b.*\b(traitor|fair|right|wrong|good|bad|loyal)\b/i, back: 'What does Ponyboy see in Cherry\u2019s face right after he says it?' },
+  { post: 1, re: /\btwo-?bit\b.*\b(care|cares|loyal|friend|serious)\b/i, back: 'What does Two-Bit say, standing at Johnny\u2019s door?' },
+  { post: 1, re: /\bdally\b.*\b(good|bad|friend|buddy|changed|right)\b/i, back: 'Why does Ponyboy say he feels like Dally\u2019s buddy for the first time?' },
+  { post: 1, re: /\bdarry\b.*\b(soc|strict|fair|mean)\b/i, back: 'What does Two-Bit say about Darry on the bus?' },
+  { post: 1, re: /\bjohnny'?s?\b.*\b(mother|mom|parents|family)\b.*\b(bad|good|fair|unfair|love|deserve|cruel|mean|wrong|right)\b/i, back: 'Read what Ponyboy remembers about his own mother right after.' },
+  { post: 1, re: /\brandy\b.*\b(coward|chicken|scared|brave|good|bad|right|wrong|fair)\b/i, back: 'What does Cherry tell Ponyboy about Randy at the vacant lot?' }
 ];
 var LATER = /(chapter (nine|ix|9|ten|x|10|eleven|xi|11|twelve|xii|12)|what happens next|how does (the story|the book) end|the ending|who wins|who won|after the rumble|does (johnny|dally|ponyboy) (die|live|survive)|will (johnny|dally|ponyboy) (die|live|survive)|nothing gold|stay gold|staying gold|the (trial|hearing|court))/i;
 var LORE_THINK = /(what do you think|why does hinton|what does (it|this|that|the (line|scene|chapter))\b.{0,40}\b(mean|show|prove|teach|stand for|represent)|is (it|he|she|ponyboy|johnny|cherry|dally|marcia|two-bit|darry) (fair|wrong|right|kind|cruel|good|bad|brave|selfish)|was it (fair|wrong|right|kind|cruel)|should (ponyboy|johnny|cherry|dally|two-bit|darry|he|she)|how (do|does|did) (ponyboy|johnny|cherry) feel|what is the (theme|lesson|moral)|which (is|was) (more|most|better)|do you think)/i;
 function loreAnswer(q){
   var t = ' ' + q.toLowerCase().replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  var read = STORE.get('read-done') === '1';
   if (LATER.test(q)) return { text: ASK_LATER, clip: '' };
-  for (var i = 0; i < TURNS.length; i++) if (TURNS[i].re.test(q)) return { text: 'That\u2019s yours to decide. ' + TURNS[i].back, clip: '' };
+  for (var i = 0; i < TURNS.length; i++) if (TURNS[i].re.test(q)) return (TURNS[i].post && !read) ? { text: ASK_EARLY, clip: '' } : { text: 'That\u2019s yours to decide. ' + TURNS[i].back, clip: '' };
   if (LORE_THINK.test(q)) return { text: ASK_THINK, clip: '' };
   var best = null, bs = 0;
   LORE_NOTES.forEach(function(n){
@@ -2946,6 +2948,7 @@ function loreAnswer(q){
     if (s > bs) { bs = s; best = n; }
   });
   if (!best || bs < 2) return { text: ASK_LATER, clip: '' };
+  if (best.post && !read) return { text: ASK_EARLY, clip: '' };
   return { text: best.a, clip: '' };
 }
 
